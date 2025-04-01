@@ -1,14 +1,14 @@
 import React, {Component} from 'react';
-import './app_entrance.less';
-import Entrance_Options from './Entrance_Options/entrance_options.js';
+import './entrance_options.less';
+import Login_Account from './Login_Account/login_account.js';
 
 
-class App_Entrance extends Component {
+class Entrance_Options extends Component {
     
     constructor(props){
         
         super(props);
-        
+
     }
     
     componentDidMount(){
@@ -18,13 +18,13 @@ class App_Entrance extends Component {
     render(){
         
         return (
-                <div id="app-entrance">
+                <div id="entrance-options">
                     
-                    <Entrance_Options/>
+                    <Login_Account/>
                     
                 </div>
             );
     }
 }
 
-export default App_Entrance;
+export default Entrance_Options;

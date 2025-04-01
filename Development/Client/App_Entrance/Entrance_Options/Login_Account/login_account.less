@@ -1,0 +1,132 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/ClientSide/style.less to edit this template
+*/
+/*
+    Created on : Mar 31, 2025, 12:28:00 AM
+    Author     : justinzhu
+*/
+
+#login-account {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    overflow: auto;
+    
+    #account-buttons-wrapper {
+        width: 50%;
+    
+        #login, #create, #restore {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-evenly;
+            align-items: center;
+
+            .back-button-wrapper {
+                width: 100%;
+                height: 100px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                
+                label {
+                    width: 35%;
+                    height: 75%;
+                    justify-content: center;
+                    align-items: center;
+                    display: flex;
+                    font-size: 200%;
+                    font-weight: bold;
+                    color: white;
+                    background-color: gray;
+                    border-radius: 100px;
+                    border: rgba(0,0,0,1) solid 1px;
+                    transition: 1s;
+                    
+                    &:hover {
+                        cursor: pointer;
+                        background-color: darkgray;
+                        color: black;
+                    }
+                }
+            }
+
+            .screen-title-wrapper {
+                width: 100%;
+                height: 100px;
+                font-weight: bold;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                font-size: 175%;
+            }
+            
+            .account-inputs-wrapper {
+                width: 75%;
+                display: flex;
+                justify-content: space-evenly;
+                align-items: center;
+                flex-direction: column;
+                
+                .account-input {
+                    width: 100%;
+                    height: 100px;
+                    display: flex;
+                    justify-content: flex-start;
+                    align-items: center;
+                    
+                    label {
+                        width: 25%;
+                        height: 100%;
+                        display: flex;
+                        justify-content: flex-start;
+                        align-items: center;
+                        font-size: 150%;
+                    }
+                    
+                    input {
+                        width: 75%;
+                        padding: 0px;
+                        margin: 0px;
+                        height: 85%;
+                        border-radius: 100px;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        text-align: center;
+                        border: rgba(0,0,0,1) solid 1px;
+                        font-size: 150%;
+                    }
+                }
+            }
+            
+            .account-buttons-wrapper {
+                width: 100%;
+                height: 100px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                
+                .account-button {
+                    padding: 25px 50px 25px 50px;
+                    font-weight: bold;
+                    background-color: green;
+                    border: rgba(0,0,0,1) solid 1px;
+                    border-radius: 100px;
+                    color: white;
+                    transition: 1s;
+                    
+                    &:hover {
+                        cursor: pointer;
+                        background-color: lightgray;
+                        color: black;
+                    }
+                }
+            }
+        }
+    }
+}

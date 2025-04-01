@@ -3,6 +3,10 @@ import {createRoot} from 'react-dom/client';
 import Context from './Context/context.js';
 import Logo from './Logo//logo.js';
 import App_Entrance from './App_Entrance/app_entrance.js';
+import Templates from './Data_Templates/account_data.js';
+import Request_URLs from './API_Requests/request_urls.js';
+import Cookie_Tools from './Utilities/cookie.js';
+import Configurations from './Utilities/configurations.js';
 import './react_entry.less';
 
 class Entry extends Component {
@@ -20,7 +24,7 @@ class Entry extends Component {
         
         window.Context = Context;
         
-        let comp = <Context.Provider value={{Logo}}>
+        let comp = <Context.Provider value={{Logo, Templates, Request_URLs, Cookie_Tools, Configurations}}>
             
             <App_Entrance />
             

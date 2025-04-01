@@ -5,29 +5,43 @@
         <group>
             <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Development/Client/react_entry.js</file>
             <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Built_Server/Development_Server_Requests_requests_user_accounts_profile_photos_upload_photos_js.built_server.js</file>
+            <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Development/Client/App_Entrance/Entrance_Options/Login_Account/Login/login.js</file>
             <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Development/Server/Requests/requests/get_web_pages/entry_page/entry.js</file>
             <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Development/Server/Requests/requests/user_accounts/create_account.js</file>
+            <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Development/Client/App_Entrance/Entrance_Options/Login_Account/Create/create.js</file>
             <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Development/Server/Websockets/Socket_Requests/socket_requests.js</file>
             <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Development/Server/Websockets/Socket_Requests/socket_requests/messaging/receive_private_message.js</file>
+            <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Development/Client/Utilities/cookie.js</file>
             <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Built_Server/built_server.js</file>
             <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Development/Client/Logo/logo.js</file>
             <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Development/Client/react_entry.less</file>
             <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/package.json</file>
             <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Development/Server/Websockets/Socket_Requests/socket_requests/webrtc_functions/add_candidate.js</file>
+            <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Development/Client/Data_Templates/account_data.js</file>
             <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/package-lock.json</file>
             <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Development/Client/Video_Streams/VideoObj.js</file>
             <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Development/Server/Websockets/websocket.js</file>
+            <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Development/Client/App_Entrance/Entrance_Options/Login_Account/Restore/restore.js</file>
             <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Development/Server/Requests/requests.js</file>
+            <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Development/Client/App_Entrance/Entrance_Options/Login_Account/Buttons/buttons.less</file>
+            <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Development/Server/Requests/requests/user_accounts/login_account.js</file>
             <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/tsconfig.json</file>
             <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Built_Server/Development_Server_Websockets_Socket_Requests_socket_requests_webrtc_functions_response_js.built_server.js</file>
             <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Development/Client/Logo/logo.less</file>
             <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Built_Client/built_client.js</file>
+            <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Development/Client/Utilities/configurations.js</file>
             <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Development/Client/Video_Streams/init_point.js</file>
+            <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Development/Client/App_Entrance/Entrance_Options/entrance_options.js</file>
             <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Development/Client/Context/context.js</file>
+            <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Development/Client/API_Requests/request_urls.js</file>
+            <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Development/Client/App_Entrance/Entrance_Options/Login_Account/login_account.less</file>
             <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/webpack.config.js</file>
+            <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Development/Client/App_Entrance/Entrance_Options/Login_Account/login_account.js</file>
             <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Development/Client/App_Entrance/app_entrance.less</file>
+            <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Development/Client/App_Entrance/Entrance_Options/Login_Account/Buttons/buttons.js</file>
             <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Development/Client/App_Entrance/app_entrance.js</file>
             <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Built_Server/entry.html</file>
+            <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Development/Client/App_Entrance/Entrance_Options/entrance_options.less</file>
             <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/app.js</file>
             <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Built_Server/Development_Server_Requests_requests_user_accounts_profile_photos_delete_photo_links_js.built_server.js</file>
         </group>

@@ -24,7 +24,10 @@ class Logo extends Component {
                         width: `${this.state.width * this.props.sizeScale}px`,
                         height: `${this.state.height * this.props.sizeScale}px`,
                         borderRadius: `${this.state.borderRadius * this.props.sizeScale}px`,
-                        padding: `${this.state.padding * this.props.sizeScale}px`
+                        padding: `${this.state.padding * this.props.sizeScale}px`,
+                        top: `${this.props.top ? this.props.top : 0}px`,
+                        left: `${this.props.left ? this.props.left : 0}px`
+                        
                     }}
         >
         
