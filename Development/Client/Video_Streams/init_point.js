@@ -69,7 +69,7 @@ import VideoObj from './VideoObj.js';
             
             let {clients_id} = typeof data === 'string' ? JSON.parse(data) : data;
             
-            console.log(clients_id);
+            //console.log(clients_id);
             
             for(let socket_id of clients_id){
  
@@ -134,15 +134,16 @@ import VideoObj from './VideoObj.js';
         
         let sender = peer.getSenders().find(s => s.track.kind === 'video');
 
-        let parameters = sender.getParameters();
+        let parameters = sender?.getParameters();
 
-        parameters.encodings[0].maxBitrate = 500000;
+        parameters?.encodings[0]?.maxBitrate = 500000;
 
         sender?.setParameters(parameters);
         
         peer.ontrack = (event) => {
             
             this.CreateVideoElement(socket_id, event.streams[0]);
+            
         };
 
         peer.createOffer().then(async (offer) => {
@@ -184,11 +185,11 @@ import VideoObj from './VideoObj.js';
            
             let sender = peer.getSenders().find(s => s.track.kind === 'video');
            
-            let parameters = sender.getParameters();
+            let parameters = sender?.getParameters();
             
-            parameters.encodings[0].maxBitrate = 500000;
+            parameters?.encodings[0]?.maxBitrate = 500000;
             
-            sender.setParameters(parameters);
+            sender?.setParameters(parameters);
             
             peer.onicecandidate = (event) => {
             
@@ -206,9 +207,11 @@ import VideoObj from './VideoObj.js';
         peer.setRemoteDescription(new RTCSessionDescription(offer)).then(()=>{
 
             return peer.createAnswer();
+            
         }).then(async (answer)=>{
  
             await peer.setLocalDescription(answer);
+            
         }).then(()=>{
 
             this.socket.emit('response', JSON.stringify({to_id: from_socket_id, from: this.socket.id, answer: peer.localDescription }));
@@ -234,7 +237,6 @@ import VideoObj from './VideoObj.js';
     }
      
     CreateVideoElement = (index, videoSrc)=>{
-
 
        this.videoSrc[index] = {src: videoSrc};
 

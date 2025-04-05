@@ -16,11 +16,11 @@ const uploads = multer({
 //let domain = '10.0.0.70';
 //let domain = '192.168.7.108';
 
-//const keyPath = './my-key.pem'; // Replace with your actual key file
-//const certPath = './my-cert.pem';    // Replace with your actual cert file
+const keyPath = './my-key.pem'; // Replace with your actual key file
+const certPath = './my-cert.pem';    // Replace with your actual cert file
 
-//const privateKey = fs.readFileSync(keyPath, 'utf8');
-//const certificate = fs.readFileSync(certPath, 'utf8');
+const privateKey = fs.readFileSync(keyPath, 'utf8');
+const certificate = fs.readFileSync(certPath, 'utf8');
 
 let app = express();
 
