@@ -1,39 +1,33 @@
-import React, {Component} from 'react';
-import First_Name from './Profile_Info_Types/first_name.js';
-import Last_Name from './Profile_Info_Types/last_name.js';
-import Birth_Date from './Profile_Info_Types/birth_date.js';
-import Birth_Location from './Profile_Info_Types/birth_location.js';
-import Current_Location from './Profile_Info_Types/current_location.js';
-import Gender from './Profile_Info_Types/gender.js';
-import Hobbies from './Profile_Info_Types/hobbies.js';
-import Martial_Status from './Profile_Info_Types/martial_status.js';
-import Professions from './Profile_Info_Types/professions.js';
-import School from './Profile_Info_Types/school.js';
+import React, {Component, createRef} from 'react';
+import Choice_Type from './Info_Types/Choice_Type/choice_type.js';
+import Date_Type from './Info_Types/Date_Type/date_type.js';
+import Json_Type from './Info_Types/Json_Type/json_type.js';
+import Text_Type from './Info_Types/Text_Type/text_type.js';
 import './profile_info_data.less';
 
 class Profile_Info_Data extends Component {
     
-    Info_Templates = [
-        {component: First_Name},
-        {component: Last_Name},
-        {component: Birth_Date},
-        {component: Birth_Location},
-        {component: Current_Location},
-        {component: Gender},
-        {component: Hobbies},
-        {component: Martial_Status},
-        {component: Professions},
-        {component: School}
-    ];
-    
     state = {
-        account_data: {}
+        account_data: {},
+        info_templates: {
+            first_name: {component: Text_Type, label: "First Name", value: ""},
+            last_name: {component: Text_Type, label: "Last Name", value: ""},
+            date_of_birth: {component: Date_Type, label: "Birth Date", value: ""},
+            birth_location: {component: Json_Type, label: "Birth Location", value: ""},
+            gender: {component: Choice_Type, label: "Gender", value: ""},
+            current_location: {component: Json_Type, label: "Current Location", value: ""},
+            martial_status: {component: Choice_Type, label: "Martial Status", value: ""},
+            hobbies: {component: Json_Type, label: "Hobbies", value: ""},
+            professions: {component: Json_Type, label: "Professions", value: ""},
+            schools: {component: Json_Type, label: "School", value: ""}
+        }
     };
     
     constructor(props){
         
         super(props);
-
+        
+        Profile_Info_Data.contextType = window.Context;
     }
     
     componentDidUpdate(prevProps, prevState){
@@ -45,12 +39,33 @@ class Profile_Info_Data extends Component {
         for(let i in this.props){
             
             this.state[i] = this.props[i];
+            
         }
+        
+        this.Update_Info_Templates();
         
         this.setState(this.state);
     }
     
+    Update_Info_Templates = () => {
+            
+        for(let i in this.state.account_data){
+
+            if(!this.state.info_templates[i]){
+                continue;
+            }
+
+            this.state.info_templates[i].value = this.state.account_data[i];
+        }
+    }
+    
     render(){
+        
+        const {Drag_Scroll} = this.context;
+        
+        let drag_scroll = new Drag_Scroll();
+        
+        let infoWrapperRef = createRef();
         
         return (
                 <div id="profile-info-data">
@@ -63,16 +78,46 @@ class Profile_Info_Data extends Component {
                     
                     </div>
                     
-                    <div id="info-wrapper">
+                    <div id="info-wrapper" 
+                        ref={infoWrapperRef}
+                        onMouseDown={(e)=>{
+                            drag_scroll.init_drag(e, infoWrapperRef.current);
+                        }}
+                        
+                        onMouseLeave={(e)=>{
+                            drag_scroll.disable_drag(e, infoWrapperRef.current);
+                        }}
+                        
+                        onMouseUp={(e)=>{
+                            drag_scroll.disable_drag(e, infoWrapperRef.current);
+                        }}
+                        onMouseMove={(e)=>{
+                            drag_scroll.move_drag(e, infoWrapperRef.current);
+                        }}
+                        tabIndex="0"
+                    >
                     
-                        {this.Info_Templates.map((value, index)=>{
+                        {Object.keys(this.state.info_templates).map((key, index)=>{
+                            
+                            const template = this.state.info_templates[key];
+                            
+                            const Com = template.component;
+                            const value = template.value;
+                            const label = template.label;
 
-                            const Com = value.component;
+                            return <div className="individual-info-wrapper" key={index}>
 
-                            return <div className="individual-info-wrapper">
-
-                                <Com account_data={this.state.account_data} key={index} />
-
+                                <div id="info-label">
+                                
+                                    {label}
+                                
+                                </div>
+            
+                                <div id="info-value">
+                                
+                                    <Com value={value} label={label}/>
+                                    
+                                </div>
                             </div>;
 
                         })}

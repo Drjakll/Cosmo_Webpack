@@ -30,7 +30,7 @@ class Create extends Component {
         
         
         
-        const {Data_Templates, Request_URLs, Configurations} = this.context;
+        const {Account_Data_Templates, Request_URLs, Configurations} = this.context;
         
         //Verify email
         if(!Configurations.Verify_Email(email)){
@@ -45,7 +45,7 @@ class Create extends Component {
         }
         
         //Create a json data template to hold account information
-        let account_data = Data_Templates.Account_Data_Template({
+        let account_data = Account_Data_Templates.Account_Data_Template({
             email: email,
             password: password,
             first_name: first_name,

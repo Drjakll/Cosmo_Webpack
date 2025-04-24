@@ -15,7 +15,7 @@ class Posts extends Component {
         return (
                 <div id="posts">
                     
-                    
+
                     
                 </div>
             );

@@ -14,7 +14,12 @@ Click nbfs://nbhost/SystemFileSystem/Templates/ClientSide/style.less to edit thi
     justify-content: center;
     align-items: center;
     flex-direction: row;
-    border-bottom: rgba(0,0,0,1) solid 1px;
+    z-index: 0;
+    //border-bottom: rgba(0,0,0,1) solid 1px;
+    
+    &:hover {
+        z-index: 9999999;
+    }
     
     #profile-picture-wrapper {
         width: 50%;
@@ -24,6 +29,6 @@ Click nbfs://nbhost/SystemFileSystem/Templates/ClientSide/style.less to edit thi
     #profile-info-wrapper {
         width: 50%;
         height: 100%;
-        border-left: rgba(0,0,0,1) solid 1px;
+        border-left: rgba(100,100,100,1) solid 1px;
     }
 }

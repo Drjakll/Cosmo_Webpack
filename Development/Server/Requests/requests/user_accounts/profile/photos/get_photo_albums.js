@@ -14,7 +14,7 @@ let request = function() {
             } else if(results.length === 0){
                 res.json({message: "No albums retreived", albums: []});
             } else {
-                res.json({message: "Successfully retrieved album", albums: results});
+                res.json({message: "Successfully retrieved albums", albums: results});
             }
 
             res.end();

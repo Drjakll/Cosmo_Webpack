@@ -48,15 +48,15 @@ app.post("/login_account", requests.user_accounts.login_account.req);
 
 //Profile Data
 app.post("/update_profile", requests.user_accounts.profile.profile_data.update_profile.req);
+
+
+//Photos
 app.post("/upload_pictures", uploads.array('files', 100), requests.user_accounts.profile.photos.upload_photos.req);
 app.post("/get_photo_links", requests.user_accounts.profile.photos.get_photo_links.req);
 app.post("/get_all_profile_pictures", requests.user_accounts.profile.profile_data.get_all_profile_pictures.req);
 app.post("/insert_profile_photo_data", requests.user_accounts.profile.profile_data.insert_profile_photo_data.req);
 app.post("/delete_data_base_profile_photo", requests.user_accounts.profile.profile_data.delete_database_profile_photos.req);
 app.post("/delete_profile_photo_files", requests.user_accounts.profile.profile_data.delete_profile_photo_files.req);
-
-
-//Photos
 app.post("/add_photo_album", requests.user_accounts.profile.photos.add_photo_album.req);
 app.post("/get_photo_albums", requests.user_accounts.profile.photos.get_photo_albums.req);
 app.post("/update_album", requests.user_accounts.profile.photos.update_album.req);
@@ -65,6 +65,11 @@ app.post("/delete_photo_links", requests.user_accounts.profile.photos.delete_pho
 app.post("/delete_photo_files", requests.user_accounts.profile.photos.delete_photo_files.req);
 app.post("/delete_album", requests.user_accounts.profile.photos.delete_album.req);
 
+//Photo Comments
+app.post("/submit_photo_comment", requests.user_accounts.profile.comments.photo_comments.submit_photo_comment.req);
+app.post("/get_photo_comments", requests.user_accounts.profile.comments.photo_comments.get_photo_comments.req);
+app.post("/update_photo_comment", requests.user_accounts.profile.comments.photo_comments.update_photo_comment.req);
+app.post("/delete_photo_comment", requests.user_accounts.profile.comments.photo_comments.delete_photo_comment.req);
 
 //Post Data
 app.post("/create_post", requests.user_accounts.profile.post_data.create_post.req);

@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import Albums from './Components/Album/albums.js';
-import Comments from './Components/Comments/comments.js';
 import Posts from './Components/Posts/posts.js';
 import Profile_Info from './Components/Profile_Info/profile_info.js';
 import './profile_template.less';
@@ -12,8 +11,7 @@ class Profile_Template extends Component {
             {component: Profile_Info, props: {}, classname: "profile-info-wrapper"},
             {component: Albums, props: {}, classname: "albums-wrapper"}, 
             {component: Posts, props: {}, classname: "posts-wrapper"}
-        ],
-        profile_data: {}
+        ]
     };
     
     constructor(props){
@@ -28,7 +26,7 @@ class Profile_Template extends Component {
         this.GetAccountData();
     }
     
-    UpdateComponentProps = (index, newProps)=>{
+    UpdateComponentProps = (index, newProps) => {
         
         for(let i in newProps){
             
@@ -41,7 +39,7 @@ class Profile_Template extends Component {
         
     }
     
-    UpdateAllComponentsProps = (newProps)=>{
+    UpdateAllComponentsProps = (newProps) => {
         
         for(let h in this.state.components){
             
@@ -56,15 +54,19 @@ class Profile_Template extends Component {
         this.setState({components: this.state.components});
     }
     
-    GetAccountData = ()=>{
+    GetAccountData = () => {
         
-        const {Cookie_Tools, Data_Templates } = this.context;
+        const {Cookie_Tools, Account_Data_Templates } = this.context;
         
-        this.profile_data = Data_Templates.Account_Data_Template();
+        this.profile_data = Account_Data_Templates.Account_Data_Template();
         
         let cookie_data = Cookie_Tools.cookie_parser(document.cookie);
         
         for(let key in this.profile_data){
+            
+            if(!cookie_data[key]){
+                return;
+            }
             
             this.profile_data[key] = cookie_data[key];
             
@@ -85,8 +87,8 @@ class Profile_Template extends Component {
                             const Com = com.component;
                             
                             return <div className={`profile-template-component ${com.classname}`} key={index}>
-            
-                                <Com properties={com.props}/>
+                                
+                                <Com properties={com.props} />
             
                             </div>;
                             

@@ -9,6 +9,7 @@ class App_Entrance extends Component {
         
         super(props);
         
+        App_Entrance.contextType = window.Context;
     }
     
     componentDidMount(){
@@ -17,8 +18,10 @@ class App_Entrance extends Component {
     
     render(){
         
+        let {Drag_Scroll} = this.context;
+        
         return (
-                <div id="app-entrance">
+                <div id="app-entrance" onMouseMove={(e)=>{Drag_Scroll.update_pageXY(e);}}>
                     
                     <Entrance_Options/>
                     

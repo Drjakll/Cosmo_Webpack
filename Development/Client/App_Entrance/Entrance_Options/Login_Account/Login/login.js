@@ -24,7 +24,7 @@ class Login extends Component {
         let email = this.emailRef?.current.value;
         let password = this.passwordRef?.current.value;
         
-        const {Data_Templates, Request_URLs, Cookie_Tools, Configurations} = this.context;
+        const {Accont_Data_Templates, Request_URLs, Cookie_Tools, Configurations} = this.context;
         
         //Verify email
         if(!Configurations.Verify_Email(email)){
@@ -33,7 +33,7 @@ class Login extends Component {
         }
         
         //Create a json data template to hold account information
-        let account_data = Data_Templates.Account_Data_Template({email: email, password: password});
+        let account_data = Account_Data_Templates.Account_Data_Template({email: email, password: password});
         
         let jsonData = JSON.stringify(account_data);
         

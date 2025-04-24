@@ -1,0 +1,64 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/ClientSide/style.less to edit this template
+*/
+/*
+    Created on : Apr 7, 2025, 6:09:38 PM
+    Author     : justinzhu
+*/
+
+#albums {
+    width: 100%;
+    height: 400px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    z-index: 0;
+    
+    &:hover {
+        z-index: 9999999;
+    }
+    
+    #albums-label {
+        width: 100%;
+        height: 75px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        
+        label {
+            font-size: 120%;
+            //font-weight: bold;
+            font-family: sans-serif;
+            color: rgba(100,100,100,1);
+        }
+    }
+    
+    #albums-wrapper {
+        width: 100%;
+        height: 325px;
+        white-space: nowrap;            
+        overflow-x: auto;
+        overflow-y: hidden;
+        scrollbar-width: none;
+        
+        &::-webkit-scrollbar {
+            display: none;
+        }
+        
+        .album-cover-wrapper {
+            width: 250px;
+            height: 250px;
+            display: inline-block;
+            margin: 25px 25px 25px 25px;
+        }
+    }
+    
+    .unselectable-text {
+        user-select: none;
+
+        * {
+            pointer-events: none;
+        }
+    }
+}

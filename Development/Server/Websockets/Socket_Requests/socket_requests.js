@@ -1,6 +1,6 @@
 import fs from 'fs';
 
-let GatherRequests = async function(path, connectedClients, clientsID, io){
+let GatherRequests = async function(path, io){
     
     let req_objs = {};
     
@@ -14,7 +14,7 @@ let GatherRequests = async function(path, connectedClients, clientsID, io){
         
         if (isDir) {
 
-            req_objs[file] = await GatherRequests(subPath + "/", connectedClients, clientsID, io);
+            req_objs[file] = await GatherRequests(subPath + "/", io);
 
         } else {
             
@@ -23,10 +23,6 @@ let GatherRequests = async function(path, connectedClients, clientsID, io){
             req_objs[key] = await import("./" + subPath.split("Socket_Requests/")[1]);
             
             req_objs[key] = req_objs[key].default;
-            
-            req_objs[key].prototype.connectedClients = connectedClients;
-            
-            req_objs[key].prototype.clientsID = clientsID;
             
             req_objs[key].io = io;
             

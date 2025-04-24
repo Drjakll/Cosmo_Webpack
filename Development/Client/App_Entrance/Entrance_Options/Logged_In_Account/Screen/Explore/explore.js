@@ -14,7 +14,7 @@ class Explore extends Component {
         return (
                 <div id="explore">
 
-                  
+                    
                     
                 </div>
             );

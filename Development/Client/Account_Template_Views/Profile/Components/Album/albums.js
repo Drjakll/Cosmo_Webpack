@@ -1,21 +1,146 @@
-import React, {Component} from 'react';
-
+import React, {Component, createRef} from 'react';
+import Album_Cover from './Album_Cover/album_cover.js';
+import Photos_Container from './Photos_Container/photos_container.js';
+import './albums.less';
 
 class Albums extends Component {
+    
+    state = {
+        account_data: null,
+        albums: [],
+        photos: [],
+        selected_album: {},
+        open_album: false
+    }
     
     constructor(props){
         
         super(props);
-
+        
+        Albums.contextType = window.Context;
     }
     
+    componentDidMount(){
+        
+        if(this.state.account_data){
+            this.setState({albums: this.Get_Albums(this.state.account_data)});
+        }
+    }
+    
+    async componentDidUpdate(prevProps, prevState){
+        
+        if(this.props === prevProps){
+            return;
+        }
+        
+        let properties = this.props.properties;
+        
+        for(let i in properties){
+            
+            this.state[i] = properties[i];
+        }
+        
+        this.setState(this.state);
+        
+        if(properties.account_data){
+        
+            this.setState({albums: await this.Get_Albums(properties.account_data)});
+            
+        }
+    }
+    
+    Get_Albums = async (account_data) => {
+        
+        const {Request_URLs} = this.context;
+        
+        let res = await fetch(Request_URLs.get_photo_albums, {
+            method: "POST",
+            body: JSON.stringify(account_data),
+            headers: {
+                'Content-Type': "application/json"
+            }
+        });
+        
+        let resJson = await res.json();
+        
+        
+        return resJson.albums;
+    }
+    
+    Get_Photo_Links = async (album_info) => {
+        
+        const {Request_URLs} = this.context;
+        
+        let res = await fetch(Request_URLs.get_photo_links, {
+            method: "POST",
+            body: JSON.stringify(album_info),
+            headers: {
+                'Content-Type': "application/json"
+            }
+        });
+        
+        let resJson = await res.json();
+        
+        console.log(resJson.message);
+        
+        this.setState({
+            photos: resJson.photos, 
+            selected_album: album_info, 
+            open_album: true
+        });
+        
+    }
+    
+    Close_Photo_Album = () => {
+        
+        this.setState({open_album: false});
+    }
     
     render(){
         
+        const {Drag_Scroll} = this.context;
+        
+        let drag_scroll = new Drag_Scroll();
+        
+        let albumsWrapperRef = createRef();
+        
         return (
                 <div id="albums">
+        
+                    {this.state.open_album ? <Photos_Container 
+                                                photos={this.state.photos}
+                                                album_info={this.state.selected_album}
+                                                Close_Photo_Album={this.Close_Photo_Album}
+                                                account_data={this.state.account_data}
+                                                /> : <></>}
+                
+                    <div id="albums-label">
                     
+                        <label>Albums</label>
                     
+                    </div>
+                    
+                    <div id="albums-wrapper"
+                        ref={albumsWrapperRef}
+                        onMouseDown={(e)=>{drag_scroll.init_drag(e, albumsWrapperRef.current);}}
+                        onMouseLeave={(e)=>{drag_scroll.disable_drag(e, albumsWrapperRef.current);}}
+                        onMouseUp={(e)=>{drag_scroll.disable_drag(e, albumsWrapperRef.current);}}
+                        onMouseMove={(e)=>{drag_scroll.move_drag(e, albumsWrapperRef.current);}}
+                    >
+                        
+                        {this.state.albums.map((data, index)=>{
+                            
+                            return <div className="album-cover-wrapper" key={index}>
+                                
+                                <Album_Cover album_info={data} 
+                                            Get_Photo_Links={this.Get_Photo_Links}
+                                />
+            
+                            </div>;
+                            
+                        })}
+                        
+                    </div>
                     
                 </div>
             );

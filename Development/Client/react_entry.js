@@ -3,10 +3,12 @@ import {createRoot} from 'react-dom/client';
 import Context from './Context/context.js';
 import Logo from './Logo//logo.js';
 import App_Entrance from './App_Entrance/app_entrance.js';
-import Data_Templates from './Data_Templates/account_data.js';
+import Account_Data_Templates from './Data_Templates/account_data.js';
+import Comment_Data_Templates from './Data_Templates/comment_data.js';
 import Request_URLs from './API_Requests/request_urls.js';
 import Cookie_Tools from './Utilities/cookie.js';
 import Configurations from './Utilities/configurations.js';
+import Drag_Scroll from './Utilities/drag_scroll.js';
 import Profile_Template from './Account_Template_Views/Profile/profile_template.js';
 import './react_entry.less';
 import VideoStream from './Video_Streams/init_point.js';
@@ -31,11 +33,13 @@ class Entry extends Component {
         value={{
             //These are global data
             Logo, 
-            Data_Templates, //Data templates
+            Account_Data_Templates, //Account data templates
+            Comment_Data_Templates, //Comment data templates
             Request_URLs, 
             Cookie_Tools,  //Useful tools for parsing and stringifying cookies
             Configurations, //The app's universal configurations
-            Profile_Template //Template for viewing user profile
+            Profile_Template, //Template for viewing user profile
+            Drag_Scroll
         }}
         
         >

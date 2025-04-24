@@ -1,9 +1,33 @@
+//Account
 const login_account = `/login_account`;
 const create_account = `/create_account`;
+
+//Account photos
+const get_photo_albums = '/get_photo_albums';
+const get_photo_links = '/get_photo_links';
+
+//Photo comments
+const get_photo_comments = '/get_photo_comments';
+const submit_photo_comment = '/submit_photo_comment';
+const update_photo_comment = '/update_photo_comment';
+const delete_photo_comment = '/delete_photo_comment';
+
 const aws_s3_url = 'https://cosmo-social-app.s3.us-west-1.amazonaws.com/';
 
 export default {
+        //Account
         login_account: login_account,
         create_account: create_account,
+        
+        //Account photos
+        get_photo_albums: get_photo_albums,
+        get_photo_links: get_photo_links,
+        
+        //Photo comments
+        get_photo_comments: get_photo_comments,
+        submit_photo_comment: submit_photo_comment,
+        update_photo_comment: update_photo_comment,
+        delete_photo_comment: delete_photo_comment,
+        
         aws_s3_url: aws_s3_url
 };
