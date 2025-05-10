@@ -75,7 +75,7 @@ class Streaming extends Component {
                 if (!this.state.stream_id) {
                     this.Create_Stream_Room(this.socket.id);
                 } else {
-                    this.Joining_The_Room(this.socket.id);
+                    this.Joining_The_Room(this.state.stream_id);
                 }
             }
             
@@ -107,13 +107,13 @@ class Streaming extends Component {
         
     }
 
-    Joining_The_Room = (socket_id) => {
+    Joining_The_Room = (stream_id) => {
 
         let acc_copy = JSON.parse(JSON.stringify(this.state.account_data));
 
         let { Stream_Room_Data_Template } = Stream_Room_Data_Templates;
 
-        acc_copy.id = this.state.stream_id;
+        acc_copy.id = stream_id;
 
         acc_copy.thumbnail_link = acc_copy.profile_picture_link;
 
