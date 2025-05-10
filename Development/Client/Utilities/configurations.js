@@ -42,7 +42,7 @@ const Verify_Password = function(password){
 };
 
 export default {
-        Cookie_Expire_Days: 30,
+        Cookie_Expire_Days: 1,
         Verify_Email: Verify_Email,
         Verify_Password: Verify_Password,
         Months: Months,

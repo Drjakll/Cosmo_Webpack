@@ -48,6 +48,7 @@ app.post("/login_account", requests.user_accounts.login_account.req);
 
 //Profile Data
 app.post("/update_profile", requests.user_accounts.profile.profile_data.update_profile.req);
+app.post("/set_as_profile_picture", requests.user_accounts.profile.profile_data.set_as_profile_picture.req);
 
 
 //Photos
@@ -77,6 +78,11 @@ app.post("/update_post", requests.user_accounts.profile.post_data.update_post.re
 app.post("/get_posts", requests.user_accounts.profile.post_data.get_posts.req);
 app.post("/delete_post", requests.user_accounts.profile.post_data.delete_post.req);
 app.post("/set_last_post", requests.user_accounts.profile.post_data.set_last_post.req);
+
+//Video Streaming
+app.post("/create_stream_room", requests.stream_rooms.create_stream_room.req);
+app.post("disband_stream_room", requests.stream_rooms.disband_stream_room.req);
+app.post("search_streams", requests.stream_rooms.search_streams.req);
 
 server.listen(4000, () => {
     

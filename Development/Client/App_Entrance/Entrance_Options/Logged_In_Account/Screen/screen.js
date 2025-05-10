@@ -42,6 +42,7 @@ class Screen extends Component {
     render(){
         
         const Screen_Type = this.Screen_Types[this.state.focus_screen];
+       
         
         return (
                 <div id="screen">

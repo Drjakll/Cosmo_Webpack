@@ -43,6 +43,7 @@ let Wrapper = function (){
         }
         
         socket.on('join_comment_group', events.join_comment_group.event);
+        socket.on('submit_comment', events.submit_a_comment.event);
         
     };
 };

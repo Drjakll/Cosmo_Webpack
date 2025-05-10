@@ -12,6 +12,11 @@ const submit_photo_comment = '/submit_photo_comment';
 const update_photo_comment = '/update_photo_comment';
 const delete_photo_comment = '/delete_photo_comment';
 
+//Video streams
+const create_stream_room = '/create_stream_room';
+const disband_stream_room = '/disband_stream_room';
+const search_streams = '/search_streams';
+
 const aws_s3_url = 'https://cosmo-social-app.s3.us-west-1.amazonaws.com/';
 
 export default {
@@ -29,5 +34,11 @@ export default {
         update_photo_comment: update_photo_comment,
         delete_photo_comment: delete_photo_comment,
         
+        //Video streams
+        create_stream_room: create_stream_room,
+        disband_stream_room: disband_stream_room,
+        search_streams: search_streams,
+        
+        //Amazon Web Service Storage 3 URL
         aws_s3_url: aws_s3_url
 };

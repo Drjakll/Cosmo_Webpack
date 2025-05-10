@@ -117,14 +117,15 @@ import VideoObj from './VideoObj.js';
             
         });
     }
-     
+    
     Offer = (socket_id)=>{
-         
+        
         let peer = new RTCPeerConnection(this.peerConfig);
 
         this.peerConnections[socket_id] = peer;
         
         if(this.localstream){
+            
             this.localstream.getTracks().forEach((track) => {     
 
                peer.addTrack(track, this.localstream);
@@ -137,7 +138,7 @@ import VideoObj from './VideoObj.js';
         let parameters = sender?.getParameters();
 
         parameters?.encodings[0]?.maxBitrate = 500000;
-
+        
         sender?.setParameters(parameters);
         
         peer.ontrack = (event) => {
@@ -255,7 +256,7 @@ import VideoObj from './VideoObj.js';
            {Object.keys(this.state.videoSrc).map((v, k)=>{
 
                return <VideoObj src={this.state.videoSrc[v].src} key={k}/>;
-
+               
            })}
 
        </div>;

@@ -28,7 +28,7 @@ let Account_Data_Template = function(initial){
     
     for(let i in initial){
         
-        if(i === "id" || !template[i]){
+        if(i === "id" || template[i] === undefined){
             continue;
         }
         

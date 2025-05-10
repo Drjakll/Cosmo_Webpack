@@ -1,0 +1,44 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/ClientSide/style.less to edit this template
+*/
+/*
+    Created on : May 7, 2025, 8:26:26 PM
+    Author     : justinzhu
+*/
+
+#stream-thumbnail {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    
+    #img {
+        width: 100%;
+        height: calc(100% - 50px);
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+        border-radius: 10px;
+        box-shadow: 5px 5px 5px rgba(0,0,0,0.25);
+        transition: 1s;
+        
+        &:hover {
+            cursor: pointer;
+            box-shadow: 0px 0px 0px rgba(0,0,0,0);
+        }
+    }
+    
+    #room-title {
+        width: 100%;
+        height: 50px;
+        font-weight: bold;
+        color: rgba(0,0,0,0.75);
+        font-size: 115%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+}

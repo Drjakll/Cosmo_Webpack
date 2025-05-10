@@ -16,7 +16,7 @@ class Logged_In_Account extends Component {
         
         super(props);
         
-            //Divided into 3 screen columns
+        //Divided into 3 screen columns
         this.state = {
             Columns : [
                 {screen: "Explore", is_main: false},
@@ -25,6 +25,15 @@ class Logged_In_Account extends Component {
             ],
             account_data: this.props.account_data
         };
+    }
+    
+    componentDidUpdate(prevProps, prevState){
+        
+        if(this.props === prevProps){
+            return;
+        }
+        
+        this.setState({account_data: this.props.account_data});
     }
     
     //This function is to change the main screen. Also changes the left and right screen.
@@ -64,6 +73,7 @@ class Logged_In_Account extends Component {
                                 })}
 
                             </div>;
+                            
         
         return (
                 <div id="logged-in-account">
@@ -71,12 +81,13 @@ class Logged_In_Account extends Component {
                     <div id="logged-in-columns-wrapper">
                     
                         {this.state.Columns.map((info, index)=>{
+
                             
                             return <div className={`logged-in-column ${info.is_main ? "main" : ""}`} key={index}>
                                         
                                         <div className="screen-wrapper">
                                             
-                                            <Screen screen_type={info.screen}/>
+                                            <Screen account_data={this.state.account_data} screen_type={info.screen}/>
                                             
                                         </div>
 

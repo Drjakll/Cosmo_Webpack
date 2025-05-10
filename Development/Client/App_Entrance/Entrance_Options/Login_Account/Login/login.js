@@ -24,7 +24,7 @@ class Login extends Component {
         let email = this.emailRef?.current.value;
         let password = this.passwordRef?.current.value;
         
-        const {Accont_Data_Templates, Request_URLs, Cookie_Tools, Configurations} = this.context;
+        const {Account_Data_Templates, Request_URLs, Cookie_Tools, Configurations} = this.context;
         
         //Verify email
         if(!Configurations.Verify_Email(email)){

@@ -8,7 +8,6 @@ let Photo_Comment_Data_Template = function(initial){
     let template = {
         id: null,
         email: "",
-        password: "",
         first_name: "",
         last_name: "",
         profile_picture_link: "",
@@ -20,7 +19,7 @@ let Photo_Comment_Data_Template = function(initial){
     
     for(let i in initial){
         
-        if(i === "id" || !template[i]){
+        if(i === "id" || template[i] === undefined){
             continue;
         }
         

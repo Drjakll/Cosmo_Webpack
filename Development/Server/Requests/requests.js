@@ -5,6 +5,7 @@ import global_data from './configurations/global_data.js';
 import generate_update_query from './tools/generate_update_query.js';
 import generate_insert_query from './tools/generate_insert_query.js';
 import generate_time_string from './tools/generate_time_string.js';
+import generate_get_query from './tools/generate_get_query.js';
 
 //Traverse through the "/requests/" directory to import all request functions
 
@@ -30,7 +31,7 @@ const GatherRequests = async (rootPath) => {
             
             let key = file_name_parts[0];
             
-            if(file_name_parts[1] != "js"){
+            if(file_name_parts[1] !== "js"){
                 continue;
             }
             
@@ -54,6 +55,8 @@ const GatherRequests = async (rootPath) => {
                 requests[key].prototype.generate_insert_query = generate_insert_query;
                 
                 requests[key].prototype.generate_time_string = generate_time_string;
+                
+                requests[key].prototype.generate_get_query = generate_get_query;
 
                 requests[key] = new requests[key]();
 

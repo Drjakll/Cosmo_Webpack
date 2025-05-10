@@ -21,6 +21,7 @@ class Entrance_Options extends Component {
         super(props);
         
         Entrance_Options.contextType = window.Context;
+        
     }
     
     LoginAttempt = async () => {

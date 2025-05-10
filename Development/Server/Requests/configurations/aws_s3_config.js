@@ -14,7 +14,7 @@ aws.config.update({
     "accessKeyId": "AKIAJH32XZD6ZNNFCQHQ",
     "secretAccessKey": "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",
     "region": "us-west-1"
-})
+});
 
 //let s3 = new S3Client({
 //    "credentials": {
