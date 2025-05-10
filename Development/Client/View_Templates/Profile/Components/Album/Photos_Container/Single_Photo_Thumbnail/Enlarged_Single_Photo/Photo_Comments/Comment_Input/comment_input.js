@@ -1,5 +1,5 @@
 import React, {Component, createRef} from 'react';
-import Reply_To_Comment_Quote from './Reply_To_Comment_Quote/reply_to_comment_quote.js';
+import Reply_To_Comment_Quote from './Reply/reply.js';
 import './comment_input.less';
 
 class Comment_Input extends Component {

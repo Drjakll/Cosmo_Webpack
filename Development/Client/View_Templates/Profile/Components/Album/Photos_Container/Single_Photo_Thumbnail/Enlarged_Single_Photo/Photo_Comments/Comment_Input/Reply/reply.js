@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import './reply_to_comment_quote.less';
+import './reply.less';
 
 class Reply_To_Comment_Quote extends Component {
     
