@@ -21,12 +21,19 @@ class Streaming extends Component {
         this.state = {
             media_source: null,
             account_data: this.props.account_data,
-            is_host: this.props.is_host
+            is_host: this.props.is_host,
+            stream_id: this.props.stream_id,
+            room_title: "New Room"
         };
     }
     
-    componentDidMount(){
-        this.Get_Media_Source();
+    componentDidMount() {
+
+        //Only to initialize the host video at starting point
+        if (this.state.is_host) {
+            this.Get_Media_Source();
+        }
+
         this.Setup_IO();
     }
     
@@ -64,9 +71,12 @@ class Streaming extends Component {
         this.socket.on('connect', ()=>{
             
             if(this.socket.id){
-                
-                this.Create_Stream_Room(this.socket.id);
-                
+
+                if (!this.state.stream_id) {
+                    this.Create_Stream_Room(this.socket.id);
+                } else {
+                    this.Joining_The_Room(this.socket.id);
+                }
             }
             
         });
@@ -87,7 +97,7 @@ class Streaming extends Component {
         
         acc_copy.host_email = acc_copy.email;
         
-        acc_copy.room_title = "New Room";
+        acc_copy.room_title = this.state.room_title;
         
         acc_copy.is_host = this.state.is_host;
         
@@ -95,6 +105,27 @@ class Streaming extends Component {
         
         this.socket.emit('create_stream', JSON.stringify(stream_room_data));
         
+    }
+
+    Joining_The_Room = (socket_id) => {
+
+        let acc_copy = JSON.parse(JSON.stringify(this.state.account_data));
+
+        let { Stream_Room_Data_Template } = Stream_Room_Data_Templates;
+
+        acc_copy.id = this.state.stream_id;
+
+        acc_copy.thumbnail_link = acc_copy.profile_picture_link;
+
+        acc_copy.host_email = acc_copy.email;
+
+        acc_copy.room_title = this.state.room_title;
+
+        acc_copy.is_host = this.state.is_host;
+
+        let as_viewer_data = Stream_Room_Data_Template(acc_copy);
+
+        this.socket.emit('join_room', JSON.stringify(as_viewer_data));
     }
     
     render(){

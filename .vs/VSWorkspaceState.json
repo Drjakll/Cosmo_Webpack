@@ -1,0 +1,18 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\Development",
+    "\\Development\\Client",
+    "\\Development\\Client\\View_Templates",
+    "\\Development\\Client\\View_Templates\\Explore",
+    "\\Development\\Client\\View_Templates\\Explore\\Stream_List_Components",
+    "\\Development\\Client\\View_Templates\\Explore\\Stream_List_Components\\Stream_Displays",
+    "\\Development\\Server",
+    "\\Development\\Server\\Websockets",
+    "\\Development\\Server\\Websockets\\IO_Namespaces",
+    "\\Development\\Server\\Websockets\\IO_Namespaces\\webrtc",
+    "\\Development\\Server\\Websockets\\IO_Namespaces\\webrtc\\events"
+  ],
+  "SelectedNode": "\\Development\\Client\\View_Templates\\Explore\\Video_Stream_Screen\\Streaming\\streaming.js",
+  "PreviewInSolutionExplorer": false
+}

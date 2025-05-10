@@ -47,9 +47,9 @@ class Video_Stream_Screen extends Component {
                 <div id="video-stream-screen">
                     
                     <Com account_data={this.state.account_data} 
-                    change_screen={this.Change_Screen}
-                    is_host={this.state.is_host}
-                    stream_id={this.state.stream_id}
+                        change_screen={this.Change_Screen}
+                        is_host={this.state.is_host}
+                        stream_id={this.state.stream_id}
                     />
                     
                 </div>

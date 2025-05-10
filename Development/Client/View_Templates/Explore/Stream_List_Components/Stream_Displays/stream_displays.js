@@ -11,7 +11,8 @@ class Stream_Displays extends Component {
         super(props);
         
         this.state = {
-            active_streams: {}
+            active_streams: {},
+            properties: this.props.properties
         };
 
     }
@@ -84,11 +85,11 @@ class Stream_Displays extends Component {
                             return <div className="thumbnail-wrapper" key={index}>
 
                                 <Individual_Stream_Thumbnail 
-                                                    image_link={stream_info.thumbnail_link} 
-                                                    title={stream_info.room_title}
-                                                    stream_id={stream_info.id}
-                                                    set_current_screen={this.state.properties.set_current_screen}
-                                                    />
+                                    image_link={stream_info.thumbnail_link} 
+                                    title={stream_info.room_title}
+                                    stream_id={stream_info.id}
+                                    set_current_screen={this.state.properties.set_current_screen}
+                                 />
                                 
                             </div>;
 

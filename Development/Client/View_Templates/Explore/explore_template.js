@@ -35,7 +35,7 @@ class Explore_Template extends Component {
         this.setState(this.props);
     }
     
-    Set_Current_Screen = (screen, is_hosting, stream_id = null) => {
+    Set_Current_Screen = (screen, is_hosting = false, stream_id = null) => {
         
         this.setState({current_screen: screen, is_host: is_hosting, stream_id: stream_id});
         
@@ -49,9 +49,9 @@ class Explore_Template extends Component {
             <div id="explore-template">
 
                 <Com account_data={this.state.account_data} 
-                set_current_screen={this.Set_Current_Screen} 
-                is_host={this.state.is_host}
-                stream_id={this.state.stream_id}
+                    set_current_screen={this.Set_Current_Screen} 
+                    is_host={this.state.is_host}
+                    stream_id={this.state.stream_id}
                 />
 
             </div>
