@@ -28,7 +28,7 @@ class Main_Video extends Component {
         
         this.setState({account_data: this.props.account_data});
         
-        this.videoRef.current.srcObject = this.props.source;
+        this.videoRef.current.srcObject = this.props.streamer.media_source;
         this.videoRef.current.play = true;
     }
     

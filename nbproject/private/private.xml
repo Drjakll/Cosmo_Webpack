@@ -11,7 +11,6 @@
             <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Development/Server/Websockets/Socket_Requests/socket_requests/webrtc_functions/register.js</file>
             <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Development/Client/react_entry.less</file>
             <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Development/Client/View_Templates/Profile/Components/Album/Photos_Container/Single_Photo_Thumbnail/Enlarged_Single_Photo/Photo_Comments/photo_comments.js</file>
-            <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Development/Client/View_Templates/Profile/Components/Album/Photos_Container/Single_Photo_Thumbnail/Enlarged_Single_Photo/Photo_Comments/Comment_Input/Reply_To_Comment_Quote/reply_to_comment_quote.js</file>
             <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Development/Client/View_Templates/Explore/Stream_List_Components/Stream_Displays/stream_displays.less</file>
             <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Development/Server/Websockets/Socket_Requests/socket_requests/webrtc_functions/add_candidate.js</file>
             <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Development/Client/View_Templates/Profile/Components/Profile_Info/profile_info.less</file>
@@ -26,7 +25,6 @@
             <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Development/Server/Requests/requests/user_accounts/profile/comments/photo_comments/update_photo_comment.js</file>
             <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Development/Server/Requests/requests/user_accounts/profile/photos/upload_photos.js</file>
             <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Development/Client/View_Templates/Profile/Components/Album/Photos_Container/Single_Photo_Thumbnail/Enlarged_Single_Photo/Photo_Comments/Comment_Input/comment_input.js</file>
-            <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Development/Client/View_Templates/Profile/Components/Album/Photos_Container/Single_Photo_Thumbnail/Enlarged_Single_Photo/Photo_Comments/Comment_Input/Reply_To_Comment_Quote/reply_to_comment_quote.less</file>
             <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Development/Client/App_Entrance/Entrance_Options/Logged_In_Account/Screen/Explore/explore.js</file>
             <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Development/Client/View_Templates/Explore/Stream_List_Components/Stream_Displays/stream_displays.js</file>
             <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Development/Client/App_Entrance/Entrance_Options/Logged_In_Account/Screen/screen.less</file>
@@ -75,6 +73,7 @@
             <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Development/Client/View_Templates/Profile/Components/Album/Photos_Container/Single_Photo_Thumbnail/Enlarged_Single_Photo/enlarged_single_photo.js</file>
             <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Development/Client/Data_Templates/account_data.js</file>
             <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Development/Client/View_Templates/Explore/Video_Stream_Screen/Prepare_To_Stream/prepare_to_stream.less</file>
+            <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Development/Client/View_Templates/Profile/Components/Album/Photos_Container/Single_Photo_Thumbnail/Enlarged_Single_Photo/Photo_Comments/Comment_Input/Reply/reply.less</file>
             <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Development/Client/View_Templates/Explore/Stream_List_Components/stream_list_components.less</file>
             <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Development/Client/View_Templates/Profile/Components/Profile_Info/Profile_Info_Data/profile_info_data.js</file>
             <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Development/Client/App_Entrance/Entrance_Options/Logged_In_Account/Screen/Profile/profile.js</file>
@@ -119,6 +118,7 @@
             <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Built_Server/entry.html</file>
             <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Development/Client/View_Templates/Profile/Components/Album/Photos_Container/Single_Photo_Thumbnail/Enlarged_Single_Photo/Photo_Comments/photo_comments.less</file>
             <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Development/Client/View_Templates/Explore/explore_template.less</file>
+            <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Development/Client/View_Templates/Profile/Components/Album/Photos_Container/Single_Photo_Thumbnail/Enlarged_Single_Photo/Photo_Comments/Comment_Input/Reply/reply.js</file>
         </group>
     </open-files>
 </project-private>

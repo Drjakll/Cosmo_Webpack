@@ -51,6 +51,7 @@ let Wrapper = function (){
         socket.on('join_stream', events.join_stream.event);
         socket.on('request_streams', events.request_streams.event);
         socket.on('disconnect', events.close_stream.event);
+        socket.on('to_new_viewer', events.to_new_viewer.event);
     };
 };
 
