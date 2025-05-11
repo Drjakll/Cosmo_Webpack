@@ -7,6 +7,14 @@
       "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Development\\Client\\View_Templates\\Explore\\Video_Stream_Screen\\Streaming\\streaming.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
     },
     {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Justin\\OneDrive\\Desktop\\Cosmo_Webpack\\Cosmo_Webpack\\Development\\Server\\Websockets\\websocket.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Development\\Server\\Websockets\\websocket.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Justin\\OneDrive\\Desktop\\Cosmo_Webpack\\Cosmo_Webpack\\Development\\Client\\View_Templates\\Explore\\Stream_List_Components\\Stream_Displays\\stream_displays.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Development\\Client\\View_Templates\\Explore\\Stream_List_Components\\Stream_Displays\\stream_displays.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Justin\\OneDrive\\Desktop\\Cosmo_Webpack\\Cosmo_Webpack\\Development\\Server\\Websockets\\IO_Namespaces\\webrtc\\webrtc.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
       "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Development\\Server\\Websockets\\IO_Namespaces\\webrtc\\webrtc.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
     },
@@ -47,10 +55,6 @@
       "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Development\\Client\\View_Templates\\Explore\\Stream_List_Components\\stream_list_components.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Justin\\OneDrive\\Desktop\\Cosmo_Webpack\\Cosmo_Webpack\\Development\\Client\\View_Templates\\Explore\\Stream_List_Components\\Stream_Displays\\stream_displays.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Development\\Client\\View_Templates\\Explore\\Stream_List_Components\\Stream_Displays\\stream_displays.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Justin\\OneDrive\\Desktop\\Cosmo_Webpack\\Cosmo_Webpack\\Development\\Client\\react_entry.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
       "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Development\\Client\\react_entry.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
     }
@@ -62,7 +66,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 10,
+          "SelectedChildIndex": 11,
           "Children": [
             {
               "$type": "Bookmark",
@@ -71,6 +75,19 @@
             {
               "$type": "Document",
               "DocumentIndex": 1,
+              "Title": "websocket.js",
+              "DocumentMoniker": "C:\\Users\\Justin\\OneDrive\\Desktop\\Cosmo_Webpack\\Cosmo_Webpack\\Development\\Server\\Websockets\\websocket.js",
+              "RelativeDocumentMoniker": "Development\\Server\\Websockets\\websocket.js",
+              "ToolTip": "C:\\Users\\Justin\\OneDrive\\Desktop\\Cosmo_Webpack\\Cosmo_Webpack\\Development\\Server\\Websockets\\websocket.js",
+              "RelativeToolTip": "Development\\Server\\Websockets\\websocket.js",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAEAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
+              "WhenOpened": "2025-05-10T07:28:34.098Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
               "Title": "webrtc.js",
               "DocumentMoniker": "C:\\Users\\Justin\\OneDrive\\Desktop\\Cosmo_Webpack\\Cosmo_Webpack\\Development\\Server\\Websockets\\IO_Namespaces\\webrtc\\webrtc.js",
               "RelativeDocumentMoniker": "Development\\Server\\Websockets\\IO_Namespaces\\webrtc\\webrtc.js",
@@ -78,12 +95,11 @@
               "RelativeToolTip": "Development\\Server\\Websockets\\IO_Namespaces\\webrtc\\webrtc.js",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAADQAAAA7AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
-              "WhenOpened": "2025-05-10T07:02:09.339Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-10T07:02:09.339Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 4,
               "Title": "join_stream.js",
               "DocumentMoniker": "C:\\Users\\Justin\\OneDrive\\Desktop\\Cosmo_Webpack\\Cosmo_Webpack\\Development\\Server\\Websockets\\IO_Namespaces\\webrtc\\events\\join_stream.js",
               "RelativeDocumentMoniker": "Development\\Server\\Websockets\\IO_Namespaces\\webrtc\\events\\join_stream.js",
@@ -91,12 +107,11 @@
               "RelativeToolTip": "Development\\Server\\Websockets\\IO_Namespaces\\webrtc\\events\\join_stream.js",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAIAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
-              "WhenOpened": "2025-05-10T07:01:59.622Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-10T07:01:59.622Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 5,
               "Title": "request_streams.js",
               "DocumentMoniker": "C:\\Users\\Justin\\OneDrive\\Desktop\\Cosmo_Webpack\\Cosmo_Webpack\\Development\\Server\\Websockets\\IO_Namespaces\\webrtc\\events\\request_streams.js",
               "RelativeDocumentMoniker": "Development\\Server\\Websockets\\IO_Namespaces\\webrtc\\events\\request_streams.js",
@@ -104,12 +119,11 @@
               "RelativeToolTip": "Development\\Server\\Websockets\\IO_Namespaces\\webrtc\\events\\request_streams.js",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAAIAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
-              "WhenOpened": "2025-05-10T07:01:54.073Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-10T07:01:54.073Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 8,
               "Title": "sub_video.js",
               "DocumentMoniker": "C:\\Users\\Justin\\OneDrive\\Desktop\\Cosmo_Webpack\\Cosmo_Webpack\\Development\\Client\\View_Templates\\Explore\\Video_Stream_Screen\\Streaming\\Sub_Video\\sub_video.js",
               "RelativeDocumentMoniker": "Development\\Client\\View_Templates\\Explore\\Video_Stream_Screen\\Streaming\\Sub_Video\\sub_video.js",
@@ -117,12 +131,11 @@
               "RelativeToolTip": "Development\\Client\\View_Templates\\Explore\\Video_Stream_Screen\\Streaming\\Sub_Video\\sub_video.js",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAB0AAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
-              "WhenOpened": "2025-05-10T06:54:49.597Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-10T06:54:49.597Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 9,
               "Title": "main_video.js",
               "DocumentMoniker": "C:\\Users\\Justin\\OneDrive\\Desktop\\Cosmo_Webpack\\Cosmo_Webpack\\Development\\Client\\View_Templates\\Explore\\Video_Stream_Screen\\Streaming\\Main_Video\\main_video.js",
               "RelativeDocumentMoniker": "Development\\Client\\View_Templates\\Explore\\Video_Stream_Screen\\Streaming\\Main_Video\\main_video.js",
@@ -130,12 +143,11 @@
               "RelativeToolTip": "Development\\Client\\View_Templates\\Explore\\Video_Stream_Screen\\Streaming\\Main_Video\\main_video.js",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
-              "WhenOpened": "2025-05-10T06:54:47.669Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-10T06:54:47.669Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 10,
               "Title": "video_stream_screen.less",
               "DocumentMoniker": "C:\\Users\\Justin\\OneDrive\\Desktop\\Cosmo_Webpack\\Cosmo_Webpack\\Development\\Client\\View_Templates\\Explore\\Video_Stream_Screen\\video_stream_screen.less",
               "RelativeDocumentMoniker": "Development\\Client\\View_Templates\\Explore\\Video_Stream_Screen\\video_stream_screen.less",
@@ -143,12 +155,11 @@
               "RelativeToolTip": "Development\\Client\\View_Templates\\Explore\\Video_Stream_Screen\\video_stream_screen.less",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001682|",
-              "WhenOpened": "2025-05-10T06:53:27.976Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-10T06:53:27.976Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 11,
               "Title": "explore_template.less",
               "DocumentMoniker": "C:\\Users\\Justin\\OneDrive\\Desktop\\Cosmo_Webpack\\Cosmo_Webpack\\Development\\Client\\View_Templates\\Explore\\explore_template.less",
               "RelativeDocumentMoniker": "Development\\Client\\View_Templates\\Explore\\explore_template.less",
@@ -156,12 +167,11 @@
               "RelativeToolTip": "Development\\Client\\View_Templates\\Explore\\explore_template.less",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAQAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001682|",
-              "WhenOpened": "2025-05-10T06:51:58.474Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-10T06:51:58.474Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 6,
               "Title": "video_stream_screen.js",
               "DocumentMoniker": "C:\\Users\\Justin\\OneDrive\\Desktop\\Cosmo_Webpack\\Cosmo_Webpack\\Development\\Client\\View_Templates\\Explore\\Video_Stream_Screen\\video_stream_screen.js",
               "RelativeDocumentMoniker": "Development\\Client\\View_Templates\\Explore\\Video_Stream_Screen\\video_stream_screen.js",
@@ -169,12 +179,11 @@
               "RelativeToolTip": "Development\\Client\\View_Templates\\Explore\\Video_Stream_Screen\\video_stream_screen.js",
               "ViewState": "AgIAAAMAAAAAAAAAAAAAADMAAAA4AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
-              "WhenOpened": "2025-05-10T06:48:42.592Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-10T06:48:42.592Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 7,
               "Title": "explore_template.js",
               "DocumentMoniker": "C:\\Users\\Justin\\OneDrive\\Desktop\\Cosmo_Webpack\\Cosmo_Webpack\\Development\\Client\\View_Templates\\Explore\\explore_template.js",
               "RelativeDocumentMoniker": "Development\\Client\\View_Templates\\Explore\\explore_template.js",
@@ -182,8 +191,7 @@
               "RelativeToolTip": "Development\\Client\\View_Templates\\Explore\\explore_template.js",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAACkAAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
-              "WhenOpened": "2025-05-10T06:47:52.066Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-10T06:47:52.066Z"
             },
             {
               "$type": "Document",
@@ -193,14 +201,14 @@
               "RelativeDocumentMoniker": "Development\\Client\\View_Templates\\Explore\\Video_Stream_Screen\\Streaming\\streaming.js",
               "ToolTip": "C:\\Users\\Justin\\OneDrive\\Desktop\\Cosmo_Webpack\\Cosmo_Webpack\\Development\\Client\\View_Templates\\Explore\\Video_Stream_Screen\\Streaming\\streaming.js",
               "RelativeToolTip": "Development\\Client\\View_Templates\\Explore\\Video_Stream_Screen\\Streaming\\streaming.js",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABkAAAAiAAAAAAAAAA==",
+              "ViewState": "AgIAAFoAAAAAAAAAAAAAAH0AAABBAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
               "WhenOpened": "2025-05-10T06:47:23.133Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 12,
               "Title": "stream_list_components.js",
               "DocumentMoniker": "C:\\Users\\Justin\\OneDrive\\Desktop\\Cosmo_Webpack\\Cosmo_Webpack\\Development\\Client\\View_Templates\\Explore\\Stream_List_Components\\stream_list_components.js",
               "RelativeDocumentMoniker": "Development\\Client\\View_Templates\\Explore\\Stream_List_Components\\stream_list_components.js",
@@ -208,12 +216,11 @@
               "RelativeToolTip": "Development\\Client\\View_Templates\\Explore\\Stream_List_Components\\stream_list_components.js",
               "ViewState": "AgIAACIAAAAAAAAAAAAgwEwAAAAMAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
-              "WhenOpened": "2025-05-10T06:02:04.265Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-10T06:02:04.265Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 2,
               "Title": "stream_displays.js",
               "DocumentMoniker": "C:\\Users\\Justin\\OneDrive\\Desktop\\Cosmo_Webpack\\Cosmo_Webpack\\Development\\Client\\View_Templates\\Explore\\Stream_List_Components\\Stream_Displays\\stream_displays.js",
               "RelativeDocumentMoniker": "Development\\Client\\View_Templates\\Explore\\Stream_List_Components\\Stream_Displays\\stream_displays.js",
@@ -226,7 +233,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 13,
               "Title": "react_entry.js",
               "DocumentMoniker": "C:\\Users\\Justin\\OneDrive\\Desktop\\Cosmo_Webpack\\Cosmo_Webpack\\Development\\Client\\react_entry.js",
               "RelativeDocumentMoniker": "Development\\Client\\react_entry.js",
@@ -234,8 +241,7 @@
               "RelativeToolTip": "Development\\Client\\react_entry.js",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAB4AAAAhAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
-              "WhenOpened": "2025-05-10T05:59:49.529Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-10T05:59:49.529Z"
             },
             {
               "$type": "Bookmark",

@@ -54,10 +54,14 @@ class Streaming extends Component {
         
         window.navigator.mediaDevices.getUserMedia({video: true, audio: false}).then((mediaObj)=>{
 
-            this.state.streamer_big_screen.media_source = mediaObj;
+            let { streamer_big_screen } = this.state;
+
+            streamer_big_screen.media_source = mediaObj;
+
+            streamer_big_screen = this.Add_Peer_Connection(streamer_big_screen);
             
-            this.setState({streamer_big_screen: this.state.streamer_big_screen});
-            
+            this.setState({ streamer_big_screen: streamer_big_screen });
+
         }).catch((err)=>{
             
             console.log(err);
@@ -147,7 +151,7 @@ class Streaming extends Component {
         return Stream_Room_Data_Template(acc_copy);
     }
     
-    Create_Peer_Connection = (streamer) => {
+    Add_Peer_Connection = (streamer) => {
         
        let peer = new RTCPeerConnection(this.peerConfig);
         
@@ -173,6 +177,20 @@ class Streaming extends Component {
         streamer.peer = peer;
         
         return streamer;
+
+    }
+
+    Create_Offer = (peer) => {
+
+        peer.createOffer().then(async (offer) => {
+
+            await peer.setLocalDescription(offer);
+
+        }).then(() => {
+
+            this.socket.emit("offer", JSON.stringify({ from: this.socket.id, to: socket_id, offer: peer.localDescription }));
+
+        }).catch(console.error);
 
     }
     
