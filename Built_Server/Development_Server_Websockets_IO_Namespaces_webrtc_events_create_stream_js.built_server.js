@@ -17,7 +17,7 @@ exports.modules = {
   \************************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\nlet Wrapper = function () {\n  this.event = data => {\n    let room_info = JSON.parse(data);\n    this.socket.join(room_info.id);\n    this.active_streams[room_info.id] = room_info;\n    this.io.emit('update_stream_list', JSON.stringify(this.active_streams));\n  };\n};\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Wrapper);\n\n//# sourceURL=webpack://cosmo_webpack/./Development/Server/Websockets/IO_Namespaces/webrtc/events/create_stream.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\nlet Wrapper = function () {\n  this.event = data => {\n    let room_info = JSON.parse(data);\n    this.my_socket.join(room_info.id);\n    this.active_streams[room_info.id] = room_info;\n    this.io.emit('update_stream_list', JSON.stringify(this.active_streams));\n  };\n};\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Wrapper);\n\n//# sourceURL=webpack://cosmo_webpack/./Development/Server/Websockets/IO_Namespaces/webrtc/events/create_stream.js?");
 
 /***/ })
 

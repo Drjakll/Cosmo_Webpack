@@ -4,7 +4,7 @@ let Wrapper = function(){
         
         let room_info = JSON.parse(data);
         
-        this.socket.join(room_info.id);
+        this.my_socket.join(room_info.id);
         
         this.active_streams[room_info.id] = room_info;
         

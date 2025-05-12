@@ -4,6 +4,8 @@ let active_streams = {};
 
 let Wrapper = function (){
     
+    this.all_sockets = {};
+    
     (async () => {
         
         this.events = {};
@@ -41,16 +43,17 @@ let Wrapper = function (){
             
             events[i] = new this.events[i]();
             
-            events[i].socket = socket;
+            events[i].my_socket = socket;
             events[i].io = this.io;
             events[i].active_streams = active_streams;
-            
+            events[i].all_sockets = this.all_sockets;
         }
         
         socket.on('create_stream', events.create_stream.event);
         socket.on('join_stream', events.join_stream.event);
         socket.on('request_streams', events.request_streams.event);
-        socket.on('disconnect', events.close_stream.event);
+        socket.on('disconnect', events.disconnect_stream.event);
+        socket.on('leave_stream', events.leave_stream.event);
         socket.on('to_new_viewer', events.to_new_viewer.event);
     };
 };

@@ -2,9 +2,9 @@ let Wrapper = function(){
     
     this.event = (data) => {
         
-        let room_info = JSON.parse(data);
+        let {to, from} = JSON.parse(data);
         
-        this.socket.to(room_info.id).emit('to_new_viewer', data);
+        this.all_sockets[to.id].emit('to_new_viewer', JSON.stringify(from));
         
     };
     

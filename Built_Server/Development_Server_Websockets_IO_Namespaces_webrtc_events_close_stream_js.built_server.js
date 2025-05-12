@@ -17,7 +17,7 @@ exports.modules = {
   \***********************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\nlet Wrapper = function () {\n  this.event = reason => {\n    delete this.active_streams[this.socket.id];\n    this.io.emit('update_stream_list', JSON.stringify(this.active_streams));\n  };\n};\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Wrapper);\n\n//# sourceURL=webpack://cosmo_webpack/./Development/Server/Websockets/IO_Namespaces/webrtc/events/close_stream.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\nlet Wrapper = function () {\n  this.event = data => {\n    let {\n      id,\n      is_host\n    } = JSON.parse(data);\n    if (is_host) {\n      delete this.active_streams[id];\n      this.io.emit('update_stream_list', JSON.stringify(this.active_streams));\n      this.my_socket.to(id).emit('close_stream', \"The host has closed the stream\");\n    }\n    this.my_socket.leave(id);\n    delete this.all_sockets[this.my_socket.id];\n  };\n};\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Wrapper);\n\n//# sourceURL=webpack://cosmo_webpack/./Development/Server/Websockets/IO_Namespaces/webrtc/events/close_stream.js?");
 
 /***/ })
 
