@@ -2,6 +2,8 @@ import React, { Component, createRef } from 'react'
 import { io } from 'socket.io-client';
 import VideoObj from './VideoObj.js';
 
+//Stopped at doing adding the ice candidates.
+
  class Init_Point extends Component {
      
     constructor(props){

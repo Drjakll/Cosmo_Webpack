@@ -52,27 +52,13 @@ class Streaming extends Component {
         this.setState(this.props);
     }
     
-    Get_Self_Media_Source = () => {
+    Get_Self_Media_Source = async () => {
         
         if(!window.navigator.mediaDevices || !window.navigator.mediaDevices.getUserMedia) {
             return;
         }
         
-        window.navigator.mediaDevices.getUserMedia({video: true, audio: false}).then((mediaObj)=>{
-
-            let { self_stream } = this.state;
-
-            self_stream.media_source = mediaObj;
-            
-            this.setState({ self_stream: self_stream });
-            
-            this.Add_Self_Tracks_To_Peer(self_stream);
-            
-        }).catch((err)=>{
-            
-            console.log(err);
-            
-        });
+        return await window.navigator.mediaDevices.getUserMedia({ video: true, audio: false });
         
     }
     
@@ -80,16 +66,24 @@ class Streaming extends Component {
         
         this.socket = io('/video_streams');
         
-        this.socket.on('connect', ()=>{
+        this.socket.on('connect', async ()=>{
             
             if(this.socket.id){
                 
                 this.my_room_tag = this.Create_Room_Tag(this.socket.id);
+
+                let { self_stream } = this.state;
+
+                self.peer = this.Init_Peer_Connection();
                 
                 //Only the host would initially not have a stream id so it needs to create the room
                 if (!this.state.stream_id) {
-                    
-                    this.Get_Self_Media_Source();
+
+                    //If it's a host, then get their webcam permission
+                    self_stream.media_source = await this.Get_Self_Media_Source();
+
+                    this.Add_Self_Tracks_To_Peer(self_stream);
+
                     this.socket.emit('create_stream', JSON.stringify(this.my_room_tag));
                     
                 } else {
@@ -97,11 +91,9 @@ class Streaming extends Component {
                     this.socket.emit('join_room', JSON.stringify(this.my_room_tag));
                     
                 }
-                
-                let { self_stream } = this.state;
-                
-                this.setState({self_stream: this.Init_Peer_Connection(self_stream)});
-                
+
+                this.setState({ self_stream: self_stream });
+
             }
             
         });
@@ -112,14 +104,34 @@ class Streaming extends Component {
             
             this.state.visitors[new_viewer.host_email] = new_viewer;
             
-            this.socket.emit('to_new_viewer', JSON.stringify({to: new_viewer, 
-                                                              from: this.my_room_tag,
-                                                              local_description: this.state.self_stream.peer?.localDescription
-                                                         }));
+            this.socket.emit('to_new_viewer', JSON.stringify({
+                to: new_viewer, 
+                from: this.my_room_tag
+            }));
+
+            let { self_stream } = this.state;
+
+            if (self_stream.peer?.localDescription !== undefined) {
+
+                this.socket.emit('send_local_description', JSON.stringify({
+                    to: new_viewer,
+                    from: thios.my_room_tag,
+                    local_description: self_stream.peer.localDescription
+                }));
+
+            }
+
+        });
+
+        this.socket.on('receive_local_description', (data) => {
+
+            let { from, local_description } = JSON.parse(data);
+
+
 
         });
         
-        this.socket.on('to_new_viewer', (data)=>{
+        this.socket.on('from_current_participant', (data)=>{
             
             let current_participant = JSON.parse(data);
             
@@ -130,13 +142,11 @@ class Streaming extends Component {
                 
                 this.setState({the_host: current_participant});
                 
-            } else {
-                
-                this.state.visitors[host_email] = current_participant;
-                this.setState({visitors: this.state.visitors});
-                
             }
-            
+                
+            this.state.visitors[host_email] = current_participant;
+            this.setState({visitors: this.state.visitors});
+
         });
     }
 
@@ -163,13 +173,9 @@ class Streaming extends Component {
         return Stream_Room_Data_Template(acc_copy);
     }
     
-    Init_Peer_Connection = (streamer) => {
+    Init_Peer_Connection = () => {
         
-        let peer = new RTCPeerConnection(this.peerConfig);
-        
-        streamer.peer = peer;
-        
-        return streamer;
+        return new RTCPeerConnection(this.peerConfig);
 
     }
     
@@ -185,15 +191,37 @@ class Streaming extends Component {
                 peer?.addTrack(track, media_source);
                 
             });
+
+            let sender = peer?.getSenders().find(s => s.track.kind === 'video');
+
+            let parameters = sender?.getParameters();
+
+            parameters?.encodings[0]?.maxBitrate = 500000;
+
+            sender?.setParameters(parameters);
         }
+    }
 
-        let sender = peer?.getSenders().find(s => s.track.kind === 'video');
+    Set_Receive_Tracks = (peer) => {
 
-        let parameters = sender?.getParameters();
+        peer.onicecandidate = (event) => {
 
-        parameters?.encodings[0]?.maxBitrate = 500000;
-        
-        sender?.setParameters(parameters);
+            if (event.candidate) {
+                peer.addIceCandidate(new RTCIceCandidate(event.candidate));
+            }
+        };
+
+        peer.ontrack = (event) => {
+
+            this.CreateVideoElement(from_socket_id, event.streams[0]);
+        };
+
+    }
+
+    Offer_To_One = (peer) => {
+
+
+
     }
 
     Offer_To_All = (peer) => {
@@ -209,7 +237,6 @@ class Streaming extends Component {
         }).catch(console.error);
 
     }
-    
     
     
     render(){
