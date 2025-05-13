@@ -28,7 +28,7 @@ class Streaming extends Component {
             visitors: {},
             streamers_small_screen: {}, //Streamers at the smaller screen
             streamer_big_screen: {}, //Stream for bigger screen
-            self_screen: {} //Self stream
+            self_stream: {} //Self stream
         };
     }
     
@@ -60,13 +60,13 @@ class Streaming extends Component {
         
         window.navigator.mediaDevices.getUserMedia({video: true, audio: false}).then((mediaObj)=>{
 
-            let { self_screen } = this.state;
+            let { self_stream } = this.state;
 
-            self_screen.media_source = mediaObj;
+            self_stream.media_source = mediaObj;
             
-            this.setState({ self_screen: self_screen });
+            this.setState({ self_stream: self_stream });
             
-            this.Add_Self_Tracks_To_Peer(self_screen);
+            this.Add_Self_Tracks_To_Peer(self_stream);
             
         }).catch((err)=>{
             
@@ -98,9 +98,9 @@ class Streaming extends Component {
                     
                 }
                 
-                let { self_screen } = this.state;
+                let { self_stream } = this.state;
                 
-                this.setState({self_screen: this.Init_Peer_Connection(self_screen)});
+                this.setState({self_stream: this.Init_Peer_Connection(self_stream)});
                 
             }
             
@@ -114,7 +114,7 @@ class Streaming extends Component {
             
             this.socket.emit('to_new_viewer', JSON.stringify({to: new_viewer, 
                                                               from: this.my_room_tag,
-                                                              local_description: this.state.self_screen.peer?.localDescription
+                                                              local_description: this.state.self_stream.peer?.localDescription
                                                          }));
 
         });
@@ -155,6 +155,7 @@ class Streaming extends Component {
 
         acc_copy.host_email = acc_copy.email;
 
+
         acc_copy.room_title = this.state.room_title;
 
         acc_copy.is_host = this.state.is_host;
@@ -172,10 +173,10 @@ class Streaming extends Component {
 
     }
     
-    Add_Self_Tracks_To_Peer = (self_screen) => {
+    Add_Self_Tracks_To_Peer = (self_stream) => {
         
-        let peer = self_screen.peer;
-        let media_source = self_screen.media_source;
+        let peer = self_stream.peer;
+        let media_source = self_stream.media_source;
         
         if(media_source !== undefined){
             
