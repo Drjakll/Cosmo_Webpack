@@ -3,18 +3,16 @@
     "",
     "\\Development",
     "\\Development\\Client",
-    "\\Development\\Client\\Video_Streams",
     "\\Development\\Client\\View_Templates",
     "\\Development\\Client\\View_Templates\\Explore",
-    "\\Development\\Client\\View_Templates\\Explore\\Video_Stream_Screen",
-    "\\Development\\Client\\View_Templates\\Explore\\Video_Stream_Screen\\Streaming",
-    "\\Development\\Client\\View_Templates\\Explore\\Video_Stream_Screen\\Streaming\\Main_Video",
+    "\\Development\\Client\\View_Templates\\Explore\\Stream_List_Components",
+    "\\Development\\Client\\View_Templates\\Explore\\Stream_List_Components\\Stream_Displays",
     "\\Development\\Server",
     "\\Development\\Server\\Websockets",
     "\\Development\\Server\\Websockets\\IO_Namespaces",
     "\\Development\\Server\\Websockets\\IO_Namespaces\\webrtc",
     "\\Development\\Server\\Websockets\\IO_Namespaces\\webrtc\\events"
   ],
-  "SelectedNode": "\\Development\\Client\\Video_Streams\\init_point.js",
+  "SelectedNode": "\\Development\\Client\\View_Templates\\Explore\\Video_Stream_Screen\\Streaming\\streaming.js",
   "PreviewInSolutionExplorer": false
 }

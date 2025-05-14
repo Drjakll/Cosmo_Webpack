@@ -37,18 +37,18 @@ class Stream_Displays extends Component {
             
         });
         
-        this.socket?.on('catch_streams', (data)=>{
+        this.socket?.on('catch_streams', ({ streams })=>{
             
             this.setState({
-                active_streams: JSON.parse(data)
+                active_streams: streams
             });
             
         });
         
-        this.socket?.on('update_stream_list', (data)=>{
+        this.socket?.on('update_stream_list', ({ streams })=>{
             
             this.setState({
-                active_streams: JSON.parse(data)
+                active_streams: streams
             });
             
         });
@@ -67,7 +67,7 @@ class Stream_Displays extends Component {
     
     Gather_Stream_List = () => {
         
-        this.socket?.emit('request_streams', "");
+        this.socket?.emit('request_streams', {});
         
     }
     
