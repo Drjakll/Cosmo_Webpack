@@ -1,15 +1,12 @@
 let Wrapper = function(){
     
-    this.event = (data) => {
+    this.event = (new_peer) => {
         
-        let new_viewer_tag = JSON.parse(data);
+        let {stream_id} = new_peer;
         
-        this.my_socket.join(new_viewer_tag.id);
+        this.my_socket.join(stream_id);
         
-        this.my_socket.all_sockets[this.my_socket.id] = this.my_socket;
-        
-        this.my_socket.to(new_viewer_tag.id).emit('new_viewer_joined', data);
-        
+        this.my_socket.to(stream_id).emit('new_viewer_joined', new_peer);
         
     };
     

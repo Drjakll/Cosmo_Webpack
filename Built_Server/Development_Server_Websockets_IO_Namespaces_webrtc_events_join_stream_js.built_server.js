@@ -17,7 +17,7 @@ exports.modules = {
   \**********************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\nlet Wrapper = function () {\n  this.event = data => {\n    let new_viewer_tag = JSON.parse(data);\n    this.my_socket.join(new_viewer_tag.id);\n    this.my_socket.all_sockets[this.my_socket.id] = this.my_socket;\n    this.my_socket.to(new_viewer_tag.id).emit('new_viewer_joined', data);\n  };\n};\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Wrapper);\n\n//# sourceURL=webpack://cosmo_webpack/./Development/Server/Websockets/IO_Namespaces/webrtc/events/join_stream.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\nlet Wrapper = function () {\n  this.event = new_peer => {\n    let {\n      stream_id\n    } = new_peer;\n    this.my_socket.join(stream_id);\n    this.my_socket.to(stream_id).emit('new_viewer_joined', new_peer);\n  };\n};\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Wrapper);\n\n//# sourceURL=webpack://cosmo_webpack/./Development/Server/Websockets/IO_Namespaces/webrtc/events/join_stream.js?");
 
 /***/ })
 

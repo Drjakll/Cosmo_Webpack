@@ -4,7 +4,7 @@ let Wrapper = function(){
         
         let {to, from} = JSON.parse(data);
         
-        this.all_sockets[to.id].emit('from_current_participant', JSON.stringify(from));
+        this.io.to[to.id].emit('from_current_participant', {from: from});
         
     };
     

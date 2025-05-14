@@ -1,14 +1,14 @@
 let Wrapper = function(){
     
-    this.event = (data) => {
+    this.event = (room_info) => {
         
-        let room_info = JSON.parse(data);
+        let {stream_id} = room_info;
         
-        this.my_socket.join(room_info.id);
+        this.my_socket.join(stream_id);
         
-        this.active_streams[room_info.id] = room_info;
+        this.active_streams[stream_id] = room_info;
         
-        this.io.emit('update_stream_list', JSON.stringify(this.active_streams));
+        this.io.emit('update_stream_list', {streams: this.active_streams});
     };
     
 };

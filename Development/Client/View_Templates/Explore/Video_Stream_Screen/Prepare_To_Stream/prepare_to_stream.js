@@ -16,7 +16,11 @@ class Prepare_To_Stream extends Component {
     }
     
     Start_Streaming = ()=>{
-        this.props.change_screen("Streaming", true);
+        
+        let {account_data} = this.state;
+        let {email} = account_data;
+        
+        this.props.change_screen("Streaming", true, email);
     }
     
     render(){
