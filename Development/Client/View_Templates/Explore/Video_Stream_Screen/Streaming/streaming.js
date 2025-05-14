@@ -22,12 +22,12 @@ class Streaming extends Component {
         this.state = {
             account_data: this.props.account_data,
             is_host: this.props.is_host,
-            stream_id: this.props.stream_id, //The stream_id is the host email.
+            stream_id: this.props.stream_id, //The stream_id is the host socket.id
             room_title: "New Room",
             the_host: null,
             participants: {},
             streamer_small_screens: {}, //Streamers at the smaller screen
-            streamer_big_screen: {}, //Streamer at the bigger screen
+            streamer_big_screen: null, //Streamer at the bigger screen
             self_stream: {} //Self stream
         };
     }
@@ -39,8 +39,8 @@ class Streaming extends Component {
     }
     
     componentWillUnmount() {
-        
-        this.socket.emit('leave_stream', JSON.stringify(this.my_room_tag));
+
+        this.socket.emit('leave_stream', this.my_room_tag);
     }
     
     componentDidUpdate(prevProps, prevState){
@@ -71,71 +71,85 @@ class Streaming extends Component {
         this.socket.on('connect', async ()=>{
             
             if(this.socket.id){
-                
-                this.my_room_tag = this.Create_Room_Tag(this.socket.id);
+             
 
                 let { is_host, participants } = this.state;
+
+                participants[this.socket.id] = {};
                 
                 if (is_host) {
 
+                    this.my_room_tag = this.Create_Room_Tag(this.socket.id, this.socket.id);
+
                     //If it's a host, then get their webcam permission
-                    let participant = { media_source: await this.Get_Self_Media_Source() };
-
-                    participants[this.my_room_tag.email] = participant;
-
-                    this.setState({ participants: participants, the_host: this.my_room_tag });
+                    participants[this.socket.id].media_source = await this.Get_Self_Media_Source();
 
                     this.socket.emit('create_stream', this.my_room_tag);
                     
                 } else {
+
+                    this.my_room_tag = this.Create_Room_Tag(this.socket.id, this.state.stream_id);
                     
                     this.socket.emit('join_stream', this.my_room_tag);
                     
                 }
+
+                participants[this.socket.id].tag = this.my_room_tag;
+
+                participants[this.socket.id].peer = this.Init_Peer_Connection(this.my_room_tag);
+
+
+                this.setState({ participants: participants, the_host: this.my_room_tag });
             }
             
         });
         
-        this.socket.on('new_viewer_joined', (new_viewer_tag) => {
+        this.socket.on('new_viewer_joined', async (new_viewer_tag) => {
 
-            let { email } = new_viewer_tag;
+            console.log("new viewer has joined!");
+
+            if (new_viewer_tag.is_host) {
+                this.setState({ the_host: new_viewer_tag });
+            }
+
+            let { id } = new_viewer_tag;
+
+            if (id === this.my_room_tag.id) {
+                return;
+            }
 
             let { participants } = this.state;
 
-            participants[email] = {};
+            participants[id] = {};
+            participants[id].tag = new_viewer_tag;
+            participants[id].peer = this.Init_Peer_Connection(new_viewer_tag);
 
-            participants[email].tag = new_viewer_tag;
-            participants[email].peer = this.Init_Peer_Connection(new_viewer_tag);
-
-            this.setState({ participants: participants });
-
-            this.New_Offer(participants[email]);
+            this.New_Offer(participants[id]);
 
         });
 
-        this.socket.on('receive_offer', async ({ from, remote_description }) => {
+        this.socket.on('receive_offer', async ({ from, remote_offer }) => {
+
+            console.log("received offer");
 
             let { participants } = this.state;
-            let { email } = from;
-
-            if (from.is_host) {
-                this.setState({ the_host: from });
-            }
+            let { id } = from;
 
             let peer = this.Init_Peer_Connection(from);
 
-            participants[email] = {};
+            participants[id] = {};
 
-            participants[email].tag = from;
-            participants[email].peer = peer;
+            participants[id].tag = from;
+            participants[id].peer = peer;
 
 
             await this.setState({ participants: participants });
 
+            console.log(remote_offer);
 
-            await peer?.setRemoteDescription(new RTCSessionDescription(remote_description));
+            await peer?.setRemoteDescription(new RTCSessionDescription(remote_offer));
 
-            this.Give_Self_Tracks_To_Peer(participants[email]);
+            this.Give_Self_Tracks_To_Peer(participants[id]);
 
             let answer = await peer?.createAnswer();
 
@@ -149,7 +163,7 @@ class Streaming extends Component {
 
             let { participants } = this.state;
 
-            let { peer } = participants[from.email];
+            let { peer } = participants[from.id];
 
             await peer?.setRemoteDescription(new RTCSessionDescription(answer));
         });
@@ -157,18 +171,16 @@ class Streaming extends Component {
         this.socket.on('receive_candidate', async ({ from, candidate }) => {
 
             let { participants } = this.state;
-            let { peer } = participants[from.email];
+            let { peer } = participants[from.id];
 
             await peer?.addIceCandidate(new RTCIceCandidate(candidate));
 
         });
     }
 
-    Create_Room_Tag = (my_id) => {
+    Create_Room_Tag = (my_id, stream_id) => {
         
         let {Stream_Room_Data_Templates} = this.context;
-        
-        let {stream_id} = this.state;
 
         let acc_copy = JSON.parse(JSON.stringify(this.state.account_data));
 
@@ -207,7 +219,7 @@ class Streaming extends Component {
 
             let { streamer_small_screens, streamer_big_screen } = this.state;
             
-            streamer_small_screens[tag.email] = event.streams[0];
+            streamer_small_screens[tag.id] = event.streams[0];
 
             if (tag.is_host) {
                 streamer_big_screen = event.stream[0];
@@ -218,6 +230,8 @@ class Streaming extends Component {
                 streamer_big_screen: streamer_big_screen
             });
         };
+
+        console.log("peer connection created");
         
         return peer;
 
@@ -226,7 +240,7 @@ class Streaming extends Component {
     Give_Self_Tracks_To_Peer = (other_participant) => {
 
         let { peer } = other_participant;
-        let { media_source } = this.state.participants[this.my_room_tag.email];
+        let media_source = this.state.participants[this.my_room_tag.id].media_source;
 
         if (media_source !== undefined) {
 
@@ -247,27 +261,26 @@ class Streaming extends Component {
 
     }
 
-    New_Offer = (participant) => {
+    New_Offer = async (participant) => {
 
         let { peer, tag } = participant;
 
-        peer.createOffer().then(async (offer) => {
+        let offer = await peer.createOffer();
 
-            await peer.setLocalDescription(offer);
+        await peer.setLocalDescription(offer);
 
-        }).then(() => {
 
-            this.socket.emit('offer', {to: tag, from: this.my_room_tag, local_description: peer.localDescription});
+        this.socket.emit('offer', {to: tag, from: this.my_room_tag, local_offer: offer});
             
-        }).catch(console.error);
 
+        console.log("offer created");
     }
 
     Go_Live = async () => {
 
         let { participants } = this.state;
 
-        let self_participant = participants[this.my_room_tag.email];
+        let self_participant = participants[this.my_room_tag.id];
 
         self_participant.media_source = await this.Get_Self_Media_Source();
 
@@ -286,7 +299,7 @@ class Streaming extends Component {
                     
                     <div id="big-stream-screen">
                         
-                        <Main_Video account_data={this.state.account_data} streamer={this.state.streamer_big_screen} />
+                        <Main_Video account_data={this.state.account_data} media_source={this.state.streamer_big_screen} />
                         
                     </div>
                     

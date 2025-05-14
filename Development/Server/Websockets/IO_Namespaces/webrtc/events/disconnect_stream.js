@@ -6,6 +6,8 @@ let Wrapper = function(){
         if(this.active_streams[this.my_socket.id] === undefined){
             return;
         }
+
+        delete this.active_streams[this.my_socket.id];
         
         this.io.emit('update_stream_list', {streams: this.active_streams});
         
