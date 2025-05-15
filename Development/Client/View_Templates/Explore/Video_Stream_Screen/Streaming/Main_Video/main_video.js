@@ -16,7 +16,7 @@ class Main_Video extends Component {
     
     componentDidMount(){
         
-        this.videoRef.current.srcObject = this.props.source;
+        this.videoRef.current.srcObject = this.props.media_source;
         this.videoRef.current.play = true;
     }
     

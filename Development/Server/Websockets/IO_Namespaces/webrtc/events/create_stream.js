@@ -10,7 +10,7 @@ let Wrapper = function(){
 
         this.io.emit('update_stream_list', { streams: this.active_streams });
 
-        this.my_socket.emit('new_viewer_joined', tag);
+        this.my_socket.to(stream_id).emit('new_viewer_joined', tag);
     };
     
 };

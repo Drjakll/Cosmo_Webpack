@@ -12,8 +12,12 @@ class Sub_Video extends Component {
         this.state = {
             account_data: this.props.account_data
         };
+       
+    }
+    
+    componentDidMount(){
         
-        this.videoRef.current.srcObject = this.props.source;
+        this.videoRef.current.srcObject = this.props.media_source;
         this.videoRef.current.play = true;
     }
     
@@ -23,9 +27,7 @@ class Sub_Video extends Component {
             return;
         }
         
-        this.setState({account_data: this.props.account_data});
-        
-        this.videoRef.current.srcObject = this.props.source;
+        this.videoRef.current.srcObject = this.props.media_source;
         this.videoRef.current.play = true;
     }
     
