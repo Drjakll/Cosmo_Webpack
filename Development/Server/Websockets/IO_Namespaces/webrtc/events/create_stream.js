@@ -8,9 +8,10 @@ let Wrapper = function(){
 
         this.active_streams[stream_id] = tag;
 
+        this.my_socket.tag = tag;
+
         this.io.emit('update_stream_list', { streams: this.active_streams });
 
-        this.my_socket.to(stream_id).emit('new_viewer_joined', tag);
     };
     
 };

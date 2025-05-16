@@ -1,18 +1,32 @@
 let Wrapper = function(){
     
     this.event = (reason) => {
-                
-        //If this isn't a host that got disconnected, don't do anything else
-        if(this.active_streams[this.my_socket.id] === undefined){
+
+        let { tag } = this.my_socket;
+
+        if (!tag) {
             return;
         }
 
-        delete this.active_streams[this.my_socket.id];
+        let { is_host, stream_id } = tag;
+
+        //If this isn't a host that got disconnected, don't do anything else
+        if (!is_host) {
+
+            this.my_socket.to(stream_id).emit('leave_room', { tag: tag });
+
+            this.my_socket.leave(stream_id);
+
+            return;
+        }
+
+        delete this.active_streams[stream_id];
         
         this.io.emit('update_stream_list', {streams: this.active_streams});
         
-        this.my_socket.to(this.my_socket.id).emit('leave_stream', {msg: "The host has disconnected from the stream."});
-        
+        this.my_socket.to(stream_id).emit('disband_room', {msg: "The host has disconnected from the stream."});
+
+        this.my_socket.leave(stream_id);
     };
     
 };

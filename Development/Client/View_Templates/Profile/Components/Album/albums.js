@@ -81,8 +81,6 @@ class Albums extends Component {
         
         let resJson = await res.json();
         
-        console.log(resJson.message);
-        
         this.setState({
             photos: resJson.photos, 
             selected_album: album_info, 
@@ -98,7 +96,7 @@ class Albums extends Component {
     
     render(){
         
-        const {Drag_Scroll} = this.context;
+        const { Drag_Scroll } = this.context;
         
         let drag_scroll = new Drag_Scroll();
         

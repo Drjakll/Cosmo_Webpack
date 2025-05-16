@@ -1,18 +1,21 @@
 let Wrapper = function(){
     
     this.event = (room_tag) => {
-
-        console.log(room_tag);
         
         let { stream_id, is_host } = room_tag;
         
-        if(is_host){
-            
+        if (is_host) {
+
             delete this.active_streams[stream_id];
-           
-            this.io.emit('update_stream_list', {streams: this.active_streams});
-            
-            this.my_socket.to(stream_id).emit('leave_stream', {msg: "The host has closed the stream"});
+
+            this.io.emit('update_stream_list', { streams: this.active_streams });
+
+            this.my_socket.to(stream_id).emit('disband_room', { msg: "The host has closed the stream" });
+
+        } else {
+
+            this.my_socket.to(stream_id).emit('leave_room', { tag: room_tag });
+
         }
         
         this.my_socket.leave(stream_id);

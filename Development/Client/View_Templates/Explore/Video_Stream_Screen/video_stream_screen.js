@@ -33,7 +33,7 @@ class Video_Stream_Screen extends Component {
         this.setState(this.props);
     }
     
-    Change_Screen = (screen, is_hosting) => {
+    Change_Screen = (screen, is_hosting = false) => {
         
         this.setState({current_screen: screen, is_host: is_hosting});
         
@@ -46,10 +46,11 @@ class Video_Stream_Screen extends Component {
         return (
                 <div id="video-stream-screen">
                     
-                    <Com account_data={this.state.account_data} 
-                        change_screen={this.Change_Screen}
-                        is_host={this.state.is_host}
-                        stream_id={this.state.stream_id}
+                <Com account_data={this.state.account_data}
+                    change_screen={this.Change_Screen}
+                    is_host={this.state.is_host}
+                    stream_id={this.state.stream_id}
+                    set_main_screen={this.props.set_current_screen}
                     />
                     
                 </div>

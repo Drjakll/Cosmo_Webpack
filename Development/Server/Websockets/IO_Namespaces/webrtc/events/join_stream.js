@@ -2,7 +2,9 @@ let Wrapper = function(){
     
     this.event = (new_peer) => {
         
-        let {stream_id} = new_peer;
+        let { stream_id } = new_peer;
+
+        this.my_socket.tag = new_peer;
         
         this.my_socket.join(stream_id);
         
