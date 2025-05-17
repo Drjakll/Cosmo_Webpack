@@ -23,7 +23,7 @@ class Video_Playback extends Component {
     
     componentWillUnmount(){
         
-        this.videoRef.current.srcObject.getTracks().forEach((track)=>{
+        this.videoRef.current.srcObject?.getTracks().forEach((track)=>{
             track.stop();
         });
         

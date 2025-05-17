@@ -31,7 +31,7 @@ class Streaming extends Component {
             stream_id: this.props.stream_id, //The stream_id is the host socket.id + Date.now()
             room_title: "New Room",
             streamer_small_screens: {}, //Streamers at the smaller screen
-            streamer_big_screen: null, //Streamer at the bigger screen
+            streamer_big_screen: null //Streamer at the bigger screen
         };
     }
     
@@ -58,13 +58,12 @@ class Streaming extends Component {
     
     Get_Self_Media_Source = async () => {
         
-        if(!window.navigator.mediaDevices || !window.navigator.mediaDevices.getUserMedia) {
-            return;
-        }
+//        if(!navigator.mediaDevices?.getUserMedia) {
+//            console.log("no device found!");
+//            return null;
+//        }
         
-        let stream_src = await window.navigator.mediaDevices.getUserMedia({ video: true, audio: false });
-        
-        return stream_src;
+        return await navigator?.mediaDevices?.getUserMedia({ video: true, audio: false });
         
     }
 
@@ -263,12 +262,12 @@ class Streaming extends Component {
     
     Give_Self_Tracks_To_Peer = (other_participant) => {
 
-        let { peer, tag } = other_participant;
+        let { peer } = other_participant;
         
 
-        if (this.my_media_source !== undefined) {
+        if (this.my_media_source) {
 
-            this.my_media_source.getTracks().forEach((track) => {
+            this.my_media_source?.getTracks().forEach((track) => {
 
                 peer?.addTrack(track, this.my_media_source);
                 
@@ -299,19 +298,29 @@ class Streaming extends Component {
     }
     
     Capture_Video = async () => {
-
-        let media_source = await this.Get_Self_Media_Source();
-
-        if (!this.my_room_tag.is_host) {
-
-            let { streamer_small_screens } = this.state;
-
-            streamer_small_screens[this.my_room_tag.id] = media_source;
-
-            this.setState({ streamer_small_screens: streamer_small_screens });
-        }
         
-        return media_source;
+        try {
+
+            let media_source = await this.Get_Self_Media_Source();
+     
+            if (!this.my_room_tag.is_host) {
+
+                let { streamer_small_screens } = this.state;
+
+                streamer_small_screens[this.my_room_tag.id] = media_source;
+
+                this.setState({ streamer_small_screens: streamer_small_screens });
+            }
+
+            return media_source;
+            
+        } catch(e){
+            
+            console.log("no device found");
+            
+            return null;
+            
+        }
     }
 
     Go_Live_To_All = async () => {

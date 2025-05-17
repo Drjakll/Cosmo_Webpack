@@ -2,6 +2,10 @@ let Wrapper = function(){
     
     this.event = (room_tag) => {
         
+        if(!room_tag){
+            return;
+        }
+        
         let { stream_id, is_host } = room_tag;
         
         if (is_host) {
