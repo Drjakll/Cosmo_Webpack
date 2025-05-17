@@ -58,10 +58,10 @@ class Streaming extends Component {
     
     Get_Self_Media_Source = async () => {
         
-//        if(!navigator.mediaDevices?.getUserMedia) {
-//            console.log("no device found!");
-//            return null;
-//        }
+        if(!navigator.mediaDevices?.getUserMedia) {
+            console.log("no device found!");
+            return null;
+        }
         
         return await navigator?.mediaDevices?.getUserMedia({ video: true, audio: false });
         
@@ -101,7 +101,7 @@ class Streaming extends Component {
 
                     this.my_room_tag = this.Create_Room_Tag(this.socket.id, this.state.stream_id);
                     
-                    this.my_media_source = await this.Capture_Video();
+                    //this.my_media_source = await this.Capture_Video();
                     
                     this.socket.emit('join_stream', this.my_room_tag);
                     
@@ -273,13 +273,13 @@ class Streaming extends Component {
                 
             });
 
-            let sender = peer?.getSenders().find(s => s.track.kind === 'video');
+            //let sender = peer?.getSenders().find(s => s.track.kind === 'video');
 
-            let parameters = sender?.getParameters();
+            //let parameters = sender?.getParameters();
 
-            parameters?.encodings[0]?.maxBitrate = 5000000;
+            //parameters?.encodings[0]?.maxBitrate = 5000000;
 
-            sender?.setParameters(parameters);
+            //sender?.setParameters(parameters);
         }
         
     }
