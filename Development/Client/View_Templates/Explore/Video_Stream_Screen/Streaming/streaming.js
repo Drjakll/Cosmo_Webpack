@@ -1,6 +1,7 @@
 import React, {Component, createRef} from 'react';
 import Main_Video from './Main_Video/main_video.js';
 import Sub_Video from './Sub_Video/sub_video.js';
+import Chat_Box from './Chat_Box/chat_box.js';
 import { io } from 'socket.io-client';
 import './streaming.less';
 
@@ -345,36 +346,38 @@ class Streaming extends Component {
         let drag_scroll = new Drag_Scroll();
 
         return (
-                <div id="streaming">
+            <div id="streaming">
                     
-                    <div id="big-stream-screen">
+                <div id="big-stream-screen">
                         
-                        <Main_Video account_data={this.state.account_data} media_source={this.state.streamer_big_screen} />
+                    <Main_Video account_data={this.state.account_data} media_source={this.state.streamer_big_screen} />
                         
-                    </div>
-
-                    <div id="smaller-stream-screens"
-                        ref={this.small_screen_ref}
-                        onMouseDown={(e) => { drag_scroll.init_drag(e, this.small_screen_ref.current); }}
-                        onMouseLeave={(e) => { drag_scroll.disable_drag(e, this.small_screen_ref.current); }}
-                        onMouseUp={(e) => { drag_scroll.disable_drag(e, this.small_screen_ref.current); }}
-                        onMouseMove={(e) => { drag_scroll.move_drag(e, this.small_screen_ref.current); }}
-                    >
-                    
-                        {Object.keys(this.state.streamer_small_screens).map((key, index)=>{
-                            
-                            return key === this.the_host?.id ? "" : <div className="sub-video" key={index}>
-                                
-                                <Sub_Video media_source={this.state.streamer_small_screens[key]} />
-                                
-                            </div>;
-                            
-                        })}
-
-                    </div>
-                    
                 </div>
-            );
+
+                <div id="smaller-stream-screens"
+                    ref={this.small_screen_ref}
+                    onMouseDown={(e) => { drag_scroll.init_drag(e, this.small_screen_ref.current); }}
+                    onMouseLeave={(e) => { drag_scroll.disable_drag(e, this.small_screen_ref.current); }}
+                    onMouseUp={(e) => { drag_scroll.disable_drag(e, this.small_screen_ref.current); }}
+                    onMouseMove={(e) => { drag_scroll.move_drag(e, this.small_screen_ref.current); }}
+                >
+                    
+                    {Object.keys(this.state.streamer_small_screens).map((key, index)=>{
+                            
+                        return key === this.the_host?.id ? "" : <div className="sub-video" key={index}>
+                                
+                            <Sub_Video media_source={this.state.streamer_small_screens[key]} />
+                                
+                        </div>;
+                            
+                    })}
+
+                </div>
+
+                <Chat_Box/>
+                    
+            </div>
+        );
     }
 }
 

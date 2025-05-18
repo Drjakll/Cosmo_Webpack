@@ -3,14 +3,14 @@
     "",
     "\\Development",
     "\\Development\\Client",
+    "\\Development\\Client\\App_Entrance",
+    "\\Development\\Client\\Utilities",
     "\\Development\\Client\\View_Templates",
-    "\\Development\\Client\\View_Templates\\Explore",
-    "\\Development\\Client\\View_Templates\\Explore\\Video_Stream_Screen",
-    "\\Development\\Client\\View_Templates\\Explore\\Video_Stream_Screen\\Prepare_To_Stream",
-    "\\Development\\Client\\View_Templates\\Explore\\Video_Stream_Screen\\Prepare_To_Stream\\Init_Streaming_Buttons",
-    "\\Development\\Client\\View_Templates\\Explore\\Video_Stream_Screen\\Streaming",
-    "\\Development\\Client\\View_Templates\\Explore\\Video_Stream_Screen\\Streaming\\Main_Video"
+    "\\Development\\Client\\View_Templates\\Profile",
+    "\\Development\\Client\\View_Templates\\Profile\\Components",
+    "\\Development\\Client\\View_Templates\\Profile\\Components\\Album",
+    "\\Development\\Client\\View_Templates\\Profile\\Components\\Album\\Photos_Container"
   ],
-  "SelectedNode": "\\Development\\Client\\View_Templates\\Explore\\Video_Stream_Screen\\Streaming\\Chat_Box\\chat_box.js",
+  "SelectedNode": "\\Development\\Client\\Utilities\\drag.js",
   "PreviewInSolutionExplorer": false
 }

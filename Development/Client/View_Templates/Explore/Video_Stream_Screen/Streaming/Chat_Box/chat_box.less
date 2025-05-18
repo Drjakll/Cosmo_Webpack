@@ -1,0 +1,43 @@
+#chat-box {
+    width: 600px;
+    height: 400px;
+    position: fixed;
+    z-index: 99999999;
+    top: 0px;
+    left: 350px;
+    border-radius: 15px;
+    overflow: hidden;
+    display: block;
+    border: rgba(0,0,0,0.25) solid 0.5px;
+
+    #drag-bar {
+        width: 100%;
+        height: 50px;
+        background-color: rgba(190,190,190, 0.1);
+
+        &:hover {
+            cursor: pointer;
+            background-color: rgba(190,190,190,0.85);
+        }
+    }
+
+    #text-background {
+        height: calc(80% - 40px);
+        width: 100%;
+        background-color: rgba(255,255,255,0.1);
+        transition: 1s;
+        position: relative;
+
+        &:hover {
+            background-color: rgba(255,255,255,0.75);
+        }
+    }
+
+    #controls {
+        border-top: rgba(0,0,0,0.25) solid 0.5px;
+        height: calc(20% - 10px);
+        width: 100%;
+        position: relative;
+        background-color: rgb(200,200,200,1);
+    }
+}
