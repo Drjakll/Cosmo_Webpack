@@ -217,6 +217,7 @@ class Streaming extends Component {
         acc_copy.is_host = this.state.is_host;
 
         return Stream_Room_Data_Template(acc_copy);
+        
     }
     
     Init_Peer_Connection = (tag) => {
@@ -374,7 +375,7 @@ class Streaming extends Component {
 
                 </div>
 
-                <Chat_Box/>
+                <Chat_Box socket={this.socket} my_room_tag={this.my_room_tag} />
                     
             </div>
         );
