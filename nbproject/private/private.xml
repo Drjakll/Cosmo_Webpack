@@ -5,7 +5,6 @@
         <group>
             <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Development/Client/View_Templates/Explore/Video_Stream_Screen/Streaming/Main_Video/main_video.less</file>
             <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Development/Server/Requests/requests/user_accounts/create_account.js</file>
-            <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Development/Server/Websockets/IO_Namespaces/webrtc/webrtc.js</file>
             <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Development/Server/Requests/tools/generate_time_string.js</file>
             <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Development/Client/Utilities/cookie.js</file>
             <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Development/Server/Websockets/Socket_Requests/socket_requests/webrtc_functions/register.js</file>
@@ -60,14 +59,11 @@
             <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Development/Client/View_Templates/Explore/explore_template.js</file>
             <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Development/Client/View_Templates/Profile/Components/Album/Photos_Container/Single_Photo_Thumbnail/Enlarged_Single_Photo/Photo_Comments/Single_Comment/single_comment.js</file>
             <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Development/Client/View_Templates/Explore/Video_Stream_Screen/Streaming/Chat_Box/Message/message.less</file>
-            <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Development/Server/Websockets/IO_Namespaces/webrtc/events/create_stream.js</file>
             <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Development/Client/App_Entrance/Entrance_Options/Logged_In_Account/logged_in_account.js</file>
             <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Development/Client/View_Templates/Explore/Video_Stream_Screen/Streaming/Chat_Box/Text_Input/text_input.js</file>
             <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/app.js</file>
             <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Development/Server/Websockets/IO_Namespaces/photo_comments/events/submit_a_comment.js</file>
             <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Development/Server/Requests/requests/user_accounts/profile/photos/add_photo_links.js</file>
-            <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Development/Server/Websockets/IO_Namespaces/webrtc/events/join_stream.js</file>
-            <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Development/Server/Websockets/IO_Namespaces/webrtc/events/leave_stream.js</file>
             <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Development/Client/View_Templates/Profile/Components/Album/Photos_Container/Single_Photo_Thumbnail/Enlarged_Single_Photo/Photo_Comments/Single_Comment/Reply_To_Comment/reply_to_comment.js</file>
             <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Development/Client/View_Templates/Explore/Stream_List_Components/stream_list_components.js</file>
             <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Development/Client/View_Templates/Explore/Video_Stream_Screen/Streaming/Chat_Box/Text_Input/text_input.less</file>
@@ -88,7 +84,6 @@
             <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Development/Client/View_Templates/Profile/Components/Album/Photos_Container/Single_Photo_Thumbnail/Enlarged_Single_Photo/Photo_Comments/Single_Comment/Reply_To_Comment/reply_to_comment.less</file>
             <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Development/Server/Requests/requests/user_accounts/profile/photos/delete_photo_files.js</file>
             <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Development/Client/App_Entrance/Entrance_Options/Logged_In_Account/Screen/Profile/profile.less</file>
-            <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Development/Server/Websockets/IO_Namespaces/webrtc/events/offer.js</file>
             <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Development/Server/Requests/requests/user_accounts/profile/comments/photo_comments/submit_photo_comment.js</file>
             <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Development/Client/View_Templates/Explore/Video_Stream_Screen/Streaming/Chat_Box/chat_box.less</file>
             <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Development/Client/View_Templates/Profile/Components/Album/Photos_Container/Single_Photo_Thumbnail/single_photo_thumbnail.js</file>
@@ -105,26 +100,23 @@
             <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Development/Client/App_Entrance/Entrance_Options/Login_Account/Login/login.js</file>
             <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Development/Client/View_Templates/Explore/Stream_List_Components/Search_Streams/search_streams.less</file>
             <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Development/Client/App_Entrance/Entrance_Options/Login_Account/Create/create.js</file>
-            <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Development/Server/Websockets/IO_Namespaces/webrtc/events/to_new_viewer.js</file>
             <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Development/Client/View_Templates/Profile/profile_template.js</file>
             <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Development/Client/View_Templates/Explore/Video_Stream_Screen/Streaming/Sub_Video/sub_video.less</file>
+            <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Development/Server/Websockets/IO_Namespaces/live_streaming/events/send_text.js</file>
             <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Development/Client/View_Templates/Explore/Video_Stream_Screen/video_stream_screen.less</file>
             <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Development/Server/Websockets/Socket_Requests/socket_requests/webrtc_functions/response.js</file>
             <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Development/Server/Websockets/websocket.js</file>
             <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Development/Client/App_Entrance/Entrance_Options/Login_Account/Restore/restore.js</file>
             <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Development/Server/Websockets/Socket_Requests/socket_requests_1.js</file>
-            <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Development/Server/Websockets/IO_Namespaces/webrtc/events/answer_to_offer.js</file>
             <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Development/Client/View_Templates/Explore/Stream_List_Components/Init_Stream/init_stream.js</file>
             <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Development/Client/App_Entrance/Entrance_Options/Logged_In_Account/Screen/Explore/explore.less</file>
             <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Development/Client/View_Templates/Explore/Video_Stream_Screen/Streaming/streaming.js</file>
             <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Development/Client/API_Requests/request_urls.js</file>
             <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Development/Client/View_Templates/Profile/Components/Profile_Info/profile_info.js</file>
-            <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Development/Server/Websockets/IO_Namespaces/webrtc/events/request_streams.js</file>
             <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Development/Client/App_Entrance/Entrance_Options/Logged_In_Account/Screen/screen.js</file>
             <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Development/Client/View_Templates/Explore/Video_Stream_Screen/Prepare_To_Stream/prepare_to_stream.js</file>
             <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Development/Server/Requests/requests/user_accounts/profile/profile_data/insert_profile_photo_data.js</file>
             <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Development/Client/View_Templates/Explore/Video_Stream_Screen/Prepare_To_Stream/Video_Playback/video_playback.js</file>
-            <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Development/Server/Websockets/IO_Namespaces/webrtc/events/disconnect_stream.js</file>
             <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Built_Server/entry.html</file>
             <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Development/Client/View_Templates/Profile/Components/Album/Photos_Container/Single_Photo_Thumbnail/Enlarged_Single_Photo/Photo_Comments/photo_comments.less</file>
             <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Development/Client/View_Templates/Explore/explore_template.less</file>
