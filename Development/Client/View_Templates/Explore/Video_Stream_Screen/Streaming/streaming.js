@@ -24,7 +24,8 @@ class Streaming extends Component {
         this.participants = {};
         this.the_host = null;
         this.my_media_source = null;
-        
+
+        this.Setup_IO();
         
         this.state = {
             account_data: this.props.account_data,
@@ -37,8 +38,6 @@ class Streaming extends Component {
     }
     
     componentDidMount() {
-
-        this.Setup_IO();
 
     }
     

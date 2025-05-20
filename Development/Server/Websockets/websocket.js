@@ -21,11 +21,11 @@ let websocket = async (server) => {
     
     //Passing the io object to the namespaces
     namespaces.photo_comments.io = photo_comments_namespace;
-    namespaces.webrtc.io = video_streams_namespace;
+    namespaces.live_streaming.io = video_streams_namespace;
     
     
     photo_comments_namespace.on('connection', namespaces.photo_comments.namespace);
-    video_streams_namespace.on('connection', namespaces.webrtc.namespace);
+    video_streams_namespace.on('connection', namespaces.live_streaming.namespace);
 };
 
 export default websocket;

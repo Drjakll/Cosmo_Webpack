@@ -3,14 +3,18 @@
     "",
     "\\Development",
     "\\Development\\Client",
-    "\\Development\\Client\\App_Entrance",
-    "\\Development\\Client\\Utilities",
     "\\Development\\Client\\View_Templates",
-    "\\Development\\Client\\View_Templates\\Profile",
-    "\\Development\\Client\\View_Templates\\Profile\\Components",
-    "\\Development\\Client\\View_Templates\\Profile\\Components\\Album",
-    "\\Development\\Client\\View_Templates\\Profile\\Components\\Album\\Photos_Container"
+    "\\Development\\Client\\View_Templates\\Explore",
+    "\\Development\\Client\\View_Templates\\Explore\\Video_Stream_Screen",
+    "\\Development\\Client\\View_Templates\\Explore\\Video_Stream_Screen\\Streaming",
+    "\\Development\\Client\\View_Templates\\Explore\\Video_Stream_Screen\\Streaming\\Chat_Box",
+    "\\Development\\Client\\View_Templates\\Explore\\Video_Stream_Screen\\Streaming\\Chat_Box\\Message",
+    "\\Development\\Server",
+    "\\Development\\Server\\Websockets",
+    "\\Development\\Server\\Websockets\\IO_Namespaces",
+    "\\Development\\Server\\Websockets\\IO_Namespaces\\live_streaming",
+    "\\Development\\Server\\Websockets\\IO_Namespaces\\live_streaming\\events"
   ],
-  "SelectedNode": "\\Development\\Client\\Utilities\\drag.js",
+  "SelectedNode": "\\Development\\Client\\View_Templates\\Explore\\Video_Stream_Screen\\Streaming\\Chat_Box\\Message\\message.less",
   "PreviewInSolutionExplorer": false
 }

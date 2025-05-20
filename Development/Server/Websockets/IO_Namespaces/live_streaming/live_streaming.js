@@ -10,7 +10,7 @@ let Wrapper = function (){
         
         this.events = {};
 
-        let path = `${__dirname}/../Development/Server/Websockets/IO_Namespaces/webrtc/events/`;
+        let path = `${__dirname}/../Development/Server/Websockets/IO_Namespaces/live_streaming/events/`;
 
         let entries = await fs.readdirSync(path);
 
@@ -58,6 +58,7 @@ let Wrapper = function (){
         socket.on('offer', events.offer.event);
         socket.on('answer_to_offer', events.answer_to_offer.event);
         socket.on('send_candidate', events.send_candidate.event);
+        socket.on('send_text', events.send_text.event);
     };
 };
 

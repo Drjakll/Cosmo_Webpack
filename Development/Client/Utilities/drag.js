@@ -17,6 +17,8 @@ let Drag = function () {
         Drag.mousedown = true;
 
         Drag.child = child;
+
+        Drag.child.style.cursor = "grabbing";
     }
 
     this.init_drag = (event) => {
@@ -62,6 +64,8 @@ let Drag = function () {
         }
 
         Drag.mousedown = false;
+
+        Drag.child.style.cursor = "";
 
         Drag.child = null;
 

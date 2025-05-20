@@ -7,3 +7,63 @@ Click nbfs://nbhost/SystemFileSystem/Templates/ClientSide/style.less to edit thi
     Author     : justinzhu
 */
 
+#message {
+    width: 50%;
+    position: relative;
+    display: block;
+
+    #msg-info {
+        width: calc(100% - 10px);
+        height: 15px;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        background-color: rgba(234, 142, 53, 1);
+        padding: 5px;
+        transition: 1s;
+        box-shadow: 5px 5px 5px rgba(0,0,0,0.25);
+        border: rgba(0,0,0,0.5) solid 0.5px;
+
+        &:hover {
+            cursor: pointer;
+            background-color: rgba(234, 142, 53, 1);
+        }
+
+        #name {
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #timestamp {
+            height: 100%;
+            width: 25%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    }
+
+    .self {
+        flex-direction: row-reverse;
+        text-align: end;
+        border-start-start-radius: 50px;
+    }
+
+    .others {
+        border-end-end-radius: 50px;
+    }
+
+    #msg {
+        width: calc(100% - 10px);
+        padding: 5px;
+        white-space: pre-wrap;
+        word-wrap: break-word;
+        margin: 0px;
+    }
+}
+
+.self-parent {
+    right: -50%;
+}
