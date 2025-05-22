@@ -16,7 +16,8 @@ class Chat_Box extends Component {
         this.state = {
             conversation: [],
             socket: this.props.socket,
-            my_room_tag: this.props.my_room_tag
+            my_room_tag: this.props.my_room_tag,
+            account_data: this.props.account_data
         };
     }
 
@@ -27,6 +28,7 @@ class Chat_Box extends Component {
         }
 
         this.setState(this.props);
+
     }
 
     componentDidMount() {
@@ -39,14 +41,15 @@ class Chat_Box extends Component {
 
     Add_Socket_Events = (socket) => {
 
-        socket.on('receive_new_text', ({from, text }) => {
+        socket?.on('receive_new_text', ({from_room_tag, text, from_account }) => {
 
             let new_text_obj = {};
 
-            for (let i in from) {
-                new_text_obj[i] = from[i];
+            for (let i in from_room_tag) {
+                new_text_obj[i] = from_room_tag[i];
             }
 
+            new_text_obj.profile_picture_link = from_account.profile_picture_link;
             new_text_obj.text = text;
             new_text_obj.timestamp = this.Get_Current_Local_Time();
 
@@ -97,7 +100,7 @@ class Chat_Box extends Component {
 
                 <div id="controls">
 
-                    <Text_Input socket={this.state.socket} my_room_tag={this.state.my_room_tag} />
+                    <Text_Input socket={this.state.socket} my_room_tag={this.state.my_room_tag} account_data={this.state.account_data} />
 
                 </div>
 

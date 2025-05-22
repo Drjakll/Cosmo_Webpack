@@ -2,6 +2,7 @@ import React, {Component, createRef} from 'react';
 import Main_Video from './Main_Video/main_video.js';
 import Sub_Video from './Sub_Video/sub_video.js';
 import Chat_Box from './Chat_Box/chat_box.js';
+import Viewer_Display from './Viewer_Display/viewer_display.js';
 import { io } from 'socket.io-client';
 import './streaming.less';
 
@@ -33,7 +34,9 @@ class Streaming extends Component {
             stream_id: this.props.stream_id, //The stream_id is the host socket.id + Date.now()
             room_title: "New Room",
             streamer_small_screens: {}, //Streamers at the smaller screen
-            streamer_big_screen: null //Streamer at the bigger screen
+            streamer_big_screen: null, //Streamer at the bigger screen
+            my_room_tag: null,
+            socket: null
         };
     }
     
@@ -92,7 +95,12 @@ class Streaming extends Component {
                     //If it's a host, then get their webcam permission
                     this.my_media_source = await this.Capture_Video();
 
-                    this.setState({streamer_big_screen: this.my_media_source, the_host: this.my_room_tag});
+                    this.setState({
+                        streamer_big_screen: this.my_media_source,
+                        the_host: this.my_room_tag,
+                        my_room_tag: this.my_room_tag,
+                        socket: this.socket
+                    });
                     
 
                     this.socket.emit('create_stream', this.my_room_tag);
@@ -100,6 +108,11 @@ class Streaming extends Component {
                 } else {
 
                     this.my_room_tag = this.Create_Room_Tag(this.socket.id, this.state.stream_id);
+
+                    this.setState({
+                        my_room_tag: this.my_room_tag,
+                        socket: this.socket
+                    });
                     
                     //this.my_media_source = await this.Capture_Video();
                     
@@ -349,6 +362,8 @@ class Streaming extends Component {
             <div id="streaming">
                     
                 <div id="big-stream-screen">
+
+                    
                         
                     <Main_Video account_data={this.state.account_data} media_source={this.state.streamer_big_screen} />
                         
@@ -374,7 +389,7 @@ class Streaming extends Component {
 
                 </div>
 
-                <Chat_Box socket={this.socket} my_room_tag={this.my_room_tag} />
+                <Chat_Box socket={this.socket} my_room_tag={this.state.my_room_tag} account_data={this.state.account_data} />
                     
             </div>
         );

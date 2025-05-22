@@ -3,18 +3,14 @@
     "",
     "\\Development",
     "\\Development\\Client",
+    "\\Development\\Client\\API_Requests",
     "\\Development\\Client\\View_Templates",
     "\\Development\\Client\\View_Templates\\Explore",
     "\\Development\\Client\\View_Templates\\Explore\\Video_Stream_Screen",
     "\\Development\\Client\\View_Templates\\Explore\\Video_Stream_Screen\\Streaming",
-    "\\Development\\Client\\View_Templates\\Explore\\Video_Stream_Screen\\Streaming\\Chat_Box",
-    "\\Development\\Client\\View_Templates\\Explore\\Video_Stream_Screen\\Streaming\\Chat_Box\\Message",
-    "\\Development\\Server",
-    "\\Development\\Server\\Websockets",
-    "\\Development\\Server\\Websockets\\IO_Namespaces",
-    "\\Development\\Server\\Websockets\\IO_Namespaces\\live_streaming",
-    "\\Development\\Server\\Websockets\\IO_Namespaces\\live_streaming\\events"
+    "\\Development\\Client\\View_Templates\\Explore\\Video_Stream_Screen\\Streaming\\Viewer_Display",
+    "\\Development\\Client\\View_Templates\\Explore\\Video_Stream_Screen\\Streaming\\Viewer_Display\\Viewer_Entry"
   ],
-  "SelectedNode": "\\Development\\Client\\View_Templates\\Explore\\Video_Stream_Screen\\Streaming\\Chat_Box\\Message\\message.less",
+  "SelectedNode": "\\Development\\Client\\View_Templates\\Explore\\Video_Stream_Screen\\Streaming\\streaming.js",
   "PreviewInSolutionExplorer": false
 }

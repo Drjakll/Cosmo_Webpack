@@ -12,7 +12,8 @@ class Text_Input extends Component {
         
         this.state = {
             socket: this.props.socket,
-            my_room_tag: this.props.my_room_tag
+            my_room_tag: this.props.my_room_tag,
+            account_data: this.props.account_data
         };
     }
 
@@ -41,7 +42,7 @@ class Text_Input extends Component {
 
         this.inputRef.current.value = ``;
 
-        socket.emit('send_text', {text: text, from: this.state.my_room_tag});
+        socket?.emit('send_text', {text: text, from: this.state.my_room_tag, account_data: this.state.account_data});
 
     }
 
