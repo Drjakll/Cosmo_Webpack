@@ -357,11 +357,32 @@ class Streaming extends Component {
     
     Generate_Profile_View = (account_data)=>{
 
-        const {Profile_Template} = this.context;
+        const { Profile_Template, Drag } = this.context;
 
-        return account_data ? <div id="profile-template-wrapper">
+        let drag = new Drag();
 
-            <Profile_Template account_data={account_data} />
+        let profile_bar_ref = createRef();
+
+        return account_data ? <div id="profile-template-wrapper" ref={profile_bar_ref}>
+
+            <div id="profile-drag-bar"
+                onMouseDown={(e) => { drag.init_child(e, profile_bar_ref.current); }}
+                onMouseUp={(e) => { drag.disable_drag(e); }}
+            >
+                <div id="exit-button" onClick={(e) => { this.setState({ view_account_data: null }); } }>
+                    X
+                </div>
+
+                <label>
+                    drag
+                </label>
+            </div>
+
+            <div id="profile-template-inner-wrapper">
+
+                <Profile_Template account_data={account_data} />
+
+            </div>
 
         </div> : <></>;
 
