@@ -11,6 +11,7 @@
             <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Development/Client/react_entry.less</file>
             <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Development/Client/View_Templates/Profile/Components/Album/Photos_Container/Single_Photo_Thumbnail/Enlarged_Single_Photo/Photo_Comments/photo_comments.js</file>
             <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Development/Client/View_Templates/Explore/Stream_List_Components/Stream_Displays/stream_displays.less</file>
+            <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Development/Server/Websockets/IO_Namespaces/live_streaming/events/acknowledge_new_viewer.js</file>
             <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Development/Server/Websockets/Socket_Requests/socket_requests/webrtc_functions/add_candidate.js</file>
             <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Development/Client/View_Templates/Profile/Components/Profile_Info/profile_info.less</file>
             <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Development/Client/Video_Streams/VideoObj.js</file>
@@ -34,8 +35,11 @@
             <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Development/Client/View_Templates/Profile/Components/Album/Photos_Container/photos_container.less</file>
             <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Development/Client/App_Entrance/app_entrance.js</file>
             <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Development/Client/View_Templates/Profile/Components/Album/Photos_Container/photos_container.js</file>
+            <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Development/Server/Websockets/IO_Namespaces/live_streaming/events/disconnect_stream.js</file>
             <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Development/Client/View_Templates/Explore/Video_Stream_Screen/Prepare_To_Stream/Video_Playback/video_playback.less</file>
             <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Development/Server/Requests/tools/generate_get_query.js</file>
+            <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Development/Client/View_Templates/Explore/Video_Stream_Screen/Streaming/Chat_Box/Viewer_Display/viewer_display.js</file>
+            <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Development/Server/Websockets/IO_Namespaces/live_streaming/events/join_stream.js</file>
             <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Development/Server/Requests/requests/get_web_pages/entry_page/entry.js</file>
             <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Development/Server/Websockets/Socket_Requests/socket_requests/messaging/receive_private_message.js</file>
             <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Development/Client/View_Templates/Explore/Stream_List_Components/Search_Streams/search_streams.js</file>
@@ -70,6 +74,7 @@
             <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Development/Client/View_Templates/Explore/Video_Stream_Screen/Prepare_To_Stream/Init_Streaming_Buttons/init_streaming_buttons.less</file>
             <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Development/Server/Websockets/Socket_Requests/socket_requests.js</file>
             <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Development/Client/View_Templates/Profile/profile_template.less</file>
+            <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Development/Client/View_Templates/Explore/Video_Stream_Screen/Streaming/Chat_Box/Viewer_Display/viewer_display.less</file>
             <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Development/Client/Data_Templates/stream_room_data.js</file>
             <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Development/Server/Websockets/Socket_Requests/socket_requests/webrtc_functions/offer.js</file>
             <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Development/Client/View_Templates/Profile/Components/Album/Photos_Container/Single_Photo_Thumbnail/Enlarged_Single_Photo/enlarged_single_photo.js</file>
@@ -93,8 +98,10 @@
             <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Development/Server/Requests/tools/generate_update_query.js</file>
             <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Development/Client/View_Templates/Profile/Components/Album/Photos_Container/Single_Photo_Thumbnail/Enlarged_Single_Photo/Photo_Comments/Single_Comment/single_comment.less</file>
             <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Development/Client/View_Templates/Explore/Stream_List_Components/Init_Stream/init_stream.less</file>
+            <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Development/Client/View_Templates/Explore/Video_Stream_Screen/Streaming/Chat_Box/Viewer_Display/Viewer_Entry/viewer_entry.less</file>
             <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Development/Server/Requests/requests/stream_rooms/disband_stream_room.js</file>
             <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Development/Client/View_Templates/Explore/Video_Stream_Screen/video_stream_screen.js</file>
+            <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Development/Server/Websockets/IO_Namespaces/live_streaming/live_streaming.js</file>
             <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Development/Client/react_entry.js</file>
             <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Development/Client/View_Templates/Profile/Components/Profile_Info/Profile_Info_Data/profile_info_data.less</file>
             <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Development/Client/App_Entrance/Entrance_Options/Login_Account/Login/login.js</file>
@@ -108,6 +115,7 @@
             <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Development/Server/Websockets/websocket.js</file>
             <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Development/Client/App_Entrance/Entrance_Options/Login_Account/Restore/restore.js</file>
             <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Development/Server/Websockets/Socket_Requests/socket_requests_1.js</file>
+            <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Development/Server/Websockets/IO_Namespaces/live_streaming/events/create_stream.js</file>
             <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Development/Client/View_Templates/Explore/Stream_List_Components/Init_Stream/init_stream.js</file>
             <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Development/Client/App_Entrance/Entrance_Options/Logged_In_Account/Screen/Explore/explore.less</file>
             <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Development/Client/View_Templates/Explore/Video_Stream_Screen/Streaming/streaming.js</file>
@@ -117,6 +125,7 @@
             <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Development/Client/View_Templates/Explore/Video_Stream_Screen/Prepare_To_Stream/prepare_to_stream.js</file>
             <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Development/Server/Requests/requests/user_accounts/profile/profile_data/insert_profile_photo_data.js</file>
             <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Development/Client/View_Templates/Explore/Video_Stream_Screen/Prepare_To_Stream/Video_Playback/video_playback.js</file>
+            <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Development/Client/View_Templates/Explore/Video_Stream_Screen/Streaming/Chat_Box/Viewer_Display/Viewer_Entry/viewer_entry.js</file>
             <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Built_Server/entry.html</file>
             <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Development/Client/View_Templates/Profile/Components/Album/Photos_Container/Single_Photo_Thumbnail/Enlarged_Single_Photo/Photo_Comments/photo_comments.less</file>
             <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Development/Client/View_Templates/Explore/explore_template.less</file>
