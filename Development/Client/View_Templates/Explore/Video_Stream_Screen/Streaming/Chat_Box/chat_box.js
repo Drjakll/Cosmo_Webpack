@@ -1,6 +1,7 @@
 import React, { Component, createRef } from 'react';
 import Message from './Message/message.js';
 import Text_Input from './Text_Input/text_input.js';
+import Viewer_Display from './Viewer_Display/viewer_display.js';
 import './chat_box.less';
 
 class Chat_Box extends Component {
@@ -36,7 +37,7 @@ class Chat_Box extends Component {
 
         this.drag = new Drag();
 
-        this.Add_Socket_Events(this.state.socket);
+        this.Add_Socket_Events(this.props.socket);
     }
 
     Add_Socket_Events = (socket) => {
@@ -74,34 +75,57 @@ class Chat_Box extends Component {
 
         return (
             <div id="chat-box" ref={this.chat_box_ref}>
+    
+                <div id="top-bar">
 
-                <div id="drag-bar"
-                    onMouseDown={(e) => { this.drag.init_child(e, this.chat_box_ref.current); }}
-                    onMouseUp={(e) => { this.drag.disable_drag(e); }}
-                >
-                
-                    Drag here
-                    
+                    <div id="drag-bar"
+                        onMouseDown={(e) => { this.drag.init_child(e, this.chat_box_ref.current); }}
+                        onMouseUp={(e) => { this.drag.disable_drag(e); }}
+                    >
+
+                        Drag here
+
+                    </div>
+
                 </div>
-
-                <div id="text">
                 
-                    {this.state.conversation.map((value, index) => {
+                <div id="lower-area">
+                
+                    <div id="chat-area">
 
-                        return <div className="message-wrapper" key={index}>
+                        <div id="text">
 
-                            <Message data={value} my_room_tag={this.state.my_room_tag} />
+                            {this.state.conversation.map((value, index) => {
 
-                        </div>;
+                                return <div className="message-wrapper" key={index}>
 
-                    })}
+                                    <Message data={value} my_room_tag={this.state.my_room_tag} />
+
+                                </div>;
+
+                            })}
+
+                        </div>
+
+                        <div id="controls">
+
+                            <Text_Input socket={this.state.socket} my_room_tag={this.state.my_room_tag} account_data={this.state.account_data} />
+
+                        </div>
+                        
+                    </div>
                     
-                </div>
-
-                <div id="controls">
-
-                    <Text_Input socket={this.state.socket} my_room_tag={this.state.my_room_tag} account_data={this.state.account_data} />
-
+                    <div id="viewer-display-area">
+                        
+                        <Viewer_Display 
+                            socket={this.state.socket} 
+                            my_account_data={this.state.account_data}
+                            my_room_tag={this.state.my_room_tag}
+                            set_account_view={this.props.set_account_view}
+                        />
+                        
+                    </div>
+                
                 </div>
 
             </div>

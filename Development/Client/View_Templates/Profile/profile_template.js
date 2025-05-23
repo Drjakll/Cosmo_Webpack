@@ -6,19 +6,21 @@ import './profile_template.less';
 
 class Profile_Template extends Component {
     
-    state = {
-        components: [
-            {component: Profile_Info, props: {}, classname: "profile-info-wrapper"},
-            {component: Albums, props: {}, classname: "albums-wrapper"}, 
-            {component: Posts, props: {}, classname: "posts-wrapper"}
-        ]
-    };
+    
     
     constructor(props){
         
         super(props);
         
         Profile_Template.contextType = window.Context;
+        
+        this.state = {
+            components: [
+                {component: Profile_Info, props: {}, classname: "profile-info-wrapper"},
+                {component: Albums, props: {}, classname: "albums-wrapper"}, 
+                {component: Posts, props: {}, classname: "posts-wrapper"}
+            ]
+        };
     }
     
     componentDidMount(){
@@ -26,7 +28,24 @@ class Profile_Template extends Component {
         if(this.props.get_account_data){
             this.props.get_account_data(this.UpdateAllComponentProps);
         }
+        
+        if(this.props.account_data){
+            this.UpdateAllComponentProps({account_data: this.props.account_data});
+        }
 
+    }
+    
+    componentDidUpdate(prevProps, prevState){
+        
+        if(this.props === prevProps){
+            return;
+        }
+        
+        if(!this.props.account_data){
+            return;
+        }
+        
+        this.UpdateAllComponentProps({account_data: this.props.account_data});
     }
     
     UpdateComponentProps = (index, newProps) => {

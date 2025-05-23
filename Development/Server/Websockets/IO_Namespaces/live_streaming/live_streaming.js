@@ -59,6 +59,7 @@ let Wrapper = function (){
         socket.on('answer_to_offer', events.answer_to_offer.event);
         socket.on('send_candidate', events.send_candidate.event);
         socket.on('send_text', events.send_text.event);
+        socket.on('acknowledge_new_viewer', events.acknowledge_new_viewer.event);
     };
 };
 

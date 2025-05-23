@@ -2,7 +2,6 @@ import React, {Component, createRef} from 'react';
 import Main_Video from './Main_Video/main_video.js';
 import Sub_Video from './Sub_Video/sub_video.js';
 import Chat_Box from './Chat_Box/chat_box.js';
-import Viewer_Display from './Viewer_Display/viewer_display.js';
 import { io } from 'socket.io-client';
 import './streaming.less';
 
@@ -36,7 +35,7 @@ class Streaming extends Component {
             streamer_small_screens: {}, //Streamers at the smaller screen
             streamer_big_screen: null, //Streamer at the bigger screen
             my_room_tag: null,
-            socket: null
+            view_account_data: null
         };
     }
     
@@ -116,7 +115,7 @@ class Streaming extends Component {
                     
                     //this.my_media_source = await this.Capture_Video();
                     
-                    this.socket.emit('join_stream', this.my_room_tag);
+                    this.socket.emit('join_stream', {room_tag: this.my_room_tag, account_data: this.state.account_data});
                     
                 }
                 
@@ -352,6 +351,22 @@ class Streaming extends Component {
         this.Give_Self_Tracks_To_Peer(this.participants[tag.id]);
     }
     
+    Set_Account_View = (account_data)=>{
+        this.setState({view_account_data: account_data});
+    }
+    
+    Generate_Profile_View = (account_data)=>{
+
+        const {Profile_Template} = this.context;
+
+        return account_data ? <div id="profile-template-wrapper">
+
+            <Profile_Template account_data={account_data} />
+
+        </div> : <></>;
+
+    }
+    
     render(){
 
         const { Drag_Scroll } = this.context;
@@ -360,10 +375,10 @@ class Streaming extends Component {
 
         return (
             <div id="streaming">
+    
+                {this.Generate_Profile_View(this.state.view_account_data)}
                     
                 <div id="big-stream-screen">
-
-                    
                         
                     <Main_Video account_data={this.state.account_data} media_source={this.state.streamer_big_screen} />
                         
@@ -389,7 +404,11 @@ class Streaming extends Component {
 
                 </div>
 
-                <Chat_Box socket={this.socket} my_room_tag={this.state.my_room_tag} account_data={this.state.account_data} />
+                <Chat_Box socket={this.socket} 
+                            my_room_tag={this.state.my_room_tag} 
+                            account_data={this.state.account_data}
+                            set_account_view={this.Set_Account_View}
+                />
                     
             </div>
         );

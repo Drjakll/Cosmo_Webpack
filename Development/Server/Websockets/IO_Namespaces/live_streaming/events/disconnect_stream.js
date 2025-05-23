@@ -14,6 +14,8 @@ let Wrapper = function(){
         if (!is_host) {
 
             this.my_socket.to(stream_id).emit('leave_room', { tag: tag });
+            
+            this.my_socket.to(stream_id).emit('leave_chat_room', {room_tag: tag});
 
             this.my_socket.leave(stream_id);
 
