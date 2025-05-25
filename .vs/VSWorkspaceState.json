@@ -3,14 +3,14 @@
     "",
     "\\Development",
     "\\Development\\Client",
-    "\\Development\\Client\\App_Entrance",
-    "\\Development\\Client\\Utilities",
     "\\Development\\Client\\View_Templates",
     "\\Development\\Client\\View_Templates\\Explore",
     "\\Development\\Client\\View_Templates\\Explore\\Video_Stream_Screen",
     "\\Development\\Client\\View_Templates\\Explore\\Video_Stream_Screen\\Streaming",
-    "\\Development\\Client\\View_Templates\\Explore\\Video_Stream_Screen\\Streaming\\Chat_Box"
+    "\\Development\\Client\\View_Templates\\Explore\\Video_Stream_Screen\\Streaming\\Chat_Box",
+    "\\Development\\Client\\View_Templates\\Explore\\Video_Stream_Screen\\Streaming\\Chat_Box\\Message",
+    "\\Development\\Client\\View_Templates\\Explore\\Video_Stream_Screen\\Streaming\\Chat_Box\\Viewer_Display\\Viewer_Entry"
   ],
-  "SelectedNode": "\\Development\\Client\\View_Templates\\Explore\\Video_Stream_Screen\\Streaming\\streaming.less",
+  "SelectedNode": "\\Development\\Client\\View_Templates\\Explore\\Video_Stream_Screen\\Streaming\\Chat_Box\\chat_box.less",
   "PreviewInSolutionExplorer": false
 }

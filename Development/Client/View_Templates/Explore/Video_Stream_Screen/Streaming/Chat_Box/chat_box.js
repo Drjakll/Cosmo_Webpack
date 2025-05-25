@@ -87,6 +87,20 @@ class Chat_Box extends Component {
 
                     </div>
 
+                    <div id="buttons-area">
+
+                        <div className="button-wrapper" id="go-live">
+
+                            <div id="button">
+
+                                Go Live
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
                 </div>
                 
                 <div id="lower-area">
