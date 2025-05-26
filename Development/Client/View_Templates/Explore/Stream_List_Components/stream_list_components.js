@@ -23,7 +23,7 @@ class Stream_List_Components extends Component {
     
     componentDidMount(){
         
-    }
+    } 
     
     componentDidUpdate(prevProps, prevState){
         

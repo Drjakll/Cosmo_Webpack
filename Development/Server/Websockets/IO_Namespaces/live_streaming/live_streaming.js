@@ -60,6 +60,8 @@ let Wrapper = function (){
         socket.on('send_candidate', events.send_candidate.event);
         socket.on('send_text', events.send_text.event);
         socket.on('acknowledge_new_viewer', events.acknowledge_new_viewer.event);
+        socket.on('request_to_go_live', events.request_to_go_live.event);
+        socket.on('answer_to_request_live', events.answer_to_request_live.event);
     };
 };
 

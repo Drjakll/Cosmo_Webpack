@@ -35,7 +35,8 @@ class Streaming extends Component {
             streamer_small_screens: {}, //Streamers at the smaller screen
             streamer_big_screen: null, //Streamer at the bigger screen
             my_room_tag: null,
-            view_account_data: null
+            view_account_data: null,
+            the_host: null
         };
     }
     
@@ -178,6 +179,18 @@ class Streaming extends Component {
             await peer?.addIceCandidate(new RTCIceCandidate(candidate));
 
         });
+        
+        this.socket.on('receive_answer_to_go_live', async ({answer})=>{
+            
+            if(answer){
+                
+                this.my_media_source = await this.Capture_Video();
+                
+                this.Go_Live_To_All();
+            }
+            
+        });
+        
 
         this.socket.on('leave_room', ({ tag }) => {
 
@@ -265,6 +278,7 @@ class Streaming extends Component {
 
         if (tag.is_host) {
             this.the_host = tag;
+            this.setState({the_host: tag});
         }
         
         this.Go_Live_To_One(tag);
@@ -429,6 +443,7 @@ class Streaming extends Component {
                             my_room_tag={this.state.my_room_tag} 
                             account_data={this.state.account_data}
                             set_account_view={this.Set_Account_View}
+                            the_host={this.state.the_host}
                 />
                     
             </div>

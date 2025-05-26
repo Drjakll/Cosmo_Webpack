@@ -20,6 +20,34 @@ Click nbfs://nbhost/SystemFileSystem/Templates/ClientSide/style.less to edit thi
         align-items: center;
         font-size: 0.75vw;
         padding: 7.5px 0px 7.5px 0px;
+        position: relative;
+        
+        #request-live-buttons {
+            width: 100%;
+            background-color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: absolute;
+            
+            #label {
+                width: 40%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+            
+            #button {
+                width: 30%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                
+                &:hover { 
+                    cursor: pointer;
+                }
+            }
+        }
     }
     
     #portrait-wrapper {

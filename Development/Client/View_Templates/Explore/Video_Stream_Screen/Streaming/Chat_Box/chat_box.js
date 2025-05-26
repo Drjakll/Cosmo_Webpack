@@ -18,7 +18,8 @@ class Chat_Box extends Component {
             conversation: [],
             socket: this.props.socket,
             my_room_tag: this.props.my_room_tag,
-            account_data: this.props.account_data
+            account_data: this.props.account_data,
+            the_host: this.props.the_host
         };
     }
 
@@ -33,6 +34,7 @@ class Chat_Box extends Component {
     }
 
     componentDidMount() {
+        
         let { Drag } = this.context;
 
         this.drag = new Drag();
@@ -69,6 +71,27 @@ class Chat_Box extends Component {
         return now.toLocaleTimeString();
 
     }
+    
+    Generate_Go_Live_Button = (my_tag) => {
+        
+        return my_tag?.is_host ? <></> : <div className="button-wrapper" id="go-live">
+
+                                            <div id="button" onClick={(e)=>{this.Request_To_Go_Live(my_tag);}}>
+
+                                                Go Live
+
+                                            </div>
+
+                                        </div>;
+    }
+    
+    Request_To_Go_Live = (my_tag) => {
+        
+        let {the_host} = this.state;
+        
+        this.props.socket.emit('request_to_go_live', {host: the_host, from: this.state.my_room_tag});
+        
+    }
 
     render() {
 
@@ -89,15 +112,7 @@ class Chat_Box extends Component {
 
                     <div id="buttons-area">
 
-                        <div className="button-wrapper" id="go-live">
-
-                            <div id="button">
-
-                                Go Live
-
-                            </div>
-
-                        </div>
+                        {this.Generate_Go_Live_Button(this.state.my_room_tag)}
 
                     </div>
 
