@@ -89,7 +89,7 @@ class Viewer_Display extends Component {
                 
             }
 
-        });            
+        });
 
         socket?.on('leave_chat_room', ({room_tag})=>{
 
@@ -100,6 +100,21 @@ class Viewer_Display extends Component {
             this.setState({participants: participants});
 
         });
+    }
+
+    Request_To_Go_Live_Answered = (tag) => {
+
+        let { participants } = this.state;
+        let { id } = tag;
+
+        if (participants[id] !== undefined) {
+
+            participants[id].request_live = false;
+
+            this.setState({ participants: participants });
+
+        }
+
     }
 
     render(){
@@ -114,21 +129,15 @@ class Viewer_Display extends Component {
 
                     let {account_data, room_tag, request_live} = participants[key];
 
-                    return <div className="participant-entry-wrapper" 
+                    return <div className="participant-entry-wrapper" key={ind} >
 
-                                key={ind} 
-
-                                onClick={(e)=>{
-
-                                    this.props.set_account_view(account_data);
-
-                                }}
-                            >
-
-                        <Viewer_Entry account_data={account_data} 
-                                    room_tag={room_tag} 
-                                    request_live={request_live} 
-                                    socket={this.state.socket}/>
+                        <Viewer_Entry account_data={account_data}
+                            room_tag={room_tag}
+                            request_live={request_live}
+                            socket={this.state.socket}
+                            set_account_view={this.props.set_account_view}
+                            request_to_go_live_answered={this.Request_To_Go_Live_Answered}
+                        />
 
                     </div>;
 

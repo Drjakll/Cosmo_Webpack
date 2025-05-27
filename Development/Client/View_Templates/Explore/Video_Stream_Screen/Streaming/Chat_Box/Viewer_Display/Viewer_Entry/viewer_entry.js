@@ -43,7 +43,10 @@ class Viewer_Entry extends Component {
             
             this.state.socket?.emit('answer_to_request_live', {to: to, answer: answer});
             
-            this.setState({request_live: false});
+            this.setState({ request_live: false });
+
+            //Let the Viewer_Display component change the request_live to false.
+            this.props.request_to_go_live_answered(to);
             
         }
 
@@ -67,7 +70,13 @@ class Viewer_Entry extends Component {
                     
                 </div>
                 
-                <div id="portrait-wrapper">
+                <div id="portrait-wrapper"
+
+                        onClick={(e) => {
+
+                            this.props.set_account_view(account_data);
+
+                        }}>
                     
                     <div id="portrait" style={{backgroundImage: `url('${aws_s3_url}${profile_picture_link}')`}}>
                         

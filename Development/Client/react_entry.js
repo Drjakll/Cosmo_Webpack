@@ -13,8 +13,8 @@ import Drag_Scroll from './Utilities/drag_scroll.js';
 import Drag from './Utilities/drag.js';
 import Profile_Template from './View_Templates/Profile/profile_template.js';
 import Explore_Template from './View_Templates/Explore/explore_template.js';
+import Calendar from './Misc_Components/Calendar/calendar.js';
 import './react_entry.less';
-import VideoStream from './Video_Streams/init_point.js';
 
 class Entry extends Component {
 
@@ -45,7 +45,8 @@ class Entry extends Component {
                 Profile_Template, //Template for viewing user profile
                 Explore_Template, //Template for viewing explore
                 Drag_Scroll,
-                Drag
+                Drag,
+                Calendar
             }}
         
         >

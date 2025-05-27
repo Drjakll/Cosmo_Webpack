@@ -3,14 +3,16 @@
     "",
     "\\Development",
     "\\Development\\Client",
-    "\\Development\\Client\\View_Templates",
-    "\\Development\\Client\\View_Templates\\Explore",
-    "\\Development\\Client\\View_Templates\\Explore\\Video_Stream_Screen",
-    "\\Development\\Client\\View_Templates\\Explore\\Video_Stream_Screen\\Streaming",
-    "\\Development\\Client\\View_Templates\\Explore\\Video_Stream_Screen\\Streaming\\Chat_Box",
-    "\\Development\\Client\\View_Templates\\Explore\\Video_Stream_Screen\\Streaming\\Chat_Box\\Message",
-    "\\Development\\Client\\View_Templates\\Explore\\Video_Stream_Screen\\Streaming\\Chat_Box\\Viewer_Display\\Viewer_Entry"
+    "\\Development\\Client\\Misc_Components",
+    "\\Development\\Client\\Misc_Components\\Calendar",
+    "\\Development\\Client\\Misc_Components\\Calendar\\Month_Year_Display",
+    "\\Development\\Server",
+    "\\Development\\Server\\Requests",
+    "\\Development\\Server\\Requests\\requests",
+    "\\Development\\Server\\Requests\\requests\\user_accounts",
+    "\\Development\\Server\\Requests\\requests\\user_accounts\\profile",
+    "\\Development\\Server\\Requests\\requests\\user_accounts\\profile\\post_data"
   ],
-  "SelectedNode": "\\Development\\Client\\View_Templates\\Explore\\Video_Stream_Screen\\Streaming\\Chat_Box\\chat_box.less",
+  "SelectedNode": "\\Development\\Client\\Misc_Components\\Calendar\\calendar.js",
   "PreviewInSolutionExplorer": false
 }

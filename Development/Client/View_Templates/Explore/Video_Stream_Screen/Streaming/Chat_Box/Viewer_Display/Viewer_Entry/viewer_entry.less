@@ -12,7 +12,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/ClientSide/style.less to edit thi
     display: flex;
     justify-content: space-evenly;
     align-items: center;
-    
+
     #name {
         width: 80%;
         display: flex;
@@ -21,42 +21,49 @@ Click nbfs://nbhost/SystemFileSystem/Templates/ClientSide/style.less to edit thi
         font-size: 0.75vw;
         padding: 7.5px 0px 7.5px 0px;
         position: relative;
-        
+
         #request-live-buttons {
             width: 100%;
-            background-color: white;
+            background-color: rgba(100,100,100,1);
             display: flex;
             justify-content: center;
             align-items: center;
             position: absolute;
-            
+            font-size: 0.5vw;
+            color: rgba(240,240,240,0.8);
+
             #label {
-                width: 40%;
+                width: 50%;
                 display: flex;
                 justify-content: center;
                 align-items: center;
+                font-size: 0.5vw;
+                padding: 7.5px 0px 7.5px 0px;
             }
-            
+
             #button {
-                width: 30%;
+                width: 25%;
                 display: flex;
                 justify-content: center;
                 align-items: center;
-                
-                &:hover { 
+                font-size: 0.5vw;
+                padding: 7.5px 0px 7.5px 0px;
+
+                &:hover {
+                    background-color: rgba(0,0,0,0.2);
                     cursor: pointer;
                 }
             }
         }
     }
-    
+
     #portrait-wrapper {
         width: 20%;
         height: 2.5vh;
         display: flex;
         justify-content: center;
         align-items: center;
-        
+
         #portrait {
             width: 90%;
             height: 90%;
@@ -66,6 +73,10 @@ Click nbfs://nbhost/SystemFileSystem/Templates/ClientSide/style.less to edit thi
             box-shadow: 2.5px 2.5px 5px rgba(0,0,0,0.25);
             border-radius: 1px;
             background-color: rgba(0,0,0,0.75);
+        }
+
+        &:hover {
+            cursor: pointer;
         }
     }
 }

@@ -188,7 +188,9 @@ class Streaming extends Component {
                 
                 this.Go_Live_To_All();
             }
-            
+
+
+
         });
         
 
@@ -246,7 +248,11 @@ class Streaming extends Component {
     
     Init_Peer_Connection = (tag) => {
         
-        let peer = new RTCPeerConnection(this.peerConfig);
+        let peer = this.participants[tag.id]?.peer;
+
+        if (!peer) {
+            peer = new RTCPeerConnection(this.peerConfig)
+        }
         
         peer.onicecandidate = (event) => {
 
@@ -352,11 +358,15 @@ class Streaming extends Component {
 
     Go_Live_To_All = async () => {
 
-        for (let i in this.participants) {
+        this.socket.emit('join_stream', { room_tag: this.my_room_tag, account_data: this.state.account_data });
 
-            this.Give_Self_Tracks_To_Peer(this.participants[i]);
 
-        }
+        //for (let i in this.participants) {
+
+        //    this.Give_Self_Tracks_To_Peer(this.participants[i]);
+
+        //    //this.New_Offer(this.participants[i]);
+        //}
 
     }
     

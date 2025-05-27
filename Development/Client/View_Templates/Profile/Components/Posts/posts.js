@@ -7,18 +7,23 @@ class Posts extends Component {
         
         super(props);
 
+        Posts.contextType = window.Context;
+
+
     }
     
     
-    render(){
+    render() {
+
+        let { Calendar } = this.context;
         
         return (
-                <div id="posts">
+            <div id="posts">
                     
+                <Calendar year={2025} month={4} date={26} callback_left={(e) => { }} callback_right={(e) => { }} date_callbacks={[]} />
                     
-                    
-                </div>
-            );
+            </div>
+        );
     }
 }
 
