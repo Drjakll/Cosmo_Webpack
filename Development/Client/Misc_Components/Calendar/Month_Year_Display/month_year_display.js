@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import './month_year_display.less';
 
 class Month_Year_Display extends Component {
 
@@ -27,7 +28,8 @@ class Month_Year_Display extends Component {
             month: month,
             year: year,
             callback_left: callback_left,
-            callback_right: callback_right
+            callback_right: callback_right,
+            update_parent: update_parent
         };
     }
 
@@ -65,7 +67,7 @@ class Month_Year_Display extends Component {
 
     render() {
 
-        return <div id="month-year">
+        return <div id="month-year-wrapper">
 
             <div className="navigation left"
                 onClick={(e) => {

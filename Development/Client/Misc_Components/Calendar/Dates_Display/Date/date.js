@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-
+import './date.less';
 
 class Date extends Component {
 
@@ -8,7 +8,9 @@ class Date extends Component {
         super(props);
 
         this.state = {
-            date: this.props.date
+            date: this.props.date,
+            style: this.props.style,
+            popup: this.props.popup
         };
     }
 
@@ -31,9 +33,20 @@ class Date extends Component {
                     this.props.callback();
                 }
 
-            }}>
-
-                {this.state.date}
+            }}
+            >
+                <div id="popup">
+                    {this.state.popup}
+                </div>
+                
+                <div id="the-date-value"
+                    
+                    style={this.state.style}
+                >
+                
+                    {this.state.date}
+                    
+                </div>
 
             </div>
         );

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Date from './Date/date.js';
+import './dates_display.less';
 
 class Dates_Display extends Component {
 
@@ -7,12 +8,12 @@ class Dates_Display extends Component {
 
         super(props);
 
-        let { days, first_day, callbacks } = this.props;
+        let { days, first_day, properties } = this.props;
 
         this.state = {
             days: days,
             first_day: first_day,
-            callbacks: callbacks
+            properties: properties
         };
     }
 
@@ -25,31 +26,31 @@ class Dates_Display extends Component {
         this.setState(this.props);
     }
 
-    Generate_Date_Array = ({first_day, days, callbacks}) => {
+    Generate_Date_Array = ({first_day, days, properties}) => {
 
         let arr = [];
         let r = 0, c = 0;
 
-        arr.push([])
+        arr.push([]);
 
         for (let i = 0; i < first_day; i++) {
-            arr[c].push({ date: "", callback: null }); 
+            arr[c].push({ date: "", callback: null, style: {}, popup: null }); 
             r++;
         }
 
         for (let i = 0; i < days; i++) {
 
-            if (r % 7 === 0) {
+            if (r > 0 && r % 7 === 0) {
                 arr.push([]);
                 c++;
             }
 
-            arr[c].push({ date: `${i + 1}`, callback: null });
+            arr[c].push({ date: `${i + 1}`, callback: null, style: {}, popup: null });
             r++;
             
         }
 
-        let remainder = 42 - c;
+        let remainder = 42 - r;
 
         for (let i = 0; i < remainder; i++) {
 
@@ -58,18 +59,22 @@ class Dates_Display extends Component {
                 c++;
             }
 
-            arr[c].push({ date: '', callback: null });
+            arr[c].push({ date: '', callback: null, style: {}, popup: null });
             r++;
         }
 
-        for (let cb of callbacks) {
+        for (let cb of properties) {
 
-            let { index, callback } = cb;
-
-            let col = Math.floor(index/7);
-            let row = index % 7;
+            let { date, callback, style, popup } = cb;
+            
+            let calendar_pos = date + first_day - 1;
+            
+            let col = Math.floor(calendar_pos/7);
+            let row = calendar_pos % 7;
 
             arr[col][row].callback = callback;
+            arr[col][row].style = style;
+            arr[col][row].popup = popup;
         }
 
         return arr;
@@ -87,11 +92,11 @@ class Dates_Display extends Component {
 
                     {row.map((col, c_ind) => {
 
-                        let { date, callback } = col;
+                        let { date, callback, style, popup } = col;
 
                         return <div className="col" key={c_ind}>
 
-                            <Date date={date} callback={callback} />
+                            <Date date={date} callback={callback} style={style} popup = {popup}/>
 
                         </div>;
 

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import './day_display.less';
 
 class Day_Display extends Component {
 
@@ -31,7 +32,7 @@ class Day_Display extends Component {
 
             {weekdays.map((val, ind) => {
 
-                return <div key={ind}>
+                return <div className="weekday" key={ind}>
 
                     {this.Week_Days[val]}
 

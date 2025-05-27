@@ -12,6 +12,7 @@
             <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Development/Client/View_Templates/Profile/Components/Album/Photos_Container/Single_Photo_Thumbnail/Enlarged_Single_Photo/Photo_Comments/photo_comments.js</file>
             <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Development/Client/View_Templates/Explore/Stream_List_Components/Stream_Displays/stream_displays.less</file>
             <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Development/Server/Websockets/IO_Namespaces/live_streaming/events/acknowledge_new_viewer.js</file>
+            <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Development/Client/Misc_Components/Calendar/Day_Display/day_display.js</file>
             <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Development/Server/Websockets/Socket_Requests/socket_requests/webrtc_functions/add_candidate.js</file>
             <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Development/Client/View_Templates/Profile/Components/Profile_Info/profile_info.less</file>
             <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Development/Client/Video_Streams/VideoObj.js</file>
@@ -59,14 +60,18 @@
             <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Built_Client/built_client.js</file>
             <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Development/Client/Utilities/configurations.js</file>
             <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Development/Server/Websockets/IO_Namespaces/io_namespaces.js</file>
+            <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Development/Client/Misc_Components/Calendar/Day_Display/day_display.less</file>
             <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Development/Server/Requests/requests/stream_rooms/create_stream_room.js</file>
             <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Development/Client/View_Templates/Explore/explore_template.js</file>
+            <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Development/Client/Misc_Components/Calendar/Dates_Display/Date/date.js</file>
             <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Development/Client/View_Templates/Profile/Components/Album/Photos_Container/Single_Photo_Thumbnail/Enlarged_Single_Photo/Photo_Comments/Single_Comment/single_comment.js</file>
             <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Development/Client/View_Templates/Explore/Video_Stream_Screen/Streaming/Chat_Box/Message/message.less</file>
             <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Development/Client/App_Entrance/Entrance_Options/Logged_In_Account/logged_in_account.js</file>
+            <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Development/Client/View_Templates/Profile/Components/Posts/posts.less</file>
             <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Development/Client/View_Templates/Explore/Video_Stream_Screen/Streaming/Chat_Box/Text_Input/text_input.js</file>
             <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Development/Server/Websockets/IO_Namespaces/live_streaming/events/request_streams.js</file>
             <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/app.js</file>
+            <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Development/Client/Misc_Components/Calendar/Month_Year_Display/month_year_display.js</file>
             <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Development/Server/Websockets/IO_Namespaces/photo_comments/events/submit_a_comment.js</file>
             <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Development/Server/Requests/requests/user_accounts/profile/photos/add_photo_links.js</file>
             <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Development/Client/View_Templates/Profile/Components/Album/Photos_Container/Single_Photo_Thumbnail/Enlarged_Single_Photo/Photo_Comments/Single_Comment/Reply_To_Comment/reply_to_comment.js</file>
@@ -96,12 +101,17 @@
             <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Development/Client/View_Templates/Profile/Components/Posts/posts.js</file>
             <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Built_Server/Development_Server_Requests_requests_user_accounts_profile_photos_add_photo_links_js.built_server.js</file>
             <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Development/Server/Requests/tools/generate_insert_query.js</file>
+            <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Development/Client/Misc_Components/Calendar/Month_Year_Display/month_year_display.less</file>
             <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Development/Server/Requests/tools/generate_update_query.js</file>
             <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Development/Client/View_Templates/Profile/Components/Album/Photos_Container/Single_Photo_Thumbnail/Enlarged_Single_Photo/Photo_Comments/Single_Comment/single_comment.less</file>
             <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Development/Client/View_Templates/Explore/Stream_List_Components/Init_Stream/init_stream.less</file>
             <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Development/Client/View_Templates/Explore/Video_Stream_Screen/Streaming/Chat_Box/Viewer_Display/Viewer_Entry/viewer_entry.less</file>
+            <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Development/Client/Misc_Components/Calendar/calendar.less</file>
+            <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Development/Client/Misc_Components/Calendar/Dates_Display/Date/date.less</file>
             <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Development/Server/Requests/requests/stream_rooms/disband_stream_room.js</file>
             <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Development/Client/View_Templates/Explore/Video_Stream_Screen/video_stream_screen.js</file>
+            <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Development/Client/Misc_Components/Calendar/Dates_Display/dates_display.js</file>
+            <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Development/Client/Misc_Components/Calendar/Dates_Display/dates_display.less</file>
             <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Development/Server/Websockets/IO_Namespaces/live_streaming/live_streaming.js</file>
             <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Development/Client/react_entry.js</file>
             <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Development/Client/View_Templates/Profile/Components/Profile_Info/Profile_Info_Data/profile_info_data.less</file>
@@ -123,6 +133,7 @@
             <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Development/Client/App_Entrance/Entrance_Options/Logged_In_Account/Screen/Explore/explore.less</file>
             <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Development/Client/View_Templates/Explore/Video_Stream_Screen/Streaming/streaming.js</file>
             <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Development/Client/API_Requests/request_urls.js</file>
+            <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Development/Client/Misc_Components/Calendar/calendar.js</file>
             <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Development/Client/View_Templates/Profile/Components/Profile_Info/profile_info.js</file>
             <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Development/Client/App_Entrance/Entrance_Options/Logged_In_Account/Screen/screen.js</file>
             <file>file:/Users/justinzhu/Desktop/Cosmo_Webpack/Development/Client/View_Templates/Explore/Video_Stream_Screen/Prepare_To_Stream/prepare_to_stream.js</file>
