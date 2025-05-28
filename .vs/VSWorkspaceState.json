@@ -3,16 +3,14 @@
     "",
     "\\Development",
     "\\Development\\Client",
-    "\\Development\\Client\\Misc_Components",
-    "\\Development\\Client\\Misc_Components\\Calendar",
-    "\\Development\\Client\\Misc_Components\\Calendar\\Month_Year_Display",
-    "\\Development\\Server",
-    "\\Development\\Server\\Requests",
-    "\\Development\\Server\\Requests\\requests",
-    "\\Development\\Server\\Requests\\requests\\user_accounts",
-    "\\Development\\Server\\Requests\\requests\\user_accounts\\profile",
-    "\\Development\\Server\\Requests\\requests\\user_accounts\\profile\\post_data"
+    "\\Development\\Client\\View_Templates",
+    "\\Development\\Client\\View_Templates\\Explore\\Video_Stream_Screen",
+    "\\Development\\Client\\View_Templates\\Explore\\Video_Stream_Screen\\Streaming",
+    "\\Development\\Client\\View_Templates\\Profile",
+    "\\Development\\Client\\View_Templates\\Profile\\Components",
+    "\\Development\\Client\\View_Templates\\Profile\\Components\\Posts",
+    "\\Development\\Client\\View_Templates\\Profile\\Components\\Posts\\Single_Post"
   ],
-  "SelectedNode": "\\Development\\Client\\Misc_Components\\Calendar\\calendar.js",
+  "SelectedNode": "\\Development\\Client\\View_Templates\\Profile\\Components\\Posts\\posts.js",
   "PreviewInSolutionExplorer": false
 }
