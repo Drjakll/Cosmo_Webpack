@@ -30,19 +30,18 @@ class Date extends Component {
             <div id="date" onClick={(e) => {
 
                 if (this.props.callback) {
-                    this.props.callback();
+                    this.props.callback(this.state.date);
                 }
-
             }}
+
+                style={this.state.style}
+                
             >
                 <div id="popup">
                     {this.state.popup}
                 </div>
                 
-                <div id="the-date-value"
-                    
-                    style={this.state.style}
-                >
+                <div id="the-date-value">
                 
                     {this.state.date}
                     

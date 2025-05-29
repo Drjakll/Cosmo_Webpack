@@ -39,6 +39,31 @@ let Account_Data_Template = function(initial){
     return template;
 };
 
+let Post_Data_Template = function(initial){
+  
+    let template = {
+        id: null,
+        title: "",
+        body: "",
+        owner_email: "",
+        date_created: null,
+        last_edited: null
+    };
+    
+    for(let i in initial){
+        
+        if(i === "id" || template[i] === undefined){
+            continue;
+        }
+        
+        template[i] = initial[i];
+        
+    }
+    
+    return template;
+};
+
 export default {
-        Account_Data_Template: Account_Data_Template
+        Account_Data_Template: Account_Data_Template,
+        Post_Data_Template: Post_Data_Template
 };

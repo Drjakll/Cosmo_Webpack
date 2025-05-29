@@ -8,6 +8,7 @@ let request = function() {
                                                and date_created >= '${date_interval.start}'
                                                and date_created <= '${date_interval.end}'
                                                order by date_created ${order}`;
+
         
         this.sql.query(query, (err, results)=>{
             

@@ -12,6 +12,9 @@ const submit_photo_comment = '/submit_photo_comment';
 const update_photo_comment = '/update_photo_comment';
 const delete_photo_comment = '/delete_photo_comment';
 
+//Posts
+const get_posts = '/get_posts';
+
 //Video streams
 const create_stream_room = '/create_stream_room';
 const disband_stream_room = '/disband_stream_room';
@@ -33,6 +36,9 @@ export default {
         submit_photo_comment: submit_photo_comment,
         update_photo_comment: update_photo_comment,
         delete_photo_comment: delete_photo_comment,
+        
+        //Posts
+        get_posts: get_posts,
         
         //Video streams
         create_stream_room: create_stream_room,

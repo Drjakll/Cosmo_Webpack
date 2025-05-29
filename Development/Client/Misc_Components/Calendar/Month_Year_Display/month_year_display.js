@@ -75,7 +75,7 @@ class Month_Year_Display extends Component {
                     let { year, month } = this.Add_Month(-1, this.state);
 
                     if (this.state.callback_left) {
-                        this.state.callback_left({year: year, month: month});
+                        this.state.callback_left({year: year, month: month + 1});
                     }
 
                     this.setState({ month: month, year: year });
@@ -109,7 +109,7 @@ class Month_Year_Display extends Component {
                     let { year, month } = this.Add_Month(1, this.state);
 
                     if (this.state.callback_right) {
-                        this.state.callback_right({ year: year, month: month });
+                        this.state.callback_right({ year: year, month: month + 1 });
                     }
 
                     this.setState({ month: month, year: year });
