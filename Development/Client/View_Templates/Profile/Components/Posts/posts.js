@@ -33,7 +33,7 @@ class Posts extends Component {
             selected_year: today.getFullYear(),
             selected_month: today.getMonth() + 1,
             selected_date: today.getDate(),
-            selected_post: {},
+            selected_post: {title: "No post selected", body: "", date_created: ""},
             properties_for_calendar_dates: []
         };
     }
@@ -103,14 +103,18 @@ class Posts extends Component {
             
         let resJson = await res.json();
         
-        if(resJson){
+        if (resJson) {
+
+            let calendar_posts = this.Organize_Posts_For_Calendar(resJson.posts);
             
             this.setState({
-                properties_for_calendar_dates: this.Organize_Posts_For_Calendar(resJson.posts),
+                properties_for_calendar_dates: calendar_posts,
                 selected_year: year,
                 selected_date: last_day_of_month,
                 selected_month: month
             });
+
+            this.Set_Current_Post(calendar_posts[calendar_posts.length - 1].date);
         }
         
     }
@@ -169,7 +173,8 @@ class Posts extends Component {
     Set_Current_Post = (date) => {
         
         this.setState({
-            selected_post: this.Posts_JSON[date]
+            selected_post: this.Posts_JSON[date],
+            selected_date: date
         });
         
     }

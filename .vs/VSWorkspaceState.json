@@ -3,14 +3,16 @@
     "",
     "\\Development",
     "\\Development\\Client",
+    "\\Development\\Client\\App_Entrance",
+    "\\Development\\Client\\App_Entrance\\Entrance_Options",
+    "\\Development\\Client\\App_Entrance\\Entrance_Options\\Logged_In_Account",
+    "\\Development\\Client\\App_Entrance\\Entrance_Options\\Logged_In_Account\\Screen",
+    "\\Development\\Client\\App_Entrance\\Entrance_Options\\Logged_In_Account\\Screen\\Profile",
     "\\Development\\Client\\View_Templates",
-    "\\Development\\Client\\View_Templates\\Explore\\Video_Stream_Screen",
-    "\\Development\\Client\\View_Templates\\Explore\\Video_Stream_Screen\\Streaming",
     "\\Development\\Client\\View_Templates\\Profile",
     "\\Development\\Client\\View_Templates\\Profile\\Components",
-    "\\Development\\Client\\View_Templates\\Profile\\Components\\Posts",
-    "\\Development\\Client\\View_Templates\\Profile\\Components\\Posts\\Single_Post"
+    "\\Development\\Client\\View_Templates\\Profile\\Components\\Profile_Info"
   ],
-  "SelectedNode": "\\Development\\Client\\View_Templates\\Profile\\Components\\Posts\\posts.js",
+  "SelectedNode": "\\app.js",
   "PreviewInSolutionExplorer": false
 }

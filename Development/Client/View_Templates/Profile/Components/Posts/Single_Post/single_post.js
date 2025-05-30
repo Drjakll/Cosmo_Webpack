@@ -45,6 +45,10 @@ class Single_Post extends Component {
         
         let parts = date_str.split("T")[0];
         let date_parts = parts?.split("-");
+
+        if (!date_parts) {
+            return;
+        }
         
         let year = parseInt(date_parts[0]);
         let month = parseInt(date_parts[1]);
@@ -68,8 +72,10 @@ class Single_Post extends Component {
             </div>
             
             <div id="body">
-        
-                {body}
+
+                <pre>
+                    {body}
+                </pre>
         
             </div>
             
