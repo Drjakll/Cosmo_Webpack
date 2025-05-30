@@ -72,7 +72,6 @@ class Profile_Template extends Component {
             }
         }
         
-        
         this.setState({components: this.state.components});
     }
     

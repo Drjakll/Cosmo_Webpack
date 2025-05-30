@@ -30,7 +30,7 @@ let request = function() {
         
         //Update the sql database
         
-        account_details.profile_picture_link = dest_src;
+        account_details.profile_picture_link = dest_src; 
         
         let query = this.generate_update_query("User_Accounts", 
                                                 account_details, 
