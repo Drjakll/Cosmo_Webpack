@@ -1,14 +1,30 @@
 let request = function() {
     
-    var clone_file = async (copy_src, dest_src, bucket_name) => {
+    //var clone_file = async (copy_src, dest_src, bucket_name) => {
 
-        let input = {
-            "Bucket": bucket_name,
-            "CopySource": copy_src,
-            "Key": dest_src
-        };
+    //    let input = {
+    //        "Bucket": bucket_name,
+    //        "CopySource": copy_src,
+    //        "Key": dest_src
+    //    };
 
-        await this.s3.copyObject(input).promise();
+    //    await this.s3.copyObject(input).promise();
+    //};
+
+    var update_photo_comments_profile_picture = (url, acc) => {
+
+        let changes = { profile_picture_link: url };
+        let credential = { email: acc.email };
+
+        let query = this.generate_update_query("Photo_Comments", changes, credential);
+
+        this.sql.query(query, (err, result) => {
+
+            if (err) {
+                console.log(err.sqlMessage);
+            }
+
+        });
     };
     
     this.req = async (req, res) => { 
@@ -17,7 +33,7 @@ let request = function() {
         
         let path_parts = src_path.split('/');
         
-        path_parts[3] = 'main_profile_picture.jpg';
+        //path_parts[3] = 'main_profile_picture.jpg';
         
         const {BucketName} = this.global_data;
         
@@ -25,7 +41,7 @@ let request = function() {
         
         let dest_src = `${path_parts[0]}/${path_parts[1]}/${path_parts[2]}/${path_parts[3]}`;
         
-        await clone_file(copy_src, dest_src, BucketName);
+        //await clone_file(copy_src, dest_src, BucketName);
         
         
         //Update the sql database
@@ -36,17 +52,21 @@ let request = function() {
                                                 account_details, 
                                                 {"email": account_details.email});
                                         
-        this.sql.query(query, (err, result)=>{
-            
-            if(err){
-                
+        this.sql.query(query, (err, result) => {
+
+            if (err) {
+
                 console.log(err.sqlMessage);
-                res.json({message: "Error updating profile picture!", acc_info: account_details, status: 0});
-                    
+                res.json({ message: "Error updating profile picture!", acc_info: account_details, status: 0 });
+
             } else {
-            
-                res.json({message: "Profile picture updated!", acc_info: account_details, status: 0});
+
+                res.json({ message: "Profile picture updated!", acc_info: account_details, status: 0 });
+
+                //Update the profile picture on the Photo_Comments table as well
+                update_photo_comments_profile_picture(dest_src, account_details);
             }
+
             res.end();
         });
 

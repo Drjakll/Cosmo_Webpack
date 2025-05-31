@@ -2,15 +2,18 @@
   "ExpandedNodes": [
     "",
     "\\Development",
+    "\\Development\\Client",
+    "\\Development\\Client\\API_Requests",
+    "\\Development\\Client\\App_Entrance",
+    "\\Development\\Client\\App_Entrance\\Entrance_Options",
+    "\\Development\\Client\\App_Entrance\\Entrance_Options\\Logged_In_Account",
+    "\\Development\\Client\\App_Entrance\\Entrance_Options\\Logged_In_Account\\Screen",
+    "\\Development\\Client\\App_Entrance\\Entrance_Options\\Logged_In_Account\\Screen\\Profile",
     "\\Development\\Server",
     "\\Development\\Server\\Requests",
     "\\Development\\Server\\Requests\\requests",
-    "\\Development\\Server\\Requests\\requests\\user_accounts",
-    "\\Development\\Server\\Requests\\requests\\user_accounts\\profile",
-    "\\Development\\Server\\Requests\\requests\\user_accounts\\profile\\comments",
-    "\\Development\\Server\\Requests\\requests\\user_accounts\\profile\\comments\\photo_comments",
-    "\\Development\\Server\\Requests\\requests\\user_accounts\\profile\\profile_data"
+    "\\Development\\Server\\Requests\\requests\\get_web_pages"
   ],
-  "SelectedNode": "\\Development\\Server\\Requests\\requests\\user_accounts\\profile\\profile_data\\set_as_profile_picture.js",
+  "SelectedNode": "\\Development\\Client\\App_Entrance\\Entrance_Options\\Logged_In_Account\\Screen\\Profile\\profile.js",
   "PreviewInSolutionExplorer": false
 }
