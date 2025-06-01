@@ -3,17 +3,14 @@
     "",
     "\\Development",
     "\\Development\\Client",
-    "\\Development\\Client\\API_Requests",
-    "\\Development\\Client\\App_Entrance",
-    "\\Development\\Client\\App_Entrance\\Entrance_Options",
-    "\\Development\\Client\\App_Entrance\\Entrance_Options\\Logged_In_Account",
-    "\\Development\\Client\\App_Entrance\\Entrance_Options\\Logged_In_Account\\Screen",
-    "\\Development\\Client\\App_Entrance\\Entrance_Options\\Logged_In_Account\\Screen\\Profile",
-    "\\Development\\Server",
-    "\\Development\\Server\\Requests",
-    "\\Development\\Server\\Requests\\requests",
-    "\\Development\\Server\\Requests\\requests\\get_web_pages"
+    "\\Development\\Client\\View_Templates",
+    "\\Development\\Client\\View_Templates\\Profile",
+    "\\Development\\Client\\View_Templates\\Profile\\Components",
+    "\\Development\\Client\\View_Templates\\Profile\\Components\\Profile_Info",
+    "\\Development\\Client\\View_Templates\\Profile\\Components\\Profile_Info\\Profile_Info_Data",
+    "\\Development\\Client\\View_Templates\\Profile\\Components\\Profile_Info\\Profile_Picture",
+    "\\Development\\Client\\View_Templates\\Profile\\Components\\Profile_Info\\Profile_Picture\\Enlarged_Profile_Photo"
   ],
-  "SelectedNode": "\\Development\\Client\\App_Entrance\\Entrance_Options\\Logged_In_Account\\Screen\\Profile\\profile.js",
+  "SelectedNode": "\\Development\\Client\\View_Templates\\Profile\\Components\\Profile_Info\\Profile_Picture\\Enlarged_Profile_Photo\\enlarged_profile_photo.js",
   "PreviewInSolutionExplorer": false
 }
