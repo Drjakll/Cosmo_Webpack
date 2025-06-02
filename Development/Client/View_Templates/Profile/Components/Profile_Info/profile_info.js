@@ -30,17 +30,22 @@ class Profile_Info extends Component {
         }
         
         this.setState(this.state);
+        
     }
     
+    
+    
     render(){
+        
+        let {profile_photo_editor} = this.state;
         
         return (
                 <div id="profile-info">
                     
                     <div id="profile-picture-wrapper">
                     
-                        <Profile_Picture account_data={this.state.account_data} />
-                
+                        <Profile_Picture account_data={this.state.account_data} generate_editors={profile_photo_editor} />
+                        
                     </div>
                     
                     <div id="profile-info-wrapper">

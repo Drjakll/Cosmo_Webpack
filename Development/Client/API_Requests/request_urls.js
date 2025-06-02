@@ -5,6 +5,7 @@ const create_account = `/create_account`;
 //Account photos
 const get_photo_albums = '/get_photo_albums';
 const get_photo_links = '/get_photo_links';
+const get_all_profile_pictures = '/get_all_profile_pictures';
 
 //Photo comments
 const get_photo_comments = '/get_photo_comments';
@@ -30,6 +31,7 @@ export default {
         //Account photos
         get_photo_albums: get_photo_albums,
         get_photo_links: get_photo_links,
+        get_all_profile_pictures: get_all_profile_pictures,
         
         //Photo comments
         get_photo_comments: get_photo_comments,

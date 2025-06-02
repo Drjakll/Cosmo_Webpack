@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import Profile_Photo_Editor from './Profile_Photo_Editor/profile_photo_editor.js';
 import './profile.less';
 
 class Profile extends Component {
@@ -31,6 +32,11 @@ class Profile extends Component {
         UpdateAllComponentProps({account_data: this.profile_data});
     }
     
+    Generate_Profile_Photo_Editor = ({account_data, refresh_account_data}) => {
+        
+        return <Profile_Photo_Editor account_data={account_data} refresh_account_data={refresh_account_data}/>;
+    }
+    
     render(){
         
         const {Profile_Template} = this.context;
@@ -38,7 +44,14 @@ class Profile extends Component {
         return (
                 <div id="profile">
                     
-                    <Profile_Template get_account_data={this.GetAccountData}/>
+                    <Profile_Template 
+                        get_account_data={this.GetAccountData}
+                        add_editors={{
+                            "Profile Info": {
+                                profile_photo_editor: this.Generate_Profile_Photo_Editor
+                            }
+                        }}
+                    />
                     
                 </div>
             );

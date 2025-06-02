@@ -15,11 +15,11 @@ class Profile_Template extends Component {
         Profile_Template.contextType = window.Context;
         
         this.state = {
-            components: [
-                {component: Profile_Info, props: {}, classname: "profile-info-wrapper"},
-                {component: Albums, props: {}, classname: "albums-wrapper"}, 
-                {component: Posts, props: {}, classname: "posts-wrapper"}
-            ]
+            components: {
+                "Profile Info": {component: Profile_Info, props: {}, classname: "profile-info-wrapper"},
+                "Albums": {component: Albums, props: {}, classname: "albums-wrapper"}, 
+                "Posts": {component: Posts, props: {}, classname: "posts-wrapper"}
+            }
         };
     }
     
@@ -32,7 +32,16 @@ class Profile_Template extends Component {
         if(this.props.account_data){
             this.UpdateAllComponentProps({account_data: this.props.account_data});
         }
-
+        
+        if(this.props.add_editors){
+            
+            let {add_editors} = this.props;
+            
+            for(let key in add_editors){
+                
+                this.UpdateComponentProps(key, add_editors[key]);
+            }
+        }
     }
     
     componentDidUpdate(prevProps, prevState){
@@ -56,7 +65,6 @@ class Profile_Template extends Component {
             
         }
         
-        
         this.setState({components: this.state.components});
         
     }
@@ -77,12 +85,16 @@ class Profile_Template extends Component {
     
     render(){
         
+        let {components} = this.state;
+        
         return (
                 <div id="profile-template">
                     
                     <div id="profile-template-components-wrapper">
                     
-                        {this.state.components.map((com, index)=>{
+                        {Object.keys(components).map((key, index)=>{
+                            
+                            const com = components[key];
                             
                             const Com = com.component;
                             
