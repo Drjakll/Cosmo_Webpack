@@ -42,8 +42,10 @@ class Reply_To_Comment_Quote extends Component {
         return <div id="reply-to-comment-quote-wrapper">
         
                 
-            <div id="close-reply-button" onClick={(e)=>{this.props.close_reply();}}>
-                x
+            <div id="close-reply-button" onClick={(e) => { this.props.close_reply(); }}>
+
+                <div id="inner-x">x</div>
+
             </div>
         
             <div id="reply-info">

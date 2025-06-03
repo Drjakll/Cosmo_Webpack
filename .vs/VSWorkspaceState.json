@@ -6,11 +6,14 @@
     "\\Development\\Client\\View_Templates",
     "\\Development\\Client\\View_Templates\\Profile",
     "\\Development\\Client\\View_Templates\\Profile\\Components",
-    "\\Development\\Client\\View_Templates\\Profile\\Components\\Profile_Info",
-    "\\Development\\Client\\View_Templates\\Profile\\Components\\Profile_Info\\Profile_Info_Data",
-    "\\Development\\Client\\View_Templates\\Profile\\Components\\Profile_Info\\Profile_Picture",
-    "\\Development\\Client\\View_Templates\\Profile\\Components\\Profile_Info\\Profile_Picture\\Enlarged_Profile_Photo"
+    "\\Development\\Client\\View_Templates\\Profile\\Components\\Album",
+    "\\Development\\Client\\View_Templates\\Profile\\Components\\Album\\Photos_Container",
+    "\\Development\\Client\\View_Templates\\Profile\\Components\\Album\\Photos_Container\\Single_Photo_Thumbnail",
+    "\\Development\\Client\\View_Templates\\Profile\\Components\\Album\\Photos_Container\\Single_Photo_Thumbnail\\Enlarged_Single_Photo",
+    "\\Development\\Client\\View_Templates\\Profile\\Components\\Album\\Photos_Container\\Single_Photo_Thumbnail\\Enlarged_Single_Photo\\Photo_Comments",
+    "\\Development\\Client\\View_Templates\\Profile\\Components\\Album\\Photos_Container\\Single_Photo_Thumbnail\\Enlarged_Single_Photo\\Photo_Comments\\Comment_Input",
+    "\\Development\\Client\\View_Templates\\Profile\\Components\\Album\\Photos_Container\\Single_Photo_Thumbnail\\Enlarged_Single_Photo\\Photo_Comments\\Comment_Input\\Reply"
   ],
-  "SelectedNode": "\\Development\\Client\\View_Templates\\Profile\\Components\\Profile_Info\\Profile_Picture\\Enlarged_Profile_Photo\\enlarged_profile_photo.js",
+  "SelectedNode": "\\Development\\Client\\View_Templates\\Profile\\Components\\Album\\Photos_Container\\Single_Photo_Thumbnail\\Enlarged_Single_Photo\\Photo_Comments\\Comment_Input\\Reply\\reply.less",
   "PreviewInSolutionExplorer": false
 }

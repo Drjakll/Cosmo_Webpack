@@ -7,27 +7,27 @@ import './profile_info_data.less';
 
 class Profile_Info_Data extends Component {
     
-    state = {
-        account_data: {},
-        info_templates: {
-            first_name: {component: Text_Type, label: "First Name", value: ""},
-            last_name: {component: Text_Type, label: "Last Name", value: ""},
-            date_of_birth: {component: Date_Type, label: "Birth Date", value: ""},
-            birth_location: {component: Json_Type, label: "Birthplace", value: ""},
-            gender: {component: Choice_Type, label: "Gender", value: ""},
-            current_location: {component: Json_Type, label: "Current Location", value: ""},
-            martial_status: {component: Choice_Type, label: "Martial Status", value: ""},
-            hobbies: {component: Json_Type, label: "Hobbies", value: ""},
-            professions: {component: Json_Type, label: "Professions", value: ""},
-            schools: {component: Json_Type, label: "School", value: ""}
-        }
-    };
-    
     constructor(props){
         
         super(props);
         
         Profile_Info_Data.contextType = window.Context;
+
+        this.state = {
+            account_data: this.props.accound_data,
+            info_templates: {
+                first_name: { component: Text_Type, label: "First Name", value: "" },
+                last_name: { component: Text_Type, label: "Last Name", value: "" },
+                date_of_birth: { component: Date_Type, label: "Birth Date", value: "" },
+                birth_location: { component: Json_Type, label: "Birthplace", value: "" },
+                gender: { component: Choice_Type, label: "Gender", value: "" },
+                current_location: { component: Json_Type, label: "Current Location", value: "" },
+                martial_status: { component: Choice_Type, label: "Martial Status", value: "" },
+                hobbies: { component: Json_Type, label: "Hobbies", value: "" },
+                professions: { component: Json_Type, label: "Professions", value: "" },
+                schools: { component: Json_Type, label: "School", value: "" }
+            }
+        };
     }
     
     componentDidUpdate(prevProps, prevState){
@@ -61,7 +61,7 @@ class Profile_Info_Data extends Component {
     
     render(){
         
-        const {Drag_Scroll} = this.context;
+        const { Drag_Scroll } = this.context;
         
         let drag_scroll = new Drag_Scroll();
         
@@ -108,16 +108,17 @@ class Profile_Info_Data extends Component {
                             return <div className="individual-info-wrapper" key={index}>
 
                                 <div id="info-label">
-                                
+
                                     {label}
-                                
+
                                 </div>
-            
+
                                 <div id="info-value">
-                                
-                                    <Com value={value} label={label}/>
-                                    
+
+                                    <Com value={value} label={label} />
+
                                 </div>
+
                             </div>;
 
                         })}

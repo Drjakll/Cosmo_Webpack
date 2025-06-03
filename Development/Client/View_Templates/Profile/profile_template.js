@@ -25,7 +25,7 @@ class Profile_Template extends Component {
     
     componentDidMount(){
         
-        if(this.props.get_account_data){
+        if (this.props.get_account_data) {
             this.props.get_account_data(this.UpdateAllComponentProps);
         }
         
@@ -85,7 +85,7 @@ class Profile_Template extends Component {
     
     render(){
         
-        let {components} = this.state;
+        let { components } = this.state;
         
         return (
                 <div id="profile-template">

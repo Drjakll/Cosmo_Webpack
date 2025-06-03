@@ -37,7 +37,7 @@ class Profile_Info extends Component {
     
     render(){
         
-        let {profile_photo_editor} = this.state;
+        let { profile_photo_editor, profile_data_editor } = this.state;
         
         return (
                 <div id="profile-info">
@@ -50,7 +50,7 @@ class Profile_Info extends Component {
                     
                     <div id="profile-info-wrapper">
                         
-                        <Profile_Info_Data account_data={this.state.account_data} />
+                        <Profile_Info_Data account_data={this.state.account_data} generate_editors={profile_data_editor} />
                         
                     </div>
                     

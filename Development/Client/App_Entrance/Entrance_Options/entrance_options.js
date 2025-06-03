@@ -50,7 +50,7 @@ class Entrance_Options extends Component {
         
         let resJson = await res.json();
         
-        let {acc_info, message} = resJson;
+        let { acc_info, message } = resJson;
         
         if(acc_info){
       

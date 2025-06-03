@@ -14,7 +14,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/ClientSide/style.less to edit thi
     left: 0px;
     position: fixed;
     z-index: 999999;
-    
+
     #the-exit-button-profile-photo-editor {
         width: 100%;
         height: 100%;
@@ -22,12 +22,12 @@ Click nbfs://nbhost/SystemFileSystem/Templates/ClientSide/style.less to edit thi
         top: 0px;
         left: 0px;
         background-color: rgba(0,0,0,0.25);
-        
+
         &:hover {
             cursor: pointer;
         }
     }
-    
+
     #the-profile-pictures-editor {
         width: 80%;
         height: 95%;
@@ -38,38 +38,61 @@ Click nbfs://nbhost/SystemFileSystem/Templates/ClientSide/style.less to edit thi
         border-radius: 15px;
         box-shadow: 0px 0px 5px rgba(0,0,0,0.25);
         overflow: hidden;
-        
-        #profile-picture-collection-label {
+
+        #top {
             width: 100%;
-            height: 25px;
+            height: 80px;
             display: flex;
-            justify-content: center;
+            justify-content: flex-start;
             align-items: center;
-            padding: 10px 0px 10px 0px;
-        }
-        
-        #profile-picture-collection {
-            width: 100%;
-            height: calc(100% - 55px);
-            display: block;
-            overflow: auto;
-            white-space: wrap;
-            
-            .individual-picture-wrapper {
-                width: calc(100%/4);
-                height: 250px;
+
+            #upload-profile-pictures-wrapper {
+                width: 25%;
+                height: 100%;
+                display: flex;
+                justify-content: space-evenly;
+                align-items: center;
+            }
+
+            #profile-picture-collection-label {
+                width: 25%;
+                height: 100%;
                 display: flex;
                 justify-content: center;
                 align-items: center;
-                flex-direction: column;
-                
+                padding: 10px 0px 10px 0px;
+                font-weight: bold;
+            }
+
+            #delete-selected-pictures-wrapper {
+                width: 50%;
+                height: 100%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+        }
+
+        #profile-picture-collection {
+            width: 100%;
+            height: calc(100% - 100px);
+            display: block;
+            overflow: auto;
+            white-space: wrap;
+
+            .individual-picture-wrapper {
+                width: calc(100%/4);
+                height: 600px;
+                display: inline-block;
+
                 #picture-wrapper {
                     width: 100%;
-                    height: 80%;
+                    height: 90%;
                     display: flex;
                     justify-content: center;
                     align-items: center;
-                    
+                    flex-direction: column;
+
                     #the-picture {
                         width: 90%;
                         height: 90%;
@@ -77,6 +100,42 @@ Click nbfs://nbhost/SystemFileSystem/Templates/ClientSide/style.less to edit thi
                         background-repeat: no-repeat;
                         background-position: center;
                         background-color: rgba(0,0,0,0.75);
+                        box-shadow: 0px 0px 5px rgba(0,0,0,0.25);
+                        border-radius: 10px;
+                        border: rgba(0,0,0,0.5);
+                        transition: 1s;
+
+                        &:hover {
+                            box-shadow: 0px 0px 0px rgba(0,0,0,0);
+                        }
+                    }
+                }
+
+                #the-buttons {
+                    width: 100%;
+                    height: 10%;
+                    display: flex;
+                    justify-content: space-evenly;
+                    align-items: center;
+
+                    #set-as-profile-button, #delete-selection {
+                        padding: 10px;
+                        border: rgba(0,0,0,0.5) solid 0.5px;
+                        background-color: rgba(0,0,0,0.1);
+                        box-shadow: 0px 0px 5px rgba(0,0,0,0.25);
+                        transition: 1s;
+                        border-radius: 10px;
+                        color: rgba(0,0,0,0.75);
+
+                        &:hover {
+                            cursor: pointer;
+                            background-color: rgba(0,0,0,0.2);
+                        }
+                    }
+
+                    .delete-selected {
+                        background-color: red !important;
+                        color: white !important;
                     }
                 }
             }
