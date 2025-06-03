@@ -31,20 +31,20 @@ class Text_Type extends Component {
     render(){
         
         return (
-                <div id="text-type" className="info">
-                    
-                    <div className="value-wrapper">
-                        
-                        <div className="value">
-                            
-                            {this.state.value}
-                            
-                        </div>
-                
+            <div id="text-type" className="info">
+
+                <div className="value-wrapper">
+
+                    <div className="value" contentEditable={false}>
+
+                        {this.state.value}
+
                     </div>
-                    
+
                 </div>
-            );
+
+            </div>
+        );
     }
 }
 

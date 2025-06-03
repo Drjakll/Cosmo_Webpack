@@ -3,17 +3,14 @@
     "",
     "\\Development",
     "\\Development\\Client",
-    "\\Development\\Client\\View_Templates",
-    "\\Development\\Client\\View_Templates\\Profile",
-    "\\Development\\Client\\View_Templates\\Profile\\Components",
-    "\\Development\\Client\\View_Templates\\Profile\\Components\\Album",
-    "\\Development\\Client\\View_Templates\\Profile\\Components\\Album\\Photos_Container",
-    "\\Development\\Client\\View_Templates\\Profile\\Components\\Album\\Photos_Container\\Single_Photo_Thumbnail",
-    "\\Development\\Client\\View_Templates\\Profile\\Components\\Album\\Photos_Container\\Single_Photo_Thumbnail\\Enlarged_Single_Photo",
-    "\\Development\\Client\\View_Templates\\Profile\\Components\\Album\\Photos_Container\\Single_Photo_Thumbnail\\Enlarged_Single_Photo\\Photo_Comments",
-    "\\Development\\Client\\View_Templates\\Profile\\Components\\Album\\Photos_Container\\Single_Photo_Thumbnail\\Enlarged_Single_Photo\\Photo_Comments\\Comment_Input",
-    "\\Development\\Client\\View_Templates\\Profile\\Components\\Album\\Photos_Container\\Single_Photo_Thumbnail\\Enlarged_Single_Photo\\Photo_Comments\\Comment_Input\\Reply"
+    "\\Development\\Client\\App_Entrance",
+    "\\Development\\Client\\App_Entrance\\Entrance_Options",
+    "\\Development\\Client\\App_Entrance\\Entrance_Options\\Logged_In_Account",
+    "\\Development\\Client\\App_Entrance\\Entrance_Options\\Logged_In_Account\\Screen",
+    "\\Development\\Client\\App_Entrance\\Entrance_Options\\Logged_In_Account\\Screen\\Profile",
+    "\\Development\\Client\\App_Entrance\\Entrance_Options\\Logged_In_Account\\Screen\\Profile\\Profile_Photo_Editor",
+    "\\Development\\Client\\App_Entrance\\Entrance_Options\\Logged_In_Account\\Screen\\Profile\\Profile_Photo_Editor\\Editor"
   ],
-  "SelectedNode": "\\Development\\Client\\View_Templates\\Profile\\Components\\Album\\Photos_Container\\Single_Photo_Thumbnail\\Enlarged_Single_Photo\\Photo_Comments\\Comment_Input\\Reply\\reply.less",
+  "SelectedNode": "\\Development\\Client\\View_Templates\\Profile\\Components\\Profile_Info\\Profile_Info_Data\\profile_info_data.js",
   "PreviewInSolutionExplorer": false
 }

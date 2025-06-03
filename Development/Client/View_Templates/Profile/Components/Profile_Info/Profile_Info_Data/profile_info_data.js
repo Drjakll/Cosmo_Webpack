@@ -16,16 +16,16 @@ class Profile_Info_Data extends Component {
         this.state = {
             account_data: this.props.accound_data,
             info_templates: {
-                first_name: { component: Text_Type, label: "First Name", value: "" },
-                last_name: { component: Text_Type, label: "Last Name", value: "" },
-                date_of_birth: { component: Date_Type, label: "Birth Date", value: "" },
-                birth_location: { component: Json_Type, label: "Birthplace", value: "" },
-                gender: { component: Choice_Type, label: "Gender", value: "" },
-                current_location: { component: Json_Type, label: "Current Location", value: "" },
-                martial_status: { component: Choice_Type, label: "Martial Status", value: "" },
-                hobbies: { component: Json_Type, label: "Hobbies", value: "" },
-                professions: { component: Json_Type, label: "Professions", value: "" },
-                schools: { component: Json_Type, label: "School", value: "" }
+                first_name: { component: Text_Type, label: "First Name", value: "", editor: null },
+                last_name: { component: Text_Type, label: "Last Name", value: "", editor: null },
+                date_of_birth: { component: Date_Type, label: "Birth Date", value: "", editor: null },
+                birth_location: { component: Json_Type, label: "Birthplace", value: "", editor: null },
+                gender: { component: Choice_Type, label: "Gender", value: "", editor: null },
+                current_location: { component: Json_Type, label: "Current Location", value: "", editor: null },
+                martial_status: { component: Choice_Type, label: "Martial Status", value: "", editor: null },
+                hobbies: { component: Json_Type, label: "Hobbies", value: "", editor: null },
+                professions: { component: Json_Type, label: "Professions", value: "", editor: null },
+                schools: { component: Json_Type, label: "School", value: "", editor: null }
             }
         };
     }
@@ -58,6 +58,8 @@ class Profile_Info_Data extends Component {
             this.state.info_templates[i].value = this.state.account_data[i];
         }
     }
+
+
     
     render(){
         
@@ -102,8 +104,9 @@ class Profile_Info_Data extends Component {
                             const template = this.state.info_templates[key];
                             
                             const Com = template.component;
-                            const value = template.value;
+                            let value = template.value;
                             const label = template.label;
+                            let editor = template.editor;
 
                             return <div className="individual-info-wrapper" key={index}>
 
@@ -115,7 +118,7 @@ class Profile_Info_Data extends Component {
 
                                 <div id="info-value">
 
-                                    <Com value={value} label={label} />
+                                    <Com value={value} label={label} editor={editor} />
 
                                 </div>
 
