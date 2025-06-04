@@ -9,6 +9,8 @@ class Profile_Info extends Component {
         
         super(props);
 
+        Profile_Info.contextType = window.Context;
+
         this.state = {
             account_data: {}
         };
@@ -32,7 +34,19 @@ class Profile_Info extends Component {
         this.setState(this.state);
         
     }
-    
+
+    Refresh_Account_Data = () => {
+
+        let { Account_Data_Templates, Cookie_Tools } = this.context;
+        let { cookie_parser } = Cookie_Tools;
+
+        let cookie_json = cookie_parser(document.cookie);
+
+        let updated_account_data = Account_Data_Templates.Account_Data_Template(cookie_json);
+
+        this.setState({ account_data: updated_account_data });
+
+    }
     
     
     render(){
@@ -43,14 +57,14 @@ class Profile_Info extends Component {
                 <div id="profile-info">
                     
                     <div id="profile-picture-wrapper">
-                    
-                        <Profile_Picture account_data={this.state.account_data} generate_editors={profile_photo_editor} />
+
+                        <Profile_Picture account_data={this.state.account_data} generate_editors={profile_photo_editor} refresh_account_data={this.Refresh_Account_Data} />
                         
                     </div>
                     
                     <div id="profile-info-wrapper">
                         
-                        <Profile_Info_Data account_data={this.state.account_data} generate_editors={profile_data_editor} />
+                        <Profile_Info_Data account_data={this.state.account_data} generate_editors={profile_data_editor} refresh_account_data={this.Refresh_Account_Data} />
                         
                     </div>
                     

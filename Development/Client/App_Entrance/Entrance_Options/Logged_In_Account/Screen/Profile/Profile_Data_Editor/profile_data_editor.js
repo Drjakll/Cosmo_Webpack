@@ -1,23 +1,24 @@
-import React, { Component } from 'react';
-import './profile_data_editor.less';
+import React from 'react';
+import Text_Type_Editor from './Text_Type/text_type.js';
+import Date_Type_Editor from './Date_Type/date_type.js';
+import Json_Type_Editor from './Json_Type/json_type.js';
+import Choice_Type_Editor from './Choice_Type/choice_type.js';
 
-class Profile_Data_Editor extends Component {
+let Profile_Data_Editor = () => {
 
-    constructor(props) {
+    return {
+        first_name: Text_Type_Editor,
+        last_name: Text_Type_Editor,
+        date_of_birth: Date_Type_Editor,
+        birth_location: Json_Type_Editor,
+        gender: Choice_Type_Editor,
+        current_location: Json_Type_Editor,
+        martial_status: Choice_Type_Editor,
+        hobbies: Json_Type_Editor,
+        professions: Json_Type_Editor,
+        schools: Json_Type_Editor
+    };
 
-        super(props);
-
-        this.state = {
-
-        };
-    }
-
-    render() {
-
-        return <div id="profile-data-editor">
-
-        </div>;
-    }
-}
+};
 
 export default Profile_Data_Editor;

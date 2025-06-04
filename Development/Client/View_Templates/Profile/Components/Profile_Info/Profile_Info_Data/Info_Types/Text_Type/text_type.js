@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-
+import './text_type.less';
 
 class Text_Type extends Component {
     
@@ -28,18 +28,26 @@ class Text_Type extends Component {
         this.setState(this.state);
     }
     
-    render(){
+    render() {
+
+        let Editor = this.props.editor;
         
         return (
             <div id="text-type" className="info">
 
-                <div className="value-wrapper">
+                <div id="value-wrapper">
 
-                    <div className="value" contentEditable={false}>
+                    <div id="value" contentEditable={false}>
 
                         {this.state.value}
 
                     </div>
+
+                </div>
+
+                <div id="editor">
+
+                    {Editor ? <Editor /> : <></>}
 
                 </div>
 

@@ -33,11 +33,6 @@ class Profile extends Component {
         
         return <Profile_Photo_Editor account_data={account_data} refresh_account_data={refresh_account_data}/>;
     }
-
-    Generate_Data_Editor = ({ account_data, refresh_account_data }) => {
-
-        return <Profile_Data_Editor account_data={account_data} refresh_account_data={refresh_account_data} />;
-    }
     
     render(){
         
@@ -51,7 +46,7 @@ class Profile extends Component {
                     add_editors={{
                         "Profile Info": {
                             profile_photo_editor: this.Generate_Profile_Photo_Editor,
-                            profile_data_editor: this.Generate_Data_Editor
+                            profile_data_editor: Profile_Data_Editor
                         }
                     }}
                 />

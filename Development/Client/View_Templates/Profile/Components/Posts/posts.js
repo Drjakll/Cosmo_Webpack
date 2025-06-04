@@ -54,7 +54,7 @@ class Posts extends Component {
         
         if(account_data){
             
-            let {last_posted} = account_data;
+            let { last_posted } = account_data;
             
             let post_date_parts = last_posted.split("T")[0]?.split("-");
             
@@ -113,6 +113,10 @@ class Posts extends Component {
                 selected_date: last_day_of_month,
                 selected_month: month
             });
+
+            if (calendar_posts.length === 0) {
+                return;
+            }
 
             this.Set_Current_Post(calendar_posts[calendar_posts.length - 1].date);
         }
