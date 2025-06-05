@@ -92,6 +92,8 @@ class Profile_Info_Data extends Component {
         
         let infoWrapperRef = createRef();
         
+        let {account_data, refresh_account_data} = this.props;
+        
         return (
             <div id="profile-info-data">
 
@@ -141,7 +143,12 @@ class Profile_Info_Data extends Component {
 
                             <div id="info-value">
 
-                                <Com value={value} label={label} editor={editor} />
+                                <Com type={key} 
+                                    value={value} 
+                                    label={label} 
+                                    editor={editor}
+                                    account_data={account_data} 
+                                    refresh_account_data={refresh_account_data}/>
 
                             </div>
 

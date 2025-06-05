@@ -31,13 +31,16 @@ class Text_Type extends Component {
     render() {
 
         let Editor = this.props.editor;
+        let account_data = this.props.account_data;
+        let type = this.props.type;
+        const refresh_account_data = this.props.refresh_account_data;
         
         return (
             <div id="text-type" className="info">
 
                 <div id="value-wrapper">
 
-                    <div id="value" contentEditable={false}>
+                    <div id="value" contentEditable={Editor ? true : false }>
 
                         {this.state.value}
 
@@ -47,7 +50,9 @@ class Text_Type extends Component {
 
                 <div id="editor">
 
-                    {Editor ? <Editor /> : <></>}
+                    {Editor ? <Editor type={type}
+                                    account_data={account_data} 
+                                    refresh_account_data={refresh_account_data} /> : <></>}
 
                 </div>
 

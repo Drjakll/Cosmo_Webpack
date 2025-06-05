@@ -22,7 +22,7 @@ class Photos_Container extends Component {
                 <div id="photos-container">
                     
                     <div id="big-close-button" onClick={this.props.Close_Photo_Album}>
-                            
+                        
                     </div>
                     
                     <div id="photo-container-wrapper">
