@@ -84,6 +84,8 @@ class Dates_Display extends Component {
 
         let date_array = this.Generate_Date_Array(this.state); 
 
+        let { capture_date, selected_month, selected_year } = this.state;
+
         return <div id="dates-display">
 
             {date_array.map((row, r_ind) => {
@@ -96,7 +98,7 @@ class Dates_Display extends Component {
 
                         return <div className="col" key={c_ind}>
 
-                            <Date date={date} callback={callback} style={style} popup = {popup}/>
+                            <Date date={date} callback={callback} style={style} popup={popup} capture_date={capture_date} selected_year={selected_year} selected_month={selected_month} />
 
                         </div>;
 

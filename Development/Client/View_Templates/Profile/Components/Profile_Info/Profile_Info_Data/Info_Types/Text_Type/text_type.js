@@ -1,13 +1,15 @@
-import React, {Component} from 'react';
+import React, {Component, createRef} from 'react';
 import './text_type.less';
 
 class Text_Type extends Component {
     
     state = {
         label: "",
-        value: null
+        value: ""
     };
-    
+
+    valueRef = createRef();
+
     constructor(props){
         
         super(props);
@@ -31,8 +33,8 @@ class Text_Type extends Component {
     render() {
 
         let Editor = this.props.editor;
+        let variable_name = this.props.variable_name;
         let account_data = this.props.account_data;
-        let type = this.props.type;
         const refresh_account_data = this.props.refresh_account_data;
         
         return (
@@ -40,19 +42,18 @@ class Text_Type extends Component {
 
                 <div id="value-wrapper">
 
-                    <div id="value" contentEditable={Editor ? true : false }>
-
-                        {this.state.value}
-
-                    </div>
+                    <input id="value" onChange={(e) => { this.setState({ value: e.target.value }); }} value={this.state.value} disabled={Editor ? false : true} />
 
                 </div>
 
                 <div id="editor">
 
-                    {Editor ? <Editor type={type}
-                                    account_data={account_data} 
-                                    refresh_account_data={refresh_account_data} /> : <></>}
+                    {Editor ? <Editor variable_name={variable_name}
+                        value={this.state.value}
+                        account_data={account_data}
+                        current_value={this.state.value}
+                        refresh_account_data={refresh_account_data}
+                    /> : <></>}
 
                 </div>
 

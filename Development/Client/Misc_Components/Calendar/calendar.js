@@ -10,7 +10,7 @@ class Calendar extends Component {
 
         super(props);
 
-        let { year, month, date, callback_left, callback_right, date_properties } = this.props;
+        let { year, month, date, callback_left, callback_right, date_properties, capture_date } = this.props;
 
         this.state = {
             year: year,
@@ -18,7 +18,8 @@ class Calendar extends Component {
             date: date,
             callback_left: callback_left,
             callback_right: callback_right,
-            date_properties: date_properties
+            date_properties: date_properties,
+            capture_date: capture_date
         };
     }
 
@@ -39,7 +40,7 @@ class Calendar extends Component {
 
     render() {
 
-        let { year, month, callback_left, callback_right, date_properties } = this.state;
+        let { year, month, callback_left, callback_right, date_properties, capture_date } = this.state;
 
         return <div id="calendar">
 
@@ -62,7 +63,13 @@ class Calendar extends Component {
 
             <div id="dates">
 
-                <Date_Display properties={date_properties} days={new Date(year, month, 0).getDate()} first_day={new Date(year, month - 1, 1).getDay()} />
+                <Date_Display properties={date_properties}
+                    days={new Date(year, month, 0).getDate()}
+                    first_day={new Date(year, month - 1, 1).getDay()}
+                    capture_date={capture_date}
+                    selected_month={month - 1}
+                    selected_year={year}
+                />
 
             </div>
             

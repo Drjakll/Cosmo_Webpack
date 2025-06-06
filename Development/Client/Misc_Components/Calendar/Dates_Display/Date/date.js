@@ -26,25 +26,33 @@ class Date extends Component {
 
     render() {
 
+        let { capture_date, selected_year, selected_month, date } = this.state;
+
+        
+
         return (
             <div id="date" onClick={(e) => {
 
                 if (this.props.callback) {
-                    this.props.callback(this.state.date);
+                    this.props.callback(date);
+                }
+
+                if (capture_date) {
+                    capture_date({ selected_year, selected_month: parseInt(selected_month) + 1, date });
                 }
             }}
 
                 style={this.state.style}
-                
+
             >
                 <div id="popup">
                     {this.state.popup}
                 </div>
-                
+
                 <div id="the-date-value">
-                
+
                     {this.state.date}
-                    
+
                 </div>
 
             </div>

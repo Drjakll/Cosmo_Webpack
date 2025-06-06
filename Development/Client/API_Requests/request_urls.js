@@ -20,6 +20,9 @@ const delete_photo_comment = '/delete_photo_comment';
 //Posts
 const get_posts = '/get_posts';
 
+//Profile details
+const update_profile = '/update_profile';
+
 //Video streams
 const create_stream_room = '/create_stream_room';
 const disband_stream_room = '/disband_stream_room';
@@ -52,6 +55,9 @@ export default {
         
     //Posts
     get_posts: get_posts,
+
+    //Profile details
+    update_profile: update_profile,
         
     //Video streams
     create_stream_room: create_stream_room,

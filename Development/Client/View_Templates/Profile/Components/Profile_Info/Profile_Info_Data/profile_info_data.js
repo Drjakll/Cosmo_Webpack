@@ -16,16 +16,46 @@ class Profile_Info_Data extends Component {
         this.state = {
             account_data: this.props.accound_data,
             info_templates: {
-                first_name: { component: Text_Type, label: "First Name", value: "", editor: null },
-                last_name: { component: Text_Type, label: "Last Name", value: "", editor: null },
-                date_of_birth: { component: Date_Type, label: "Birth Date", value: "", editor: null },
-                birth_location: { component: Json_Type, label: "Birthplace", value: "", editor: null },
-                gender: { component: Choice_Type, label: "Gender", value: "", editor: null },
-                current_location: { component: Json_Type, label: "Current Location", value: "", editor: null },
-                martial_status: { component: Choice_Type, label: "Martial Status", value: "", editor: null },
-                hobbies: { component: Json_Type, label: "Hobbies", value: "", editor: null },
-                professions: { component: Json_Type, label: "Professions", value: "", editor: null },
-                schools: { component: Json_Type, label: "School", value: "", editor: null }
+                first_name: { component: Text_Type, label: "First Name", value: "", editor: null, options: [] },
+                last_name: { component: Text_Type, label: "Last Name", value: "", editor: null, options: [] },
+                gender: { component: Choice_Type, label: "Gender", value: "", editor: null, options: ["Male", "Female"] },
+                martial_status: { component: Choice_Type, label: "Martial Status", value: "", editor: null, options: ["Single", "Dating", "Engaged", "Married", "Divorce", "Widow", "Unspecified"] },
+                date_of_birth: { component: Date_Type, label: "Birth Date", value: "", editor: null, options: [] },
+                birth_location: {
+                    component: Json_Type, label: "Birthplace", value: "", editor: null, options: [
+                        { label: "Country", data_type: "string" },
+                        { label: "State/Province", data_type: "string" },
+                        { label: "City", data_type: "string" }
+                    ]
+                },
+                current_location: {
+                    component: Json_Type, label: "Current Location", value: "", editor: null, options: [
+                        { label: "Country", data_type: "string" },
+                        { label: "State/Province", data_type: "string" },
+                        { label: "City", data_type: "string" }
+                    ]
+                },
+                hobbies: {
+                    component: Json_Type, label: "Hobbies", value: "", editor: null, options: [
+                        { label: "Hobby", data_type: "string" },
+                        { label: "Date Started", data_type: "date" },
+                        { label: "Profeciency", data_type: "string" }
+                    ]
+                },
+                professions: {
+                    component: Json_Type, label: "Talent", value: "", editor: null, options: [
+                        { label: "Talent", data_type: "string" },
+                        { label: "Date Started", data_type: "date" },
+                        { label: "Profeciency", data_type: "string" }
+                    ]
+                },
+                schools: {
+                    component: Json_Type, label: "School", value: "", editor: null, options: [
+                        { label: "School", data_type: "string" },
+                        { label: "Date Started", data_type: "date" },
+                        { label: "Date Ended", data_type: "date" }
+                    ]
+                }
             }
         };
     }
@@ -132,6 +162,7 @@ class Profile_Info_Data extends Component {
                         let value = template.value;
                         const label = template.label;
                         let editor = template.editor;
+                        let options = template.options;
 
                         return <div className="individual-info-wrapper" key={index}>
 
@@ -143,12 +174,14 @@ class Profile_Info_Data extends Component {
 
                             <div id="info-value">
 
-                                <Com type={key} 
-                                    value={value} 
-                                    label={label} 
+                                <Com variable_name={key}
+                                    value={value}
+                                    label={label}
                                     editor={editor}
-                                    account_data={account_data} 
-                                    refresh_account_data={refresh_account_data}/>
+                                    account_data={account_data}
+                                    refresh_account_data={refresh_account_data}
+                                    options={options}
+                                />
 
                             </div>
 

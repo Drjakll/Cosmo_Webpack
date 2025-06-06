@@ -5,7 +5,7 @@ class Json_Type extends Component {
 
     state = {
         label: "",
-        value: null,
+        value: "[]",
         show_popup: false
     };
     
@@ -29,7 +29,9 @@ class Json_Type extends Component {
         
         this.setState(this.state);
     }
-    
+
+
+
     Pop_Up = () => { 
         
         let array_data = [];
@@ -43,30 +45,42 @@ class Json_Type extends Component {
                 array_data = [];
             }
         }
-        
+
+        let Editor = this.props.editor;
+        let account_data = this.props.account_data;
+        let refresh_account_data = this.props.refresh_account_data;
+        let options = this.props.options;
+        let variable_name = this.props.variable_name;
+
         return <div id="json-type-popup">
-        
+
             <div id="json-info-details">
-                
+
                 <div id="json-data-label">
                     {this.state.label}
                 </div>
-                
+
+                {Editor ? <div id="add-content-editor-wrapper">
+
+                    <Editor account_data={account_data} refresh_account_data={refresh_account_data} data_config={options} variable_name={variable_name}/>
+
+                </div> : <></>}
+
                 <div id="details">
-        
-                    {array_data.map((json_obj, index_0)=>{
-                        
+
+                    {array_data.map((json_obj, index_0) => {
+
                         return <div className="detail-wrapper" key={index_0}>
-                           
+
                             <div id="detail-index">
-                                
+
                                 #{index_0 + 1}
-                                
+
                             </div>
-                        
+
                             <div id="detail-segments-wrapper">
-                        
-                                {Object.keys(json_obj).map((key, index_1)=>{
+
+                                {Object.keys(json_obj).map((key, index_1) => {
 
                                     return <div className="detail-segment" key={index_1}>
 
@@ -85,22 +99,22 @@ class Json_Type extends Component {
                                     </div>;
 
                                 })}
-                            
+
                             </div>
-                            
+
                         </div>;
-                        
+
                     })}
-        
+
                 </div>
-                
+
             </div>
-        
-            <div id="popup-wrapper" onClick={(e)=>{this.setState({show_popup: false}); }}>
-       
-        
+
+            <div id="popup-wrapper" onClick={(e) => { this.setState({ show_popup: false }); }}>
+
+
             </div>
-        
+
         </div>;
     }
     
