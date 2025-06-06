@@ -13,6 +13,8 @@ class Json_Type extends Component {
         
         super(props);
 
+        Json_Type.contextType = window.Context;
+
     }
     
     componentDidUpdate(prevProps, prevState){
@@ -30,7 +32,57 @@ class Json_Type extends Component {
         this.setState(this.state);
     }
 
+    Update_Account_Data = async () => {
 
+        let { account_data, variable_name, value } = this.state;
+        let { Request_URLs, Cookie_Tools, Configurations } = this.context;
+        let { update_profile } = Request_URLs;
+        const { cookie_converter } = Cookie_Tools;
+
+        account_data[variable_name] = value;
+
+        let body = account_data;
+
+        let res = await fetch(update_profile, {
+            method: "POST",
+            body: JSON.stringify(body),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+
+        let resJson = await res.json();
+
+        if (resJson) {
+
+            let date = new Date();
+
+            date.setTime(date.getTime() + Configurations.Cookie_Expire_Days * 24 * 60 * 60 * 1000);
+
+            let cookieStrs = cookie_converter(account_data, { "expires": date.toUTCString(), "path": "/" });
+
+            for (let cookieStr of cookieStrs) {
+                document.cookie = cookieStr;
+            }
+
+            const { refresh_account_data } = this.props;
+
+            refresh_account_data();
+        }
+
+    }
+
+    Delete_Item = async (index) => {
+
+        let array = JSON.parse(this.state.value);
+
+        array.splice(index, 1);
+
+        await this.setState({ value: JSON.stringify(array) });
+
+        this.Update_Account_Data();
+
+    }
 
     Pop_Up = () => { 
         
@@ -62,7 +114,12 @@ class Json_Type extends Component {
 
                 {Editor ? <div id="add-content-editor-wrapper">
 
-                    <Editor account_data={account_data} refresh_account_data={refresh_account_data} data_config={options} variable_name={variable_name}/>
+                    <Editor account_data={account_data}
+                        refresh_account_data={refresh_account_data}
+                        data_config={options}
+                        variable_name={variable_name}
+                        update_account_data={this.Update_Account_Data}
+                    />
 
                 </div> : <></>}
 
@@ -101,6 +158,12 @@ class Json_Type extends Component {
                                 })}
 
                             </div>
+
+                            {Editor ? <div id="delete-button-wrapper">
+                                <div id="delete-button" onClick={(e) => { this.Delete_Item(index_0); }}>
+                                    Delete
+                                </div>
+                            </div> : <></>}
 
                         </div>;
 

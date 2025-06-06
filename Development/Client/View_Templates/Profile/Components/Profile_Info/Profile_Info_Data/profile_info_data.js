@@ -52,8 +52,8 @@ class Profile_Info_Data extends Component {
                 schools: {
                     component: Json_Type, label: "School", value: "", editor: null, options: [
                         { label: "School", data_type: "string" },
-                        { label: "Date Started", data_type: "date" },
-                        { label: "Date Ended", data_type: "date" }
+                        { label: "Type", data_type: "string" },
+                        { label: "Year Graduate", data_type: "date" }
                     ]
                 }
             }
@@ -122,7 +122,7 @@ class Profile_Info_Data extends Component {
         
         let infoWrapperRef = createRef();
         
-        let {account_data, refresh_account_data} = this.props;
+        let { account_data, refresh_account_data } = this.props;
         
         return (
             <div id="profile-info-data">

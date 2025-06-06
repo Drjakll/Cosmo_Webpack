@@ -15,8 +15,6 @@ class Json_Type extends Component {
 
         return <div id="json-type-editor">
 
-            
-
         </div>;
     }
 }
