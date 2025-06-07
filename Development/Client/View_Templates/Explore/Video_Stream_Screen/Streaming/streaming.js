@@ -36,7 +36,8 @@ class Streaming extends Component {
             streamer_big_screen: null, //Streamer at the bigger screen
             my_room_tag: null,
             view_account_data: null,
-            the_host: null
+            the_host: null,
+            big_screen_id: null
         };
     }
     
@@ -268,17 +269,19 @@ class Streaming extends Component {
         
         peer.ontrack = (event) => {
 
-            let { streamer_small_screens, streamer_big_screen } = this.state;
+            let { streamer_small_screens, streamer_big_screen, big_screen_id } = this.state;
             
             streamer_small_screens[tag.id] = event.streams[0];
 
             if (tag.is_host) {
                 streamer_big_screen = event.streams[0];
+                big_screen_id = tag.id;
             }
             
             this.setState({
                 streamer_small_screens: streamer_small_screens,
-                streamer_big_screen: streamer_big_screen
+                streamer_big_screen: streamer_big_screen,
+                big_screen_id: big_screen_id
             });
         };
 
@@ -335,15 +338,16 @@ class Streaming extends Component {
         try {
 
             let media_source = await this.Get_Self_Media_Source();
-     
-            if (!this.my_room_tag.is_host) {
 
-                let { streamer_small_screens } = this.state;
+            let { streamer_small_screens, big_screen_id } = this.state;
 
-                streamer_small_screens[this.my_room_tag.id] = media_source;
-
-                this.setState({ streamer_small_screens: streamer_small_screens });
+            if (this.my_room_tag.is_host) {
+                big_screen_id = this.my_room_tag.id;
             }
+
+            streamer_small_screens[this.my_room_tag.id] = media_source;
+
+            this.setState({ streamer_small_screens: streamer_small_screens, big_screen_id: big_screen_id });
 
             return media_source;
             
@@ -411,6 +415,18 @@ class Streaming extends Component {
         </div> : <></>;
 
     }
+
+    Swap_With_Main_Screen = ({ media_src, id }) => {
+
+        let { streamer_small_screens, streamer_big_screen, big_screen_id } = this.state;
+
+        streamer_big_screen = streamer_small_screens[id];
+
+        big_screen_id = id;
+
+        this.setState({ streamer_small_screens: streamer_small_screens, streamer_big_screen: media_src, big_screen_id: big_screen_id });
+
+    }
     
     render(){
 
@@ -437,11 +453,11 @@ class Streaming extends Component {
                     onMouseMove={(e) => { drag_scroll.move_drag(e, this.small_screen_ref.current); }}
                 >
                     
-                    {Object.keys(this.state.streamer_small_screens).map((key, index)=>{
-                            
-                        return key === this.the_host?.id ? "" : <div className="sub-video" key={index}>
-                                
-                            <Sub_Video media_source={this.state.streamer_small_screens[key]} />
+                    {Object.keys(this.state.streamer_small_screens).map((key, index) => {
+
+                        return key === this.state.big_screen_id ? "" : <div className="sub-video" key={index}>
+
+                            <Sub_Video media_source={this.state.streamer_small_screens[key]} id={key} swap_screen={this.Swap_With_Main_Screen} />
                                 
                         </div>;
                             

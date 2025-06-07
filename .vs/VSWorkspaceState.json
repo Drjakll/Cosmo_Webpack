@@ -3,14 +3,15 @@
     "",
     "\\Development",
     "\\Development\\Client",
-    "\\Development\\Client\\View_Templates",
-    "\\Development\\Client\\View_Templates\\Profile",
-    "\\Development\\Client\\View_Templates\\Profile\\Components",
-    "\\Development\\Client\\View_Templates\\Profile\\Components\\Profile_Info",
-    "\\Development\\Client\\View_Templates\\Profile\\Components\\Profile_Info\\Profile_Info_Data",
-    "\\Development\\Client\\View_Templates\\Profile\\Components\\Profile_Info\\Profile_Info_Data\\Info_Types",
-    "\\Development\\Client\\View_Templates\\Profile\\Components\\Profile_Info\\Profile_Info_Data\\Info_Types\\Json_Type"
+    "\\Development\\Client\\App_Entrance",
+    "\\Development\\Client\\App_Entrance\\Entrance_Options",
+    "\\Development\\Client\\App_Entrance\\Entrance_Options\\Logged_In_Account",
+    "\\Development\\Client\\App_Entrance\\Entrance_Options\\Logged_In_Account\\Screen",
+    "\\Development\\Client\\App_Entrance\\Entrance_Options\\Logged_In_Account\\Screen\\Profile",
+    "\\Development\\Client\\App_Entrance\\Entrance_Options\\Logged_In_Account\\Screen\\Profile\\Profile_Photo_Editor",
+    "\\Development\\Client\\App_Entrance\\Entrance_Options\\Logged_In_Account\\Screen\\Profile\\Profile_Photo_Editor\\Editor",
+    "\\Development\\Client\\Utilities"
   ],
-  "SelectedNode": "\\Development\\Client\\View_Templates\\Profile\\Components\\Profile_Info\\Profile_Info_Data\\Info_Types\\Json_Type\\json_type.js",
+  "SelectedNode": "\\Development\\Client\\App_Entrance\\Entrance_Options\\Logged_In_Account\\Screen\\Profile\\Profile_Photo_Editor\\Editor\\editor.js",
   "PreviewInSolutionExplorer": false
 }
