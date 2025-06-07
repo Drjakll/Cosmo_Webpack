@@ -10,7 +10,7 @@ let Profile_Data_Editor = () => {
         first_name: Text_Type_Editor,
         last_name: Text_Type_Editor,
         date_of_birth: Date_Type_Editor,
-        birth_location: Json_Type_Editor,
+        location_of_birth: Json_Type_Editor,
         gender: Choice_Type_Editor,
         current_location: Json_Type_Editor,
         martial_status: Choice_Type_Editor,

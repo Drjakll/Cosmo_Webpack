@@ -10,7 +10,11 @@ class Date extends Component {
         this.state = {
             date: this.props.date,
             style: this.props.style,
-            popup: this.props.popup
+            popup: this.props.popup,
+            capture_date: this.props.capture_date,
+            selected_year: this.props.selected_year,
+            selected_month: this.props.selected_month,
+            callback: this.props.callback
         };
     }
 
@@ -28,15 +32,13 @@ class Date extends Component {
 
         let { capture_date, selected_year, selected_month, date } = this.state;
 
-        
-
         return (
             <div id="date" onClick={(e) => {
 
                 if (this.props.callback) {
                     this.props.callback(date);
                 }
-
+                
                 if (capture_date) {
                     capture_date({ selected_year, selected_month: parseInt(selected_month) + 1, date });
                 }

@@ -32,9 +32,9 @@ class Json_Type extends Component {
         this.setState(this.state);
     }
 
-    Update_Account_Data = async () => {
+    Update_Account_Data = async (value) => {
 
-        let { account_data, variable_name, value } = this.state;
+        let { account_data, variable_name } = this.state;
         let { Request_URLs, Cookie_Tools, Configurations } = this.context;
         let { update_profile } = Request_URLs;
         const { cookie_converter } = Cookie_Tools;
@@ -77,10 +77,12 @@ class Json_Type extends Component {
         let array = JSON.parse(this.state.value);
 
         array.splice(index, 1);
+        
+        let json_string = JSON.stringify(array);
 
-        await this.setState({ value: JSON.stringify(array) });
+        await this.setState({ value: json_string });
 
-        this.Update_Account_Data();
+        this.Update_Account_Data(json_string);
 
     }
 
@@ -97,12 +99,14 @@ class Json_Type extends Component {
                 array_data = [];
             }
         }
-
+        
+        //The items below are for the editor
         let Editor = this.props.editor;
         let account_data = this.props.account_data;
         let refresh_account_data = this.props.refresh_account_data;
         let options = this.props.options;
         let variable_name = this.props.variable_name;
+        //End of the item list
 
         return <div id="json-type-popup">
 
@@ -119,19 +123,20 @@ class Json_Type extends Component {
                         data_config={options}
                         variable_name={variable_name}
                         update_account_data={this.Update_Account_Data}
+                        value={array_data}
                     />
 
                 </div> : <></>}
 
                 <div id="details">
 
-                    {array_data.map((json_obj, index_0) => {
+                    {array_data?.map((json_obj, index_0) => {
 
                         return <div className="detail-wrapper" key={index_0}>
 
                             <div id="detail-index">
 
-                                #{index_0 + 1}
+                                
 
                             </div>
 

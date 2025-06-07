@@ -25,12 +25,26 @@ class Month_Year_Display extends Component {
         let { month, year, callback_left, callback_right, update_parent } = this.props;
 
         this.state = {
+            years: [],
             month: month,
             year: year,
             callback_left: callback_left,
             callback_right: callback_right,
             update_parent: update_parent
         };
+    }
+    
+    componentDidMount(){
+                
+        let years = [];
+        
+        let thisYear = (new Date()).getFullYear();
+        
+        for(let i = 0; i < 121; i++){
+            years.push(thisYear - i);
+        }
+        
+        this.setState({years: years});
     }
 
     componentDidUpdate(prevProps, prevState) {
@@ -64,6 +78,64 @@ class Month_Year_Display extends Component {
         return { month, year };
 
     }
+    
+    Year_Selections = () => {
+        
+        let Select = async (year) => {
+            
+            year = parseInt(year);
+            
+            if(this.state.callback_left){
+                this.state.callback_left({year: year, month: this.state.month + 1});
+            }
+            
+            this.props.update_parent(this.state.month, year);
+            
+        };
+        
+        return <div id="year-selections">
+        
+            {this.state.years.map((value, index)=>{
+                
+                return <div className="year-item" onClick={(e)=>{ Select(value); }} key={index}>
+                    
+                    {value}
+                    
+                </div>;
+                
+            })}
+        
+        </div>;
+    }
+    
+    Month_Selections = () => {
+        
+        let Select = async (ind) => {
+ 
+            let month_index = parseInt(ind);
+            
+            if(this.state.callback_left){
+                this.state.callback_left({year: this.state.year, month: month_index + 1});
+            }
+            
+            this.props.update_parent(month_index, this.state.year);
+            
+        };
+        
+        return <div id="month-selections">
+        
+            {this.Months.map((value, index)=>{
+                
+                return <div className="month-item" onClick={(e)=>{ Select(index); }} key={index}>
+                    
+                    {value}
+                    
+                </div>;
+                
+            })}
+        
+        </div>;
+    }
 
     render() {
 
@@ -91,13 +163,25 @@ class Month_Year_Display extends Component {
 
                 <div id="year">
 
-                    {this.state.year}
+                    <div id="selected-year">{this.state.year}</div>
+                    
+                    <div id="year-selections-wrapper">
+
+                        {this.Year_Selections()}
+
+                    </div>
 
                 </div>
 
                 <div id="month">
 
-                    {this.Months[this.state.month]}
+                    <div id="selected-month">{this.Months[this.state.month]}</div>
+                    
+                    <div id="month-selections-wrapper">
+                        
+                        {this.Month_Selections()}
+                        
+                    </div>
 
                 </div>
 

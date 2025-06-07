@@ -60,6 +60,11 @@ Click nbfs://nbhost/SystemFileSystem/Templates/ClientSide/style.less to edit thi
                 height: calcu(100% - 50px);
                 display: block;
                 overflow: auto;
+                scrollbar-width: none;
+                
+                &::-webkit-scrollbar {
+                    display: none;
+                }
                 
                 .detail-wrapper {
                     width: 100%;
@@ -100,6 +105,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/ClientSide/style.less to edit thi
                                 align-items: center;
                                 font-weight: 700;
                                 color: rgba(0,0,0,0.75);
+                                font-size: 0.75vw;
                             }
                             
                             #detail-segment-value {
@@ -107,6 +113,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/ClientSide/style.less to edit thi
                                 display: flex;
                                 justify-content: center;
                                 align-items: center;
+                                font-size: 0.85vw;
                             }
                         }
                     }
@@ -119,7 +126,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/ClientSide/style.less to edit thi
                         align-items: center;
 
                         #delete-button {
-                            padding: 0.25vw;
+                            padding: 0.5vw;
                             border: rgba(0,0,0,0.5) solid 0.01vw;
                             border-radius: 25px;
                             background-color: antiquewhite;

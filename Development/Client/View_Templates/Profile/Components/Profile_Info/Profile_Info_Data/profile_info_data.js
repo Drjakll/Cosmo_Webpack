@@ -21,7 +21,7 @@ class Profile_Info_Data extends Component {
                 gender: { component: Choice_Type, label: "Gender", value: "", editor: null, options: ["Male", "Female"] },
                 martial_status: { component: Choice_Type, label: "Martial Status", value: "", editor: null, options: ["Single", "Dating", "Engaged", "Married", "Divorce", "Widow", "Unspecified"] },
                 date_of_birth: { component: Date_Type, label: "Birth Date", value: "", editor: null, options: [] },
-                birth_location: {
+                location_of_birth: {
                     component: Json_Type, label: "Birthplace", value: "", editor: null, options: [
                         { label: "Country", data_type: "string" },
                         { label: "State/Province", data_type: "string" },
@@ -130,7 +130,7 @@ class Profile_Info_Data extends Component {
                 <div id="profile-data-label-wrapper">
 
                     <label>
-                        Account Details
+                        Personal Details
                     </label>
 
                 </div>

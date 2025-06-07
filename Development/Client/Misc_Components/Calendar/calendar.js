@@ -12,13 +12,15 @@ class Calendar extends Component {
 
         let { year, month, date, callback_left, callback_right, date_properties, capture_date } = this.props;
 
+        let today = new Date();
+
         this.state = {
-            year: year,
-            month: month,
-            date: date,
+            year: year ? year : today.getFullYear(),
+            month: month ? month : today.getMonth() + 1,
+            date: date ? date : today.getDate(),
             callback_left: callback_left,
             callback_right: callback_right,
-            date_properties: date_properties,
+            date_properties: date_properties ? date_properties : [],
             capture_date: capture_date
         };
     }

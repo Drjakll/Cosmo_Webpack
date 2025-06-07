@@ -8,12 +8,15 @@ class Dates_Display extends Component {
 
         super(props);
 
-        let { days, first_day, properties } = this.props;
+        let { days, first_day, properties, capture_date, selected_year, selected_month } = this.props;
 
         this.state = {
             days: days,
             first_day: first_day,
-            properties: properties
+            properties: properties,
+            capture_date: capture_date,
+            selected_year: selected_year,
+            selected_month: selected_month
         };
     }
 
@@ -98,7 +101,7 @@ class Dates_Display extends Component {
 
                         return <div className="col" key={c_ind}>
 
-                            <Date date={date} callback={callback} style={style} popup={popup} capture_date={capture_date} selected_year={selected_year} selected_month={selected_month} />
+                            <Date date={date} callback={callback} style={style} popup ={popup} capture_date={capture_date} selected_year={selected_year} selected_month={selected_month} />
 
                         </div>;
 

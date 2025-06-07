@@ -46,7 +46,7 @@ class Date_Type extends Component {
 
     Generate_Calendar = () => {
 
-        let { Calendar } = this.context;
+        const { Calendar } = this.context;
 
         let { value } = this.state;
 
