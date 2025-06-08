@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import Profile_Photo_Editor from './Profile_Photo_Editor/profile_photo_editor.js';
 import Profile_Data_Editor from './Profile_Data_Editor/profile_data_editor.js';
+import Album_Editor from './Album_Editor/album_editor.js';
 import './profile.less';
 
 class Profile extends Component {
@@ -31,7 +32,7 @@ class Profile extends Component {
     
     Generate_Profile_Photo_Editor = ({ account_data, refresh_account_data }) => {
         
-        return <Profile_Photo_Editor account_data={account_data} refresh_account_data={refresh_account_data}/>;
+        return <Profile_Photo_Editor account_data={account_data} refresh_account_data={refresh_account_data} />;
     }
     
     render(){
@@ -46,7 +47,10 @@ class Profile extends Component {
                     add_editors={{
                         "Profile Info": {
                             profile_photo_editor: this.Generate_Profile_Photo_Editor,
-                            profile_data_editor: Profile_Data_Editor
+                            profile_data_editor: Profile_Data_Editor,
+                        },
+                        "Albums": {
+                            album_editor: Album_Editor
                         }
                     }}
                 />

@@ -19,3 +19,5 @@ class Album_Editor extends Component {
     }
     
 }
+
+export default Album_Editor;

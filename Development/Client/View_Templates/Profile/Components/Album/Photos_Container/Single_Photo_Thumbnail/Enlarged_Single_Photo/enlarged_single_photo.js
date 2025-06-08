@@ -35,29 +35,29 @@ class Enlarged_Single_Photo extends Component {
     render(){
         
         return <div id="enlarged-single-photo-wrapper">
-            
-            <div id="enlarged-single-photo-exit-button" onClick={(e)=>{this.props.exit_enlarge_mode(); }}>
-        
+
+            <div id="enlarged-single-photo-exit-button" onClick={(e) => { this.props.exit_enlarge_mode(); }}>
+
             </div>
-            
+
             <div id="enlarged-single-photo">
-            
+
                 <div id="enlarged-photo"
                     style={{
                         backgroundImage: `url('${this.state.aws_s3_url}${this.state.photo_info.link}')`
                     }}
                 >
-        
+
                 </div>
-                
-                <div id="comments-area-wrapper">   
-                
-                    <Photo_Comments photo_info={this.state.photo_info} account_data={this.state.account_data}/>
-                
+
+                <div id="comments-area-wrapper">
+
+                    <Photo_Comments photo_info={this.state.photo_info} account_data={this.state.account_data} />
+
                 </div>
-        
+
             </div>
-            
+
         </div>;
     }
 }
