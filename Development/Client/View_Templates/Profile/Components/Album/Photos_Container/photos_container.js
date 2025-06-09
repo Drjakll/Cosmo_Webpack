@@ -18,6 +18,7 @@ class Photos_Container extends Component {
     
     render(){
         
+        
         return (
                 <div id="photos-container">
                     

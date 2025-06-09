@@ -102,6 +102,11 @@ class Albums extends Component {
         
         let albumsWrapperRef = createRef();
         
+        const Album_Editor = this.state.album_editor;
+        
+        const Photos_Container_Editor  = Album_Editor?.Photos_Container_Editor;
+       
+        
         return (
                 <div id="albums">
         
@@ -112,11 +117,21 @@ class Albums extends Component {
                                                 account_data={this.state.account_data}
                                                 /> : <></>}
                 
-                    <div id="albums-label">
+                    <div id="albums-top">
                     
-                        <label>Albums</label>
+                        {Album_Editor ? 
+                            <Album_Editor 
+                                Photos_Container_Editor={Photos_Container_Editor}
+                                Album_Cover={Album_Cover}
+                            /> : <></>}
                     
-                    </div>
+                        <div id="albums-label">
+
+                            <label>Albums</label>
+
+                        </div>
+                        
+                    </div>    
                     
                     <div id="albums-wrapper"
                         ref={albumsWrapperRef}
@@ -132,6 +147,7 @@ class Albums extends Component {
                                 
                                 <Album_Cover album_info={data} 
                                             Get_Photo_Links={this.Get_Photo_Links}
+                                            Photos_Container_Editor={Photos_Container_Editor}
                                 />
             
                             </div>;
