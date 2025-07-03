@@ -13,13 +13,11 @@ class Album_Editor extends Component {
         
         return <div id="album-editor">
         
-            Hello
+            
         
         </div>;
     }
     
 }
-
-Album_Editor.Photos_Container_Editor = Photos_Container_Editor;
 
 export default Album_Editor;
