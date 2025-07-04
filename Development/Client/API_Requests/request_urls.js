@@ -3,6 +3,7 @@ const login_account = `/login_account`;
 const create_account = `/create_account`;
 
 //Account photos
+const add_photo_album = '/add_photo_album';
 const get_photo_albums = '/get_photo_albums';
 const get_photo_links = '/get_photo_links';
 const get_all_profile_pictures = '/get_all_profile_pictures';
@@ -39,6 +40,7 @@ export default {
     create_account: create_account,
         
     //Account photos
+    add_photo_album: add_photo_album,
     get_photo_albums: get_photo_albums,
     get_photo_links: get_photo_links,
     get_all_profile_pictures: get_all_profile_pictures,

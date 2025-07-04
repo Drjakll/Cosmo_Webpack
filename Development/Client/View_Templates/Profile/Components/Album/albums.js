@@ -22,9 +22,7 @@ class Albums extends Component {
     
     componentDidMount(){
         
-        if(this.state.account_data){
-            this.setState({albums: this.Get_Albums(this.state.account_data)});
-        }
+        this.Get_Albums();
     }
     
     async componentDidUpdate(prevProps, prevState){
@@ -40,16 +38,22 @@ class Albums extends Component {
             this.state[i] = properties[i];
         }
         
-        this.setState(this.state);
+        await this.setState(this.state);
         
         if(properties.account_data){
         
-            this.setState({albums: await this.Get_Albums(properties.account_data)});
+            this.Get_Albums();
             
         }
     }
     
-    Get_Albums = async (account_data) => {
+    Get_Albums = async () => {
+
+        let {account_data} = this.state;
+
+        if(!account_data){
+            return;
+        }
         
         const {Request_URLs} = this.context;
         
@@ -64,7 +68,7 @@ class Albums extends Component {
         let resJson = await res.json();
         
         
-        return resJson.albums;
+        this.setState({albums: resJson.albums});
     }
     
     Get_Photo_Links = async (album_info) => {
@@ -104,13 +108,13 @@ class Albums extends Component {
         
         const Album_Editor = this.state.album_editor;
         
-        const Photos_Container_Editor  = Album_Editor?.Photos_Container_Editor;
-       
+        const Photos_Container_Editor  = Album_Editor?.Photos_Container_Editor;  
         
         return (
                 <div id="albums">
         
                     {this.state.open_album ? <Photos_Container 
+                                                photos_container_editor={Photos_Container_Editor}
                                                 photos={this.state.photos}
                                                 album_info={this.state.selected_album}
                                                 Close_Photo_Album={this.Close_Photo_Album}
@@ -119,12 +123,14 @@ class Albums extends Component {
                 
                     <div id="albums-top">
                     
-                        {Album_Editor ? 
-                            <Album_Editor 
-                                Photos_Container_Editor={Photos_Container_Editor}
-                                Album_Cover={Album_Cover}
-                            /> : <></>}
-                    
+                        <div id="editor-wrapper">
+                            {Album_Editor ? 
+                                <Album_Editor 
+                                    get_albums={this.Get_Albums}
+                                    account_data={this.state.account_data}
+                                /> : <></>}
+                        </div>
+
                         <div id="albums-label">
 
                             <label>Albums</label>

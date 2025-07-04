@@ -4,7 +4,7 @@ let request = function() {
         
         let acc = req.body;
         
-        let query = `select * from Photo_Albums where owner_email = '${acc.email}'`;
+        let query = `select * from Photo_Albums where owner_email = '${acc.email}' order by created_on desc`;
 
         this.sql.query(query, (err, results)=>{
 
