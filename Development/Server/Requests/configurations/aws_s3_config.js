@@ -11,8 +11,8 @@ import { S3, S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
 import aws from 'aws-sdk';
 
 aws.config.update({
-    "accessKeyId": "AKIAJH32XZD6ZNNFCQHQ",
-    "secretAccessKey": "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",
+    "accessKeyId": "AKIAU2FAKXNDYFYLOWWV",
+    "secretAccessKey": "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",
     "region": "us-west-1"
 });
 
