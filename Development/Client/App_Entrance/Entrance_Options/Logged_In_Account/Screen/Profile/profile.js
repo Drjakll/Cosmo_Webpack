@@ -33,6 +33,7 @@ class Profile extends Component {
     Generate_Profile_Photo_Editor = ({ account_data, refresh_account_data }) => {
         
         return <Profile_Photo_Editor account_data={account_data} refresh_account_data={refresh_account_data} />;
+
     }
     
     render(){

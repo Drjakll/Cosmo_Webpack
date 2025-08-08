@@ -16,7 +16,7 @@ let request = function(){
     
     this.req = async (req, res)=>{
         
-        let {photos} = req.body;
+        let { photos } = req.body;
         
         if(Object.keys(photos).length === 0){
             res.json({message: "No files deleted"});

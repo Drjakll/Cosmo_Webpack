@@ -111,59 +111,61 @@ class Albums extends Component {
         const Photos_Container_Editor  = Album_Editor?.Photos_Container_Editor;  
         
         return (
-                <div id="albums">
+             <div id="albums">
         
-                    {this.state.open_album ? <Photos_Container 
-                                                photos_container_editor={Photos_Container_Editor}
-                                                photos={this.state.photos}
-                                                album_info={this.state.selected_album}
-                                                Close_Photo_Album={this.Close_Photo_Album}
-                                                account_data={this.state.account_data}
-                                                /> : <></>}
+                {this.state.open_album ?
+
+                <Photos_Container 
+                        photos_container_editor={Photos_Container_Editor}
+                        photos={this.state.photos}
+                        album_info={this.state.selected_album}
+                        Close_Photo_Album={this.Close_Photo_Album}
+                        account_data={this.state.account_data}
+                        Get_Albums={this.Get_Albums}
+                /> : <></>}
                 
-                    <div id="albums-top">
+                <div id="albums-top">
                     
-                        <div id="editor-wrapper">
-                            {Album_Editor ? 
-                                <Album_Editor 
-                                    get_albums={this.Get_Albums}
-                                    account_data={this.state.account_data}
-                                /> : <></>}
-                        </div>
-
-                        <div id="albums-label">
-
-                            <label>Albums</label>
-
-                        </div>
-                        
-                    </div>    
-                    
-                    <div id="albums-wrapper"
-                        ref={albumsWrapperRef}
-                        onMouseDown={(e)=>{drag_scroll.init_drag(e, albumsWrapperRef.current);}}
-                        onMouseLeave={(e)=>{drag_scroll.disable_drag(e, albumsWrapperRef.current);}}
-                        onMouseUp={(e)=>{drag_scroll.disable_drag(e, albumsWrapperRef.current);}}
-                        onMouseMove={(e)=>{drag_scroll.move_drag(e, albumsWrapperRef.current);}}
-                    >
-                        
-                        {this.state.albums.map((data, index)=>{
-                            
-                            return <div className="album-cover-wrapper" key={index}>
-                                
-                                <Album_Cover album_info={data} 
-                                            Get_Photo_Links={this.Get_Photo_Links}
-                                            Photos_Container_Editor={Photos_Container_Editor}
-                                />
-            
-                            </div>;
-                            
-                        })}
-                        
+                    <div id="editor-wrapper">
+                        {Album_Editor ? 
+                            <Album_Editor 
+                                get_albums={this.Get_Albums}
+                                account_data={this.state.account_data}
+                            /> : <></>}
                     </div>
+
+                    <div id="albums-label">
+
+                        <label>Albums</label>
+
+                    </div>
+                        
+                </div>    
                     
+                <div id="albums-wrapper"
+                    ref={albumsWrapperRef}
+                    onMouseDown={(e)=>{drag_scroll.init_drag(e, albumsWrapperRef.current);}}
+                    onMouseLeave={(e)=>{drag_scroll.disable_drag(e, albumsWrapperRef.current);}}
+                    onMouseUp={(e)=>{drag_scroll.disable_drag(e, albumsWrapperRef.current);}}
+                    onMouseMove={(e)=>{drag_scroll.move_drag(e, albumsWrapperRef.current);}}
+                >
+                        
+                    {this.state.albums.map((data, index)=>{
+                            
+                        return <div className="album-cover-wrapper" key={index}>
+                                
+                            <Album_Cover album_info={data} 
+                                        Get_Photo_Links={this.Get_Photo_Links}
+                            />
+            
+                        </div>;
+                            
+                    })}
+                        
                 </div>
-            );
+                    
+            </div>
+        );
     }
 }
 

@@ -14,42 +14,66 @@ class Photos_Container extends Component {
             account_data: this.props.account_data
         };
     }
+
+    componentDidUpdate(prevProps, prevState) {
+
+        if (this.props === this.prevProps) {
+            return;
+        }
+
+        for (let i in this.props) {
+            this.state[i] = this.props[i];
+        }
+
+        this.setState(this.state);
+    }
     
     
     render(){
-        
+
+        let Editor = this.props.photos_container_editor;
         
         return (
-                <div id="photos-container">
+            <div id="photos-container">
                     
-                    <div id="big-close-button" onClick={this.props.Close_Photo_Album}>
+                <div id="big-close-button" onClick={this.props.Close_Photo_Album}>
                         
-                    </div>
-                    
-                    <div id="photo-container-wrapper">
-                    
-                        <div id="photo-container-title">
-                            {this.state.album_info.title}
-                        </div>
-                    
-                        <div id="photos">
-                        
-                            {this.state.photos.map((photo_info, index)=>{
-
-                                return <div className="photo-thumbnail-wrapper" key={index}>
-
-                                    <Single_Photo_Thumbnail photo_info={photo_info} account_data={this.state.account_data}/>
-
-                                </div>;
-
-                            })}
-                
-                        </div>
-                                
-                    </div>      
-                    
                 </div>
-            );
+                    
+                <div id="photo-container-wrapper">
+                    
+                    <div id="photo-container-title">
+                        {this.state.album_info.title}
+                    </div>
+
+                    {Editor ? <div id="editor-wrapper">
+                        <Editor photo_links={this.state.photos}
+                            album_info={this.state.album_info}
+                            account_data={this.state.account_data}
+                            Close_Photo_Album={this.props.Close_Photo_Album}
+                            Get_Albums={this.props.Get_Albums}
+                        />
+                    </div>
+                        : <></>}
+                    
+                    <div id="photos">
+                        
+                        {this.state.photos.map((photo_info, index)=>{
+
+                            return <div className="photo-thumbnail-wrapper" key={index}>
+
+                                <Single_Photo_Thumbnail photo_info={photo_info} account_data={this.state.account_data}/>
+
+                            </div>;
+
+                        })}
+                
+                    </div>
+                                
+                </div>      
+                    
+            </div>
+        );
     }
 }
 

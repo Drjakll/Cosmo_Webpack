@@ -16,41 +16,85 @@ class Profile_Info_Data extends Component {
         this.state = {
             account_data: this.props.accound_data,
             info_templates: {
-                first_name: { component: Text_Type, label: "First Name", value: "", editor: null, options: [] },
-                last_name: { component: Text_Type, label: "Last Name", value: "", editor: null, options: [] },
-                gender: { component: Choice_Type, label: "Gender", value: "", editor: null, options: ["Male", "Female"] },
-                martial_status: { component: Choice_Type, label: "Martial Status", value: "", editor: null, options: ["Single", "Dating", "Engaged", "Married", "Divorce", "Widow", "Unspecified"] },
+                first_name: {
+                    component: Text_Type,
+                    label: "First Name",
+                    value: "",
+                    editor: null,
+                    options: []
+                },
+                last_name: {
+                    component: Text_Type,
+                    label: "Last Name",
+                    value: "",
+                    editor: null,
+                    options: []
+                },
+                gender: {
+                    component: Choice_Type,
+                    label: "Gender",
+                    value: "",
+                    editor: null,
+                    options: ["Male", "Female"]
+                },
+                martial_status: {
+                    component: Choice_Type,
+                    label: "Martial Status",
+                    value: "",
+                    editor: null,
+                    options: ["Single", "Dating", "Engaged", "Married", "Divorce", "Widow", "Unspecified"]
+                },
                 date_of_birth: { component: Date_Type, label: "Birth Date", value: "", editor: null, options: [] },
                 location_of_birth: {
-                    component: Json_Type, label: "Birthplace", value: "", editor: null, options: [
+                    component: Json_Type,
+                    label: "Birthplace",
+                    value: "",
+                    editor: null,
+                    options: [
                         { label: "Country", data_type: "string" },
                         { label: "State/Province", data_type: "string" },
                         { label: "City", data_type: "string" }
                     ]
                 },
                 current_location: {
-                    component: Json_Type, label: "Current Location", value: "", editor: null, options: [
+                    component: Json_Type,
+                    label: "Current Location",
+                    value: "",
+                    editor: null,
+                    options: [
                         { label: "Country", data_type: "string" },
                         { label: "State/Province", data_type: "string" },
                         { label: "City", data_type: "string" }
                     ]
                 },
                 hobbies: {
-                    component: Json_Type, label: "Hobbies", value: "", editor: null, options: [
+                    component: Json_Type,
+                    label: "Hobbies",
+                    value: "",
+                    editor: null,
+                    options: [
                         { label: "Hobby", data_type: "string" },
                         { label: "Date Started", data_type: "date" },
                         { label: "Profeciency", data_type: "string" }
                     ]
                 },
                 professions: {
-                    component: Json_Type, label: "Talent", value: "", editor: null, options: [
+                    component: Json_Type,
+                    label: "Talent",
+                    value: "",
+                    editor: null,
+                    options: [
                         { label: "Talent", data_type: "string" },
                         { label: "Date Started", data_type: "date" },
                         { label: "Profeciency", data_type: "string" }
                     ]
                 },
                 schools: {
-                    component: Json_Type, label: "School", value: "", editor: null, options: [
+                    component: Json_Type,
+                    label: "School",
+                    value: "",
+                    editor: null,
+                    options: [
                         { label: "School", data_type: "string" },
                         { label: "Type", data_type: "string" },
                         { label: "Year Graduate", data_type: "date" }
@@ -136,7 +180,9 @@ class Profile_Info_Data extends Component {
                 </div>
 
                 <div id="info-wrapper"
+
                     ref={infoWrapperRef}
+
                     onMouseDown={(e) => {
                         drag_scroll.init_drag(e, infoWrapperRef.current);
                     }}
@@ -148,9 +194,11 @@ class Profile_Info_Data extends Component {
                     onMouseUp={(e) => {
                         drag_scroll.disable_drag(e, infoWrapperRef.current);
                     }}
+
                     onMouseMove={(e) => {
                         drag_scroll.move_drag(e, infoWrapperRef.current);
                     }}
+
                     tabIndex="0"
                 >
 

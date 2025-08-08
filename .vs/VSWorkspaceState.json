@@ -3,14 +3,14 @@
     "",
     "\\Development",
     "\\Development\\Client",
-    "\\Development\\Client\\App_Entrance",
-    "\\Development\\Client\\App_Entrance\\Entrance_Options",
-    "\\Development\\Client\\App_Entrance\\Entrance_Options\\Logged_In_Account",
-    "\\Development\\Client\\App_Entrance\\Entrance_Options\\Logged_In_Account\\Screen",
-    "\\Development\\Client\\App_Entrance\\Entrance_Options\\Logged_In_Account\\Screen\\Profile",
-    "\\Development\\Client\\App_Entrance\\Entrance_Options\\Logged_In_Account\\Screen\\Profile\\Album_Editor",
-    "\\Development\\Client\\App_Entrance\\Entrance_Options\\Logged_In_Account\\Screen\\Profile\\Album_Editor\\Photos_Container_Editor"
+    "\\Development\\Client\\API_Requests",
+    "\\Development\\Client\\View_Templates",
+    "\\Development\\Client\\View_Templates\\Profile",
+    "\\Development\\Client\\View_Templates\\Profile\\Components",
+    "\\Development\\Client\\View_Templates\\Profile\\Components\\Profile_Info",
+    "\\Development\\Client\\View_Templates\\Profile\\Components\\Profile_Info\\Profile_Info_Data",
+    "\\Development\\Client\\View_Templates\\Profile\\Components\\Profile_Info\\Profile_Picture"
   ],
-  "SelectedNode": "\\Development\\Client\\App_Entrance\\Entrance_Options\\Logged_In_Account\\Screen\\Profile\\Album_Editor\\album_editor.js",
+  "SelectedNode": "\\Development\\Client\\App_Entrance\\Entrance_Options\\Logged_In_Account\\Screen\\Profile\\Album_Editor\\album_editor.less",
   "PreviewInSolutionExplorer": false
 }

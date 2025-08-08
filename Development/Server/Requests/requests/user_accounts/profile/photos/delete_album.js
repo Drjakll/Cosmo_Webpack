@@ -8,9 +8,12 @@ let request = function() {
         if(!album.id || !album.owner_email){
             res.json({message: "Error deleting album"});
             res.end();
+            return;
         }
         
         let query = `delete from Photo_Albums where id = ${album.id} and owner_email = '${album.owner_email}'`;
+
+        console.log(query);
         
         this.sql.query(query, (err, result)=>{
            

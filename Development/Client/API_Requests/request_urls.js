@@ -6,11 +6,14 @@ const create_account = `/create_account`;
 const add_photo_album = '/add_photo_album';
 const get_photo_albums = '/get_photo_albums';
 const get_photo_links = '/get_photo_links';
+const delete_album = '/delete_album';
 const get_all_profile_pictures = '/get_all_profile_pictures';
 const set_as_profile_picture = '/set_as_profile_picture';
 const insert_profile_photo_data = '/insert_profile_photo_data';
 const delete_profile_photo_files = '/delete_profile_photo_files';
 const delete_database_profile_photos = '/delete_data_base_profile_photo';
+const delete_photo_links = '/delete_photo_links';
+const delete_photo_files = '/delete_photo_files';
 
 //Photo comments
 const get_photo_comments = '/get_photo_comments';
@@ -43,11 +46,14 @@ export default {
     add_photo_album: add_photo_album,
     get_photo_albums: get_photo_albums,
     get_photo_links: get_photo_links,
+    delete_album: delete_album,
     get_all_profile_pictures: get_all_profile_pictures,
     set_as_profile_picture: set_as_profile_picture,
     insert_profile_photo_data: insert_profile_photo_data,
     delete_profile_photo_files: delete_profile_photo_files,
     delete_database_profile_photos: delete_database_profile_photos,
+    delete_photo_links: delete_photo_links,
+    delete_photo_files: delete_photo_files,
         
     //Photo comments
     get_photo_comments: get_photo_comments,

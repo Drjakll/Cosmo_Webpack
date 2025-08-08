@@ -19,7 +19,8 @@ class Album_Editor extends Component {
         }
     }
 
-    componentDidUpdate(prevProps, prevState){
+    componentDidUpdate(prevProps, prevState) {
+
         if(prevProps === this.props){
             return;
         }
@@ -27,7 +28,13 @@ class Album_Editor extends Component {
         this.setState(this.props);
     }
 
-    Add_Photo_Album = async (e)=>{
+    Add_Photo_Album = async (e) => {
+
+        let album_name = prompt("Please enter an album name.");
+
+        if (!album_name) {
+            return;
+        }
 
         let {account_data} = this.state;
         let {Photo_Album_Data_Templates, Request_URLs} = this.context;
@@ -35,7 +42,7 @@ class Album_Editor extends Component {
         let {add_photo_album} = Request_URLs;
 
 
-        let param = Photo_Album_Data({title: "Untitled Album", brief_description: "My adventure", owner_email: account_data.email});
+        let param = Photo_Album_Data({title: album_name, brief_description: "My adventure", owner_email: account_data.email});
 
         if(!account_data){
             return;
@@ -49,7 +56,6 @@ class Album_Editor extends Component {
             }
         })).json();
 
-        console.log(resJson?.message);
 
         this.props.get_albums();
     }
