@@ -83,7 +83,9 @@ class Photo_Comments extends Component {
         this.setState({reply_to_comment: reply});
     }
     
-    render(){
+    render() {
+
+        let { Comment_Editor } = this.props;
         
         return <div id="photo-comments-wrapper">
         
@@ -93,7 +95,12 @@ class Photo_Comments extends Component {
                     
                     return <div className="comment-wrapper" key={index}>
                         
-                        <Single_Comment comment={comment} set_reply={this.Set_Reply}/>
+                        <Single_Comment
+                            comment={comment}
+                            set_reply={this.Set_Reply}
+                            Comment_Editor={Comment_Editor}
+                            Get_Photo_Comments={this.Get_Photo_Comments}
+                        />
                         
                     </div>;
                     

@@ -16,7 +16,7 @@ let cookie_parser = (cookie) => {
 
 };
 
-let cookie_converter = function*(json, options) {
+let cookie_converter = function* (json, options) {
 
     for (let i in json) {
 

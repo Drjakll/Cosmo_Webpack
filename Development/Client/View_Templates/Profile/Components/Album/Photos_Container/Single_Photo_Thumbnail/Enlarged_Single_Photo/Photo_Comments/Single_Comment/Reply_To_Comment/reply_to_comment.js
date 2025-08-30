@@ -41,7 +41,9 @@ class Reply_To_Comment extends Component {
                 <div id="reply-comment-wrapper">
                 
                     <pre id="comment-reply">
+
                         {this.state.reply.comment}
+
                     </pre>
                     
                 </div>

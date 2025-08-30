@@ -229,7 +229,7 @@ class Editor extends Component {
 
                     <div id="upload-profile-pictures-wrapper">
 
-                        <input type="file" ref={fileRef} />
+                        <input type="file" ref={fileRef} accept="image/*" />
 
                         <button onClick={(e) => {
 

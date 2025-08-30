@@ -24,14 +24,13 @@ class Profile_Template extends Component {
     }
     
     componentDidMount(){
-        
-        if (this.props.get_account_data) {
+        if (this.props.account_data) {
+            this.UpdateAllComponentProps({ account_data: this.props.account_data });
+        }
+        else if (this.props.get_account_data) {
             this.props.get_account_data(this.UpdateAllComponentProps);
         }
         
-        if(this.props.account_data){
-            this.UpdateAllComponentProps({account_data: this.props.account_data});
-        }
         
         if(this.props.add_editors){
             

@@ -49,7 +49,7 @@ class Profile_Picture extends Component {
         const { generate_editors, refresh_account_data } = this.state;
 
         return (
-            <div id="profile-picture">
+            <div id="profile-picture" className={this.state.enlarge_photo ? "enlarged-photo" : ""}>
 
                 {this.state.enlarge_photo ? <Enlarged_Profile_Photo turn_off_enlarge={this.Turn_Off_Enlarge} full_url={`${aws_s3_url}${profile_picture_link}`} /> : <></>}
                 

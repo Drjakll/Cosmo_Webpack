@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, createRef } from 'react';
 import './single_post.less';
 
 class Single_Post extends Component {
@@ -18,24 +18,40 @@ class Single_Post extends Component {
         'December'
     ]
 
+    bodyRef = createRef();
+
     constructor(props) {
 
         super(props);
         
-        let {post} = this.props;
+        let { post } = this.props;
+
+        Single_Post.contextType = window.Context;
 
         this.state = {
-            post: post
+            post: post,
+            post_photos: []
         };
     }
+
+    componentDidMount() {
+
+        this.bodyRef.current.innerHTML = this.state.post.body;
+
+        this.Get_Post_Photos();
+    }
     
-    componentDidUpdate(prevProps, prevState){
+    async componentDidUpdate(prevProps, prevState){
         
         if(this.props === prevProps){
             return;
         }
         
-        this.setState(this.props);
+        await this.setState(this.props);
+
+        this.bodyRef.current.innerHTML = this.state.post.body;
+
+        this.Get_Post_Photos();
     }
     
     Generate_Beautiful_Date = (date_str)=>{
@@ -58,10 +74,36 @@ class Single_Post extends Component {
         
     }
 
+    Get_Post_Photos = async () => {
+
+        let { post } = this.state;
+
+        if (!post || !post.id) {
+            return;
+        }
+
+        let { get_post_photo_links } = this.context.Request_URLs;
+
+        let res = await (await fetch(get_post_photo_links, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(post)
+        })).json();
+
+        if (res && res.photos.length > 0) {
+
+            this.setState({
+                post_photos: res.photos
+            })
+        }
+    }
+
     render() {
         
         let {post} = this.state;
-        let {title, body, date_created} = post;
+        let {title, date_created} = post;
 
         return <div id="single-post">
         
@@ -73,8 +115,7 @@ class Single_Post extends Component {
             
             <div id="body">
 
-                <pre>
-                    {body}
+                <pre ref={this.bodyRef}>
                 </pre>
         
             </div>

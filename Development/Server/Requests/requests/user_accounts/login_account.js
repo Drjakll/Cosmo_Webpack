@@ -18,7 +18,8 @@ let request = function(){
                 if(result.length === 0){
                     res.json({message: "Email and password don't match.", acc_info: null, status: 0b10});
                 } else {
-                    res.json({message: "Login successful.", acc_info: result[0], status: 0b11});
+                    res.json({ message: "Login successful.", acc_info: result[0], status: 0b11 });
+
                 }
             }
             

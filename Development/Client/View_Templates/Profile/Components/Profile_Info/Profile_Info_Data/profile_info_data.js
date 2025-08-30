@@ -37,9 +37,9 @@ class Profile_Info_Data extends Component {
                     editor: null,
                     options: ["Male", "Female"]
                 },
-                martial_status: {
+                marital_status: {
                     component: Choice_Type,
-                    label: "Martial Status",
+                    label: "Marital Status",
                     value: "",
                     editor: null,
                     options: ["Single", "Dating", "Engaged", "Married", "Divorce", "Widow", "Unspecified"]

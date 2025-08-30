@@ -12,7 +12,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/ClientSide/style.less to edit thi
     display: block;
     margin: 0px 0px 30px 0px;
     border-radius: 10px;
-    box-shadow: 5px 5px 5px rgba(0,0,0,0.25);
+    box-shadow: 0px 0px 10px rgba(0,0,0,0.25);
     left: 5%;
     position: relative;
     border: rgba(0,0,0,0.25) solid 0.5px;
@@ -20,6 +20,16 @@ Click nbfs://nbhost/SystemFileSystem/Templates/ClientSide/style.less to edit thi
     
     &:first-child {
         margin-top: 15px;
+    }
+
+    #comment-editor-wrapper {
+        height: 1vw;
+        position: absolute;
+        right: 0%;
+        top: 0%;
+        display: flex;
+        justify-content: space-evenly;
+        align-items: center;
     }
     
     #user-info {
@@ -97,7 +107,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/ClientSide/style.less to edit thi
                 color: rgba(100,100,100,1);
                 margin: 15px 15px 0px 15px;
                 background-color: rgba(255,255,255,0.5);
-                box-shadow: rgba(0,0,0,0.25) 2.5px 2.5px 2.5px;
+                box-shadow: rgba(0,0,0,0.25) 0px 0px 5px;
             }
             
             #comment-responses-wrapper {
@@ -117,7 +127,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/ClientSide/style.less to edit thi
                     label {
                         color: blue;
                         transition: 1s;
-                        text-shadow: rgba(0,0,0,0.25) 2.5px 2.5px 5px;
+                        text-shadow: rgba(0,0,0,0.25) 0px 0px 5px;
                         
                         &:hover {
                             color: grey;

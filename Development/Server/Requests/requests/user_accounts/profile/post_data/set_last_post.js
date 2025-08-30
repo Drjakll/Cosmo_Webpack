@@ -10,11 +10,12 @@ let request = function() {
         this.sql.query(query, (err, results)=>{
             
             let query2 = "";
+            let timestamp = null;
             
             if(err){
                 
                 console.log(err.sqlMessage);
-                res.json({message: "Error retrieving post(s)"});
+                res.json({message: "Error retrieving post(s)", last_posted: null});
                 res.end();
                 return;
             
@@ -25,7 +26,7 @@ let request = function() {
             }
             else {
                 
-                let timestamp = this.generate_time_string(new Date(results[0].date_created));
+                timestamp = this.generate_time_string(new Date(results[0].date_created));
                 
                 
                 query2 = `update User_Accounts set last_posted = '${timestamp}'
@@ -38,16 +39,16 @@ let request = function() {
                 if(err2){
 
                     console.log(err2.sqlMessage);
-                    res.json({message:"Error updating last posted"});
+                    res.json({message:"Error updating last posted", last_posted: null});
 
                 } else if (result.affectedRows === 0){
 
                     res.json({message: "No user found"});
-
+                     
                 }
                 else {
 
-                    res.json({message: "Successfully updated last posted"});
+                    res.json({message: "Successfully updated last posted", last_posted: timestamp});
                 }
 
                 res.end();

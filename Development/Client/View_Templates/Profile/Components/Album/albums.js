@@ -67,7 +67,10 @@ class Albums extends Component {
         
         let resJson = await res.json();
         
-        
+        if (resJson.albums === this.state.albums) {
+            return;
+        }
+
         this.setState({albums: resJson.albums});
     }
     
@@ -111,7 +114,7 @@ class Albums extends Component {
         const Photos_Container_Editor  = Album_Editor?.Photos_Container_Editor;  
         
         return (
-             <div id="albums">
+             <div id="albums" tabIndex="0">
         
                 {this.state.open_album ?
 
@@ -122,6 +125,7 @@ class Albums extends Component {
                         Close_Photo_Album={this.Close_Photo_Album}
                         account_data={this.state.account_data}
                         Get_Albums={this.Get_Albums}
+                        Get_Photo_Links={this.Get_Photo_Links}
                 /> : <></>}
                 
                 <div id="albums-top">

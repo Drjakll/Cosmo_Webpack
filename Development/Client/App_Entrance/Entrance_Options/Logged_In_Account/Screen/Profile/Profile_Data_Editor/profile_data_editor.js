@@ -13,8 +13,8 @@ let Profile_Data_Editor = () => {
         location_of_birth: Json_Type_Editor,
         gender: Choice_Type_Editor,
         current_location: Json_Type_Editor,
-        martial_status: Choice_Type_Editor,
-        hobbies: Json_Type_Editor,
+        marital_status: Choice_Type_Editor,
+        hobbies: Json_Type_Editor, 
         professions: Json_Type_Editor,
         schools: Json_Type_Editor
     };

@@ -1,0 +1,93 @@
+#the-post-texts-editor {
+    width: calc(100% - 1px);
+    height: 100%;
+    border-right: rgba(0,0,0,0.5) solid 1px;
+    display: block;
+
+    #the-text-editor-area {
+        height: 85%;
+        width: 100%;
+
+        #the-title-input-wrapper {
+            width: 100%;
+            height: 15%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            #the-title-input {
+                width: calc(75% - 0.7vh - 0.7vw);
+                height: calc(75% - 0.7vh - 0.7vw);
+                font-size: calc(1vh + 1vw);
+                padding: calc(0.35vh + 0.35vw);
+                border: rgba(0,0,0,0.5) solid 0.5px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                border-radius: 50px;
+                background-color: rgba(255,255,255,0.5);
+                font-weight: bold;
+                color: rgba(0,0,0,0.75);
+            }
+        }
+
+        #text-editor-button-area {
+            width: 100%;
+            height: 5%;
+            display: flex;
+            justify-content: space-evenly;
+            align-items: center;
+        }
+
+        #the-body-input-wrapper {
+            width: 100%;
+            height: 80%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            #the-body-input {
+                width: calc(85% - 1.2vh - 1.2vw);
+                height: calc(85% - 1.2vh - 1.2vw);
+                font-size: calc(0.5vh + 0.5vw);
+                padding: calc(0.6vh + 0.6vw);
+                border: rgba(0,0,0,0.5) solid 0.5px;
+                border-radius: 10px;
+                //background-color: rgba(255,255,255,0.65);
+                //color: rgba(0,0,0,0.75);
+                display: inline-block;
+                white-space: pre;
+                color: antiquewhite;
+                background-color: rgba(0,0,0,0.75);
+            }
+        }
+    }
+
+
+    #the-buttons-area {
+        height: 15%;
+        width: 100%;
+        display: flex;
+        justify-content: space-evenly;
+        align-items: center;
+
+        .post-button {
+            padding: calc(0.5vh + 0.5vw);
+            font-size: calc(0.35vh + 0.35vw);
+            border-radius: 50px;
+            border: rgba(0,0,0,0.5) solid 0.5px;
+            background-color: darkolivegreen;
+            color: antiquewhite;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: 1s;
+            font-weight: bold;
+
+            &:hover {
+                cursor: pointer;
+                background-color: olive;
+            }
+        }
+    }
+}

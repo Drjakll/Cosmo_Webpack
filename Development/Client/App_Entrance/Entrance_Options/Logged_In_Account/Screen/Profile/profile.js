@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import Profile_Photo_Editor from './Profile_Photo_Editor/profile_photo_editor.js';
 import Profile_Data_Editor from './Profile_Data_Editor/profile_data_editor.js';
 import Album_Editor from './Album_Editor/album_editor.js';
+import Post_Editor from './Post_Editor/post_editor.js';
 import './profile.less';
 
 class Profile extends Component {
@@ -11,6 +12,10 @@ class Profile extends Component {
         super(props);
         
         Profile.contextType = window.Context;
+
+        this.state = {
+            account_data: props.account_data
+        }
     }
     
     GetAccountData = (UpdateAllComponentProps) => {
@@ -44,6 +49,7 @@ class Profile extends Component {
             <div id="profile">
 
                 <Profile_Template
+                    account_data={this.state.account_data}
                     get_account_data={this.GetAccountData}
                     add_editors={{
                         "Profile Info": {
@@ -52,6 +58,9 @@ class Profile extends Component {
                         },
                         "Albums": {
                             album_editor: Album_Editor
+                        },
+                        "Posts": {
+                            post_editor: Post_Editor
                         }
                     }}
                 />

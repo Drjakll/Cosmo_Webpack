@@ -11,7 +11,8 @@ class Enlarged_Single_Photo extends Component {
         this.state = {
             photo_info: this.props.photo_info,
             aws_s3_url: this.props.aws_s3_url,
-            account_data: this.props.account_data
+            account_data: this.props.account_data,
+            album_info: this.props.album_info
         };
     }
     
@@ -32,7 +33,11 @@ class Enlarged_Single_Photo extends Component {
         this.setState(this.state);
     }
     
-    render(){
+    render() {
+
+        let { Enlarged_Photo_Editor } = this.props;
+
+        let Comment_Editor = Enlarged_Photo_Editor?.Comment_Editor;
         
         return <div id="enlarged-single-photo-wrapper">
 
@@ -42,17 +47,36 @@ class Enlarged_Single_Photo extends Component {
 
             <div id="enlarged-single-photo">
 
-                <div id="enlarged-photo"
-                    style={{
-                        backgroundImage: `url('${this.state.aws_s3_url}${this.state.photo_info.link}')`
-                    }}
-                >
+                <div id="enlarged-photo-wrapper">
+
+                    {Enlarged_Photo_Editor ?
+
+                        <div id="photo-editor-wrapper">
+                            <Enlarged_Photo_Editor
+                                photo_info={this.state.photo_info}
+                                album_info={this.state.album_info}
+                                Get_Albums={this.props.Get_Albums}
+                            />
+                        </div>
+
+                        : <></>}
+
+                    <div id="enlarged-photo"
+                        style={{
+                            backgroundImage: `url('${this.state.aws_s3_url}${this.state.photo_info.link}')`
+                        }}
+                    >
+
+                </div>
 
                 </div>
 
                 <div id="comments-area-wrapper">
 
-                    <Photo_Comments photo_info={this.state.photo_info} account_data={this.state.account_data} />
+                    <Photo_Comments
+                        photo_info={this.state.photo_info}
+                        account_data={this.state.account_data}
+                        Comment_Editor={Comment_Editor} />
 
                 </div>
 

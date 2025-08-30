@@ -4,6 +4,7 @@ const create_account = `/create_account`;
 
 //Account photos
 const add_photo_album = '/add_photo_album';
+const add_photo_links = '/add_photo_links';
 const get_photo_albums = '/get_photo_albums';
 const get_photo_links = '/get_photo_links';
 const delete_album = '/delete_album';
@@ -14,6 +15,7 @@ const delete_profile_photo_files = '/delete_profile_photo_files';
 const delete_database_profile_photos = '/delete_data_base_profile_photo';
 const delete_photo_links = '/delete_photo_links';
 const delete_photo_files = '/delete_photo_files';
+const update_album = '/update_album';
 
 //Photo comments
 const get_photo_comments = '/get_photo_comments';
@@ -23,6 +25,13 @@ const delete_photo_comment = '/delete_photo_comment';
 
 //Posts
 const get_posts = '/get_posts';
+const create_post = '/create_post';
+const update_post = '/update_post';
+const delete_post = '/delete_post';
+const delete_post_photo_links = '/delete_post_photo_links';
+const set_last_post = '/set_last_post';
+const add_post_photo_links = '/add_post_photo_links';
+const get_post_photo_links = '/get_post_photo_links';
 
 //Profile details
 const update_profile = '/update_profile';
@@ -44,6 +53,7 @@ export default {
         
     //Account photos
     add_photo_album: add_photo_album,
+    add_photo_links: add_photo_links,
     get_photo_albums: get_photo_albums,
     get_photo_links: get_photo_links,
     delete_album: delete_album,
@@ -54,6 +64,7 @@ export default {
     delete_database_profile_photos: delete_database_profile_photos,
     delete_photo_links: delete_photo_links,
     delete_photo_files: delete_photo_files,
+    update_album: update_album,
         
     //Photo comments
     get_photo_comments: get_photo_comments,
@@ -63,6 +74,13 @@ export default {
         
     //Posts
     get_posts: get_posts,
+    create_post: create_post,  
+    update_post: update_post,
+    delete_post: delete_post,
+    delete_post_photo_links: delete_post_photo_links,
+    set_last_post: set_last_post,
+    add_post_photo_links: add_post_photo_links,
+    get_post_photo_links: get_post_photo_links,
 
     //Profile details
     update_profile: update_profile,

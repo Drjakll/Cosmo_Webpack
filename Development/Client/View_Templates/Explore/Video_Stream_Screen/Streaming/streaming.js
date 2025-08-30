@@ -67,7 +67,7 @@ class Streaming extends Component {
             return null;
         }
         
-        return await navigator?.mediaDevices?.getUserMedia({ video: true, audio: false });
+        return await navigator?.mediaDevices?.getUserMedia({ video: true, audio: true });
         
     }
 
@@ -274,6 +274,7 @@ class Streaming extends Component {
             streamer_small_screens[tag.id] = event.streams[0];
 
             if (tag.is_host) {
+                console.log("I receive a candidate!");
                 streamer_big_screen = event.streams[0];
                 big_screen_id = tag.id;
             }
@@ -440,8 +441,10 @@ class Streaming extends Component {
                 {this.Generate_Profile_View(this.state.view_account_data)}
                     
                 <div id="big-stream-screen">
-                        
-                    <Main_Video account_data={this.state.account_data} media_source={this.state.streamer_big_screen} />
+
+                    <Main_Video account_data={this.state.account_data}
+                        media_source={this.state.streamer_big_screen}
+                        is_self={this.state.big_screen_id === this.state.my_room_tag?.id ? true : false} />
                         
                 </div>
 
@@ -454,10 +457,12 @@ class Streaming extends Component {
                 >
                     
                     {Object.keys(this.state.streamer_small_screens).map((key, index) => {
+                        
+                        return key === this.state.big_screen_id ? <></> : <div className="sub-video" key={index}>
 
-                        return key === this.state.big_screen_id ? "" : <div className="sub-video" key={index}>
-
-                            <Sub_Video media_source={this.state.streamer_small_screens[key]} id={key} swap_screen={this.Swap_With_Main_Screen} />
+                            <Sub_Video media_source={this.state.streamer_small_screens[key]}
+                                id={key} swap_screen={this.Swap_With_Main_Screen}
+                                is_self={this.state.my_room_tag?.id === key ? true : false} />
                                 
                         </div>;
                             

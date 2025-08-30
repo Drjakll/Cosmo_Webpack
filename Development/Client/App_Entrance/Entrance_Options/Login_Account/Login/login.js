@@ -60,7 +60,7 @@ class Login extends Component {
         date.setTime(date.getTime() + Configurations.Cookie_Expire_Days * 24 * 60 * 60 * 1000);
         
         //Convert the account data into cookie strings
-        const cookieStrs = Cookie_Tools.cookie_converter(acc_info, {"expires":date.toUTCString(), "path": "/"});
+        const cookieStrs = Cookie_Tools.cookie_converter(acc_info, { "expires": date.toUTCString(), "path": "/" });
         
         //Store the cookie strings into cookie
         for(let cookieStr of cookieStrs){

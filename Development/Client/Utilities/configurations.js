@@ -37,14 +37,29 @@ const Verify_Email = function(email){
 
 const Verify_Password = function(password){
     
-    return /^(?=(.*\d){3,})(?=.*[A-Z])(?=.*[!@#$%^&*?]).{8,}$/.test(password);
+    return true; ///^(?=(.*\d){3,})(?=.*[A-Z])(?=.*[!@#$%^&*?]).{8,}$/.test(password);
     
 };
 
+const UTC_Time_Now = function () {
+    let now = new Date();
+
+    let year = parseInt(now.getUTCFullYear());
+    let month = parseInt(now.getUTCMonth()) + 1;
+    let date = parseInt(now.getUTCDate());
+    let hours = parseInt(now.getUTCHours());
+    let minutes = parseInt(now.getUTCMinutes());
+    let seconds = parseInt(now.getUTCSeconds());
+
+    return { year, month, date, hours, minutes, seconds };
+}
+
+
 export default {
-        Cookie_Expire_Days: 1,
-        Verify_Email: Verify_Email,
-        Verify_Password: Verify_Password,
-        Months: Months,
-        Weekdays: Weekdays
+    Cookie_Expire_Days: 1,
+    Verify_Email: Verify_Email,
+    Verify_Password: Verify_Password,
+    Months: Months,
+    Weekdays: Weekdays,
+    UTC_Time_Now: UTC_Time_Now
 }

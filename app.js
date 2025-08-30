@@ -77,15 +77,18 @@ app.post("/create_post", requests.user_accounts.profile.post_data.create_post.re
 app.post("/update_post", requests.user_accounts.profile.post_data.update_post.req);
 app.post("/get_posts", requests.user_accounts.profile.post_data.get_posts.req);
 app.post("/delete_post", requests.user_accounts.profile.post_data.delete_post.req);
+app.post("/delete_post_photo_links", requests.user_accounts.profile.post_data.delete_post_photo_links.req); 
 app.post("/set_last_post", requests.user_accounts.profile.post_data.set_last_post.req);
+app.post("/add_post_photo_links", requests.user_accounts.profile.post_data.add_post_photo_links.req);
+app.post("/get_post_photo_links", requests.user_accounts.profile.post_data.get_post_photo_links.req);
 
 //Video Streaming
 app.post("/create_stream_room", requests.stream_rooms.create_stream_room.req);
 app.post("disband_stream_room", requests.stream_rooms.disband_stream_room.req);
 app.post("search_streams", requests.stream_rooms.search_streams.req);
 
-server.listen(4000, () => {
+server.listen(8080, () => {
     
-    console.log("Listening to port 4000");
+    console.log("Listening to port 8080");
 
 });

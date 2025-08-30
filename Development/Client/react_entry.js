@@ -7,6 +7,7 @@ import Account_Data_Templates from './Data_Templates/account_data.js';
 import Comment_Data_Templates from './Data_Templates/comment_data.js';
 import Photo_Album_Data_Templates from './Data_Templates/photo_album_data.js';
 import Stream_Room_Data_Templates from './Data_Templates/stream_room_data.js';
+import Post_Data_Templates from './Data_Templates/post_data.js';
 import Request_URLs from './API_Requests/request_urls.js';
 import Cookie_Tools from './Utilities/cookie.js';
 import Configurations from './Utilities/configurations.js';
@@ -42,6 +43,7 @@ class Entry extends Component {
                 Account_Data_Templates, //Account data templates
                 Comment_Data_Templates, //Comment data templates
                 Photo_Album_Data_Templates, //Photo album data templates
+                Post_Data_Templates, //Post data templates
                 Request_URLs,
                 Cookie_Tools,  //Useful tools for parsing and stringifying cookies
                 Configurations, //The app's universal configurations

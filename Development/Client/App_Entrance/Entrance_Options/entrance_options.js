@@ -80,6 +80,8 @@ class Entrance_Options extends Component {
     componentDidMount(){
         
         this.LoginAttempt();
+
+        window.LoginAttempt = this.LoginAttempt;
         
     }
     

@@ -12,8 +12,6 @@ let request = function() {
         }
         
         let query = `delete from Photo_Albums where id = ${album.id} and owner_email = '${album.owner_email}'`;
-
-        console.log(query);
         
         this.sql.query(query, (err, result)=>{
            

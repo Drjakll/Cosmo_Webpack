@@ -6,7 +6,7 @@ let request = function() {
         let comment_info = req.body;
  
         
-        let query = `delete from Photo_Comments where id = ${comment_info}`;
+        let query = `delete from Photo_Comments where id = ${comment_info.id}`;
         
         this.sql.query(query, (err, result)=>{
            

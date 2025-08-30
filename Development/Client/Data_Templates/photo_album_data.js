@@ -30,8 +30,8 @@ let Photo_Data = function (initial) {
         link: "",
         image_descriptions: "",
         title: "",
-        belongs_to_album: "",
-        meda_data: "{}",
+        belongs_to_album: 0,
+        meta_data: "{}",
         time_added: null
     };
 

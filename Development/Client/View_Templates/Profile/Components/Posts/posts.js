@@ -52,7 +52,7 @@ class Posts extends Component {
         
         let {account_data} = this.state;
         
-        if(account_data){
+        if (account_data) {
             
             let { last_posted } = account_data;
             
@@ -71,7 +71,7 @@ class Posts extends Component {
     
     Change_Month = ({year, month}) => {
         
-        let {email} = this.state.account_data;
+        let { email } = this.state.account_data;
 
         let last_day_of_month = new Date(year, month, 0).getDate();
 
@@ -187,10 +187,12 @@ class Posts extends Component {
 
         const { Calendar } = this.context;
         
-        let {selected_year, selected_month, selected_date, selected_post} = this.state;
+        let { selected_year, selected_month, selected_date, selected_post } = this.state;
+
+        const Post_Editor = this.state.post_editor;
         
         return (
-            <div id="posts">
+            <div id="posts" tabIndex="0">
                 
                 <div id="post-label">
                     Posts
@@ -220,6 +222,17 @@ class Posts extends Component {
                     </div>
 
                 </div>
+
+
+                {Post_Editor ?
+                    <div id="post-editor-wrapper">
+                        <Post_Editor
+                            Get_Posts_On_This_Month={this.Change_Month}
+                            selected_post={this.state.selected_post}
+                            account_info={this.state.account_data}
+                        />
+                    </div>
+                    : <></>}
 
                 <div id="bottom">
 

@@ -40,14 +40,30 @@ Click nbfs://nbhost/SystemFileSystem/Templates/ClientSide/style.less to edit thi
         align-items: center;
         overflow: hidden;
         
-        #enlarged-photo {
+        #enlarged-photo-wrapper {
             height: 100%;
             width: 65%;
-            background-size: contain;
-            background-repeat: no-repeat;
-            background-position: center;
-            background-color: rgba(25,25,25,1);
-            box-shadow: rgba(0,0,0,0.25) 5px 5px 10px;
+            position: relative;
+
+            #photo-editor-wrapper {
+                width: 100%;
+                height: 5%;
+                display: flex;
+                justify-content: flex-end;
+                align-items: center;
+                position: absolute;
+                top: 0%;
+            }
+
+            #enlarged-photo {
+                height: 100%;
+                width: 100%;
+                background-size: contain;
+                background-repeat: no-repeat;
+                background-position: center;
+                background-color: rgba(25,25,25,1);
+                box-shadow: rgba(0,0,0,0.25) 5px 5px 10px;
+            }
         }
         
         #comments-area-wrapper {

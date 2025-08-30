@@ -9,11 +9,15 @@ let request = function() {
         
         this.sql.query(query, (err, result)=>{
             
-            if(err){
+            if (err) {
+
                 console.log(err.sqlMessage);
-                res.json({message: "Error adding new post"});
+                res.json({ message: "Error adding new post" });
+
             } else {
-                res.json({message: "New post added"});
+
+                res.json({ message: "New post added" });
+
             }
             
             res.end();

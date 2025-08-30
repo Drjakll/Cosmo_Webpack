@@ -189,22 +189,22 @@ class Json_Type extends Component {
     render(){
         
         return (
-                <div id="json-type" className="info">
+            <div id="json-type" className={`info ${this.state.show_popup ? 'popped': ''}`}>
                 
-                    {this.state.show_popup ? this.Pop_Up() : <></>}
+                {this.state.show_popup ? this.Pop_Up() : <></>}
                     
-                    <div id="value-wrapper">
+                <div id="value-wrapper">
                     
-                        <div id="show-button" onClick={(e)=>{this.setState({show_popup: true}); }}>
+                    <div id="show-button" onClick={(e)=>{this.setState({show_popup: true}); }}>
                             
-                            Show
+                        Show
                             
-                        </div>
-                
                     </div>
-                    
+                
                 </div>
-            );
+                    
+            </div>
+        );
     }
 }
 

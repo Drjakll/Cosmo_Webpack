@@ -38,7 +38,7 @@ class Profile_Photo_Editor extends Component {
         
         const { account_data, refresh_account_data } = this.state;
         
-        return <div id="profile-photo-editor">
+        return <div id="profile-photo-editor" className={`${this.state.show_editor ? "enlarged-profile-photo-editor" : ""}`}>
 
             {this.state.show_editor ? <Editor exit_editor={this.Exit_Editor} account_data={account_data} refresh_account_data={refresh_account_data} /> : <></>}
         

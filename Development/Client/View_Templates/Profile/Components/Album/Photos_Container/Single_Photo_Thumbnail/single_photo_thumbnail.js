@@ -13,7 +13,9 @@ class Single_Photo extends Component {
         this.state = {
             photo_info: this.props.photo_info,
             enlarge_photo: false,
-            account_data: this.props.account_data
+            account_data: this.props.account_data,
+            photos_to_be_deleted: {},
+            album_info: this.props.album_info
         };
     }
     
@@ -45,34 +47,45 @@ class Single_Photo extends Component {
         let {aws_s3_url} = Request_URLs;
         
         const photo_link = this.state.photo_info?.link;
+
+        const Editor = this.props.Thumbnail_Editor;
         
         //To avoid unecessary request to the aws s3 if there is no photo link available
         aws_s3_url = photo_link ? aws_s3_url : "";
         
         return (
-                <div id="single-photo-thumbnail">
+            <div id="single-photo-thumbnail">
         
-                    {this.state.enlarge_photo ? <Enlarged_Single_Photo 
-                                                    photo_info={this.state.photo_info}
-                                                    aws_s3_url={`${aws_s3_url}`} 
-                                                    exit_enlarge_mode={this.Exit_Enlarge_Mode}
-                                                    account_data={this.state.account_data}
-                                                    /> : <></>}
-                    
-                    <div id="photo-thumbnail"
-                        style={{
-                            backgroundImage: `url('${aws_s3_url}${photo_link}')`
-                        }}
-                        onClick = {(e)=>{
+                {this.state.enlarge_photo ?
+                    <Enlarged_Single_Photo 
+                        photo_info={this.state.photo_info}
+                        aws_s3_url={`${aws_s3_url}`}
+                        exit_enlarge_mode={this.Exit_Enlarge_Mode}
+                        account_data={this.state.account_data}
+                        Enlarged_Photo_Editor={Editor?.Enlarged_Photo_Editor}
+                        album_info={this.state.album_info}
+                        Get_Albums={this.props.Get_Albums}
+                /> : <></>}
+
+                {Editor ?
+                    <Editor photo_info={this.state.photo_info} photos_to_be_deleted={this.state.photos_to_be_deleted} />
+                    : <></>}
+
+                <div id="photo-thumbnail"
+                    style={{
+                        backgroundImage: `url('${aws_s3_url}${photo_link}')`
+                    }}
+                    onClick = {(e)=>{
                             
-                            this.setState({enlarge_photo: true});
-                        }}
-                    >
-                
-                    </div>
+                        this.setState({enlarge_photo: true});
+                    }}
+                >
                     
+                
                 </div>
-            );
+                    
+            </div>
+        );
     }
 }
 

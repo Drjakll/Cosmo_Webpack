@@ -19,9 +19,10 @@ let Account_Data_Template = function(initial){
         schools: "[]",
         hobbies: "[]",
         professions: "[]",
-        martial_status: "",
-        current_location: "{}",
+        marital_status: "",
+        current_location: "[]",
         relationships: "[]",
+        connection_list: "{}",
         last_posted: null,
         created_on: null
     };

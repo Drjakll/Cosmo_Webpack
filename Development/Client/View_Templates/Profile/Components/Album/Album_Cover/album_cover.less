@@ -28,14 +28,14 @@ Click nbfs://nbhost/SystemFileSystem/Templates/ClientSide/style.less to edit thi
             background-repeat: no-repeat;
             background-size: cover;
             background-position: center 30%; 
-            box-shadow: rgba(0,0,0,0.25) 2.5px 2.5px 5px;
-            border-radius: 5px;        
-            border: rgba(55,55,55,0.25) solid 1px;
+            box-shadow: rgba(0,0,0,0.5) 5px 5px 10px;
+            border-radius: 10px;        
+            //border: rgba(0,0,0,0.5) solid 1px;
             transition: 1s;
             
             &:hover {
                 cursor: pointer;
-                box-shadow: rgba(0,0,0,0) 0px 0px 0px;
+                box-shadow: rgba(0,0,0,0.5) 0px 0px 1px;
             }
         }
     }
@@ -46,6 +46,6 @@ Click nbfs://nbhost/SystemFileSystem/Templates/ClientSide/style.less to edit thi
         display: flex;
         justify-content: center;
         align-items: center;
-        font-size: 0.8vw;
+        font-size: calc(0.4vw + 0.4vh);
     }
 }

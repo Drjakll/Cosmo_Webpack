@@ -3,6 +3,7 @@ import Connections from './Connections/connections.js';
 import Explore from './Explore/explore.js';
 import News from './News/news.js';
 import Profile from './Profile/profile.js';
+import Empty from './Empty/empty.js';
 import './screen.less';
 
 
@@ -12,7 +13,8 @@ class Screen extends Component {
         "Connections": Connections,
         "Explore": Explore,
         "News": News,
-        "Profile": Profile
+        "Profile": Profile,
+        "Empty": Empty
     };
     
     constructor(props){
@@ -45,7 +47,7 @@ class Screen extends Component {
        
         
         return (
-                <div id="screen">
+                <div id="screen" tabIndex="0">
                     
                     <Screen_Type account_data={this.state.account_data} />
                     

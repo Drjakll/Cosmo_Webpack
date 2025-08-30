@@ -22,7 +22,11 @@ Click nbfs://nbhost/SystemFileSystem/Templates/ClientSide/style.less to edit thi
     width: 100%;
     display: block;
     position: relative;
-    
+
+    &:hover {
+        z-index: 999999;
+    }
+
     #post-label {
         width: 100%;
         display: flex;
@@ -31,14 +35,24 @@ Click nbfs://nbhost/SystemFileSystem/Templates/ClientSide/style.less to edit thi
         color: rgba(0,0,0,0.85);
         font-size: 0.75vw;
     }
-    
+
+    #post-editor-wrapper {
+        width: 100%;
+        height: 5vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 999;
+    }
+
     #top {
         width: 100%;
         display: flex;
         justify-content: flex-end;
         align-items: center;
         position: relative;
-        
+        z-index: 9999;
+
         #calendar-wrapper {
             width: 50%;
             display: flex;
@@ -46,20 +60,21 @@ Click nbfs://nbhost/SystemFileSystem/Templates/ClientSide/style.less to edit thi
             align-items: center;
             position: relative;
             flex-direction: column;
-            
+            z-index: 9999;
+
             &:hover {
-                
+
                 #date-display-clickable {
                     //background-color: rgba(0,0,0,0.1);
                     cursor: pointer;
                 }
-                
+
                 #calendar-popup {
                     display: flex;
                     animation: appear 0.5s ease-out forwards;
                 }
             }
-            
+
             #calendar-popup {
                 width: 90%;
                 height: 30vh;
@@ -68,8 +83,9 @@ Click nbfs://nbhost/SystemFileSystem/Templates/ClientSide/style.less to edit thi
                 display: none;
                 position: absolute;
                 top: 3vh;
+                z-index: 9999;
             }
-            
+
             #date-display-clickable {
                 width: 100%;
                 height: 2vh;

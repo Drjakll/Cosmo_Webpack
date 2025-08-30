@@ -1,0 +1,64 @@
+
+#the-post-photos-holder {
+    width: 100%;
+    height: 100%;
+    display: block;
+
+    #top {
+        width: 100%;
+        height: 10%;
+        display: flex;
+        justify-content: space-evenly;
+        align-items: center;
+
+        #file-upload-wrapper {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: space-evenly;
+            align-items: center;
+        }
+    }
+
+    #bottom {
+        width: 100%;
+        height: 90%;
+        display: flex;
+        justify-content: space-evenly;
+        align-items: center;
+        position: relative;
+
+        #photos-wrapper {
+            width: 95%;
+            height: 100%;
+            display: block;
+            white-space: wrap;
+            overflow: auto;
+            position: relative;
+            margin: 0% 2.5% 0% 2.5%;
+
+            .single-photo-wrapper {
+                width: calc(100%/3);
+                height: 15vh;
+                display: inline-block;
+
+                .single-photo {
+                    width: 90%;
+                    height: 90%;
+                    object-fit: cover;
+                    border-radius: 10px;
+                    transition: 1s;
+                    border: rgba(0,0,0,0) solid 5px;
+
+                    &:hover {
+                        cursor: pointer;
+                    }
+                }
+
+                .selected-photo {
+                    border: rgba(255, 106, 0, 0.75) solid 5px;
+                }
+            }
+        }
+    }
+}
