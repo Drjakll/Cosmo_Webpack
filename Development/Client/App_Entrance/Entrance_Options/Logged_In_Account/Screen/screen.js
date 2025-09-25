@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import Connections from './Connections/connections.js';
 import Explore from './Explore/explore.js';
 import News from './News/news.js';
 import Profile from './Profile/profile.js';
@@ -10,7 +9,6 @@ import './screen.less';
 class Screen extends Component {
     
     Screen_Types = {
-        "Connections": Connections,
         "Explore": Explore,
         "News": News,
         "Profile": Profile,
@@ -44,7 +42,6 @@ class Screen extends Component {
     render(){
         
         const Screen_Type = this.Screen_Types[this.state.focus_screen];
-       
         
         return (
                 <div id="screen" tabIndex="0">

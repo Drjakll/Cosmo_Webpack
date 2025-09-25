@@ -17,6 +17,8 @@ import Upload_Files_To_S3 from './Utilities/upload_files_to_s3.js';
 import Profile_Template from './View_Templates/Profile/profile_template.js';
 import Explore_Template from './View_Templates/Explore/explore_template.js';
 import Calendar from './Misc_Components/Calendar/calendar.js';
+import Profile_Popup from './Popup_Templates/Profile_Popup/profile_popup.js';
+import Search_Parameters from './Data_Templates/Search_Parameters/search_parameters.js';
 import './react_entry.less';
 
 class Entry extends Component {
@@ -28,7 +30,7 @@ class Entry extends Component {
     componentDidMount(){
         
         
-    }
+    } 
     
     render(){
         
@@ -52,7 +54,9 @@ class Entry extends Component {
                 Drag_Scroll, //For scrolling within the html element
                 Drag, //For dragging any html element
                 Calendar,
-                Upload_Files_To_S3 //Use for uploading files to aws s3
+                Profile_Popup, //Profile template but a popup
+                Upload_Files_To_S3, //Use for uploading files to aws s3
+                Search_Parameters
             }}
         
         >

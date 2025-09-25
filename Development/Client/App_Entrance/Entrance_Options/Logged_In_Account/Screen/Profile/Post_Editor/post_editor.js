@@ -40,17 +40,21 @@ class Post_Editor extends Component {
 
     Disable_Create_New_Post = () => {
 
+        let { account_info } = this.state;
+
+        if(!account_info){
+            return;
+        }
+
         let { Configurations } = this.context;
 
         let { UTC_Time_Now } = Configurations;
 
         let utc_now = UTC_Time_Now();
 
-        let { account_info } = this.state;
-
         let { last_posted } = account_info;
 
-        if (last_posted) {
+        if (last_posted !== 'null' && last_posted !== undefined) {
 
             let split_date = last_posted.split("T")[0].split("-");
 

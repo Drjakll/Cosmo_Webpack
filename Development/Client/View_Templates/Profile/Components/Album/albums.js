@@ -114,7 +114,7 @@ class Albums extends Component {
         const Photos_Container_Editor  = Album_Editor?.Photos_Container_Editor;  
         
         return (
-             <div id="albums" tabIndex="0">
+             <div id="albums">
         
                 {this.state.open_album ?
 

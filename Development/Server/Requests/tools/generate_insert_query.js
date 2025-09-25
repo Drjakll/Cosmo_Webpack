@@ -1,5 +1,5 @@
 let generate_query = (table_name, data)=>{
-    
+
     let query = `insert into ${table_name} (`;
     
     for(let i in data){
@@ -26,6 +26,10 @@ let generate_query = (table_name, data)=>{
                 break;
             case "number":
                 query += `${data[i]},`;
+                break;
+            case 'object':
+                query += `'${JSON.stringify(data[i])}',`
+                break;
         }
     }
     

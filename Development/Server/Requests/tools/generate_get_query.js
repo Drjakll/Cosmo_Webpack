@@ -2,7 +2,7 @@ let generate_query = (table_name, requirements, data_to_get) => {
     
     let get_types_of_data = (types) => {
         
-        if(types === '*'){
+        if(types === '*' || types.length === 0){
             return types;
         }
         
@@ -12,47 +12,53 @@ let generate_query = (table_name, requirements, data_to_get) => {
             sub_query += `${type},`;
         }
         
-        sub_query = sub_query.substr(0, -1);
+        sub_query = sub_query.substring(0, sub_query.length - 1);
         
         return sub_query;
     };
     
-    let generate_json_search = (column_name, obj) => {
+    let generate_json_search = (column_name, obj, conjunc = undefined) => {
         
         let sub_query = ``;
         
         for(let i in obj){
-            sub_query += ` json_search(${column_name}, 'all', '%${obj[i]}%, null, '$[*]."${i}"') and`;
+
+            switch(conjunc){
+                case "json_contains_path":
+                    sub_query += ` json_contains_path(${column_name}, 'one', '$."${i}"') and`
+                    break;
+
+                default:
+                    sub_query += ` json_search(${column_name}, 'one', '%${obj[i]}%', null, '$[*]."${i}"') is not null and`;
+                    break;
+            }
         }   
         
-        return sub_query.substr(0,-4);
+        return sub_query.substring(0, sub_query.length - 4);
     };
     
     let query = `select ${get_types_of_data(data_to_get)} from ${table_name}`;
     
-    if(requirements.length > 0){
+    if(Object.keys(requirements).length > 0){
         //Only add "where" clause if there is any requirement
-        query += ` where `;
+        query += ` where`;
     }
     
-    for(let req of requirements){
+    for(let i in requirements){
         
-        let key = req.key;
-        let type = req.type;
-        let value = req.value;
-        let conjuc = req.conjunc;
+        let {key, value, type, conjunc} = requirements[i];
         
         switch(type){
             case "string":
-                query += `${key} ${conjuc} '${value} and`;
+                query += ` ${key} ${conjunc} '${conjunc === "like" ? `%${value}%` : value}' and`;
                 break;
                 
             case "number":
-                query += `${key} ${conjuc} ${value} and`;
+                query += ` ${key} ${conjunc} ${value} and`;
                 break;
                 
             case "range":
-                query += `${key} ${conjuc} ${value} and`;
+                query += ` ${key} ${conjunc} ${value} and`;
                 break;
                 
             case 'json':
@@ -61,15 +67,15 @@ let generate_query = (table_name, requirements, data_to_get) => {
                     continue;
                 }
                 
-                query += `${generate_json_search(key, value)} and`;
+                query += ` ${generate_json_search(key, value, conjunc)} and`;
                 break;
             
         }
     }
     
     //If no requirement(s) is set, then don't subtract " and" at the end of the query
-    query = requirements.length > 0 ? query.substr(0, -4) : query;
-    
+    query = Object.keys(requirements).length > 0 ? query.substring(0, query.length - 4) : query;
+
     return query;
     
 };

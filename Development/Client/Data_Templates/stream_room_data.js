@@ -8,12 +8,12 @@ let Stream_Room_Data_Template = function(initial){
         last_name: "",
         date_of_birth: "",
         gender: "",
-        location_of_birth: "{}",
+        location_of_birth: "[]",
         schools: "[]",
         hobbies: "[]",
         professions: "[]",
-        martial_status: "",
-        current_location: "{}",
+        marital_status: "",
+        current_location: "[]",
         relationships: "[]",
         thumbnail_link: null,
         time_created: null,
@@ -23,7 +23,7 @@ let Stream_Room_Data_Template = function(initial){
     
     for(let i in initial){
         
-        if(template[i] === undefined){
+        if(template[i] === undefined || template[i] === 'null'){
             continue;
         }
         

@@ -37,14 +37,7 @@ class Profile_Info extends Component {
 
     Refresh_Account_Data = () => {
 
-        let { Account_Data_Templates, Cookie_Tools } = this.context;
-        let { cookie_parser } = Cookie_Tools;
-
-        let cookie_json = cookie_parser(document.cookie);
-
-        let updated_account_data = Account_Data_Templates.Account_Data_Template(cookie_json);
-
-        this.setState({ account_data: updated_account_data });
+        window.LoginAttempt();
 
     }
     

@@ -3,6 +3,7 @@ import Profile_Photo_Editor from './Profile_Photo_Editor/profile_photo_editor.js
 import Profile_Data_Editor from './Profile_Data_Editor/profile_data_editor.js';
 import Album_Editor from './Album_Editor/album_editor.js';
 import Post_Editor from './Post_Editor/post_editor.js';
+import Connections_Editor from './Connections_Editor/connections_editor.js';
 import './profile.less';
 
 class Profile extends Component {
@@ -18,19 +19,9 @@ class Profile extends Component {
         }
     }
     
-    GetAccountData = (UpdateAllComponentProps) => {
+    GetAccountData = async (UpdateAllComponentProps) => {
         
-        const {Cookie_Tools, Account_Data_Templates } = this.context;
-        
-        this.profile_data = Account_Data_Templates.Account_Data_Template();
-        
-        let cookie_data = Cookie_Tools.cookie_parser(document.cookie);
-        
-        for(let key in this.profile_data){
-            
-            this.profile_data[key] = cookie_data[key];
-            
-        }
+        this.profile_data = await window.LoginAttempt();
         
         UpdateAllComponentProps({account_data: this.profile_data});
     }
@@ -61,6 +52,9 @@ class Profile extends Component {
                         },
                         "Posts": {
                             post_editor: Post_Editor
+                        },
+                        "Connections": {
+                            connections_editor: Connections_Editor
                         }
                     }}
                 />

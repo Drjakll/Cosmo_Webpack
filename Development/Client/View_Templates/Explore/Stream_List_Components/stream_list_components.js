@@ -13,11 +13,12 @@ class Stream_List_Components extends Component {
         //this.props.set_current_screen is a callback from the explore_template.js
         this.state = {
             components: [
-                {component: Search_Streams, classname: "search-streams", props: {}},
+                {component: Search_Streams, classname: "search-streams", props: {account_data: this.props.account_data, search_streams: this.props.search_streams}},
                 {component: Stream_Displays, classname: "stream-displays", props: {set_current_screen: this.props.set_current_screen}},
                 {component: Init_Stream, classname: "init-stream", props: {set_current_screen: this.props.set_current_screen}}
             ],
-            account_data: this.props.account_data
+            account_data: this.props.account_data,
+            active_streams: this.props.active_streams
         };
     }
     
@@ -31,7 +32,7 @@ class Stream_List_Components extends Component {
             return;
         }
         
-        this.setState({account_data: this.props.account_data});
+        this.setState({account_data: this.props.account_data, active_streams: this.props.active_streams});
     }
     
     UpdateComponentProps = (index, newProps) => {
@@ -40,7 +41,7 @@ class Stream_List_Components extends Component {
             
             this.state.components[index].props[i] = newProps[i];
             
-        }
+        } 
         
         
         this.setState({components: this.state.components});
@@ -73,7 +74,7 @@ class Stream_List_Components extends Component {
                             
                             return <div className={`component ${com.classname}`} key={index}>
                                 
-                                <Com properties={com.props} account_data={this.state.account_data} />
+                                <Com properties={com.props} account_data={this.state.account_data} active_streams={this.state.active_streams} />
             
                             </div>;
                             

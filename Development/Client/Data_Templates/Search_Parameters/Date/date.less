@@ -1,0 +1,62 @@
+#search-date-input-wrapper {
+    width: 100%;
+    height: 150px;
+    display: block;
+
+    #label-wrapper {
+        width: 100%;
+        height: calc(50% - 25px);
+
+        #search-label {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    }
+
+    #value-wrapper {
+        width: 100%;
+        height: calc(50% - 25px);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+
+        &:hover {
+            #calendar-wrapper {
+                display: flex;
+            }
+        }
+
+        #value {
+            padding: 0px;
+            width: 100%;
+            height: 100%;
+            border: none;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            font-size: 0.75vw;
+        }
+
+        #calendar-wrapper {
+            width: 20vh;
+            height: 20vh;
+            position: absolute;
+            top: 100%;
+            left: 0%;
+            display: none;
+        }
+    }
+
+    #search-option-button-wrapper {
+        width: 100%;
+        height: 50px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }    
+}

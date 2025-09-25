@@ -1,0 +1,106 @@
+#connections-search-wrapper {
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.1);
+    display: block;
+    overflow-y: auto;
+    scrollbar-width: none;
+    z-index: 999999;
+    position: relative;
+
+    #search-parameters-wrapper {
+        width: 100%;
+        min-height: 50px;
+        display: block;
+        z-index: 999999999 !important;
+        position: relative;
+
+        #no-requirement-note {
+            width: 100%;
+            height: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .parameter-wrapper {
+            width: 100%;
+            border-top: rgba(0,0,0,0.5) solid 0.5px;
+        }
+    }
+
+    #apply-search-button-wrapper {
+        width: 100%;
+        height: 50px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    #add-search-parameter-button-wrapper {
+        width: 100%;
+        height: 35px;
+        display: block;
+        border-top: rgba(0,0,0,0.5) solid 0.5px;
+        z-index: 0;
+
+        #add-search-parameter-dropdown {
+            width: 100%;
+            height: 100%;
+            display: block;
+            position: relative;
+            transition: 1s;
+            z-index: 0;
+
+            &:hover {
+                cursor: pointer;
+                background-color: darkorange;
+                color: whitesmoke;
+                
+                #search-parameters {
+                    display: block;
+                }
+            }
+
+            #label {
+                width: 100%;
+                height: 100%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+
+                &:hover {
+                    cursor: pointer;
+                }
+            }
+
+            #search-parameters {
+                width: 100%;
+                position: absolute;
+                display: none;
+                top: 100%;
+                border: rgba(0,0,0,0.5) solid 0.5px;
+                border-top: none;
+
+                .search-parameter-option {
+                    width: 100%;
+                    height: 30px;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    position: relative;
+                    background-color: rgba(175, 221, 102, 0.87);
+                    color: rgb(22, 3, 3);
+                    transition: 1s;
+                    border-top: rgba(0,0,0,0.5) solid 0.5px;
+
+                    &:hover {
+                        cursor: pointer;
+                        background-color: whitesmoke;
+                        color: black;
+                    }
+                }
+            }
+        }
+    }
+}

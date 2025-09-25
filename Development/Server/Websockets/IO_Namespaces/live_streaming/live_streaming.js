@@ -1,6 +1,37 @@
 import fs from 'fs';
 
-let active_streams = {};
+let active_streams = {
+    first_name: null,
+    last_name: null,
+    marital_status: null,
+    gender: null,
+    date_of_birth: null,
+    current_location: {
+        "State/Province": null,
+        "City": null,
+        "Country": null
+    },
+    location_of_birth: {
+        "State/Province": null,
+        "City": null,
+        "Country": null
+    },
+    hobbies: {
+        "Hobby": null,
+        "Profeciency": null,
+        "Date Started": null        
+    },
+    schools: {
+        "Type": null,
+        "Year Graduate": null,
+        "School": null
+    },
+    professions: {
+        "Talent": null,
+        "Profeciency": null,
+        "Date Started": null
+    }
+};
 
 let Wrapper = function (){
     

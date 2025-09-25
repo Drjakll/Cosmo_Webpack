@@ -8,6 +8,12 @@ class Account_Buttons extends Component {
         super(props);
 
         Account_Buttons.contextType = window.Context;
+
+        let {account_data} = props;
+
+        this.state = {
+            account_data
+        };
     }
 
     Logout = (e) => {

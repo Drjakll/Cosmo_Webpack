@@ -10,7 +10,6 @@ class Logged_In_Account extends Component {
         "Empty",
         "Explore",
         "Profile",
-        "Connections",
         "News",
         "Empty"
     ];
@@ -24,7 +23,6 @@ class Logged_In_Account extends Component {
                 {screen: "Empty", is_main: false, id: "Empty"},
                 { screen: "Explore", is_main: false, id: "Explore" },
                 { screen: "Profile", is_main: true, id: "Profile" },
-                { screen: "Connections", is_main: false, id: "Connections" },
                 { screen: "News", is_main: false, id: "News" },
                 { screen: "Empty", is_main: false, id: "Empty" }
             ],
@@ -78,7 +76,7 @@ class Logged_In_Account extends Component {
 
             {this.Button_Data.map((value, index) => {
 
-                return value === "Empty" ? <></> :
+                return value === "Empty" ? "" :
                     <div className="logged-in-option-button"
                         key={index}
                         onClick={(e) => {
@@ -92,6 +90,7 @@ class Logged_In_Account extends Component {
             })}
 
         </div>;
+
                             
         
         return (
@@ -99,7 +98,7 @@ class Logged_In_Account extends Component {
 
                 <div id="upper-bar-wrapper">
 
-                    <Upper_Bar/>
+                    <Upper_Bar account_data={this.state.account_data}/>
 
                 </div>
 

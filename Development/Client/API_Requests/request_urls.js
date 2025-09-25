@@ -44,6 +44,13 @@ const search_streams = '/search_streams';
 //Photo uploads
 const upload_photos = '/upload_pictures';
 
+//Connections
+const get_all_connections = '/get_all_connections';
+const find_connections = '/find_connections';
+const connection_request = '/connection_request';
+const accept_connection_req = '/accept_connection_req';
+const remove_connection = '/remove_connection';
+
 const aws_s3_url = 'https://cosmo-social-app.s3.us-west-1.amazonaws.com/';
 
 export default {
@@ -92,6 +99,13 @@ export default {
 
     //Photo uploads
     upload_photos: upload_photos,
+
+    //Connections
+    get_all_connections: get_all_connections,
+    find_connections: find_connections,
+    connection_request: connection_request,
+    accept_connection_req: accept_connection_req,
+    remove_connection: remove_connection,
 
     //Amazon Web Service Storage 3 URL
     aws_s3_url: aws_s3_url

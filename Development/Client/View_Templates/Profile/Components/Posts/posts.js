@@ -56,7 +56,7 @@ class Posts extends Component {
             
             let { last_posted } = account_data;
             
-            let post_date_parts = last_posted.split("T")[0]?.split("-");
+            let post_date_parts = last_posted?.split("T")[0]?.split("-");
             
             if(post_date_parts){
                 

@@ -18,6 +18,7 @@ let websocket = async (server) => {
     
     const photo_comments_namespace = io.of('/photo_comments');
     const video_streams_namespace = io.of('/video_streams');
+    const connections_namespace = io.of('/connections');
     
     //Passing the io object to the namespaces
     namespaces.photo_comments.io = photo_comments_namespace;
@@ -26,6 +27,7 @@ let websocket = async (server) => {
     
     photo_comments_namespace.on('connection', namespaces.photo_comments.namespace);
     video_streams_namespace.on('connection', namespaces.live_streaming.namespace);
+    connections_namespace.on('connection', namespaces.connections.namespace);
 };
 
 export default websocket;

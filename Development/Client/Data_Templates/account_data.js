@@ -3,6 +3,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/ClientSide/javascript.js to edit this template
  */
 
+import Choice_Type from './Info_Types/Choice_Type/choice_type.js';
+import Date_Type from './Info_Types/Date_Type/date_type.js';
+import Json_Type from './Info_Types/Json_Type/json_type.js';
+import Text_Type from './Info_Types/Text_Type/text_type.js';
 
 let Account_Data_Template = function(initial){
   
@@ -15,7 +19,7 @@ let Account_Data_Template = function(initial){
         profile_picture_link: "",
         date_of_birth: "",
         gender: "",
-        location_of_birth: "{}",
+        location_of_birth: "[]",
         schools: "[]",
         hobbies: "[]",
         professions: "[]",
@@ -23,6 +27,10 @@ let Account_Data_Template = function(initial){
         current_location: "[]",
         relationships: "[]",
         connection_list: "{}",
+        alerts: "{}",
+        online_ws_id: "{}",
+        connection_requests: "{}",
+        block_list: "{}",
         last_posted: null,
         created_on: null
     };
@@ -39,6 +47,111 @@ let Account_Data_Template = function(initial){
     
     return template;
 };
+
+let Account_Info_Data_Template = function(editor = null){
+
+    let template = {
+                first_name: {
+                    component: Text_Type,
+                    label: "First Name",
+                    value: "",
+                    editor: null,
+                    options: []
+                },
+                last_name: {
+                    component: Text_Type,
+                    label: "Last Name",
+                    value: "",
+                    editor: null,
+                    options: []
+                },
+                gender: {
+                    component: Choice_Type,
+                    label: "Gender",
+                    value: "",
+                    editor: null,
+                    options: ["Male", "Female"]
+                },
+                marital_status: {
+                    component: Choice_Type,
+                    label: "Marital Status",
+                    value: "",
+                    editor: null,
+                    options: ["Single", "Dating", "Engaged", "Married", "Divorce", "Widow", "Unspecified"]
+                },
+                date_of_birth: { 
+                    component: Date_Type,
+                    label: "Birth Date", 
+                    value: "", 
+                    editor: null, 
+                    options: [] 
+                },
+                location_of_birth: {
+                    component: Json_Type,
+                    label: "Birthplace",
+                    value: "",
+                    editor: null,
+                    options: [
+                        { label: "Country", data_type: "string" },
+                        { label: "State/Province", data_type: "string" },
+                        { label: "City", data_type: "string" }
+                    ]
+                },
+                current_location: {
+                    component: Json_Type,
+                    label: "Current Location",
+                    value: "",
+                    editor: null,
+                    options: [
+                        { label: "Country", data_type: "string" },
+                        { label: "State/Province", data_type: "string" },
+                        { label: "City", data_type: "string" }
+                    ]
+                },
+                hobbies: {
+                    component: Json_Type,
+                    label: "Hobbies",
+                    value: "",
+                    editor: null,
+                    options: [
+                        { label: "Hobby", data_type: "string" },
+                        { label: "Date Started", data_type: "date" },
+                        { label: "Profeciency", data_type: "string" }
+                    ]
+                },
+                professions: {
+                    component: Json_Type,
+                    label: "Talent",
+                    value: "",
+                    editor: null,
+                    options: [
+                        { label: "Talent", data_type: "string" },
+                        { label: "Date Started", data_type: "date" },
+                        { label: "Profeciency", data_type: "string" }
+                    ]
+                },
+                schools: {
+                    component: Json_Type,
+                    label: "School",
+                    value: "",
+                    editor: null,
+                    options: [
+                        { label: "School", data_type: "string" },
+                        { label: "Type", data_type: "string" },
+                        { label: "Year Graduate", data_type: "date" }
+                    ]
+                }
+            };
+
+    if(editor){
+
+        for(let i in editor){
+            template[i].editor = editor[i];
+        }
+    }
+
+    return template;
+}
 
 let Post_Data_Template = function(initial){
   
@@ -66,5 +179,6 @@ let Post_Data_Template = function(initial){
 
 export default {
         Account_Data_Template: Account_Data_Template,
-        Post_Data_Template: Post_Data_Template
+        Post_Data_Template: Post_Data_Template,
+        Account_Info_Data_Template: Account_Info_Data_Template
 };

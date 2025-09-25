@@ -84,11 +84,25 @@ app.post("/get_post_photo_links", requests.user_accounts.profile.post_data.get_p
 
 //Video Streaming
 app.post("/create_stream_room", requests.stream_rooms.create_stream_room.req);
-app.post("disband_stream_room", requests.stream_rooms.disband_stream_room.req);
-app.post("search_streams", requests.stream_rooms.search_streams.req);
+app.post("/disband_stream_room", requests.stream_rooms.disband_stream_room.req);
+app.post("/search_streams", requests.stream_rooms.search_streams.req);
+
+//Connections
+app.post("/get_all_connections", requests.connections.get_all_connections.req);
+app.post("/find_connections", requests.connections.find_connections.req);
+app.post("/connection_request", requests.connections.connection_req_sent.req, requests.connections.connection_request.req, requests.alerts.update_alerts.req);
+app.post("/accept_connection_req", requests.connections.accept_connection_req.req, //The account who made the add request accept first
+                                    requests.connections.accept_connection_req.req, //Then the account who requsted to add to accept the add
+                                    requests.connections.connection_req_sent.req, //Remove the connection_sent from the list for the account who requested to add
+                                    requests.connections.connection_request.req,  //Remove the connection_request from the account who received the request
+                                    requests.alerts.update_alerts.req) //Remove the alert from the account who received the request
+app.post("/remove_connection", requests.connections.remove_connection.req, requests.connections.remove_connection.req, (req, res)=>{ res.json({}); res.end(); });
+
+//Alerts
+app.post("/update_alerts", requests.alerts.update_alerts.req);
 
 server.listen(8080, () => {
-    
+   
     console.log("Listening to port 8080");
 
 });

@@ -3,17 +3,14 @@
     "",
     "\\Development",
     "\\Development\\Client",
-    "\\Development\\Client\\Data_Templates",
     "\\Development\\Client\\View_Templates",
-    "\\Development\\Client\\View_Templates\\Profile",
-    "\\Development\\Client\\View_Templates\\Profile\\Components",
-    "\\Development\\Client\\View_Templates\\Profile\\Components\\Profile_Info",
-    "\\Development\\Client\\View_Templates\\Profile\\Components\\Profile_Info\\Profile_Info_Data\\Info_Types",
-    "\\Development\\Client\\View_Templates\\Profile\\Components\\Profile_Info\\Profile_Info_Data\\Info_Types\\Json_Type",
+    "\\Development\\Client\\View_Templates\\Connections",
+    "\\Development\\Client\\View_Templates\\Explore",
     "\\Development\\Server",
     "\\Development\\Server\\Requests",
-    "\\Development\\Server\\Requests\\tools"
+    "\\Development\\Server\\Requests\\requests",
+    "\\Development\\Server\\Requests\\requests\\connections"
   ],
-  "SelectedNode": "\\Development\\Server\\Requests\\tools\\generate_get_query.js",
+  "SelectedNode": "\\AGENTS.md",
   "PreviewInSolutionExplorer": false
 }

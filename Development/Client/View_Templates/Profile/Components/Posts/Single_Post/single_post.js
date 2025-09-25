@@ -49,7 +49,7 @@ class Single_Post extends Component {
         
         await this.setState(this.props);
 
-        this.bodyRef.current.innerHTML = this.state.post.body;
+        this.bodyRef.current?.innerHTML = this.state.post?.body;
 
         this.Get_Post_Photos();
     }

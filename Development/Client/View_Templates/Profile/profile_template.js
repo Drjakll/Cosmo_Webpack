@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import Albums from './Components/Album/albums.js';
 import Posts from './Components/Posts/posts.js';
 import Profile_Info from './Components/Profile_Info/profile_info.js';
+import Connections from './Components/Connections/connections_template.js';
 import './profile_template.less';
 
 class Profile_Template extends Component {
@@ -18,7 +19,8 @@ class Profile_Template extends Component {
             components: {
                 "Profile Info": {component: Profile_Info, props: {}, classname: "profile-info-wrapper"},
                 "Albums": {component: Albums, props: {}, classname: "albums-wrapper"}, 
-                "Posts": {component: Posts, props: {}, classname: "posts-wrapper"}
+                "Posts": {component: Posts, props: {}, classname: "posts-wrapper"},
+                "Connections": {component: Connections, props: {}, classname: "connections-wrapper"},
             }
         };
     }
@@ -87,28 +89,28 @@ class Profile_Template extends Component {
         let { components } = this.state;
         
         return (
-                <div id="profile-template">
-                    
-                    <div id="profile-template-components-wrapper">
-                    
-                        {Object.keys(components).map((key, index)=>{
-                            
-                            const com = components[key];
-                            
-                            const Com = com.component;
-                            
-                            return <div className={`profile-template-component ${com.classname}`} key={index}>
-                                
-                                <Com properties={com.props} />
-            
-                            </div>;
-                            
-                        })}
-                    
-                    </div>
-                    
+            <div id="profile-template">
+
+                <div id="profile-template-components-wrapper">
+
+                    {Object.keys(components).map((key, index) => {
+
+                        const com = components[key];
+
+                        const Com = com.component;
+
+                        return <div className={`profile-template-component ${com.classname}`} key={index}>
+
+                            <Com properties={com.props} />
+
+                        </div>;
+
+                    })}
+
                 </div>
-            );
+
+            </div>
+        );
     }
 }
 

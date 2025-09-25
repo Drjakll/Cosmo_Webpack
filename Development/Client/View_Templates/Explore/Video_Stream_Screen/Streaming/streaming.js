@@ -24,8 +24,6 @@ class Streaming extends Component {
         this.participants = {};
         this.the_host = null;
         this.my_media_source = null;
-
-        this.Setup_IO();
         
         this.state = {
             account_data: this.props.account_data,
@@ -42,6 +40,8 @@ class Streaming extends Component {
     }
     
     componentDidMount() {
+
+        this.Setup_IO();
 
     }
     
@@ -74,56 +74,56 @@ class Streaming extends Component {
     Generate_Stream_ID = (socket_id) => {
         return `${socket_id}${Date.now()}`;
     }
-    
-    Setup_IO = () => {
-        
-        this.socket = io('/video_streams');
-        
-        this.socket.on('connect', async ()=>{
+
+    Init_Streaming = async ()=>{
+
+        if(this.socket?.id){
+
+            let { is_host } = this.state;
             
-            if(this.socket.id){
-               
+            if (is_host) {
 
-                let { is_host } = this.state;
+                let stream_id = this.Generate_Stream_ID(this.socket.id);
+
+                this.my_room_tag = this.Create_Room_Tag(this.socket.id, stream_id);
+
+
+                //If it's a host, then get their webcam permission
+                this.my_media_source = await this.Capture_Video();
+
+                this.setState({
+                    streamer_big_screen: this.my_media_source,
+                    the_host: this.my_room_tag,
+                    my_room_tag: this.my_room_tag,
+                    socket: this.socket
+                });
                 
-                if (is_host) {
 
-                    let stream_id = this.Generate_Stream_ID(this.socket.id);
+                this.socket.emit('create_stream', this.my_room_tag);
+                
+            } else {
 
-                    this.my_room_tag = this.Create_Room_Tag(this.socket.id, stream_id);
+                this.my_room_tag = this.Create_Room_Tag(this.socket.id, this.state.stream_id);
 
-
-                    //If it's a host, then get their webcam permission
-                    this.my_media_source = await this.Capture_Video();
-
-                    this.setState({
-                        streamer_big_screen: this.my_media_source,
-                        the_host: this.my_room_tag,
-                        my_room_tag: this.my_room_tag,
-                        socket: this.socket
-                    });
-                    
-
-                    this.socket.emit('create_stream', this.my_room_tag);
-                    
-                } else {
-
-                    this.my_room_tag = this.Create_Room_Tag(this.socket.id, this.state.stream_id);
-
-                    this.setState({
-                        my_room_tag: this.my_room_tag,
-                        socket: this.socket
-                    });
-                    
-                    //this.my_media_source = await this.Capture_Video();
-                    
-                    this.socket.emit('join_stream', {room_tag: this.my_room_tag, account_data: this.state.account_data});
-                    
-                }
+                this.setState({
+                    my_room_tag: this.my_room_tag,
+                    socket: this.socket
+                });
+                
+                //this.my_media_source = await this.Capture_Video();
+                
+                this.socket.emit('join_stream', {room_tag: this.my_room_tag, account_data: this.state.account_data});
                 
             }
             
-        });
+        }
+    }
+    
+    Setup_IO = () => {
+        
+        this.socket = this.props.stream_socket;
+        
+        this.Init_Streaming();
         
         this.socket.on('new_viewer_joined', async (new_viewer_tag) => {
 
@@ -378,42 +378,26 @@ class Streaming extends Component {
     Go_Live_To_One = (tag) => {
         
         this.Give_Self_Tracks_To_Peer(this.participants[tag.id]);
+
     }
     
     Set_Account_View = (account_data)=>{
+
         this.setState({view_account_data: account_data});
+        
     }
     
     Generate_Profile_View = (account_data)=>{
 
-        const { Profile_Template, Drag } = this.context;
+        const { Profile_Popup } = this.context;
 
-        let drag = new Drag();
+        return account_data ? <Profile_Popup account_data={account_data} Exit={this.Close_Profile_Popup} /> : "";
 
-        let profile_bar_ref = createRef();
+    }
 
-        return account_data ? <div id="profile-template-wrapper" ref={profile_bar_ref}>
-
-            <div id="profile-drag-bar"
-                onMouseDown={(e) => { drag.init_child(e, profile_bar_ref.current); }}
-                onMouseUp={(e) => { drag.disable_drag(e); }}
-            >
-                <div id="exit-button" onClick={(e) => { this.setState({ view_account_data: null }); } }>
-                    X
-                </div>
-
-                <label>
-                    drag
-                </label>
-            </div>
-
-            <div id="profile-template-inner-wrapper">
-
-                <Profile_Template account_data={account_data} />
-
-            </div>
-
-        </div> : <></>;
+    Close_Profile_Popup = ()=>{
+        
+        this.setState({view_account_data: null});
 
     }
 
@@ -458,7 +442,7 @@ class Streaming extends Component {
                     
                     {Object.keys(this.state.streamer_small_screens).map((key, index) => {
                         
-                        return key === this.state.big_screen_id ? <></> : <div className="sub-video" key={index}>
+                        return key === this.state.big_screen_id ? "" : <div className="sub-video" key={index}>
 
                             <Sub_Video media_source={this.state.streamer_small_screens[key]}
                                 id={key} swap_screen={this.Swap_With_Main_Screen}

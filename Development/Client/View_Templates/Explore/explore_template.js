@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import Stream_List_Components from './Stream_List_Components/stream_list_components.js';
 import Video_Stream_Screen from './Video_Stream_Screen/video_stream_screen.js';
+import { io } from 'socket.io-client';
 import './explore_template.less';
 
 class Explore_Template extends Component {
@@ -18,12 +19,16 @@ class Explore_Template extends Component {
             account_data: this.props.account_data,
             current_screen: "Stream_List_Components",
             is_host: false,
-            stream_id: null
+            stream_id: null,
+            socket: null,
+            active_streams: {}
         };
     }
     
     componentDidMount(){
         
+        this.Init_Socket();
+
     }
     
     componentDidUpdate(prevProps, prevState){
@@ -40,6 +45,46 @@ class Explore_Template extends Component {
         this.setState({current_screen: screen, is_host: is_hosting, stream_id: stream_id});
         
     }
+
+    Init_Socket = () => {
+        
+        this.socket = io('/video_streams');
+        
+        this.socket?.on('connect', ()=>{
+            
+            if(!this.socket.id){
+                return;
+            }
+            
+            this.Gather_Stream_List({});
+            
+        });
+        
+        this.socket?.on('catch_streams', ({ streams })=>{
+
+            console.log(streams);
+            
+            this.setState({
+                active_streams: streams
+            });
+            
+        });
+        
+        this.socket?.on('update_stream_list', ({ streams })=>{
+            
+            this.socket.emit("request_streams", {});
+            
+        });
+
+        this.setState({socket: this.socket});
+        
+    }
+    
+    Gather_Stream_List = (search_parameters) => {
+        
+        this.socket?.emit('request_streams', search_parameters);
+        
+    }
     
     render(){
         
@@ -52,6 +97,9 @@ class Explore_Template extends Component {
                     set_current_screen={this.Set_Current_Screen} 
                     is_host={this.state.is_host}
                     stream_id={this.state.stream_id}
+                    stream_socket={this.state.socket}
+                    active_streams={this.state.active_streams}
+                    search_streams={this.Gather_Stream_List}
                 />
 
             </div>

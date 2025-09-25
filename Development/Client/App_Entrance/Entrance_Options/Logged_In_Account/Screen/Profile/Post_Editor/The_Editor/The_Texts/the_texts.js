@@ -48,8 +48,6 @@ class The_Texts extends Component {
 
         this.setState(this.props);
 
-
-
     }
 
     Update_Post = (e) => {

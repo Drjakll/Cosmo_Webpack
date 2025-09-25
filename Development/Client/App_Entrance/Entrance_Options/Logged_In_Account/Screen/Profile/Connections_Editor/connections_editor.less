@@ -1,0 +1,50 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/ClientSide/style.less to edit this template
+*/
+/*
+    Created on : Apr 3, 2025, 1:59:33 AM
+    Author     : justinzhu
+*/
+
+#connections-editor {    
+    height: 100%;
+    width: 100%;
+    display: flex;
+    overflow: auto;
+    justify-content: space-evenly;
+    align-items: center;
+    position: relative;
+
+    #connections-editor-popup-wrapper {
+        width: 100vw;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: fixed;
+        background-color: rgba(0,0,0,0.25);
+        top: 0%;
+        left: 0%;
+        z-index: 99999999;
+    }
+
+    .connections-editor-button {
+        min-width: 75px;
+        height: 25px;
+        padding: 0px 15px 0px 15px;
+        background-color: darkorange;
+        color: white;
+        border-radius: 50px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        transition: 1s;
+        border: rgba(0,0,0,0.5) solid 0.5px;
+
+        &:hover {
+            cursor: pointer;
+            background-color: darkred;
+        }
+    }
+}

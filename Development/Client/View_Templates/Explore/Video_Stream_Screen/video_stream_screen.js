@@ -20,7 +20,8 @@ class Video_Stream_Screen extends Component {
             //If stream_id exists, jump directly to streaming; if no stream_id exists, jump to prepare to stream
             current_screen: this.props.stream_id ? "Streaming" : "Prepare_To_Stream",
             is_host: this.props.is_host,
-            stream_id: this.props.stream_id
+            stream_id: this.props.stream_id,
+            stream_socket: this.props.stream_socket
         };
     }
     
@@ -51,6 +52,7 @@ class Video_Stream_Screen extends Component {
                     is_host={this.state.is_host}
                     stream_id={this.state.stream_id}
                     set_main_screen={this.props.set_current_screen}
+                    stream_socket={this.state.stream_socket}
                     />
                     
                 </div>

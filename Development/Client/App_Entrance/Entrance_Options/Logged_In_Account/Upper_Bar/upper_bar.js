@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Account_Buttons from './Account_Buttons/account_buttons.js';
+import Alert_Buttons from './Alert_Buttons/alert_buttons.js';
 import './upper_bar.less';
 
 class Upper_Bar extends Component {
@@ -8,15 +9,36 @@ class Upper_Bar extends Component {
 
         super(props);
 
+        let {account_data} = this.props;
+
+        this.state = {
+            account_data
+        };
+
+    }
+
+    componentDidUpdate(prevProps, prevState){
+
+        if(this.props === prevProps){
+            return;
+        }
+
+        this.setState(this.props);
     }
 
     render() {
 
         return <div id="upper-bar">
 
-            <div id="account-buttons-wrapper">
+            <div id="alert-buttons-wrapper" className="upper-buttons">
 
-                <Account_Buttons/>
+                <Alert_Buttons account_data={this.state.account_data}/>
+
+            </div>
+
+            <div id="account-buttons-wrapper" className="upper-buttons">
+
+                <Account_Buttons account_data={this.state.account_data} />
 
             </div>
 

@@ -19,6 +19,8 @@ class Entrance_Options extends Component {
     constructor(props){
         
         super(props);
+
+        window.LoginAttempt = this.LoginAttempt;
         
         Entrance_Options.contextType = window.Context;
         
@@ -51,11 +53,10 @@ class Entrance_Options extends Component {
         let resJson = await res.json();
         
         let { acc_info, message } = resJson;
-
         
         if(acc_info){
-      
-            this.setState({selected_screen: "Logged In Account", account_info: acc_info});
+
+            await this.setState({selected_screen: "Logged In Account", account_info: acc_info});
         
             let date = new Date();
 
@@ -75,13 +76,13 @@ class Entrance_Options extends Component {
             this.setState({selected_screen: "Login Account"});
             
         }
+
+        return acc_info;
     }
     
     componentDidMount(){
         
         this.LoginAttempt();
-
-        window.LoginAttempt = this.LoginAttempt;
         
     }
     

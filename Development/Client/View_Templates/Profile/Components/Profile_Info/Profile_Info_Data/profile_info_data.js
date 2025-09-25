@@ -1,8 +1,4 @@
 import React, {Component, createRef} from 'react';
-import Choice_Type from './Info_Types/Choice_Type/choice_type.js';
-import Date_Type from './Info_Types/Date_Type/date_type.js';
-import Json_Type from './Info_Types/Json_Type/json_type.js';
-import Text_Type from './Info_Types/Text_Type/text_type.js';
 import './profile_info_data.less';
 
 class Profile_Info_Data extends Component {
@@ -15,93 +11,25 @@ class Profile_Info_Data extends Component {
 
         this.state = {
             account_data: this.props.accound_data,
-            info_templates: {
-                first_name: {
-                    component: Text_Type,
-                    label: "First Name",
-                    value: "",
-                    editor: null,
-                    options: []
-                },
-                last_name: {
-                    component: Text_Type,
-                    label: "Last Name",
-                    value: "",
-                    editor: null,
-                    options: []
-                },
-                gender: {
-                    component: Choice_Type,
-                    label: "Gender",
-                    value: "",
-                    editor: null,
-                    options: ["Male", "Female"]
-                },
-                marital_status: {
-                    component: Choice_Type,
-                    label: "Marital Status",
-                    value: "",
-                    editor: null,
-                    options: ["Single", "Dating", "Engaged", "Married", "Divorce", "Widow", "Unspecified"]
-                },
-                date_of_birth: { component: Date_Type, label: "Birth Date", value: "", editor: null, options: [] },
-                location_of_birth: {
-                    component: Json_Type,
-                    label: "Birthplace",
-                    value: "",
-                    editor: null,
-                    options: [
-                        { label: "Country", data_type: "string" },
-                        { label: "State/Province", data_type: "string" },
-                        { label: "City", data_type: "string" }
-                    ]
-                },
-                current_location: {
-                    component: Json_Type,
-                    label: "Current Location",
-                    value: "",
-                    editor: null,
-                    options: [
-                        { label: "Country", data_type: "string" },
-                        { label: "State/Province", data_type: "string" },
-                        { label: "City", data_type: "string" }
-                    ]
-                },
-                hobbies: {
-                    component: Json_Type,
-                    label: "Hobbies",
-                    value: "",
-                    editor: null,
-                    options: [
-                        { label: "Hobby", data_type: "string" },
-                        { label: "Date Started", data_type: "date" },
-                        { label: "Profeciency", data_type: "string" }
-                    ]
-                },
-                professions: {
-                    component: Json_Type,
-                    label: "Talent",
-                    value: "",
-                    editor: null,
-                    options: [
-                        { label: "Talent", data_type: "string" },
-                        { label: "Date Started", data_type: "date" },
-                        { label: "Profeciency", data_type: "string" }
-                    ]
-                },
-                schools: {
-                    component: Json_Type,
-                    label: "School",
-                    value: "",
-                    editor: null,
-                    options: [
-                        { label: "School", data_type: "string" },
-                        { label: "Type", data_type: "string" },
-                        { label: "Year Graduate", data_type: "date" }
-                    ]
-                }
-            }
+            info_templates: {}
         };
+    }
+
+    async componentDidMount(){
+
+        //Account_Info_Data_Template is located at the Data_Templates folder
+        let {Account_Info_Data_Template} = this.context.Account_Data_Templates;
+
+        let info_template = await Account_Info_Data_Template(null);
+
+        this.state.info_templates = info_template;
+
+        this.Update_Info_Templates();
+
+        this.Attach_Editors();
+
+        this.setState(this.state);
+        
     }
 
     componentDidUpdate(prevProps, prevState) {
