@@ -10,7 +10,7 @@ let Wrapper = function(){
 
             let recursion = async (i, ptr) =>{
 
-                if(i >= vSplit.length){
+                if(i > vSplit.length){
                     return true;
                 }
 
@@ -24,16 +24,11 @@ let Wrapper = function(){
                     return false;
                 }
 
+                Add_To_Result(ptr);
+
                 for(let j in ptr){
 
                     if(j === "tags"){
-                        
-                        let tag = ptr[j];
-
-                        for(let k in tag){
-                            result[k] = tag[k];
-                        }
-
                         continue;
                     }
 
@@ -44,19 +39,31 @@ let Wrapper = function(){
                 return false;
             };
 
-            let c = vSplit[0];
+            let Add_To_Result = (ptr)=>{
 
-            if(!c){
-                return;
-            }
-
-            if(await recursion(1, i_ptr[c])){
-
-                let tags = i_ptr[c].tags;
+                let tags = ptr.tags;
 
                 for(let i in tags){
                     result[i] = tags[i];
                 }
+
+            }
+
+            if(!i_ptr){
+                return;
+            }
+
+            let c = vSplit[0];
+
+            if(c === undefined){
+                Add_To_Result(i_ptr);
+                return;
+            }
+
+            if(await recursion(1, i_ptr[c])){
+                
+                Add_To_Result(i_ptr[c]);
+
             }
         };
 
@@ -92,7 +99,11 @@ let Wrapper = function(){
     }
     
     this.event = async (search) => {
-        
+
+        if(Object.keys(search).length === 0){
+            search.first_name = "";
+        }
+
         let result = await Search_Stream(search);
         
         this.my_socket.emit('catch_streams', {streams: result});

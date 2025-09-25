@@ -58,38 +58,36 @@ let Wrapper = function(){
 
         let recursion = async (i, sub_ptr)=>{
 
-            if(i >= vSplit.length){
+            let c = vSplit[i];
+
+            if(i >= vSplit.length || c === undefined){
                 return;
             }
 
-            let c = vSplit[i];
-
-            if(sub_ptr[c] === null){
-                sub_ptr[c] = create_letter_array();
-            }
-
-            //Toggle between deleting the tag or inserting the tag
-            if(sub_ptr.tags[tag.stream_id]){
-                delete sub_ptr.tags[tag.stream_id];
-            } else {
-                sub_ptr.tags[tag.stream_id] = {stream_id, thumbnail_link, room_title};
-            }
+            sub_ptr[c] = add(sub_ptr[c]);
 
             await recursion(i+1, sub_ptr[c]);
 
         };
 
-        let c = vSplit[0];
+        let add = (ptr)=>{
 
-        if(!c){
-            return;
-        }
+            if(ptr === null){
+                ptr = create_letter_array();
+            }
+            //Toggle between deleting the tag or inserting the tag
+            if(ptr.tags[tag.stream_id]){
+                delete ptr.tags[tag.stream_id];
+            } else {
+                ptr.tags[tag.stream_id] = {stream_id, thumbnail_link, room_title};
+            }
 
-        if(ptr[c] === null){
-            ptr[c] = create_letter_array();
-        }
+            return ptr;
+        };
 
-        await recursion(1, ptr[c]);
+        ptr = add(ptr);
+
+        await recursion(0, ptr);
 
     };
 
