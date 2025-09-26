@@ -8,7 +8,7 @@ class Choice extends Component {
         super(props);
 
         this.state = {
-            value: ""
+            value: "Select"
         };
     }
 

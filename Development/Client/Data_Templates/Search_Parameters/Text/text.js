@@ -39,7 +39,7 @@ class Text extends Component {
 
             <div id="value-input-wrapper">
 
-                <input type="text" onBlur={this.Save_To_Search} />
+                <input type="text" onBlur={this.Save_To_Search} placeHolder={this.props.label}/>
 
             </div>
 

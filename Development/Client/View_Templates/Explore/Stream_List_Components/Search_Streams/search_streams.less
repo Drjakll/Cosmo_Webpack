@@ -11,10 +11,11 @@ Click nbfs://nbhost/SystemFileSystem/Templates/ClientSide/style.less to edit thi
     width: 100%;
     height: 100%;
     display: block;
+    box-shadow: rgba(0,0,0,0.5) 0px 5px 10px;
 
     #stream-search-options-wrapper {
         width: 100%;
-        height: 90%;
+        height: 87.5%;
         display: flex;
         flex-direction: row;
         justify-content: center;
@@ -24,15 +25,18 @@ Click nbfs://nbhost/SystemFileSystem/Templates/ClientSide/style.less to edit thi
             width: 30%;
             height: 100%;
             display: block;
+            border-right: rgba(0,0,0,0.5) solid 0.5px;
 
             #label {
                 width: 100%;
                 height: 40px;
-                background-color: darkorange;
+                background-color: rgb(81, 170, 176);
                 color: whitesmoke;
                 display: flex;
                 justify-content: center;
                 align-items: center;
+                font-size: calc(0.45vw + 0.45vh);
+                border-bottom: rgba(0,0,0,0.5) solid 0.5px;
             }
 
             #search-parameters {
@@ -48,9 +52,11 @@ Click nbfs://nbhost/SystemFileSystem/Templates/ClientSide/style.less to edit thi
                     display: flex;
                     justify-content: center;
                     align-items: center;
-                    background-color: darkgreen;
+                    background-color: teal;
                     color: whitesmoke;
                     transition: 1s;
+                    font-size: calc(0.4vw + 0.4vh);
+                    border-bottom: rgba(0,0,0,0.5) solid 0.5px;
 
                     &:hover {
                         cursor: pointer;
@@ -66,7 +72,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/ClientSide/style.less to edit thi
             display: block;
             overflow-y: auto;
             scrollbar-width: none;
-            background-color: whitesmoke;
+            background-color: lightgrey;
 
             #no-requirement-note {
                 width: 100%;
@@ -74,6 +80,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/ClientSide/style.less to edit thi
                 display: flex;
                 justify-content: center;
                 align-items: center;
+                font-size: calc(0.5vw + 0.5vh);
             }
 
             .parameter-wrapper {
@@ -88,10 +95,29 @@ Click nbfs://nbhost/SystemFileSystem/Templates/ClientSide/style.less to edit thi
 
     #stream-search-buttons-wrapper {
         width: 100%;
-        height: 10%;
+        height: 12.5%;
         display: flex;
         justify-content: space-evenly;
         align-items: center;
-        background-color: teal;
+        background-color: rgb(50, 156, 155);
+        border-top: rgba(0,0,0,0.5) solid 1px;
+        border-bottom: rgba(0,0,0,0.5) solid 1px;
+
+        #apply-search {
+            background-color: darkslategrey;
+            color: whitesmoke;
+            border: rgba(0,0,0,0.5) solid 1px;
+            padding: 5px;
+            font-size: calc(0.4vh + 0.4vw);
+            border-radius: 10px;
+            transition: 1s;
+            box-shadow: rgba(0,0,0,0.5) 0px 0px 10px;
+
+            &:hover {
+                cursor: pointer;
+                background-color: grey;
+                box-shadow: rgba(0,0,0,0.5) 0px 0px 0px;
+            }
+        }
     }
 }

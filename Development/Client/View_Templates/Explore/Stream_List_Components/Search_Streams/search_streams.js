@@ -122,7 +122,7 @@ class Search_Streams extends Component {
 
                     <div id="stream-search-option-selections-wrapper">
 
-                        <div id="label">Add a Search Parameter</div>
+                        <div id="label">Search Parameters</div>
 
                         <div id="search-parameters">
 
@@ -144,7 +144,7 @@ class Search_Streams extends Component {
 
                     <div id="stream-search-selected-options-wrapper">
 
-                        {search_param_keys.length === 0 ? <label id="no-requirement-note">No Search Requirement</label> : search_param_keys.map((key, index)=>{
+                        {search_param_keys.length === 0 ? <label id="no-requirement-note">No Search Parameters</label> : search_param_keys.map((key, index)=>{
 
                             let {editor, options, label} = search_parameters[key];
 

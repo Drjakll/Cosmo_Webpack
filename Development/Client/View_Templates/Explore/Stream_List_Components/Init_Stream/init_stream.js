@@ -42,7 +42,7 @@ class Init_Stream extends Component {
                         
                             <div id="ready-button" onClick={this.Prepare_To_Stream}>
                             
-                                Prepare
+                                Go Live!
                                 
                             </div>
                 
