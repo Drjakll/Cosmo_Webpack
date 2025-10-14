@@ -46,7 +46,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/ClientSide/style.less to edit thi
             justify-content: center;
             align-items: center;
             color: rgba(100,100,100,1);
-            font-size: 125%;
+            font-size: calc(0.4vw + 0.4vh);
             font-weight: bold;
         }
 
@@ -75,5 +75,32 @@ Click nbfs://nbhost/SystemFileSystem/Templates/ClientSide/style.less to edit thi
                 position: relative;
             }
         }
+    }
+}
+
+@media only screen and (max-width: 1000px) {
+
+    #photos-container {
+
+        #photo-container-wrapper {
+            width: 90%;
+            left: 5%;
+
+            #photo-container-title {
+                font-size: calc(1.25vw + 0.6vh);
+            }
+
+            #editor-wrapper {
+                height: 15%;
+            }
+
+            #photos {
+
+                .photo-thumbnail-wrapper {
+                    width: calc(100%/2 - 5px);
+                }
+            }
+        }
+
     }
 }

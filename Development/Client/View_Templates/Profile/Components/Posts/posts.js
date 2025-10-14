@@ -34,7 +34,8 @@ class Posts extends Component {
             selected_month: today.getMonth() + 1,
             selected_date: today.getDate(),
             selected_post: {title: "No post selected", body: "", date_created: ""},
-            properties_for_calendar_dates: []
+            properties_for_calendar_dates: [],
+            connection_list: this.props.connection_list || {} //For sending out websocket events to particular connected user
         };
     }
     
@@ -230,6 +231,7 @@ class Posts extends Component {
                             Get_Posts_On_This_Month={this.Change_Month}
                             selected_post={this.state.selected_post}
                             account_info={this.state.account_data}
+                            connection_list={this.state.connection_list}
                         />
                     </div>
                     : <></>}

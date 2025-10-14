@@ -8,19 +8,17 @@ class Connections_Temnplate extends Component {
 
         super(props);
 
-        let { account_data } = this.props.properties;
+        let { account_data, connection_list } = this.props.properties;
 
         Connections_Temnplate.contextType = window.Context;
 
         this.state = {
             account_data: account_data,
-            connection_list: []
+            connection_list: connection_list
         };
     }
 
     componentDidMount(){
-
-        this.Get_Connection_List(this.state.account_data);
 
     }
 
@@ -32,37 +30,6 @@ class Connections_Temnplate extends Component {
 
         await this.setState(this.props.properties);
 
-        this.Get_Connection_List(this.state.account_data);
-
-    }
-
-    Get_Connection_List = async (account_data)=>{
-
-        if(!account_data){
-            return;
-        }
-
-        let {email} = account_data;
-
-        let { get_all_connections } = this.context.Request_URLs;
-
-        let data = await (await fetch(
-            get_all_connections, {
-                method: "POST",
-                body: JSON.stringify({email}),
-                headers: {
-                    'Content-Type': "application/json"
-                }
-            }
-        )).json();
-
-        if(data){
-
-            let {result} = data;
-
-            this.setState({connection_list: result});
-
-        }
     }
 
     render() {
@@ -81,7 +48,7 @@ class Connections_Temnplate extends Component {
 
                 {Editor ? 
                 <div id="connections-editor-wrapper">
-                    <Editor Profile_Thumbnail={Profile_Thumbnail} account_data={this.state.account_data} />
+                    <Editor Profile_Thumbnail={Profile_Thumbnail} account_data={this.state.account_data} connection_list={this.state.connection_list}/>
                 </div> : 
                 <></>}
 
@@ -109,7 +76,9 @@ class Connections_Temnplate extends Component {
                     }}
             >
 
-                {this.state.connection_list.map((data, index)=>{
+                {Object.keys(this.state.connection_list || {}).map((key, index)=>{
+
+                    let data = this.state.connection_list[key];
 
                     return <div key={index} className="profile-thumbnail-wrapper"><Profile_Thumbnail connection_profile={data} current_user_account_data={this.state.account_data} /></div>;
 

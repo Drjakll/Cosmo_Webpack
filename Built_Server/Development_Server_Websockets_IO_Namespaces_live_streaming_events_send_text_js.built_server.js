@@ -17,7 +17,7 @@ exports.modules = {
   \****************************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-eval("{__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\nlet Wrapper = function () {\n  this.event = ({\n    from,\n    text,\n    account_data\n  }) => {\n    let {\n      stream_id\n    } = from;\n    this.io.to(stream_id).emit('receive_new_text', {\n      from_room_tag: from,\n      text: text,\n      from_account: account_data\n    });\n  };\n};\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Wrapper);\n\n//# sourceURL=webpack://cosmo_webpack/./Development/Server/Websockets/IO_Namespaces/live_streaming/events/send_text.js?\n}");
+eval("{__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\nlet Wrapper = function () {\n  this.event = ({\n    from,\n    text,\n    account_data\n  }) => {\n    if (!from) {\n      return;\n    }\n    let {\n      stream_id\n    } = from;\n    this.io.to(stream_id)?.emit('receive_new_text', {\n      from_room_tag: from,\n      text: text,\n      from_account: account_data\n    });\n  };\n};\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Wrapper);\n\n//# sourceURL=webpack://cosmo_webpack/./Development/Server/Websockets/IO_Namespaces/live_streaming/events/send_text.js?\n}");
 
 /***/ })
 

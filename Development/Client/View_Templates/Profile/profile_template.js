@@ -27,7 +27,7 @@ class Profile_Template extends Component {
     
     componentDidMount(){
         if (this.props.account_data) {
-            this.UpdateAllComponentProps({ account_data: this.props.account_data });
+            this.UpdateAllComponentProps({ account_data: this.props.account_data, connection_list: this.props.connection_list });
         }
         else if (this.props.get_account_data) {
             this.props.get_account_data(this.UpdateAllComponentProps);
@@ -55,7 +55,7 @@ class Profile_Template extends Component {
             return;
         }
         
-        this.UpdateAllComponentProps({account_data: this.props.account_data});
+        this.UpdateAllComponentProps({account_data: this.props.account_data, connection_list: this.props.connection_list});
     }
     
     UpdateComponentProps = (index, newProps) => {
@@ -99,7 +99,7 @@ class Profile_Template extends Component {
 
                         const Com = com.component;
 
-                        return <div className={`profile-template-component ${com.classname}`} key={index}>
+                        return <div className={`profile-template-component ${com.classname}`} key={key}>
 
                             <Com properties={com.props} />
 

@@ -17,7 +17,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/ClientSide/style.less to edit thi
     
     #album-cover-wrapper {
         width: 90%;
-        height: calc(100% - 60px);
+        height: calc(90% - 60px);
         display: flex;
         justify-content: center;
         align-items: center;
@@ -28,14 +28,14 @@ Click nbfs://nbhost/SystemFileSystem/Templates/ClientSide/style.less to edit thi
             background-repeat: no-repeat;
             background-size: cover;
             background-position: center 30%; 
-            box-shadow: rgba(0,0,0,0.5) 5px 5px 10px;
+            box-shadow: rgba(0,0,0,0.5) 5px 5px 0.5px;
             border-radius: 10px;        
-            //border: rgba(0,0,0,0.5) solid 1px;
+            border: rgba(0,0,0,0.5) solid 1px;
             transition: 1s;
             
             &:hover {
                 cursor: pointer;
-                box-shadow: rgba(0,0,0,0.5) 0px 0px 1px;
+                box-shadow: rgba(0,0,0,0.5) 5px 5px 14px;
             }
         }
     }
@@ -46,6 +46,19 @@ Click nbfs://nbhost/SystemFileSystem/Templates/ClientSide/style.less to edit thi
         display: flex;
         justify-content: center;
         align-items: center;
-        font-size: calc(0.4vw + 0.4vh);
+        font-size: 16px;
+        background: radial-gradient(ellipse at center, lightgray 1%, whitesmoke 65%);
+        margin-top: 25px;
+    }
+}
+
+@media only screen and (max-width: 1000px) {
+
+    #album-cover {
+
+        #album-title-wrapper {
+            font-size: calc(1.25vw + 0.6vh);
+        }
+
     }
 }

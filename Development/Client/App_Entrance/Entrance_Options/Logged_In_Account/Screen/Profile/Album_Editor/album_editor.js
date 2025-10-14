@@ -64,9 +64,13 @@ class Album_Editor extends Component {
         
         return <div id="album-editor">
         
-             <div id="add-button" onClick={this.Add_Photo_Album}>
-                New Album
-             </div>
+            <div id="add-button" onClick={this.Add_Photo_Album}>
+
+                <div id="new-album-icon" style={{backgroundImage: `url(./static/add_album_icon.png)`}}></div>
+
+                <label>Add Album</label> 
+
+            </div>
         
         </div>;
     }

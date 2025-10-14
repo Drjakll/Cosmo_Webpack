@@ -21,7 +21,7 @@ class The_Texts extends Component {
 
         super(props);
 
-        let { post, account_info, post_photos, selected_photos } = props;
+        let { post, account_info, post_photos, selected_photos, connection_list } = props;
 
         The_Texts.contextType = window.Context;
 
@@ -29,7 +29,8 @@ class The_Texts extends Component {
             post: post,
             post_photos: post_photos,
             account_info: account_info,
-            selected_photos: selected_photos
+            selected_photos: selected_photos,
+            connection_list: connection_list
         };
     }
 
@@ -84,7 +85,9 @@ class The_Texts extends Component {
         await this.Delete_Post_Photos(this.state.post_photos);
         await this.Delete_Photo_Links(this.state.post_photos);
 
-        this.props.Get_Posts();
+        await this.props.Get_Posts();
+
+        global_connection_socket?.emit("refresh_group_alerts", {request_to_emails: this.state.connection_list});
 
     }
 

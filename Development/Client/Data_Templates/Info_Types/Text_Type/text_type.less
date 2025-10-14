@@ -22,7 +22,10 @@
             justify-content: center;
             align-items: center;
             text-align: center;
-            font-size: 0.75vw;
+            font-size: 16px;
+            background-color: rgba(0,0,0,0);
+            color: rgba(75,75,75,1);
+            font-weight: 700;
         }
     }
 
@@ -32,6 +35,23 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        font-size: 0.5vw;
+        font-size: calc(0.25vw + 0.25vh);
+    }
+}
+
+@media only screen and (max-width: 1000px) {
+
+    #text-type {
+
+        #value-wrapper {
+
+            #value {
+                font-size: calc(1.25vw + 0.6vh);
+            }
+        }
+
+        #editor {
+            font-size: calc(0.75vw + 0.4vh);
+        }
     }
 }

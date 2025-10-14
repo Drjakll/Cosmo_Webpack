@@ -11,13 +11,14 @@ class The_Editor extends Component {
 
         The_Editor.contextType = window.Context;
 
-        let { selected_post, account_info } = props;
+        let { selected_post, account_info, connection_list } = props;
 
         this.state = {
             selected_post: selected_post,
             post_photos: [],
             selected_photos: {},
-            account_info: account_info
+            account_info: account_info,
+            connection_list: connection_list
         };
     }
 
@@ -42,7 +43,9 @@ class The_Editor extends Component {
             body: JSON.stringify(post)
         })).json();
 
-        this.props.Get_Posts();
+        await this.props.Get_Posts();
+
+        global_connection_socket?.emit("refresh_group_alerts", {request_to_emails: this.state.connection_list});
 
     }
 
@@ -58,7 +61,9 @@ class The_Editor extends Component {
             body: JSON.stringify(post)
         })).json();
 
-        this.props.Get_Posts();
+        await this.props.Get_Posts();
+
+        global_connection_socket?.emit("refresh_group_alerts", {request_to_emails: this.state.connection_list});
     }
 
     Set_Post_Photos = (photos) => {
@@ -84,6 +89,7 @@ class The_Editor extends Component {
                     Get_Posts={this.props.Get_Posts}
                     post_photos={this.state.post_photos}
                     selected_photos={this.state.selected_photos}
+                    connection_list={this.state.connection_list}
                 />
 
             </div>

@@ -18,12 +18,8 @@ let request = function () {
             'marital_status',
             'hobbies',
             'current_location',
-            'connection_list',
-            'online_ws_id',
-            'connection_requests',
             'block_list'
         ]);
-    
 
         this.sql.query(query, (err, result) => {
 

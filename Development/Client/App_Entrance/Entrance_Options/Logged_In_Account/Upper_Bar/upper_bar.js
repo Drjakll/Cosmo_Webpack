@@ -9,10 +9,11 @@ class Upper_Bar extends Component {
 
         super(props);
 
-        let {account_data} = this.props;
+        let {account_data, connection_list} = this.props;
 
         this.state = {
-            account_data
+            account_data,
+            connection_list
         };
 
     }
@@ -32,7 +33,7 @@ class Upper_Bar extends Component {
 
             <div id="alert-buttons-wrapper" className="upper-buttons">
 
-                <Alert_Buttons account_data={this.state.account_data}/>
+                <Alert_Buttons account_data={this.state.account_data} connection_list={this.state.connection_list}/>
 
             </div>
 

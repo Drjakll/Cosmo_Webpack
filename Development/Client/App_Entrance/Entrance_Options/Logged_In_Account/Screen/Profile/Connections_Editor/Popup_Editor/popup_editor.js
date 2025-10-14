@@ -12,11 +12,12 @@ class Popup_Editor extends Component {
         
         super(props);
 
-        let {account_data, popup_type} = this.props;
+        let {account_data, popup_type, connection_list} = this.props;
 
         this.state = {
             account_data: account_data,
-            popup_type: popup_type
+            popup_type: popup_type,
+            connection_list: connection_list
         };
     }
 
@@ -43,7 +44,6 @@ class Popup_Editor extends Component {
     render(){
 
         const Popup_Type = this.Popup_Types[this.state.popup_type];
-
         
         return (
             <div id="connections-popup-editor">
@@ -60,7 +60,7 @@ class Popup_Editor extends Component {
 
                     <div id="result-wrapper">
 
-                        <Popup_Type ref={this.resultRef} account_data={this.state.account_data} Profile_Thumbnail={this.props.Profile_Thumbnail}/>
+                        <Popup_Type ref={this.resultRef} account_data={this.state.account_data} Profile_Thumbnail={this.props.Profile_Thumbnail} connection_list={this.state.connection_list}/>
 
                     </div>
                     

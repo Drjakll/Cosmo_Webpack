@@ -20,6 +20,7 @@
             background-color: lightblue;
             box-shadow: rgba(0,0,0,0.25) 5px 5px 5px;
             transition: 1s;
+            text-align: center;
 
             &:hover {
                 cursor: pointer;
@@ -51,5 +52,61 @@
 
             }
         }
+
+        #delete-photo-button {
+
+            button {
+                border-radius: 50px;
+                border: rgba(0,0,0,0.5) solid 0.5px;
+                padding: 1.5%;
+                width: 100px;
+            }
+        }
+    }
+}
+
+@media only screen and (max-width: 1000px) {
+
+    #photos-container-editor {
+
+        #editor-buttons-wrapper {
+            flex-direction: column;
+
+            #delete-album-button {
+                padding: 1.5% 2.5% 1.5% 2.5%;
+                border-radius: 50px;
+                font-size: calc(1.25vw + 0.6vh);
+            }
+
+            #add-photos-section {
+                width: 100%;
+                height: 20%;
+                padding: 0;
+
+                #upload-photo-selections-wrapper {
+                    height: 100%;
+
+                    input {
+                        height: 75%;
+                        font-size: calc(1.25vw + 0.5vh);
+                    }
+                }
+
+                #upload-button-wrapper {
+
+                    button {
+                        font-size: calc(0.75vw + 0.4vh);
+                    }
+                }
+            }
+
+            #delete-photo-button {
+                
+                button {
+                    font-size: calc(1.25vw + 0.6vh);
+                }
+            }
+        }
+
     }
 }

@@ -12,8 +12,14 @@ class Profile_Popup extends Component {
         let {account_data} = props;
 
         this.state = {
-            account_data
+            account_data,
+            connection_list: {}
         };
+    }
+
+    componentDidMount(){
+
+        this.Get_Connection_List(this.state.account_data);
     }
 
     componentDidUpdate(prevProps, prevState){
@@ -23,6 +29,46 @@ class Profile_Popup extends Component {
         }
 
         this.setState(this.props);
+
+        this.Get_Connection_List(this.props.account_data);
+    }
+
+    Get_Connection_List = async (account_data)=>{
+
+        if(!account_data){
+            return;
+        }
+
+        let { get_connection_list } = this.context.Request_URLs;
+
+        let body = {
+            request: account_data,
+            status: "accepted"
+        };
+
+        let data = await (await fetch(
+            get_connection_list, {
+                method: "POST",
+                body: JSON.stringify(body),
+                headers: {
+                    'Content-Type': "application/json"
+                }
+            }
+        )).json();
+
+        if(data){
+
+            let {results} = data;
+
+            let jsonObj_results = {};
+
+            for(let entry of results){
+                jsonObj_results[entry.email] = entry;
+            }
+
+            this.setState({connection_list: jsonObj_results});
+
+        }
     }
 
     render(){
@@ -52,7 +98,7 @@ class Profile_Popup extends Component {
 
             <div id="profile-template-inner-wrapper">
 
-                <Profile_Template account_data={account_data} />
+                <Profile_Template account_data={account_data} connection_list={this.state.connection_list}/>
 
             </div>
 

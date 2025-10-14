@@ -7,12 +7,11 @@ class Connection_Request extends Component {
 
         super(props);
 
-        let {account_data} = this.props;
-
         Connection_Request.contextType = window.Context;
 
         this.state = {
-            request_user_data: {}
+            request_user_data: null,
+            connection_list: this.props.connection_list,
         };
 
     }
@@ -31,21 +30,21 @@ class Connection_Request extends Component {
 
         this.setState(this.props);
 
-        this.Get_Request_User_Data();
+        if(!this.state.request_user_data){
+            this.Get_Request_User_Data();
+        }
     }
 
     Get_Request_User_Data = async ()=>{
 
-        let {data} = this.props;
-
-        let {request_from_id} = data;
+        let {from_account_email} = this.props;
 
         let {find_connections} = this.context.Request_URLs;
 
         let search_req = {
-            key: "id",
-            type: "number", 
-            value: parseInt(request_from_id),
+            key: "email",
+            type: "string", 
+            value: from_account_email,
             conjunc: "="
         };
 
@@ -68,18 +67,19 @@ class Connection_Request extends Component {
 
     Accept_Connection_Request = async (e)=>{
 
-        let {accept_connection_req} = this.context.Request_URLs;
+        let {accept_connection_request} = this.context.Request_URLs;
 
         let {account_data} = this.props;
 
         let {request_user_data} = this.state;
 
         let body = {
-            accept_user_acc: account_data, //We swap the order because we are making
-            user_acc: request_user_data //the requester to add this account first
+            request_from: request_user_data, //The account that is making the request
+            request_to: account_data, //To the recipient of the request is being asked
+            status: "accepted" 
         };
 
-        await fetch(accept_connection_req, {
+        await fetch(accept_connection_request, {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json'
@@ -87,14 +87,16 @@ class Connection_Request extends Component {
             body: JSON.stringify(body)
         });
 
-        window.con_socket.emit("refresh_account", {request_to_email: request_user_data.email});
+        this.props.refresh_alerts(); //Refresh self alerts
 
-        window.LoginAttempt();
+        LoginAttempt(); //Refresh self login
+
+        global_connection_socket.emit("refresh_account", {request_to_email: request_user_data.email}); //Refresh other party's account so that it will refresh everything else
     }
 
     Decline_Connection_Request = async (e)=>{
 
-        let {connection_request} = this.context.Request_URLs;
+        let {remove_connection_request} = this.context.Request_URLs;
 
         let {account_data} = this.props;
 
@@ -105,9 +107,7 @@ class Connection_Request extends Component {
             request_to: account_data
         };
 
-        console.log(body);
-
-        await fetch(connection_request, {
+        await fetch(remove_connection_request, {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json'
@@ -115,14 +115,16 @@ class Connection_Request extends Component {
             body: JSON.stringify(body)
         });
 
-        window.con_socket.emit("refresh_account", {email: request_user_data.email});
+        this.props.refresh_alerts(); //Refresh self alerts
 
-        window.LoginAttempt();
+        LoginAttempt(); //Refresh self login
+
+        global_connection_socket?.emit("refresh_account", {request_to_email: request_user_data.email}); //Refresh other party's account so that it will refresh everything else
     }
 
     render() {
 
-        let {aws_s3_url} = this.context.Request_URLs
+        let {aws_s3_url} = this.context.Request_URLs;
 
         return <div id="connection-request">
 
@@ -130,25 +132,32 @@ class Connection_Request extends Component {
 
                 <div id="request-user-photo-wrapper">
 
-                    <img src={`${aws_s3_url}${this.state.request_user_data.profile_picture_link}`} id="request-user-img"/>
+                    <img src={`${aws_s3_url}${this.state.request_user_data?.profile_picture_link}`} id="request-user-img" onClick={(e)=>{ this.props.view_popup_profile(this.state.request_user_data); }}/>
                     
                 </div>
 
                 <div id="request-user-msg-wrapper">
 
-                    <label id="request-user-name">{`${this.state.request_user_data.first_name} ${this.state.request_user_data.last_name}`} has sent a connection request</label>
+                    <label id="request-user-name">{`${this.state.request_user_data?.first_name} ${this.state.request_user_data?.last_name}`} has sent a connection request</label>
 
                 </div>
 
             </div>
 
-            <div id="request-response-options-wrapper">
+            {this.state.connection_list[this.state.request_user_data?.email] ? 
 
-                <button onClick={this.Accept_Connection_Request}>Accept</button>
+                <div id="request-response-options-wrapper">Accepted</div> 
 
-                <button onClick={this.Decline_Connection_Request}>Decline</button>
+                :
+                
+                <div id="request-response-options-wrapper">
 
-            </div>
+                    <button onClick={this.Accept_Connection_Request}>Accept</button>
+
+                    <button onClick={this.Decline_Connection_Request}>Decline</button>
+
+                </div>
+            }
 
         </div>;
     }

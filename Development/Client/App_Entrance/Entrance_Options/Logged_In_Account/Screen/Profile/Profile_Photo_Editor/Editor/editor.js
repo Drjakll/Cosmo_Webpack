@@ -225,6 +225,12 @@ class Editor extends Component {
             
             <div id="the-profile-pictures-editor">
 
+                <div id="profile-picture-collection-label">
+            
+                    Profile Pictures Collection
+
+                </div>
+
                 <div id="top">
 
                     <div id="upload-profile-pictures-wrapper">
@@ -236,12 +242,6 @@ class Editor extends Component {
                             this.Upload_Profile_Pictures(fileRef.current.files);
 
                         }}>Upload</button>
-
-                    </div>
-
-                    <div id="profile-picture-collection-label">
-                
-                        Profile Pictures Collection
 
                     </div>
 

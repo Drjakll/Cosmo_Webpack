@@ -23,6 +23,7 @@ let websocket = async (server) => {
     //Passing the io object to the namespaces
     namespaces.photo_comments.io = photo_comments_namespace;
     namespaces.live_streaming.io = video_streams_namespace;
+    namespaces.connections.io = connections_namespace;
     
     
     photo_comments_namespace.on('connection', namespaces.photo_comments.namespace);

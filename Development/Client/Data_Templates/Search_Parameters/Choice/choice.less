@@ -42,7 +42,7 @@
             justify-content: center;
             align-items: center;
             text-align: center;
-            font-size: 0.75vw;
+            font-size: calc(0.375vw + 0.375vh);
         }
 
         #search-option-selections-wrapper {
@@ -64,7 +64,7 @@
                     display: flex;
                     justify-content: center;
                     align-items: center;
-                    font-size: 0.5vw;
+                    font-size: calc(0.25vw + 0.25vh);
                     border-top: rgba(0,0,0,0.5) solid 0.5px;
 
                     &:hover {
@@ -86,5 +86,40 @@
         display: flex;
         justify-content: center;
         align-items: center;
+
+        button {
+            border: rgba(0,0,0,0.5) solid 0.5px;
+            border-radius: 50px;
+        }
+    }
+}
+
+@media only screen and (max-width: 1000px){
+    
+    #search-choice-input-wrapper {
+
+        #value-wrapper {
+            
+            #value {
+                font-size: calc(1.25vw + 0.5vh);
+            }
+
+            #search-option-selections-wrapper {
+
+                #search-option-selections {
+
+                    .option {
+                        font-size: calc(1.25vw + 0.5vh);
+                    }
+                }
+            }
+        }
+
+        #search-option-button-wrapper {
+
+            button {
+                font-size: calc(1.25vw + 0.5vh);
+            }
+        }
     }
 }

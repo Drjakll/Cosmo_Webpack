@@ -30,12 +30,14 @@ Click nbfs://nbhost/SystemFileSystem/Templates/ClientSide/style.less to edit thi
             background-position: center 30%;
             background-size: cover;
             background-repeat: no-repeat;
-            //border-radius: 25px;
+            border-bottom-right-radius: 25px;
             border: rgba(55,55,55,1) solid 1px;
-            box-shadow: 5px 5px 5px rgba(0,0,0,0.25);
+            box-shadow: 5px 5px 14px rgba(0,0,0,0.5);
+            transition: 1s;
             
             &:hover {
                 cursor: pointer;
+                box-shadow: 5px 5px 1px rgba(0,0,0,0.5);
             }
         }
     }
@@ -43,4 +45,17 @@ Click nbfs://nbhost/SystemFileSystem/Templates/ClientSide/style.less to edit thi
 
 .enlarged-photo {
     z-index: 99999999;
+}
+
+@media only screen and (max-width: 1000px){
+
+    #profile-picture {
+
+        #profile-picture-image-wrapper {
+
+            #profile-photo {
+                border-radius: 0px;
+            }
+        }
+    }
 }

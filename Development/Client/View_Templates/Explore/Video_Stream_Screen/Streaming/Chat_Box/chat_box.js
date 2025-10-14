@@ -7,12 +7,15 @@ import './chat_box.less';
 class Chat_Box extends Component {
 
     chat_box_ref = createRef();
+    textRef = createRef();
 
     constructor(props) {
 
         super(props);
 
         Chat_Box.contextType = window.Context;
+
+        this.added_event = false; //To make sure it only adds the event once
         
         this.state = {
             conversation: [],
@@ -23,14 +26,18 @@ class Chat_Box extends Component {
         };
     }
 
-    componentDidUpdate(prevProps, prevState) {
+    async componentDidUpdate(prevProps, prevState) {
 
         if (this.props === prevProps) {
             return;
         }
 
-        this.setState(this.props);
+        await this.setState(this.props);
 
+        if(!this.added_event && this.state.socket){
+            this.Add_Socket_Events(this.state.socket);
+        }
+        
     }
 
     componentDidMount() {
@@ -39,12 +46,14 @@ class Chat_Box extends Component {
 
         this.drag = new Drag();
 
-        this.Add_Socket_Events(this.props.socket);
+        if(!this.added_event && this.state.socket){
+            this.Add_Socket_Events(this.state.socket);
+        }
     }
 
     Add_Socket_Events = (socket) => {
 
-        socket?.on('receive_new_text', ({from_room_tag, text, from_account }) => {
+        socket?.on('receive_new_text', async ({from_room_tag, text, from_account }) => {
 
             let new_text_obj = {};
 
@@ -58,10 +67,18 @@ class Chat_Box extends Component {
 
             this.state.conversation.push(new_text_obj);
 
-            this.setState({ conversation: this.state.conversation });
+            await this.setState({ conversation: this.state.conversation });
+
+            setTimeout(()=>{
+                this.textRef.current.scrollTo({
+                    top: this.textRef.current.scrollHeight,
+                    behavior: 'smooth'
+                });
+            }, 250);
 
         });
 
+        this.added_event = true;
     }
 
     Get_Current_Local_Time = () => {
@@ -122,7 +139,7 @@ class Chat_Box extends Component {
                 
                     <div id="chat-area">
 
-                        <div id="text">
+                        <div id="text" ref={this.textRef}>
 
                             {this.state.conversation.map((value, index) => {
 

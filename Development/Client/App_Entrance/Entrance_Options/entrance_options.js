@@ -11,10 +11,6 @@ class Entrance_Options extends Component {
         "Logged In Account": Logged_In_Account
     };
     
-    state = {
-        selected_screen: "Logged In Account",
-        account_info: null
-    };
     
     constructor(props){
         
@@ -23,6 +19,11 @@ class Entrance_Options extends Component {
         window.LoginAttempt = this.LoginAttempt;
         
         Entrance_Options.contextType = window.Context;
+
+        this.state = {
+            selected_screen: "Login Account",
+            account_info: null
+        };
         
     }
     
@@ -56,7 +57,10 @@ class Entrance_Options extends Component {
         
         if(acc_info){
 
-            await this.setState({selected_screen: "Logged In Account", account_info: acc_info});
+            await this.setState({
+                selected_screen: "Logged In Account", 
+                account_info: acc_info
+            });
         
             let date = new Date();
 

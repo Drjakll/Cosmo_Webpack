@@ -34,7 +34,7 @@ let generate_query = (table_name, requirements, data_to_get) => {
             }
         }   
         
-        return sub_query.substring(0, sub_query.length - 4);
+        return sub_query.slice(0, -4);
     };
     
     let query = `select ${get_types_of_data(data_to_get)} from ${table_name}`;
@@ -43,22 +43,27 @@ let generate_query = (table_name, requirements, data_to_get) => {
         //Only add "where" clause if there is any requirement
         query += ` where`;
     }
+
+    let counter = 0;
     
     for(let i in requirements){
         
-        let {key, value, type, conjunc} = requirements[i];
+        let {key, value, type, conjunc, logical} = requirements[i];
+
+        //Sometimes logical might not exists, so default is " and".
+        query += `${counter > 0 && type !== "group_start" && type !== "group_end" ? (` ${logical}` || " and" ) : "" }`
         
         switch(type){
             case "string":
-                query += ` ${key} ${conjunc} '${conjunc === "like" ? `%${value}%` : value}' and`;
+                query += ` ${key} ${conjunc} '${conjunc === "like" ? `%${value}%` : value}'`;
                 break;
                 
             case "number":
-                query += ` ${key} ${conjunc} ${value} and`;
+                query += ` ${key} ${conjunc} ${value}`;
                 break;
                 
             case "range":
-                query += ` ${key} ${conjunc} ${value} and`;
+                query += ` ${key} ${conjunc} ${value}`;
                 break;
                 
             case 'json':
@@ -67,14 +72,23 @@ let generate_query = (table_name, requirements, data_to_get) => {
                     continue;
                 }
                 
-                query += ` ${generate_json_search(key, value, conjunc)} and`;
+                query += ` ${generate_json_search(key, value, conjunc)}`;
+                break;
+
+            case 'group_start':
+                query += " (";
+                break;
+
+            case 'group_end':
+                query += ") ";
                 break;
             
         }
+
+        if(type !== "group_start" && type !== "group_end"){
+            counter++;
+        }
     }
-    
-    //If no requirement(s) is set, then don't subtract " and" at the end of the query
-    query = Object.keys(requirements).length > 0 ? query.substring(0, query.length - 4) : query;
 
     return query;
     

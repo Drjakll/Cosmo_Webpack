@@ -31,20 +31,48 @@ Click nbfs://nbhost/SystemFileSystem/Templates/ClientSide/style.less to edit thi
 
     .connections-editor-button {
         min-width: 75px;
-        height: 25px;
+        height: 40px;
         padding: 0px 15px 0px 15px;
-        background-color: darkorange;
-        color: white;
+        //background-color: darkorange;
+        color: rgba(75,75,75,1);
         border-radius: 50px;
         display: flex;
-        justify-content: center;
+        justify-content: space-evenly;
         align-items: center;
         transition: 1s;
-        border: rgba(0,0,0,0.5) solid 0.5px;
+        //border: rgba(0,0,0,0.5) solid 0.5px;
+
+        .icon {
+            width: 40px;
+            height: 40px;
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+
+        label {
+
+            &:hover {
+                cursor: pointer;
+            }
+        }
 
         &:hover {
             cursor: pointer;
-            background-color: darkred;
+            color: rgba(235,235,235,1);
+            background-color: darkorange;
+        }
+    }
+}
+
+@media only screen and (max-width: 1000px){
+    
+    #connections-editor {
+
+        .connections-editor-button {
+            font-size: calc(1.25vw + 0.6vh);
+            padding: 1%;
+            height: 15px;
         }
     }
 }

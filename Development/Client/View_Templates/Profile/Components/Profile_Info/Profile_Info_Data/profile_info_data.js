@@ -107,6 +107,18 @@ class Profile_Info_Data extends Component {
 
                 </div>
 
+                {/*this is just a gap for decoration*/}
+                <div id="gap">
+
+                    <div id="left"></div>
+
+                    <div id="right">
+
+
+                    </div>
+
+                </div>
+
                 <div id="info-wrapper"
 
                     ref={infoWrapperRef}

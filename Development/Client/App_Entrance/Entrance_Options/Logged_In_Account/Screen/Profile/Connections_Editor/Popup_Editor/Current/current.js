@@ -9,18 +9,17 @@ class Current extends Component {
 
         Current.contextType = window.Context;
 
-        let {account_data} = this.props;
+        let {account_data, connection_list} = this.props;
 
         this.state = {
             account_data: account_data,
-            search_results: []
+            search_results: connection_list,
+            all_connections: connection_list
         };
     }
 
     componentDidMount(){
         
-        this.Get_Connection_List();
-
     }
 
     componentDidUpdate(prevProps, prevState){
@@ -32,46 +31,21 @@ class Current extends Component {
         this.setState(this.props);
     }
 
-    Get_Connection_List = async ()=>{
-
-        let {account_data} = this.state;
-
-        if(!account_data){
-            return;
-        }
-
-        let {email} = account_data;
-
-        let { get_all_connections } = this.context.Request_URLs;
-
-        let data = await (await fetch(
-            get_all_connections, {
-                method: "POST",
-                body: JSON.stringify({email}),
-                headers: {
-                    'Content-Type': "application/json"
-                }
-            }
-        )).json();
-
-        if(data){
-
-            let {result} = data;
-
-            this.setState({search_results: result});
-
-        }
-    }
-
     Apply_Search = async (requirements)=>{    
 
         let { find_connections } = this.context.Request_URLs;
 
-        let new_req = {};
+        let {all_connections} = this.state;
 
-        new_req[this.state.account_data.email] = true;
+        //"group_start" means it's the start of a parenthesis "("
+        requirements["group_start"] = {type: "group_start"};
 
-        requirements[this.state.account_data.email] = {key: "connection_list", value: new_req, type: "json", conjunc: "json_contains_path"};
+        for(let email in all_connections){
+            requirements[email] = {key: "email", value: all_connections[email].email, type: "string", conjunc: "=", logical: "or"};
+        }
+
+        //"group_end" means it's the end of a parenthesis ")"
+        requirements["group_end"] = {type: "group_end"};
 
         let result = await( await fetch(find_connections, {
             method: "POST",
@@ -89,20 +63,20 @@ class Current extends Component {
         }
     }
     
-    Generate_Connection_Options = (connection_profile, from, array_index = null)=>{
+    Generate_Connection_Options = (connection_profile, array_index = null)=>{
 
         let Remove_Connection = async (e)=>{
 
-            const {remove_connection} = this.context.Request_URLs;
+            const {remove_connection_request} = this.context.Request_URLs;
 
             let {account_data} = this.state;
 
             let body = {
-                email: account_data.email,
-                to_remove_email: connection_profile.email
+                request_from: account_data,
+                request_to: connection_profile
             };
 
-            await fetch(remove_connection, {
+            await fetch(remove_connection_request, {
                 method: "POST",
                 headers: {
                     'Content-Type': 'application/json'
@@ -111,11 +85,13 @@ class Current extends Component {
             });
 
             //Let the opposing account know that the connection has been removed
-            con_socket?.emit("refresh_account", {request_to_email: connection_profile.email});
+            global_connection_socket?.emit("refresh_account", {request_to_email: connection_profile.email});
 
-            await this.Get_Connection_List();
+            delete this.state.all_connections[connection_profile.email];
 
-            window.LoginAttempt();
+            await this.setState({all_connections: this.state.all_connections});
+
+            await this.Apply_Search({});
 
         };
 
@@ -150,7 +126,9 @@ class Current extends Component {
 
                 <div id="search-results-list-wrapper">
 
-                    {search_results.map((data, index)=>{
+                    {Object.keys(search_results).map((key, index)=>{
+
+                        let data = search_results[key];
 
                         return this.Do_Not_Appear(data) ?
                         

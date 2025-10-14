@@ -73,8 +73,8 @@ app.post("/update_photo_comment", requests.user_accounts.profile.comments.photo_
 app.post("/delete_photo_comment", requests.user_accounts.profile.comments.photo_comments.delete_photo_comment.req);
 
 //Post Data
-app.post("/create_post", requests.user_accounts.profile.post_data.create_post.req);
-app.post("/update_post", requests.user_accounts.profile.post_data.update_post.req);
+app.post("/create_post", requests.user_accounts.profile.post_data.create_post.req, requests.alerts.add_new_alert.req);
+app.post("/update_post", requests.user_accounts.profile.post_data.update_post.req, requests.alerts.update_alert_data.req);
 app.post("/get_posts", requests.user_accounts.profile.post_data.get_posts.req);
 app.post("/delete_post", requests.user_accounts.profile.post_data.delete_post.req);
 app.post("/delete_post_photo_links", requests.user_accounts.profile.post_data.delete_post_photo_links.req); 
@@ -88,18 +88,20 @@ app.post("/disband_stream_room", requests.stream_rooms.disband_stream_room.req);
 app.post("/search_streams", requests.stream_rooms.search_streams.req);
 
 //Connections
-app.post("/get_all_connections", requests.connections.get_all_connections.req);
+app.post("/get_connection_list", requests.connections.get_connection_requests.req, requests.connections.get_connection_list.req, (req, res)=>{ res.json({results: req.body.connection_list}); });
 app.post("/find_connections", requests.connections.find_connections.req);
-app.post("/connection_request", requests.connections.connection_req_sent.req, requests.connections.connection_request.req, requests.alerts.update_alerts.req);
-app.post("/accept_connection_req", requests.connections.accept_connection_req.req, //The account who made the add request accept first
-                                    requests.connections.accept_connection_req.req, //Then the account who requsted to add to accept the add
-                                    requests.connections.connection_req_sent.req, //Remove the connection_sent from the list for the account who requested to add
-                                    requests.connections.connection_request.req,  //Remove the connection_request from the account who received the request
-                                    requests.alerts.update_alerts.req) //Remove the alert from the account who received the request
-app.post("/remove_connection", requests.connections.remove_connection.req, requests.connections.remove_connection.req, (req, res)=>{ res.json({}); res.end(); });
+app.post("/send_connection_request", requests.connections.send_connection_request.req, requests.alerts.add_new_alert.req);
+app.post("/get_connection_requests_from", requests.connections.get_connection_requests_from.req, (req, res)=>{ res.json({results: req.body.list_of_emails}); });
+app.post("/get_connection_request_to", requests.connections.get_connection_requests_to.req, (req, res)=>{ res.json({results: req.body.list_of_emails}); });
+app.post("/remove_connection_request", requests.connections.remove_connection_request.req);
+app.post("/accept_connection_request", requests.connections.update_connection_request.req);
 
 //Alerts
-app.post("/update_alerts", requests.alerts.update_alerts.req);
+app.post("/update_alert_data", requests.alerts.update_alert_data.req);
+app.post("/delete_alert", requests.alerts.delete_alert.req);
+app.post("/get_connection_alerts", requests.connections.get_connection_requests.req, 
+                                            requests.connections.get_connection_list.req,
+                                            requests.alerts.get_alerts.req);
 
 server.listen(8080, () => {
    

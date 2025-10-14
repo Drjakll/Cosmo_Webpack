@@ -8,12 +8,13 @@ class Connections_Editor extends Component {
         
         super(props);
 
-        let {account_data} = this.props;
+        let {account_data, connection_list} = this.props;
 
         Connections_Editor.contextType = window.Context;
 
         this.state = {
             account_data: account_data,
+            connection_list: connection_list,
             show_popup: false,
             popup_type: "Edit"
         };
@@ -46,19 +47,27 @@ class Connections_Editor extends Component {
 
                 {this.state.show_popup ? 
                 <div id="connections-editor-popup-wrapper">
-                    <Popup_Editor account_data={this.state.account_data} release_popup={this.Release_Popup} popup_type={this.state.popup_type} Profile_Thumbnail={this.props.Profile_Thumbnail}/>
+                    <Popup_Editor account_data={this.state.account_data} 
+                                release_popup={this.Release_Popup} 
+                                popup_type={this.state.popup_type} 
+                                Profile_Thumbnail={this.props.Profile_Thumbnail} 
+                                connection_list={this.state.connection_list}/>
                     </div> 
                 : <></>}
 
                 <div className="connections-editor-button" onClick={(e)=>{this.Show_Popup("Current");}}>
 
-                    Edit
+                    <div id="friends-icon" className="icon" style={{backgroundImage: `url(./static/friends_icon.png)`}}></div>
+
+                    <label>Edit</label>
                     
                 </div>
 
                 <div className="connections-editor-button" onClick={(e)=>{this.Show_Popup("Find_New");}}>
-                    
-                    Search
+
+                    <div id="friends-search-icon" className="icon" style={{backgroundImage: `url(./static/friends_search_icon.png)`}}></div>
+
+                    <label>Search</label>
 
                 </div>
 

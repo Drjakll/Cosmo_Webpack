@@ -7,14 +7,22 @@ class Find_New extends Component {
         
         super(props);
 
-        let {account_data} = this.props;
+        let {account_data, connection_list} = this.props;
 
         Find_New.contextType = window.Context;
 
         this.state = {
             account_data: account_data,
+            connection_list: connection_list,
+            pending_connection_requests: {},
             search_results: []
         };
+    }
+
+    async componentDidMount(){
+
+        //Get all the pending requests
+        await this.Get_Pending_Requests();
     }
 
     componentDidUpdate(prevProps, prevState){
@@ -46,20 +54,22 @@ class Find_New extends Component {
         }
     }
 
-    Generate_Connection_Options = (connection_profile, from, array_index = null)=>{
+    Generate_Connection_Options = (connection_profile, array_index = null)=>{
 
-        let Send_Connection_Request = async (e)=>{
+        //send is a flag signal to remove or send
+        let Signal_Connection_Request = async (send = false)=>{
 
-            let { connection_request } = this.context.Request_URLs;
+            let { send_connection_request, remove_connection_request } = this.context.Request_URLs;
 
             let {account_data} = this.state;
 
+            //Signal the request to connect, either remove or send connection request
             let body = {
                 request_from: account_data,
                 request_to: connection_profile
             };
 
-            let data = await (await fetch(connection_request, {
+            let data = await (await fetch(send ? send_connection_request : remove_connection_request, {
                 method: "POST",
                 headers: {
                     'Content-Type': 'application/json'
@@ -67,47 +77,79 @@ class Find_New extends Component {
                 body: JSON.stringify(body)
             })).json();
 
-            if(data){
-                //Update the particular search_results of array_index to reflect the sent connection_request
-                let {updated_request_list} = data;
+            //Update pending requests
+            this.Get_Pending_Requests();
 
-                let {search_results} = this.state;
-
-                if(array_index !== null){
-                    search_results[array_index].connection_requests = JSON.stringify(updated_request_list);
-                }
-
-                this.setState({search_results});
-            }
-
-            con_socket?.emit("refresh_account", {request_to_email: connection_profile.email});
+            //Signal the other party to refresh their connection requests
+            global_connection_socket?.emit("refresh_alerts", {request_to_email: connection_profile.email});
         };
 
-        let {account_data} = this.state;
-
-        let connection_requests = JSON.parse(connection_profile.connection_requests || "{}");
+        let {pending_connection_requests} = this.state;
 
         return <div id="connection-options">
 
-            <button className="connection-option-button" onClick={Send_Connection_Request}>{connection_requests[account_data.email] ? "Cancel Request" : "Add"}</button>
+            <button className="connection-option-button" onClick={(e)=>{Signal_Connection_Request(pending_connection_requests[connection_profile.email] ? false : true); }}>
+                {pending_connection_requests[connection_profile.email] ? "Cancel Request" : "Add"}
+            </button>
 
             <button className="connection-option-button">Block</button>
             
         </div>;
     }
 
+    //Find all pending requests
+    Get_Pending_Requests = async ()=>{
+
+        let {get_connection_requests_from } = this.context.Request_URLs;
+
+        let {account_data} = this.state;
+
+        let body = {
+            request_from: account_data,
+            status: "pending"
+        };
+
+        let data = await (await fetch(
+                            get_connection_requests_from,
+                                {
+                                    method: "POST",
+                                    headers: {
+                                        'Content-Type': 'application/json'
+                                    },
+                                    body: JSON.stringify(body)
+                                }
+                            )).json();
+
+        if(data){
+
+            let {results} = data;
+
+            let pending_requests = {};
+
+            for(let entry of results){
+
+                pending_requests[entry] = entry;
+
+            }
+
+            this.setState({pending_connection_requests: pending_requests});
+
+        }
+    }
+
+
+
     //To determine if the result should not appear on the search page
     Do_Not_Appear = (oppose_user_acc)=>{
 
-        let {id, block_list, connection_list} = oppose_user_acc;
-        let {account_data} = this.state;
+        let {id, block_list} = oppose_user_acc;
+        let {account_data, connection_list} = this.state;
 
         id = parseInt(id);
         block_list = JSON.parse(block_list || "{}");
-        connection_list = JSON.parse(connection_list || "{}");
 
-        //The three conditions that stops search results to appear
-        if(parseInt(account_data.id) === id || block_list[account_data.email] || connection_list[account_data.email]){
+        //The three conditions that stops search results to appear - Self, blocked, and if it's already in the connection list
+        if(parseInt(account_data.id) === id || block_list[account_data.email] || connection_list[oppose_user_acc.email]){
             return true;
         }
 
@@ -143,7 +185,6 @@ class Find_New extends Component {
                             <Profile_Thumbnail connection_profile={data} current_user_account_data={this.state.account_data} generate_options={this.Generate_Connection_Options} array_index={index}/>
 
                         </div>;
-
 
                     })}
 

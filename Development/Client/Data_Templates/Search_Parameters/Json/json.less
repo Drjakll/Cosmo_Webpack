@@ -99,5 +99,62 @@
         display: flex;
         justify-content: center;
         align-items: center;
+
+        button {
+            border: rgba(0,0,0,0.5) solid 0.5px;
+            border-radius: 50px;
+        }
+    }
+}
+
+@media only screen and (max-width: 1000px){
+
+    #search-json-input-wrapper {
+
+        #label-wrapper {
+
+            #search-label {
+                font-size: calc(1.25vw + 0.5vh);
+            }
+        }
+
+        #input-wrapper {
+
+            .input-item {
+
+                #label {
+                    font-size: calc(1.25vw + 0.5vh);
+                }
+
+                #value {
+
+                    .input-data-type {
+
+                        input {
+                            font-size: calc(1.25vw + 0.5vh);
+                        }
+                    }
+
+                    .date {
+
+                        #selected-date {
+                            font-size: calc(1.25vw + 0.5vh);
+                        }
+
+                        #dropdown {
+                            width: calc(50vw);
+                            left: 0%;
+                        }
+                    }
+                }
+            }
+        }
+
+        #search-button-wrapper {
+
+            button {
+                font-size: calc(1.25vw + 0.5vh);
+            }
+        }
     }
 }

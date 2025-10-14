@@ -104,7 +104,8 @@ class Search extends Component {
             key: key_index,
             type: type, 
             value: value,
-            conjunc: conjunc
+            conjunc: conjunc,
+            logical: "and"
         };
 
         this.search_requirements[key_index] = search_req;

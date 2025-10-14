@@ -72,7 +72,8 @@ class Text_Input extends Component {
             
             <div id="input-wrapper">
 
-                <textarea id="input" ref={this.inputRef}
+                <textarea id="input" 
+                    ref={this.inputRef}
                     contentEditable={true}
                     onKeyDown={this.Shift_On}
                     onKeyPress={(e) => { this.Send_Message(this.state.socket, e); }}

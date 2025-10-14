@@ -68,7 +68,7 @@ class Profile_Thumbnail extends Component {
 
             <div id="connection-options-wrapper">
 
-                {this.props.generate_options ? this.props.generate_options(connection_profile, current_user_account_data, this.props.array_index) : null}
+                {this.props.generate_options ? this.props.generate_options(connection_profile, this.props.array_index) : null}
 
             </div>
 

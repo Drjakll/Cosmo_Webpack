@@ -53,7 +53,7 @@ class Json extends Component {
             
                 <div id="selected-date">
                     
-                    {this.state.date_value}
+                    {this.state.date_value || "Select a date"}
                     
                 </div>
                 

@@ -5,6 +5,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    z-index: 99999;
 
     #value-wrapper {
         width: 75%;
@@ -29,7 +30,9 @@
             justify-content: center;
             align-items: center;
             text-align: center;
-            font-size: 0.75vw;
+            font-size: 16px;
+            font-weight: 700;
+            color: rgba(75,75,75,1);
         }
 
         #calendar-wrapper {
@@ -47,6 +50,19 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        font-size: 0.5vw;
+        font-size: 12px;
+    }
+}
+
+@media only screen and (max-width: 1000px) {
+
+    #date-type {
+
+        #value-wrapper {
+
+            #value {
+                font-size: 12px;
+            }
+        }
     }
 }

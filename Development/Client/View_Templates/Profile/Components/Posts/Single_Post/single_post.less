@@ -10,7 +10,7 @@
         justify-content: center;
         align-items: center;
         font-weight: bold;
-        font-size: 1vw;
+        font-size: calc(0.5vw + 0.5vh);
         color: rgba(0,0,0,0.75);
     }
 
@@ -37,5 +37,26 @@
         justify-content: center;
         align-items: center;
         padding: 15px 0px 15px 0px;
+    }
+}
+
+@media only screen and (max-width: 1000px){
+    
+    #single-post {
+
+        #title {
+            font-size: calc(1.25vw + 1vh);
+        }
+    }
+
+    #body {
+
+        pre {
+            font-size: calc(1vw + 0.5vh);
+        }
+    }
+
+    #time-created {
+        font-size: calc(1.25vw + 0.5vh);
     }
 }

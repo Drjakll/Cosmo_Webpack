@@ -61,7 +61,7 @@ class Json_Type extends Component {
             
                 <div id="selected-date">
                     
-                    {this.state.json_obj[key_label]}
+                    {this.state.json_obj[key_label] || "Select a date"}
                     
                 </div>
                 

@@ -1,53 +1,65 @@
-#alert-buttons {
+#alert-buttons-wrapper {
     width: 100%;
     height: 100%;
     position: relative;
 
-    &:hover {
+    #alert-buttons {
+        width: 100%;
+        height: 100%;
+        position: relative;
+
+        &:hover {
+
+            #alert-buttons-label {
+
+                label {
+                    cursor: pointer;
+                    background-color: rgba(25,50, 75, 1);
+                }
+            }
+
+            #new-alerts-wrapper {
+                display: block;
+                z-index: 10;
+                box-shadow: 0px 0px 5px rgba(0,0,0,0.5);
+            }
+        }
 
         #alert-buttons-label {
-
+            width: 100%;
+            height: 100%;
+            
             label {
-                cursor: pointer;
-                background-color: rgba(25,50, 75, 1);
+                height: 100%;
+                width: 100%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                background-color: rgba(55,75, 150, 1);
+                color: whitesmoke;
+                transition: 1s;
             }
         }
 
         #new-alerts-wrapper {
-            display: block;
-            z-index: 10;
-            box-shadow: 0px 0px 5px rgba(0,0,0,0.5);
-        }
-    }
-
-    #alert-buttons-label {
-        width: 100%;
-        height: 100%;
-        
-        label {
-            height: 100%;
             width: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background-color: rgba(55,75, 150, 1);
-            color: whitesmoke;
-            transition: 1s;
-        }
-    }
+            display: none;
+            position: absolute;
+            top: 100%;
+            background-color: whitesmoke;
 
-    #new-alerts-wrapper {
-        width: 100%;
-        display: none;
-        position: absolute;
-        top: 100%;
+            .alert {
+                width: 100%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                border-bottom: rgba(0,0,0,0.5) solid 1px;
+                transition: 1s;
 
-        .alert {
-            width: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            border-bottom: rgba(0,0,0,0.5) solid 1px;
+                &:hover {
+                    background-color: rgba(0,0,0,0.1);
+                }
+            }
         }
     }
 }

@@ -26,10 +26,6 @@ let Account_Data_Template = function(initial){
         marital_status: "",
         current_location: "[]",
         relationships: "[]",
-        connection_list: "{}",
-        alerts: "{}",
-        online_ws_id: "{}",
-        connection_requests: "{}",
         block_list: "{}",
         last_posted: null,
         created_on: null
@@ -65,6 +61,13 @@ let Account_Info_Data_Template = function(editor = null){
                     editor: null,
                     options: []
                 },
+                date_of_birth: { 
+                    component: Date_Type,
+                    label: "Birth Date", 
+                    value: "", 
+                    editor: null, 
+                    options: [] 
+                },
                 gender: {
                     component: Choice_Type,
                     label: "Gender",
@@ -78,13 +81,6 @@ let Account_Info_Data_Template = function(editor = null){
                     value: "",
                     editor: null,
                     options: ["Single", "Dating", "Engaged", "Married", "Divorce", "Widow", "Unspecified"]
-                },
-                date_of_birth: { 
-                    component: Date_Type,
-                    label: "Birth Date", 
-                    value: "", 
-                    editor: null, 
-                    options: [] 
                 },
                 location_of_birth: {
                     component: Json_Type,

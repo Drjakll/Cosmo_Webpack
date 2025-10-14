@@ -45,11 +45,18 @@ const search_streams = '/search_streams';
 const upload_photos = '/upload_pictures';
 
 //Connections
-const get_all_connections = '/get_all_connections';
+const get_connection_list = '/get_connection_list';
 const find_connections = '/find_connections';
-const connection_request = '/connection_request';
-const accept_connection_req = '/accept_connection_req';
-const remove_connection = '/remove_connection';
+const send_connection_request = '/send_connection_request';
+const accept_connection_request = '/accept_connection_request';
+const remove_connection_request = '/remove_connection_request';
+const get_connection_requests_from = '/get_connection_requests_from';
+const get_connection_requests_to = '/get_connection_requests_to';
+
+//Alerts
+const update_alert_data = '/update_alert_data';
+const get_connection_alerts = '/get_connection_alerts';
+const delete_alert = '/delete_alert';
 
 const aws_s3_url = 'https://cosmo-social-app.s3.us-west-1.amazonaws.com/';
 
@@ -101,11 +108,18 @@ export default {
     upload_photos: upload_photos,
 
     //Connections
-    get_all_connections: get_all_connections,
+    get_connection_list: get_connection_list,
     find_connections: find_connections,
-    connection_request: connection_request,
-    accept_connection_req: accept_connection_req,
-    remove_connection: remove_connection,
+    send_connection_request: send_connection_request,
+    accept_connection_request: accept_connection_request,
+    remove_connection_request: remove_connection_request,
+    get_connection_requests_from: get_connection_requests_from,
+    get_connection_requests_to: get_connection_requests_to,
+
+    //Alerts
+    update_alert_data: update_alert_data,
+    get_connection_alerts: get_connection_alerts,
+    delete_alert: delete_alert,
 
     //Amazon Web Service Storage 3 URL
     aws_s3_url: aws_s3_url

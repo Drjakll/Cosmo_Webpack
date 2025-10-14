@@ -21,7 +21,8 @@ class Screen extends Component {
         
         this.state = {
             focus_screen: this.props.screen_type,
-            account_data: this.props.account_data
+            account_data: this.props.account_data,
+            connection_list: this.props.connection_list
         };
 
     }
@@ -34,7 +35,8 @@ class Screen extends Component {
         
         this.setState({
             focus_screen: this.props.screen_type,
-            account_data: this.props.account_data
+            account_data: this.props.account_data,
+            connection_list: this.props.connection_list
         });
         
     }
@@ -46,7 +48,7 @@ class Screen extends Component {
         return (
                 <div id="screen" tabIndex="0">
                     
-                    <Screen_Type account_data={this.state.account_data} />
+                    <Screen_Type account_data={this.state.account_data} connection_list={this.state.connection_list}/>
                     
                 </div>
             );

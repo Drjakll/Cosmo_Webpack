@@ -61,7 +61,6 @@
                 display: none;
                 background-color: rgba(225,225,225,1);
                 border: rgba(0,0,0,0.5) solid 0.01vw;
-                font-size: 0.75vw;
 
                 #year-selections {
                     width: 100%;
@@ -81,6 +80,7 @@
                         display: flex;
                         justify-content: center;
                         align-items: center;
+                        font-size: calc(0.375vw + 0.375vh);
                         
                         &:hover {
                             cursor: pointer;
@@ -146,6 +146,48 @@
                         &:hover {
                             cursor: pointer;
                             background-color: rgba(0,0,0,0.1);
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media only screen and (max-width: 1000px){
+    
+    #month-year-wrapper {
+
+        #month-year-display {
+
+            #year {
+                #selected-year {
+                    font-size: calc(1.25vw + 0.5vh);
+                }
+
+                #year-selections-wrapper {
+
+                    #year-selections {
+
+                        .year-item {
+                            font-size: calc(1.25vw + 0.5vh);
+                        }
+                    }
+                }
+            }
+
+            #month {
+
+                #selected-month {
+                    font-size: calc(1.25vw + 0.5vh);
+                }
+
+                #month-selections-wrapper {
+
+                    #month-selections {
+
+                        .month-item {
+                            font-size: calc(1.25vw + 0.5vh);
                         }
                     }
                 }

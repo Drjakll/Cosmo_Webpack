@@ -24,6 +24,7 @@ class Streaming extends Component {
         this.participants = {};
         this.the_host = null;
         this.my_media_source = null;
+        this.socket = this.props.stream_socket;
         
         this.state = {
             account_data: this.props.account_data,
@@ -86,7 +87,7 @@ class Streaming extends Component {
                 let stream_id = this.Generate_Stream_ID(this.socket.id);
 
                 this.my_room_tag = this.Create_Room_Tag(this.socket.id, stream_id);
-
+                
 
                 //If it's a host, then get their webcam permission
                 this.my_media_source = await this.Capture_Video();
@@ -120,8 +121,6 @@ class Streaming extends Component {
     }
     
     Setup_IO = () => {
-        
-        this.socket = this.props.stream_socket;
         
         this.Init_Streaming();
         
@@ -274,7 +273,6 @@ class Streaming extends Component {
             streamer_small_screens[tag.id] = event.streams[0];
 
             if (tag.is_host) {
-                console.log("I receive a candidate!");
                 streamer_big_screen = event.streams[0];
                 big_screen_id = tag.id;
             }
@@ -453,14 +451,17 @@ class Streaming extends Component {
                     })}
 
                 </div>
+                
+                <div id="chatbox-wrapper">
 
-                <Chat_Box socket={this.socket} 
-                            my_room_tag={this.state.my_room_tag} 
-                            account_data={this.state.account_data}
-                            set_account_view={this.Set_Account_View}
-                            the_host={this.state.the_host}
-                />
-                    
+                    <Chat_Box socket={this.socket} 
+                                my_room_tag={this.state.my_room_tag} 
+                                account_data={this.state.account_data}
+                                set_account_view={this.Set_Account_View}
+                                the_host={this.state.the_host}
+                    />
+
+                </div>  
             </div>
         );
     }

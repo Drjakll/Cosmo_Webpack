@@ -1,6 +1,6 @@
 #connections-template-wrapper {
     width: 100%;
-    height: 30vh;
+    height: 300px;
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
@@ -8,7 +8,7 @@
 
     #connections-label {
         width: 100%;
-        height: 10%;
+        height: 20%;
         display: flex;
         justify-content: space-evenly;
         align-items: center;
@@ -28,6 +28,8 @@
             justify-content: center;
             align-items: center;
             font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+            font-weight: 700;
+            font-size: 18px;
         }
     }
 
@@ -37,10 +39,21 @@
         display: flex;
         overflow-x: auto;
         overflow-y: hidden;
+        scrollbar-width: none;
 
         .profile-thumbnail-wrapper {
             width: 200px;
             height: 100%;
+        }
+    }
+}
+
+@media only screen and (max-width: 1000px){
+    
+    #connections-template-wrapper {
+
+        #connections-label {
+            font-size: calc(1.25vw 0.6vh);
         }
     }
 }

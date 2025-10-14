@@ -16,7 +16,8 @@ class Post_Editor extends Component {
             editor_opened: false,
             selected_post: null,
             account_info: props.account_info,
-            disable_create_new_post: false
+            disable_create_new_post: false,
+            connection_list: props.connection_list
         };
     }
 
@@ -38,7 +39,7 @@ class Post_Editor extends Component {
         this.Disable_Create_New_Post();
     }
 
-    Disable_Create_New_Post = () => {
+    Disable_Create_New_Post = async () => {
 
         let { account_info } = this.state;
 
@@ -66,7 +67,7 @@ class Post_Editor extends Component {
 
             if (year === l_year && month === l_month && date === l_day) {
 
-                this.setState({ disable_create_new_post: true });
+                await this.setState({ disable_create_new_post: true });
             }
 
         }
@@ -109,7 +110,7 @@ class Post_Editor extends Component {
 
             await this.setState({ account_info });
 
-            this.Disable_Create_New_Post();
+            await this.Disable_Create_New_Post();
         }
 
         let Exit =  async (e) => {
@@ -123,7 +124,7 @@ class Post_Editor extends Component {
 
             <div id="the-editor-exit-button" onClick={Exit}></div>
 
-            <The_Editor Get_Posts={Get_Posts_On_This_Month} account_info={this.state.account_info} selected_post={this.state.selected_post} />
+            <The_Editor Get_Posts={Get_Posts_On_This_Month} account_info={this.state.account_info} selected_post={this.state.selected_post} connection_list={this.state.connection_list} />
 
         </div>;
     }
@@ -145,11 +146,15 @@ class Post_Editor extends Component {
                     this.setState({ editor_opened: true, selected_post: null });
                 }}>
 
-                    New Post
+                    <div id="new-post-icon" className="post-icon" style={{backgroundImage: `url(./static/add_post_icon.png)`}}></div>
+
+                    <label>New Post</label>
 
                 </div>
 
                 <div className="post-button" id="edit-post-button" onClick={(e) => { this.setState({ editor_opened: true, selected_post: this.existing_post }); }}>
+
+                    <div id="edit-post-icon" className="post-icon" style={{backgroundImage: `url(./static/edit_post_icon.png)`}}></div>
 
                     Edit Post
 

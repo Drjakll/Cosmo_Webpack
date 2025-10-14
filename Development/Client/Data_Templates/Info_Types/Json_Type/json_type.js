@@ -136,7 +136,7 @@ class Json_Type extends Component {
 
                             <div id="detail-index">
 
-                                
+                                {index_0 + 1}
 
                             </div>
 

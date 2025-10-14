@@ -21,7 +21,7 @@ class Logo extends Component {
         return <div id="logo" 
                     style={{
                         fontSize: `calc(${this.props.sizeScale} * (${this.state.fontSize}vh + ${this.state.fontSize}vw)`, 
-                        width: `calc(${this.state.width}vw * ${this.props.sizeScale})`,
+                        width: `calc(${this.state.width}vw * ${this.props.sizeScale / this.props.ratio})`,
                         height: `calc(${this.state.height}vh * ${this.props.sizeScale})`,
                         borderRadius: `${this.state.borderRadius * this.props.sizeScale}px`,
                         paddingLeft: `calc((${this.state.padding.h}vw) * ${this.props.sizeScale})`,

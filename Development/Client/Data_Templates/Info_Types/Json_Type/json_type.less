@@ -173,22 +173,22 @@ Click nbfs://nbhost/SystemFileSystem/Templates/ClientSide/style.less to edit thi
         z-index: 99;
 
         #show-button {
-            min-width: 5vw;
+            min-width: 100px;
             height: 60%;
             border-radius: 25px;
-            background-color: rgba(30,30,30,1);
-            box-shadow: rgba(0,0,0,0.25) 0px 0px 10px;
+            background-color: rgba(50,50,50,1);
+            box-shadow: rgba(0,0,0,0.5) 5px 5px 10px;
             display: flex;
             justify-content: center;
             align-items: center;
             color: rgba(230,230,230,1);
             transition: 1s;
-            font-size: 0.75vw;
+            font-size: 13px;
             z-index: 99;
 
             &:hover {
                 cursor: pointer;
-                box-shadow: rgba(0,0,0,0.0) 0px 0px 0px;
+                box-shadow: rgba(0,0,0,0.0) 5px 5px 0px;
             }
         }
     }
@@ -196,4 +196,60 @@ Click nbfs://nbhost/SystemFileSystem/Templates/ClientSide/style.less to edit thi
 
 .popped {
     z-index: 99999999 !important;
+}
+
+@media only screen and (max-width: 1000px) {
+
+    #json-type {
+
+
+        #json-type-popup {
+            
+            #json-info-details {
+                width: 80%;
+
+                #json-data-label {
+                    font-size: calc(1.25vw + 0.6vh);
+                }
+
+                #details {
+
+                    .detail-wrapper {
+                        margin: 2.5vh 0vw 0vh 0vw;
+
+                        #detail-segments-wrapper {
+                            margin: 5px 0px 0px 0px;
+
+                            .detail-segment {
+                                padding: 5px 0px 5px 0px;
+
+                                #detail-segment-value {
+                                    font-size: calc(1vw + 0.5vh);
+                                }
+
+                                #detail-segment-label {
+                                    font-size: calc(1.25vw + 0.6vh);
+                                }
+                            }
+                        }
+
+                        #delete-button-wrapper {
+
+                            #delete-button {
+                                font-size: calc(1vw + 0.5vh);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        #value-wrapper {
+
+            #show-button {
+                font-size: calc(1vw + 0.6vh);
+                min-width: 10vw;
+            }
+        }
+    }
 }

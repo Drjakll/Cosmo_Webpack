@@ -1,6 +1,6 @@
 let request = function() {
     
-    this.req = (req, res) => { 
+    this.req = (req, res, next) => { 
         
         let post_details = req.body;
         
@@ -17,15 +17,27 @@ let request = function() {
         this.sql.query(query, (err, result)=>{
             
             if(err){
+
                 console.log(err.sqlMessage);
                 res.json({message: "Error editing post"});
+                res.end();
+
             } else if (result.affectedRows === 0){
+
                 res.json({message: "No post found"});
+                res.end();
+
             } else {
-                res.json({message: "Post updated"});
+
+                let {title, body, id} = post_details;
+                
+                req.body.type = "post";
+                req.body.data = {title, body};
+                req.body.type_id = id;
+                req.body.alert_id = null;
+
+                next();
             }
-            
-            res.end();
             
         });
 

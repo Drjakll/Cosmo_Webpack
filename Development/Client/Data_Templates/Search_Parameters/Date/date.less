@@ -39,7 +39,7 @@
             justify-content: center;
             align-items: center;
             text-align: center;
-            font-size: 0.75vw;
+            font-size: calc(0.375vw + 0.375vh);
         }
 
         #calendar-wrapper {
@@ -47,7 +47,7 @@
             height: 20vh;
             position: absolute;
             top: 100%;
-            left: 0%;
+            left: 25%;
             display: none;
         }
     }
@@ -58,5 +58,42 @@
         display: flex;
         justify-content: center;
         align-items: center;
+
+        button {
+            border: rgba(0,0,0,0.5) solid 0.5px;
+            border-radius: 50px;
+        }
     }    
+}
+
+
+@media only screen and (max-width: 1000px){
+    #search-date-input-wrapper {
+
+        #label-wrapper {
+
+            #search-label {
+                font-size: calc(1.25vw + 0.5vh);
+            }
+        }
+
+        #value-wrapper {
+
+            #value {
+                font-size: calc(1.25vw + 0.6vh);
+            }
+
+            #calendar-wrapper {
+
+            }
+        }
+
+
+        #search-option-button-wrapper {
+
+            button {
+                font-size: calc(1.25vw + 0.5vh);
+            }
+        }
+    }   
 }

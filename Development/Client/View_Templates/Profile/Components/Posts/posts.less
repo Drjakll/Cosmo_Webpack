@@ -32,9 +32,10 @@ Click nbfs://nbhost/SystemFileSystem/Templates/ClientSide/style.less to edit thi
         display: flex;
         justify-content: center;
         align-items: center;
-        color: rgba(0,0,0,0.85);
-        font-size: 0.75vw;
-        background-color: rgba(0,0,0,0.1);
+        color: rgba(75,75,75,1);
+        font-size: 18px;
+        font-weight: bold;
+        //background-color: rgba(0,0,0,0.1);
         padding: 10px 0px 10px 0px;
     }
 
@@ -103,5 +104,15 @@ Click nbfs://nbhost/SystemFileSystem/Templates/ClientSide/style.less to edit thi
 
     #bottom {
         width: 100%;
+    }
+}
+
+@media only screen and (max-width: 1000px){
+    
+    #posts {
+
+        #post-label {
+            font-size: calc(1.25vw + 0.5vh);
+        }
     }
 }

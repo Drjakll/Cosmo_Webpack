@@ -15,7 +15,8 @@ class Profile extends Component {
         Profile.contextType = window.Context;
 
         this.state = {
-            account_data: props.account_data
+            account_data: props.account_data,
+            connection_list: props.connection_list
         }
     }
     
@@ -23,7 +24,18 @@ class Profile extends Component {
         
         this.profile_data = await window.LoginAttempt();
         
-        UpdateAllComponentProps({account_data: this.profile_data});
+        this.setState({account_data: this.profile_data});
+    }
+
+    componentDidUpdate(prevProps, prevState){
+
+        if(this.props === prevProps){
+            return;
+        }
+
+        let {account_data, connection_list} = this.props;
+
+        this.setState({account_data, connection_list});
     }
     
     Generate_Profile_Photo_Editor = ({ account_data, refresh_account_data }) => {
@@ -41,6 +53,7 @@ class Profile extends Component {
 
                 <Profile_Template
                     account_data={this.state.account_data}
+                    connection_list={this.state.connection_list}
                     get_account_data={this.GetAccountData}
                     add_editors={{
                         "Profile Info": {

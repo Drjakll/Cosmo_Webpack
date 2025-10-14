@@ -9,7 +9,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/ClientSide/style.less to edit thi
 
 #profile-photo-editor {
     width: 100%;
-    height: 3vh;
+    height: 50px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -24,10 +24,12 @@ Click nbfs://nbhost/SystemFileSystem/Templates/ClientSide/style.less to edit thi
         justify-content: center;
         align-items: center;
         color: rgba(50,50,50,0.85);
-        background-color: rgba(255,255,255,0.5);
+        background-color: rgba(255,255,255,0.0);
         transition: 1s;
         border-radius: 50px;
-        border: rgba(0,0,0,0.25) solid 0.5px;
+        font-size: 16px;
+        font-weight: bold;
+        //border: rgba(0,0,0,0.25) solid 0.5px;
         
         &:hover {
             cursor: pointer;
@@ -39,4 +41,14 @@ Click nbfs://nbhost/SystemFileSystem/Templates/ClientSide/style.less to edit thi
 
 .enlarged-profile-photo-editor {
     z-index: 9999999;
+}
+
+@media only screen and (max-width: 1000px){
+    
+    #profile-photo-editor {
+
+        #editor-button {
+            font-size: 16px;
+        }
+    }
 }

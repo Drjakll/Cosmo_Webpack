@@ -45,8 +45,10 @@ let Wrapper = function (){
         }
         
         socket.on("newly_logged_in", events.newly_logged_in.event);
-        socket.on("refresh_account", events.refresh_account.event);
+        socket.on("refresh_alerts", events.refresh_alerts.event);
         socket.on("logging_off", events.logging_off.event);
+        socket.on("refresh_account", events.refresh_account.event);
+        socket.on("refresh_group_alerts", events.refresh_group_alerts.event);
     };
 };
 

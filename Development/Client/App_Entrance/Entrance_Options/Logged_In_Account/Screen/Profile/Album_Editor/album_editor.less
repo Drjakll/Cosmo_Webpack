@@ -15,21 +15,52 @@ Click nbfs://nbhost/SystemFileSystem/Templates/ClientSide/style.less to edit thi
     align-items: center;
 
     #add-button {
-        padding: calc(0.3vh + 0.3vw);
+        padding: 0px 20px 0px 20px;
         border-radius: 50px;
-        border: rgba(0,0,0,0.5) solid 0.5px;
-        background-color: darkorange;
-        box-shadow: rgba(0,0,0,0.5) 0px 0px 5px;
+        //border: rgba(0,0,0,0.5) solid 0.5px;
+        //background-color: darkorange;
+        //box-shadow: rgba(0,0,0,0.5) 0px 0px 5px;
         transition: 1s;
-        color: rgba(255,255,255,0.85);
-        font-size: calc(0.45vh + 0.45vw);
+        color: rgba(50,50,50,0.85);
+        font-size: 16px;
         font-family: sans-serif;
-        font-weight: bold;
+        font-weight: 700;
+        display: flex;
+        justify-content: center;
+        align-items: center;
 
         &:hover {
             cursor: pointer;
-            background-color: rgba(0,0,0,0.5);
+            background-color: rgba(68, 122, 68, 0.918);
             color: white;
         }
+
+        label {
+            user-select: none;
+            
+            &:hover {
+                cursor: pointer;
+            }
+        }
+
+        #new-album-icon {
+            height: 40px;
+            width: 40px;
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+    }
+}
+
+@media only screen and (max-width: 1000px) {
+
+    #album-editor {
+
+        #add-button {
+            padding: 5%;
+            font-size: calc(1.25vw + 0.5vh);
+        }
+
     }
 }
