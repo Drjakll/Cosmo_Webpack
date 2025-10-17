@@ -52,7 +52,7 @@ class Connections_Temnplate extends Component {
                 </div> : 
                 <></>}
 
-                <label>Connections</label>
+                <label><u>Connections ({Object.keys(this.state.connection_list || {}).length})</u></label>
 
             </div>
             

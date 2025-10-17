@@ -8,7 +8,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/ClientSide/style.less to edit thi
 */
 
 #message {
-    width: 45%;
+    width: 60%;
     position: relative;
     display: block;
     margin-bottom: 35px;
@@ -16,7 +16,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/ClientSide/style.less to edit thi
 
     #msg-info {
         width: 100%;
-        height: 2.5vh;
+        height: 30px;
         display: flex;
         justify-content: space-evenly;
         align-items: center;
@@ -52,7 +52,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/ClientSide/style.less to edit thi
                 display: flex;
                 justify-content: center;
                 align-items: center;
-                font-size: calc(0.2525vw + 0.2525vh);
+                font-size: 12px; //calc(0.2525vw + 0.2525vh);
             }
 
             #timestamp {
@@ -61,7 +61,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/ClientSide/style.less to edit thi
                 display: flex;
                 justify-content: center;
                 align-items: center;
-                font-size: calc(0.2525vw + 0.2525vh);
+                font-size: 12px; //calc(0.2525vw + 0.2525vh);
             }
 
         }
@@ -71,25 +71,57 @@ Click nbfs://nbhost/SystemFileSystem/Templates/ClientSide/style.less to edit thi
         }
     }
 
-    .self {
-        flex-direction: row-reverse;
-        text-align: end;
+    .self-wrapper {
+        justify-content: flex-end;
     }
 
-    #msg {
-        width: calc(100% - 10px);
-        padding: 5px;
-        white-space: pre-wrap;
-        word-wrap: break-word;
-        margin: 0px;
-        background-color: rgba(0,0,0,0.75);
-        box-shadow: 2.5px 2.5px 5px rgba(0,0,0,0.25);
-        color: antiquewhite;
+    .others-wrapper {
+        justify-content: flex-start;
+    }
+
+    #message-wrapper {
+        width: 100%;
+        display: flex;
+
+        .self {
+            border-top-left-radius: 25px;
+            border-bottom-left-radius: 25px;
+
+            #name-time {
+                border-top-left-radius: 25px;
+                border-bottom-left-radius: 25px;
+            }
+        }
+
+        .others {
+            border-top-right-radius: 25px;
+            border-bottom-right-radius: 25px;
+
+            #name-time {
+                border-top-right-radius: 25px;
+                border-bottom-right-radius: 25px;
+            }
+        }
+
+        #msg {
+            width: fit-content;
+            max-width: calc(100% - 20px);
+            font-size: 15px;
+            padding: 10px;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            margin: 0px;
+            background-color: rgba(0,0,0,0.75);
+            box-shadow: 2.5px 2.5px 5px rgba(0,0,0,0.25);
+            color: antiquewhite;
+            position: relative;
+        }
     }
 }
 
 .self-parent {
-    right: -55%;
+    right: -40%;
 }
 
 @media only screen and (max-width: 1000px){

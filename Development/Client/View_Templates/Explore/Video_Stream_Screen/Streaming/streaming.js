@@ -24,7 +24,7 @@ class Streaming extends Component {
         this.participants = {};
         this.the_host = null;
         this.my_media_source = null;
-        this.socket = this.props.stream_socket;
+        this.socket = io('/video_streams'); //this.props.stream_socket;
         
         this.state = {
             account_data: this.props.account_data,
@@ -34,13 +34,13 @@ class Streaming extends Component {
             streamer_small_screens: {}, //Streamers at the smaller screen
             streamer_big_screen: null, //Streamer at the bigger screen
             my_room_tag: null,
-            view_account_data: null,
+            view_account_data: null, //User account data for popup profile view
             the_host: null,
             big_screen_id: null
         };
     }
-    
-    componentDidMount() {
+
+    async componentDidMount() {
 
         this.Setup_IO();
 
@@ -48,8 +48,9 @@ class Streaming extends Component {
     
     componentWillUnmount() {
 
-        this.socket.emit('leave_stream', this.my_room_tag);
         this.Shut_Off_Camera();
+        this.socket.emit('leave_stream', this.my_room_tag);
+
     }
     
     componentDidUpdate(prevProps, prevState){
@@ -78,46 +79,49 @@ class Streaming extends Component {
 
     Init_Streaming = async ()=>{
 
-        if(this.socket?.id){
+        this.socket?.on('connect', async ()=>{
 
-            let { is_host } = this.state;
-            
-            if (is_host) {
+            if(this.socket?.id){
 
-                let stream_id = this.Generate_Stream_ID(this.socket.id);
-
-                this.my_room_tag = this.Create_Room_Tag(this.socket.id, stream_id);
+                let { is_host } = this.state;
                 
+                if (is_host) {
 
-                //If it's a host, then get their webcam permission
-                this.my_media_source = await this.Capture_Video();
+                    let stream_id = this.Generate_Stream_ID(this.socket.id);
 
-                this.setState({
-                    streamer_big_screen: this.my_media_source,
-                    the_host: this.my_room_tag,
-                    my_room_tag: this.my_room_tag,
-                    socket: this.socket
-                });
-                
+                    this.my_room_tag = this.Create_Room_Tag(this.socket.id, stream_id);
+                    
 
-                this.socket.emit('create_stream', this.my_room_tag);
-                
-            } else {
+                    //If it's a host, then get their webcam permission
+                    this.my_media_source = await this.Capture_Video();
 
-                this.my_room_tag = this.Create_Room_Tag(this.socket.id, this.state.stream_id);
+                    this.setState({
+                        streamer_big_screen: this.my_media_source,
+                        the_host: this.my_room_tag,
+                        my_room_tag: this.my_room_tag,
+                        socket: this.socket
+                    });
+                    
 
-                this.setState({
-                    my_room_tag: this.my_room_tag,
-                    socket: this.socket
-                });
-                
-                //this.my_media_source = await this.Capture_Video();
-                
-                this.socket.emit('join_stream', {room_tag: this.my_room_tag, account_data: this.state.account_data});
+                    this.socket.emit('create_stream', this.my_room_tag);
+                    
+                } else {
+
+                    this.my_room_tag = this.Create_Room_Tag(this.socket.id, this.state.stream_id);
+
+                    this.setState({
+                        my_room_tag: this.my_room_tag,
+                        socket: this.socket
+                    });
+                    
+                    //this.my_media_source = await this.Capture_Video();
+                    
+                    this.socket.emit('join_stream', {room_tag: this.my_room_tag, account_data: this.state.account_data});
+                    
+                }
                 
             }
-            
-        }
+        });
     }
     
     Setup_IO = () => {
@@ -170,6 +174,7 @@ class Streaming extends Component {
             let { peer } = this.participants[from.id];
 
             await peer?.setRemoteDescription(new RTCSessionDescription(answer));
+
         });
 
         this.socket.on('receive_candidate', async ({ from, candidate }) => {
@@ -459,6 +464,7 @@ class Streaming extends Component {
                                 account_data={this.state.account_data}
                                 set_account_view={this.Set_Account_View}
                                 the_host={this.state.the_host}
+                                change_screen={this.props.root_change_screen}
                     />
 
                 </div>  

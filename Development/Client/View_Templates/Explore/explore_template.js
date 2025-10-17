@@ -20,14 +20,14 @@ class Explore_Template extends Component {
             current_screen: "Stream_List_Components",
             is_host: false,
             stream_id: null,
-            socket: null,
-            active_streams: {}
+            socket: this.Init_Socket(),
+            active_streams: {},
+            search_criteria: {}
         };
+
     }
     
     componentDidMount(){
-        
-        this.Init_Socket();
 
     }
     
@@ -46,13 +46,14 @@ class Explore_Template extends Component {
         
     }
 
+    //Intended to be called before the component is mounted
     Init_Socket = () => {
         
         this.socket = io('/video_streams');
-        
-        this.socket?.on('connect', ()=>{
-            
-            if(!this.socket.id){
+
+        this.socket?.on('connect', () => {
+
+            if (!this.socket.id) {
                 return;
             }
             
@@ -70,17 +71,19 @@ class Explore_Template extends Component {
         
         this.socket?.on('update_stream_list', ({ streams })=>{
             
-            this.socket.emit("request_streams", {});
+            this.socket.emit("request_streams", this.state.search_criteria);
             
         });
 
-        this.setState({socket: this.socket});
+        return this.socket;
         
     }
     
     Gather_Stream_List = (search_parameters) => {
         
         this.socket?.emit('request_streams', search_parameters);
+
+        this.setState({search_criteria: search_parameters});
         
     }
     

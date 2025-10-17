@@ -32,7 +32,7 @@ class Text_Input extends Component {
 
     Send_Message = (socket, e = null) => {
 
-        if ((e !== null && e.key !== 'Enter') || this.Shift === true) {
+        if ((e !== null && e.key !== 'Enter')) {
 
             return;
 

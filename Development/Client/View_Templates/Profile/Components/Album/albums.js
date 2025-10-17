@@ -140,7 +140,7 @@ class Albums extends Component {
 
                     <div id="albums-label">
 
-                        <label>Albums</label>
+                        <label><u>Albums</u></label>
 
                     </div>
                         

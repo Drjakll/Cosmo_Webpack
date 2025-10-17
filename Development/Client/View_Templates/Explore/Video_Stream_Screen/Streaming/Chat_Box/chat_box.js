@@ -88,18 +88,34 @@ class Chat_Box extends Component {
         return now.toLocaleTimeString();
 
     }
-    
-    Generate_Go_Live_Button = (my_tag) => {
+
+    End_Streaming = (my_tag)=>{
         
-        return my_tag?.is_host ? <></> : <div className="button-wrapper" id="go-live">
+        this.props.change_screen('Stream_List_Components', false, null);
+        
+    }
 
-                                            <div id="button" onClick={(e)=>{this.Request_To_Go_Live(my_tag);}}>
+    Generate_Button = (my_tag) => {
 
-                                                Go Live
+        return my_tag?.is_host ? <div className="button-wrapper" id="go-live">
 
-                                            </div>
+                                    <div id="button" onClick={(e)=>{this.End_Streaming(my_tag);}}>
 
-                                        </div>;
+                                        End Stream
+
+                                    </div>
+
+                                </div> 
+                                : 
+                                <div className="button-wrapper" id="go-live">
+
+                                    <div id="button" onClick={(e)=>{this.Request_To_Go_Live(my_tag);}}>
+
+                                        Go Live
+
+                                    </div>
+
+                                </div>;
     }
     
     Request_To_Go_Live = (my_tag) => {
@@ -129,7 +145,7 @@ class Chat_Box extends Component {
 
                     <div id="buttons-area">
 
-                        {this.Generate_Go_Live_Button(this.state.my_room_tag)}
+                        {this.Generate_Button(this.state.my_room_tag)}
 
                     </div>
 

@@ -47,19 +47,23 @@ class Message extends Component {
 
                 <div id="name-time" className={`${id === sender_id ? "name-self" : "name-others"}`}>
 
-                    <div id="name">{`${first_name} ${last_name}`}</div>
-
                     <div id="timestamp">{timestamp}</div>
+
+                    <div id="name">{`${first_name} ${last_name}`}</div>
 
                 </div>
 
             </div>
 
-            <pre id="msg" className={`${id === sender_id ? "self" : "others"}`}>
+            <div id="message-wrapper" className={`${id === sender_id ? "self-wrapper" : "others-wrapper"}`}>
 
-                {text}
+                <pre id="msg" className={`${id === sender_id ? "self" : "others"}`}>
 
-            </pre>
+                    {text}
+
+                </pre>
+                
+            </div>
             
         </div>;
     }

@@ -40,6 +40,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/ClientSide/style.less to edit thi
             align-items: center;
             transition: 0.0s;
             flex: 0 0 auto;
+            z-index: 0;
 
             .screen-wrapper {
                 width: 100%;
@@ -53,8 +54,10 @@ Click nbfs://nbhost/SystemFileSystem/Templates/ClientSide/style.less to edit thi
 
         .main {
             width: 40vw !important;
-            box-shadow: 0px 0px 10px rgba(0,0,0,0.5);
+            box-shadow: 0px 0px 0px rgba(0,0,0,0.5);
             z-index: 999;
+            border-left: rgba(0,0,0,0.5) solid 0.5px;
+            border-right: rgba(0,0,0,0.5) solid 0.5px;
 
             .screen-wrapper {
                 height: calc(100% - 4vh) !important;

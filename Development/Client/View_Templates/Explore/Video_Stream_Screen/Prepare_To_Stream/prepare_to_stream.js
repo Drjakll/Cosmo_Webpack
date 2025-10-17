@@ -17,7 +17,7 @@ class Prepare_To_Stream extends Component {
     
     Start_Streaming = ()=>{
         
-        this.props.change_screen("Streaming", true, null);
+        this.props.change_screen("Streaming", true);
     }
     
     render(){

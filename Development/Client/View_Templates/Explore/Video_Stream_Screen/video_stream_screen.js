@@ -49,6 +49,7 @@ class Video_Stream_Screen extends Component {
                     
                 <Com account_data={this.state.account_data}
                     change_screen={this.Change_Screen}
+                    root_change_screen={this.props.set_current_screen}
                     is_host={this.state.is_host}
                     stream_id={this.state.stream_id}
                     set_main_screen={this.props.set_current_screen}

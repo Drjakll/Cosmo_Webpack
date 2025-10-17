@@ -11,7 +11,8 @@ Click nbfs://nbhost/SystemFileSystem/Templates/ClientSide/style.less to edit thi
     width: 100%;
     height: 100%;
     display: block;
-    box-shadow: rgba(0,0,0,0.5) 0px 5px 10px;
+    box-shadow: rgba(0,0,0,0.0) 0px 5px 10px;
+    border-bottom: rgba(0,0,0,1) solid 0.5px;
 
     #stream-search-options-wrapper {
         width: 100%;
@@ -30,7 +31,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/ClientSide/style.less to edit thi
             #label {
                 width: 100%;
                 height: 40px;
-                background-color: rgb(81, 170, 176);
+                background-color: rgb(22, 112, 112);
                 color: whitesmoke;
                 display: flex;
                 justify-content: center;
@@ -52,7 +53,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/ClientSide/style.less to edit thi
                     display: flex;
                     justify-content: center;
                     align-items: center;
-                    background-color: teal;
+                    background-color: rgb(11, 56, 56);
                     color: whitesmoke;
                     transition: 1s;
                     font-size: calc(0.4vw + 0.4vh);
@@ -60,7 +61,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/ClientSide/style.less to edit thi
 
                     &:hover {
                         cursor: pointer;
-                        background-color: lightskyblue;
+                        background-color: darkslategray;
                     }
                 }
             }
@@ -99,23 +100,22 @@ Click nbfs://nbhost/SystemFileSystem/Templates/ClientSide/style.less to edit thi
         display: flex;
         justify-content: space-evenly;
         align-items: center;
-        background-color: rgb(50, 156, 155);
+        background-color: rgb(22, 112, 112);
         border-top: rgba(0,0,0,0.5) solid 1px;
-        border-bottom: rgba(0,0,0,0.5) solid 1px;
 
         #apply-search {
-            background-color: darkslategrey;
+            background-color: rgb(22,112,112);
             color: whitesmoke;
-            border: rgba(0,0,0,0.5) solid 1px;
+            border: rgba(0,0,0,0.5) solid 0px;
             padding: 5px;
             font-size: calc(0.4vh + 0.4vw);
             border-radius: 10px;
             transition: 1s;
-            box-shadow: rgba(0,0,0,0.5) 0px 0px 10px;
+            //box-shadow: rgba(0,0,0,0.5) 0px 0px 10px;
 
             &:hover {
                 cursor: pointer;
-                background-color: grey;
+                background-color: darkslategrey;
                 box-shadow: rgba(0,0,0,0.5) 0px 0px 0px;
             }
         }

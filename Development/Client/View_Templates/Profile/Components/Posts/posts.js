@@ -196,7 +196,7 @@ class Posts extends Component {
             <div id="posts" tabIndex="0">
                 
                 <div id="post-label">
-                    Posts
+                    <u>Posts</u>
                 </div>
 
                 <div id="top">
