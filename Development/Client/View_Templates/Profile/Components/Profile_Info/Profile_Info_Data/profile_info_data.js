@@ -102,7 +102,7 @@ class Profile_Info_Data extends Component {
                 <div id="profile-data-label-wrapper">
 
                     <label>
-                        <u>Personal Information </u>
+                        <u>About Me </u>
                     </label>
 
                 </div>
