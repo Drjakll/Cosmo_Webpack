@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import Explore from './Explore/explore.js';
 import News from './News/news.js';
 import Profile from './Profile/profile.js';
+import Messaging from './Messaging/messaging.js';
 import Empty from './Empty/empty.js';
 import './screen.less';
 
@@ -12,6 +13,7 @@ class Screen extends Component {
         "Explore": Explore,
         "News": News,
         "Profile": Profile,
+        "Messaging": Messaging,
         "Empty": Empty
     };
     

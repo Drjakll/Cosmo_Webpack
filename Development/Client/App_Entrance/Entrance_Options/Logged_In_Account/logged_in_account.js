@@ -11,6 +11,7 @@ class Logged_In_Account extends Component {
         "Explore",
         "Profile",
         "News",
+        "Messaging",
     ];
 
     //Fixed index of screens
@@ -18,6 +19,7 @@ class Logged_In_Account extends Component {
         { screen: "Explore", is_main: false, id: "Explore" },
         { screen: "Profile", is_main: false, id: "Profile" },
         { screen: "News", is_main: false, id: "News" },
+        { screen: "Messaging", is_main: false, id: "Messaging"},
     ]
     
     constructor(props){
@@ -33,6 +35,7 @@ class Logged_In_Account extends Component {
                 { screen: "Explore", is_main: false, id: "Explore" },
                 { screen: "Profile", is_main: true, id: "Profile" },
                 { screen: "News", is_main: false, id: "News" },
+                { screen: "Messaging", is_main: false, id: "Messaging" },
             ],
             account_data: this.props.account_data,
             connection_list: {}
@@ -62,6 +65,7 @@ class Logged_In_Account extends Component {
 
         });
 
+
         this.RotateScreen(1);
         this.Get_Connection_List(this.state.account_data);
 
@@ -84,9 +88,11 @@ class Logged_In_Account extends Component {
 
         let { Columns } = this.state;
 
+        let length = this.Button_Data.length;
+
         for(let i in this.Columns){
 
-            let newIndex = (((i + 1 - index)%3 + 3)%3);
+            let newIndex = (((parseInt(i) + 1 - index)%length + length)%length);
 
             Columns[newIndex] = this.Columns[i];
             Columns[newIndex].is_main = false;
