@@ -39,6 +39,8 @@ let request = function () {
             `(target_only = '${request.email}' or target_only = 'everyone' or target_only = 'connection_list')`;
         
         }
+
+        query += " order by time_created desc";
         
         this.sql.query(query, (err, results) => {
 

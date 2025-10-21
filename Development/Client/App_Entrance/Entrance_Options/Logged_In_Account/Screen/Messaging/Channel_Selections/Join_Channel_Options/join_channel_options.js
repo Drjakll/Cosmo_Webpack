@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
-import './online_users.less';
+import './join_channel_options.less';
 
-class Online_Users extends Component {
+class Join_Channel_Options extends Component {
 
     constructor(props){
         
@@ -23,13 +23,18 @@ class Online_Users extends Component {
     render(){
 
         return (
-                <div id="online-users">
+                <div id="join-channel-options">
 
-                    
+                    <div id="the-exit-button" onClick={this.props.exit}></div>
+
+                    <div id="join-channel-options-window">
+
+
+                    </div>
                     
                 </div>
             );
     }
 }
 
-export default Online_Users;
+export default Join_Channel_Options;

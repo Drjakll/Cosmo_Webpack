@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import Message_Area from './Message_Area/message_area.js';
-import Online_Users from './Online_Users/online_users.js';
+import Users from './Users/users.js';
 import Channel_Selections from './Channel_Selections/channel_selections.js';
 import './messaging.less';
 
@@ -13,7 +13,8 @@ class Messaging extends Component {
         
         this.state = {
             account_data: this.props.account_data,
-            connection_list: this.props.connection_list
+            connection_list: this.props.connection_list,
+            visible_users: []
         };  
     }
 
@@ -26,6 +27,13 @@ class Messaging extends Component {
         this.setState(this.props);
     }
 
+    Update_Visible_Users = (visible_users)=>{
+
+        this.setState({
+            visible_users: visible_users
+        });
+    }
+
     render(){
 
         return (
@@ -35,13 +43,17 @@ class Messaging extends Component {
 
                         <div id="channel-selections-wrapper">
 
-                            <Channel_Selections />
+                            <Channel_Selections 
+                                connection_list={this.state.connection_list} 
+                                account_data={this.state.account_data}
+                                update_visible_users={this.Update_Visible_Users}
+                            />
 
                         </div>
 
                         <div id="online-users-wrapper">
 
-                            <Online_Users />
+                            <Users visible_users={this.state.visible_users}/>
 
                         </div>
 

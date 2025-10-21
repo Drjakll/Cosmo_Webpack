@@ -126,9 +126,9 @@ class Search_Streams extends Component {
 
                         <div id="search-parameters">
 
-                            {Object.keys(this.state.search_parameter_options).sort().map((key, index)=>{
+                            {Object.keys(search_parameter_options).sort().map((key, index)=>{
 
-                                let {label} = this.state.search_parameter_options[key];
+                                let {label} = search_parameter_options[key];
 
                                 return <div className="search-parameter-option" key={index} onClick={(e)=>{this.Add_Search_Parameter_Option(key);}}>
 
@@ -144,7 +144,7 @@ class Search_Streams extends Component {
 
                     <div id="stream-search-selected-options-wrapper">
 
-                        {search_param_keys.length === 0 ? <label id="no-requirement-note">No Requirements Selected</label> : search_param_keys.map((key, index)=>{
+                        {search_param_keys.length === 0 ? <label id="no-requirement-note">No Requirement Selected</label> : search_param_keys.map((key, index)=>{
 
                             let {editor, options, label} = search_parameters[key];
 
