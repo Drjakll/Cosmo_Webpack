@@ -149,9 +149,15 @@ let Wrapper = function(){
 
         let { stream_id } = tag;
 
+        tag.key = tag.email;
+
         this.my_socket.join(stream_id);
 
-        await Store_Active_Stream(tag);
+        console.log(tag);
+
+        //await Store_Active_Stream(tag);
+
+        await this.storage.Store(tag);
 
         this.my_socket.tag = tag;
 

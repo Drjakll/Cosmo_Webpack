@@ -104,7 +104,9 @@ let Wrapper = function(){
             search.first_name = "";
         }
 
-        let result = await Search_Stream(search);
+        //let result = await Search_Stream(search);
+
+        let result = await this.request_storage.Search(search);
         
         this.my_socket.emit('catch_streams', {streams: result});
         

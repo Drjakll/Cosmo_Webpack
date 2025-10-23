@@ -153,6 +153,9 @@ let Wrapper = function (){
             
             events[i].my_socket = socket;
             events[i].io = this.io;
+            events[i].root_io = this.root_io;
+            events[i].storage = new this.storage(active_streams);
+            events[i].request_storage = new this.request_storage(active_streams);
             events[i].active_streams = active_streams;
             events[i].all_sockets = this.all_sockets;
             events[i].Delete_Active_Stream = Delete_Active_Stream;

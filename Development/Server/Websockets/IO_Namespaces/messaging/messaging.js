@@ -1,6 +1,6 @@
 import fs from 'fs';
 
-Existing_Channels = {};
+let Existing_Channels = {};
 
 let Wrapper = function (){
     
