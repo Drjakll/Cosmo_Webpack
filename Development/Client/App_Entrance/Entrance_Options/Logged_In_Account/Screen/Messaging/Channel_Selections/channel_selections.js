@@ -6,10 +6,6 @@ import './channel_selections.less';
 
 class Channel_Selections extends Component {
 
-    Channel_Types = {
-        other: Other_Channel
-    }
-
     constructor(props){
         
         super(props);
@@ -19,8 +15,9 @@ class Channel_Selections extends Component {
         this.state = {
             connection_list,
             account_data,
-            channels: {}, //example: {'Channel 1': {type: 'other', users: {}, callback: function(){}, channel_name: 'Channel 1'}}
-            show_join_channel: false
+            channels: {}, //example: {'Channel 1': {channel_name: 'Channel 1'}}
+            show_join_channel: false, // A trigger for opening options for creating/joining a channel
+            selected_channel: null
         };  
     }
 
@@ -88,16 +85,12 @@ class Channel_Selections extends Component {
 
                             let channel_data = channels[key];
                             
-                            let {type, users, callback, channel_name} = channel_data;
-
-                            const Channel_Button = this.Channel_Types[type];
+                            let {channel_name} = channel_data;
 
                             return <div className="channel-button-wrapper" key={key}>
 
-                                <Channel_Button 
-                                    connection_list={users} 
+                                <Other_Channel 
                                     account_data={this.state.account_data}
-                                    update_visible_users={callback}
                                     channel_name={channel_name}
                                 />
 

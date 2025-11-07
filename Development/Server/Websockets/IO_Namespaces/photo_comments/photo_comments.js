@@ -39,6 +39,7 @@ let Wrapper = function (){
             events[i] = new this.events[i]();
             
             events[i].socket = socket;
+            events[i].root_io = this.root_io;
             events[i].io = this.io;
         }
         

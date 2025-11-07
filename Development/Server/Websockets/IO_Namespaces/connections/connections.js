@@ -41,6 +41,7 @@ let Wrapper = function (){
             
             events[i].socket = socket;
             events[i].io = this.io;
+            events[i].root_io = this.root_io;
             events[i].user_email = this.user_email;
         }
         
@@ -49,6 +50,7 @@ let Wrapper = function (){
         socket.on("logging_off", events.logging_off.event);
         socket.on("refresh_account", events.refresh_account.event);
         socket.on("refresh_group_alerts", events.refresh_group_alerts.event);
+        socket.on("refresh_connection_list", events.refresh_connection_list.event);
     };
 };
 

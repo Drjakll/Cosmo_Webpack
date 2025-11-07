@@ -58,6 +58,12 @@ const update_alert_data = '/update_alert_data';
 const get_connection_alerts = '/get_connection_alerts';
 const delete_alert = '/delete_alert';
 
+//Messaging
+const create_conversation = "/create_conversation";
+const update_conversation = "/update_conversation";
+const get_conversations = "/get_conversations";
+const delete_conversation = "/delete_conversation";
+
 const aws_s3_url = 'https://cosmo-social-app.s3.us-west-1.amazonaws.com/';
 
 export default {
@@ -120,6 +126,12 @@ export default {
     update_alert_data: update_alert_data,
     get_connection_alerts: get_connection_alerts,
     delete_alert: delete_alert,
+
+    //Messaging
+    get_conversations: get_conversations,
+    update_conversation: update_conversation,
+    delete_conversation: delete_conversation,
+    create_conversation: create_conversation,
 
     //Amazon Web Service Storage 3 URL
     aws_s3_url: aws_s3_url

@@ -34,9 +34,9 @@ let request = function () {
 
             query += " and ";
 
-            query += status === "pending" ?  
-            `(target_only = '${request.email}' )` :  
-            `(target_only = '${request.email}' or target_only = 'everyone' or target_only = 'connection_list')`;
+            query += (status === "pending" ?  
+            `(target_only = '${request.email}' )` :  //If pending, then it only targets the user who is requesting only
+            `(target_only = '${request.email}' or target_only = 'everyone' or target_only = 'connection_list')`);
         
         }
 

@@ -28,7 +28,7 @@ let generate_query = (table_name, data)=>{
                 query += `${data[i]},`;
                 break;
             case 'object':
-                query += `'${JSON.stringify(data[i])}',`
+                query += `'${JSON.stringify(data[i]).replace(/\\/g, "\\\\").replace(/\'/g, "\\'")}',`
                 break;
         }
     }

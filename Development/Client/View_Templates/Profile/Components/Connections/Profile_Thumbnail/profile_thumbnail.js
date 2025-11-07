@@ -56,7 +56,12 @@ class Profile_Thumbnail extends Component {
 
             <div id="profile-thumbnail-image-wrapper">
 
-                <img id="profile-thumbnail-image" src={`${aws_s3_url}${profile_picture_link}`} alt="Profile Thumbnail" onClick={(e)=>{ this.setState({view_profile_data: true}); }}/>
+                <img id="profile-thumbnail-image" 
+                    src={`${aws_s3_url}${profile_picture_link}`} 
+                    alt="Profile Thumbnail"
+                    onClick={(e)=>{ this.setState({view_profile_data: true}); }}
+                    draggable={false}
+                />
 
             </div>
 

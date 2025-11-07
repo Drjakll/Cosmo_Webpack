@@ -28,7 +28,8 @@ let Account_Data_Template = function(initial){
         relationships: "[]",
         block_list: "{}",
         last_posted: null,
-        created_on: null
+        created_on: null,
+        is_online: false
     };
     
     for(let i in initial){

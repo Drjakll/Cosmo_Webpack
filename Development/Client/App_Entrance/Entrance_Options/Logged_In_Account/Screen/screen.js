@@ -10,7 +10,7 @@ import './screen.less';
 class Screen extends Component {
     
     Screen_Types = {
-        "Explore": Explore,
+        "Livestream": Explore,
         "News": News,
         "Profile": Profile,
         "Messaging": Messaging,

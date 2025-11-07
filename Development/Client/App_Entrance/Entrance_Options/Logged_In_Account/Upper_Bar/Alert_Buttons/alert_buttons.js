@@ -72,12 +72,12 @@ class Alert_Buttons extends Component {
 
     Refresh_Alerts = async ()=>{
 
-            let from_pending_alerts = await this.Get_Alerts("pending");
-            let from_connection_alerts = await this.Get_Alerts("accepted");
+        let from_pending_alerts = await this.Get_Alerts("pending");
+        let from_connection_alerts = await this.Get_Alerts("accepted");
 
-            let alerts = from_pending_alerts.concat(from_connection_alerts);
+        let alerts = from_pending_alerts.concat(from_connection_alerts);
 
-            await this.setState({alerts: alerts});
+        await this.setState({alerts: alerts});
     }
 
     Get_Alerts = async (status)=>{

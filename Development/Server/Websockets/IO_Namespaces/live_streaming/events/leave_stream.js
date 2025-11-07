@@ -22,7 +22,11 @@ let Wrapper = function(){
             return;
         }
 
-        await this.Delete_Active_Stream(room_tag);
+        //await this.Delete_Active_Stream(room_tag);
+
+        room_tag.key = room_tag.email;
+
+        await this.storage.Delete_Entry(room_tag);
         
         this.io.emit('update_stream_list', {streams: {}});
 

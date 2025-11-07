@@ -10,7 +10,8 @@ class Other_Channel extends Component {
         let {channel_name} = this.props;
 
         this.state = {
-            channel_name
+            channel_name,
+            users: {}
         };  
     }
 
@@ -22,6 +23,8 @@ class Other_Channel extends Component {
 
         this.setState(this.props);
     }
+
+
 
     render(){
 

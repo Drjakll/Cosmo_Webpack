@@ -1,0 +1,20 @@
+let Wrapper = function(){
+
+    this.event = ({private_conversations, email}) => {
+        
+        for(let room_tag in private_conversations){
+
+            this.socket.join(room_tag);
+
+            this.socket.rooms_joined[room_tag] = room_tag;
+            
+            //The reason why massive_send_out is true is because this report is sent out to the mass amount of users
+            this.socket.to(room_tag).emit('report_online', {email, room_tag, massive_send_out: true});
+        }
+
+    };
+    
+};
+
+export default Wrapper;
+

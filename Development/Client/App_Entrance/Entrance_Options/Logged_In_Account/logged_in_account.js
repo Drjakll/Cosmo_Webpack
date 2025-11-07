@@ -8,7 +8,7 @@ import './logged_in_account.less';
 class Logged_In_Account extends Component {
     
     Button_Data = [
-        "Explore",
+        "Livestream",
         "Profile",
         "News",
         "Messaging",
@@ -16,7 +16,7 @@ class Logged_In_Account extends Component {
 
     //Fixed index of screens
     Columns = [
-        { screen: "Explore", is_main: false, id: "Explore" },
+        { screen: "Livestream", is_main: false, id: "Livestream" },
         { screen: "Profile", is_main: false, id: "Profile" },
         { screen: "News", is_main: false, id: "News" },
         { screen: "Messaging", is_main: false, id: "Messaging"},
@@ -32,7 +32,7 @@ class Logged_In_Account extends Component {
 
         this.state = {
             Columns: [ //This Columns will dynamically rearrange by the user
-                { screen: "Explore", is_main: false, id: "Explore" },
+                { screen: "Livestream", is_main: false, id: "Livestream" },
                 { screen: "Profile", is_main: true, id: "Profile" },
                 { screen: "News", is_main: false, id: "News" },
                 { screen: "Messaging", is_main: false, id: "Messaging" },
@@ -42,7 +42,7 @@ class Logged_In_Account extends Component {
         };
     }
 
-    componentDidMount() {
+    async componentDidMount() {
     
 
         //Delete the user key from the websocket backend before exiting
@@ -61,25 +61,29 @@ class Logged_In_Account extends Component {
 
         global_connection_socket.on("refresh_account", ({})=>{
 
-            LoginAttempt();
+            window.LoginAttempt();
+
+        });
+
+        global_connection_socket.on("refresh_connection_list", ({})=>{
+
+            this.Get_Connection_List(this.state.account_data);
 
         });
 
 
+        await this.Get_Connection_List(this.state.account_data);
         this.RotateScreen(1);
-        this.Get_Connection_List(this.state.account_data);
 
     }
     
-    componentDidUpdate(prevProps, prevState){
+    async omponentDidUpdate(prevProps, prevState){
         
         if(this.props === prevProps){
             return;
         }
-        
-        this.setState({account_data: this.props.account_data});
 
-        this.Get_Connection_List(this.props.account_data);
+        await this.Get_Connection_List(this.props.account_data);
 
     }
     
@@ -148,9 +152,10 @@ class Logged_In_Account extends Component {
                 jsonObj_results[entry.email] = entry;
             }
 
-            this.setState({connection_list: jsonObj_results});
+            await this.setState({account_data, connection_list: jsonObj_results});
 
         }
+
     }
 
     render(){

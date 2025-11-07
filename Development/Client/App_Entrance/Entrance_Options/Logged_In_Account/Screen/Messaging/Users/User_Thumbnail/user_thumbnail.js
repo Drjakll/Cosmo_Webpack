@@ -5,19 +5,21 @@ class User_Thumbnail extends Component {
 
     Dropdown_Options = [
         {name: 'View Profile', action: ()=>{ this.props.show_user_profile(this.state.user_profile_data); }},
-        {name: 'Send Message', action: ()=>{ /* Implement send message functionality here */ }}
+        {name: 'New Conversation', action: ()=>{ this.Create_New_Conversation(); }}
     ]
 
     constructor(props){
         
         super(props);
 
-        let {user_profile_data} = this.props;
+        let {user_profile_data, account_data, selected} = this.props;
 
         User_Thumbnail.contextType = window.Context;
 
         this.state = {
-            user_profile_data
+            user_profile_data,
+            account_data,
+            selected
         };  
     }
 
@@ -27,7 +29,31 @@ class User_Thumbnail extends Component {
             return;
         }
 
+
         this.setState(this.props);
+    }
+
+    Create_New_Conversation = async ()=>{
+
+        let {create_conversation} = this.context.Request_URLs;
+        
+        let users = {
+            initiator_email: this.state.account_data.email,
+            oppose_email: this.state.user_profile_data.email
+        };
+
+        let data = await( await fetch(
+            create_conversation,
+            {
+                method: "POST",
+                body: JSON.stringify(users),
+                headers: {
+                    'Content-Type': "application/json"
+                }
+            }
+        )).json();
+
+        this.props.refresh_conversation_list([{email: users.oppose_email}]);
     }
 
     Show_Options = ()=>{
@@ -60,7 +86,9 @@ class User_Thumbnail extends Component {
 
     render(){
 
-        let {profile_picture_link, first_name, last_name} = this.state.user_profile_data;
+        let {selected, user_profile_data} = this.state;
+
+        let {profile_picture_link, first_name, last_name, email} = user_profile_data;
 
         let {aws_s3_url} = this.context.Request_URLs;
 
@@ -69,9 +97,17 @@ class User_Thumbnail extends Component {
 
                     {this.Show_Options()}
 
-                    <div id="profile-picture-wrapper">
+                    <div id="profile-picture-wrapper" 
+                        onClick={(e)=>{
+                            this.props.select_user(email);
+                        }}
+                    >
 
-                        <img src={`${aws_s3_url}${profile_picture_link}`} alt="Profile-Picture" />
+                        <img src={`${aws_s3_url}${profile_picture_link}`} 
+                            alt="Profile-Picture" 
+                            className={`${selected ? "selected-user" : ""}`}
+                            draggable={false}
+                        />
 
                     </div>
 

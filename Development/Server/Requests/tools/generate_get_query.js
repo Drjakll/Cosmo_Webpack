@@ -17,7 +17,7 @@ let generate_query = (table_name, requirements, data_to_get) => {
         return sub_query;
     };
     
-    let generate_json_search = (column_name, obj, conjunc = undefined) => {
+    let generate_json_search = (column_name, obj, conjunc = null) => {
         
         let sub_query = ``;
         
@@ -25,7 +25,16 @@ let generate_query = (table_name, requirements, data_to_get) => {
 
             switch(conjunc){
                 case "json_contains_path":
-                    sub_query += ` json_contains_path(${column_name}, 'one', '$."${i}"') and`
+                    sub_query += ` json_contains_path(${column_name}, 'one', '$."${i}"') and`;
+                    break;
+
+                case 'json_contains':
+                    //Searching within a non-nested array
+                    sub_query += ` json_contains(${column_name}, '${obj[i]}') and`;
+                    break;
+
+                case 'json_search':
+                    sub_query += ` json_search(${column_name}, 'one', '${obj[i]}') is not null and`;
                     break;
 
                 default:
@@ -67,11 +76,11 @@ let generate_query = (table_name, requirements, data_to_get) => {
                 break;
                 
             case 'json':
-                
+
                 if(Object.keys(value).length === 0){
                     continue;
                 }
-                
+
                 query += ` ${generate_json_search(key, value, conjunc)}`;
                 break;
 

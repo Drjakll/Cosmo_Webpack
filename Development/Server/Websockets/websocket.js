@@ -26,6 +26,32 @@ let websocket = async (server) => {
     namespaces.live_streaming.io = video_streams_namespace;
     namespaces.connections.io = connections_namespace;
     namespaces.messaging.io = messaging_namespace;
+
+    //Checking every 10 seconds if any socket has not been pinged for over 11 seconds
+    setInterval(async ()=>{
+
+        let email_socket = namespaces.messaging.email_socket;
+
+        let time_now = Date.now();
+
+        for(let email in email_socket){
+
+            let soc = email_socket[email];
+
+            if(time_now - soc.last_pinged > 11000){
+
+                for(let name in soc.rooms_joined){
+
+                    messaging_namespace.to(name).emit('report_offline', {room_tag: name, email});
+
+                }
+
+                delete email_socket[email];
+            }
+        }
+
+
+    }, 10000);
     
     
     photo_comments_namespace.on('connection', namespaces.photo_comments.namespace);

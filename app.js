@@ -103,6 +103,12 @@ app.post("/get_connection_alerts", requests.connections.get_connection_requests.
                                             requests.connections.get_connection_list.req,
                                             requests.alerts.get_alerts.req);
 
+//Messaging
+app.post("/create_conversation", requests.messaging.create_conversation.req);
+app.post("/update_conversation", requests.messaging.update_conversation.req);
+app.post("/delete_conversation", requests.messaging.delete_conversation.req);
+app.post("/get_conversations", requests.messaging.get_conversations.req);
+
 server.listen(8080, () => {
    
     console.log("Listening to port 8080");

@@ -13,9 +13,12 @@ let generate_query = (table_name, data, requirements)=>{
             case "number":
                 query += `${data[key]},`;
                 break;
+            case "object":
+                query += `'${JSON.stringify(data[key]).replace(/\\/g, "\\\\").replace(/\'/g, "\\'")}',`;
+                break;
 
         }
-
+        
     }
     
     query = query.slice(0, -1) + " where ";

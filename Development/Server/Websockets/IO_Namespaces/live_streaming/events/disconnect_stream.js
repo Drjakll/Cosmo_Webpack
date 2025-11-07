@@ -22,9 +22,10 @@ let Wrapper = function(){
             return;
         }
 
+        
+        tag.key = tag.email;
 
-
-        await this.Delete_Active_Stream(tag);
+        await this.storage.Delete_Entry(tag);
         
         this.io.emit('update_stream_list', {streams: {}});
         

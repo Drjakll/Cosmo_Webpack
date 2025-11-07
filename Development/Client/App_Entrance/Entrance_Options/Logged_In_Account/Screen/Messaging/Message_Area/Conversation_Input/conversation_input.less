@@ -1,0 +1,79 @@
+#conversation-input {
+    width: 100%;
+    height: 100%;
+    display: block;
+
+    #misc-functions {
+        width: 100%;
+        height: 20px;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        background-color: rgba(220,220,220,1);
+        border-bottom: rgba(0,0,0,0.5) solid 0.5px;
+
+        .misc-button-wrapper {
+            width: 100px;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            #misc-button {
+                width: 100%;
+                height: 100%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                background-color: rgb(13, 110, 148);
+                color: whitesmoke;
+                font-size: 14px;
+                border-right: rgba(0,0,0,0.5) solid 0.5px;
+                transition: 1s;
+
+                &:hover {
+                    cursor: pointer;
+                    background-color: rgb(146, 9, 9);
+                }
+            }
+        }
+    }
+
+    #text-input-wrapper {
+        width: 100%;
+        height: calc(100% - 20px);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        #text-input {
+            min-width: calc(75% - 10px);
+            max-width: calc(75% - 10px);
+            min-height: calc(100% - 10px);
+            max-height: calc(100% - 10px);
+            padding: 5px;
+            border: none;
+            outline: none;
+            box-shadow: none;
+        }
+
+        #send-input-text-button {
+            width: calc(25% - 0.5px);
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: rgba(220,220,220,1);
+            background-color: teal;
+            transition: 1s;
+            user-select: none;
+            border-left: rgba(75,75,75,1) solid 0.5px;
+
+            &:hover {
+                cursor: pointer;
+                background-color: greenyellow;
+                color: black;
+            }
+        }
+    }
+}

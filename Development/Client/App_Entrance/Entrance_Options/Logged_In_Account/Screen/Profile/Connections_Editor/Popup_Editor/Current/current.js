@@ -85,7 +85,7 @@ class Current extends Component {
             });
 
             //Let the opposing account know that the connection has been removed
-            global_connection_socket?.emit("refresh_account", {request_to_email: connection_profile.email});
+            global_connection_socket?.emit("refresh_connection_list", {request_to_email: connection_profile.email});
 
             delete this.state.all_connections[connection_profile.email];
 

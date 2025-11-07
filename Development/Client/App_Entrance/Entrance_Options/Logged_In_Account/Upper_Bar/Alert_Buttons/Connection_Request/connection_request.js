@@ -89,9 +89,11 @@ class Connection_Request extends Component {
 
         this.props.refresh_alerts(); //Refresh self alerts
 
-        LoginAttempt(); //Refresh self login
+        //Refresh self connection list
+        global_connection_socket?.emit("refresh_connection_list", {request_to_email: account_data.email}); 
 
-        global_connection_socket.emit("refresh_account", {request_to_email: request_user_data.email}); //Refresh other party's account so that it will refresh everything else
+        //Refresh the other party's connection list
+        global_connection_socket.emit("refresh_connection_list", {request_to_email: request_user_data.email});
     }
 
     Decline_Connection_Request = async (e)=>{
@@ -117,9 +119,6 @@ class Connection_Request extends Component {
 
         this.props.refresh_alerts(); //Refresh self alerts
 
-        LoginAttempt(); //Refresh self login
-
-        global_connection_socket?.emit("refresh_account", {request_to_email: request_user_data.email}); //Refresh other party's account so that it will refresh everything else
     }
 
     render() {
