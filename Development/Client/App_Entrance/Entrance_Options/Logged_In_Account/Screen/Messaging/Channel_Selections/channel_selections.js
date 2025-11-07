@@ -66,7 +66,7 @@ class Channel_Selections extends Component {
         return (
                 <div id="channel-selections">
 
-                    {show_join_channel ? <Join_Channel_Options exit={this.Show_Join_Channel} /> : ""}
+                    {show_join_channel ? <Join_Channel_Options exit={this.Show_Join_Channel} create_public_channel={this.props.create_public_channel} /> : ""}
 
                     <div id="available-channels">
 

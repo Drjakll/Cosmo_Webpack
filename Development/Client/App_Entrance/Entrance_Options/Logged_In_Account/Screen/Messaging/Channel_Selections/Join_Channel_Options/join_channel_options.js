@@ -28,7 +28,9 @@ class Join_Channel_Options extends Component {
 
     Create_Channel = (e)=>{
 
-        
+        let {new_channel_name} = this.state;
+
+        this.props.create_public_channel({channel_name: new_channel_name});
 
     }
 

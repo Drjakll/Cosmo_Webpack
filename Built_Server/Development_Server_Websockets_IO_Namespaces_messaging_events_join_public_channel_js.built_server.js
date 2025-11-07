@@ -1,4 +1,3 @@
-"use strict";
 /*
  * ATTENTION: The "eval" devtool has been used (maybe by default in mode: "development").
  * This devtool is neither made for production nor for readable output files.
@@ -15,9 +14,9 @@ exports.modules = {
 /*!*********************************************************************************************!*\
   !*** ./Development/Server/Websockets/IO_Namespaces/messaging/events/join_public_channel.js ***!
   \*********************************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+/***/ (() => {
 
-eval("{__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\nlet Wrapper = function () {\n  this.event = channel_info => {\n    let {\n      channel_name\n    } = channel_info;\n    this.socket.join(channel_name);\n    this.channel_storage.store(channel_info);\n  };\n};\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Wrapper);\n\n//# sourceURL=webpack://cosmo_webpack/./Development/Server/Websockets/IO_Namespaces/messaging/events/join_public_channel.js?\n}");
+eval("{\n\n//# sourceURL=webpack://cosmo_webpack/./Development/Server/Websockets/IO_Namespaces/messaging/events/join_public_channel.js?\n}");
 
 /***/ })
 

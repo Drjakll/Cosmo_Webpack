@@ -66,6 +66,7 @@ let Wrapper = function (){
         socket.on('clear_seen_by', events.clear_seen_by.event);
         socket.on('ping', events.ping.event);
         socket.on('send_report_online', events.send_report_online.event);
+        socket.on('create_public_channel', events.create_public_channel.event);
 
     };
 };

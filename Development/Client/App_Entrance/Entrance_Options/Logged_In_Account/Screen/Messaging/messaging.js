@@ -322,6 +322,12 @@ class Messaging extends Component {
         this.setState({public_private});
     }
 
+    Create_Public_Channel = (channel_info)=>{
+
+        this.msg_socket?.emit('create_public_channel', {channel_info});
+
+    }
+
     render(){
 
         return (
@@ -336,6 +342,7 @@ class Messaging extends Component {
                             account_data={this.state.account_data}
                             update_visible_users={this.Update_Visible_Users}
                             set_public_private={this.Set_Public_Private}
+                            create_public_channel={this.Create_Public_Channel}
                         />
 
                     </div>
