@@ -13,11 +13,11 @@ class Message_Area extends Component {
         Message_Area.contextType = window.Context;
 
         this.state = {
-            private_conversations: this.props.private_conversations,
-            private_or_public: "public",
+            conversations: this.props.conversations,
+            private_or_public: this.props.private_or_public,
             account_data: this.props.account_data,
             connection_list: this.props.connection_list,
-            selected_room_tag: "",
+            selected_room_tag: this.props.selected_room_tag,
             selected_users: this.props.selected_users, //Selected users for any purpose, (example: add selected users to a conversation)
             current_users_info: {} //Current user information that are currently in the chat room
         };  
@@ -44,8 +44,6 @@ class Message_Area extends Component {
 
         current_users_info[room_tag] = users_info;
 
-        //console.log("updating current users info");
-
         this.setState({current_users_info});
     }
 
@@ -54,11 +52,11 @@ class Message_Area extends Component {
         return this.state.selected_room_tag ? true : false;
     }
 
-    Leave_Conversation = async ()=>{
+    Leave_Private_Conversation = async ()=>{
 
-        let {private_conversations, selected_room_tag, account_data} = this.state;
+        let {conversations, selected_room_tag, account_data} = this.state;
 
-        let selected_conversation = private_conversations[selected_room_tag];
+        let selected_conversation = conversations.private[selected_room_tag];
 
         if(!selected_conversation){
             alert("Invalid conversation selected");
@@ -79,9 +77,7 @@ class Message_Area extends Component {
 
     Select_Button = (selection) => {
 
-        this.setState({private_or_public: selection});
-
-        this.props.set_public_private(selection);
+        this.props.switch_conversation(selection, "");
 
     }
 
@@ -94,7 +90,7 @@ class Message_Area extends Component {
             return;
         }
 
-        let conversation = this.state.private_conversations[room_tag];
+        let conversation = this.state.conversations.private[room_tag];
 
         if(!conversation){
             console.log("Conversation not found!");
@@ -154,16 +150,16 @@ class Message_Area extends Component {
 
     render(){
 
-        let {private_conversations, selected_room_tag} = this.state;
+        let {conversations, selected_room_tag, private_or_public} = this.state;
 
-        let private_conversation = private_conversations[selected_room_tag];
+        let conversation = conversations[private_or_public][selected_room_tag];
 
-        let user_status = private_conversation?.users?.find((u)=>{ return u.email === this.state.account_data.email; });
+        let user_status = conversation?.users?.find((u)=>{ return u.email === this.state.account_data.email; });
 
         return (
                 <div id="message-area">
 
-                    <div id="left-message-area" onClick={(e)=>{this.props.seen_by(null); }}>
+                    <div id="left-message-area" onClick={(e)=>{this.props.seen_by(selected_room_tag); }}>
 
                         <div id="top-left-message-area">
 
@@ -191,10 +187,10 @@ class Message_Area extends Component {
 
                             <div id="conversation-texts-wrapper">
 
-                                <Conversation_Texts conversation={private_conversation} 
+                                <Conversation_Texts conversation={conversation} 
                                                     my_account={this.state.account_data}
                                                     user_status={user_status}
-                                                    current_users_info={this.state.current_users_info[private_conversation?.room_tag]}
+                                                    current_users_info={this.state.current_users_info[conversation?.room_tag]}
                                     />
 
                             </div>
@@ -225,9 +221,9 @@ class Message_Area extends Component {
 
                             <div id="list-of-conversations">
 
-                                {Object.keys(this.state.private_conversations).map((key, index)=>{
+                                {Object.keys(this.state.conversations[private_or_public]).map((key, index)=>{
 
-                                    let value = this.state.private_conversations[key];
+                                    let value = this.state.conversations[private_or_public][key];
 
                                     return <div className={`conversation-thumbnail-wrapper`}
                                                 key={value.room_tag}>

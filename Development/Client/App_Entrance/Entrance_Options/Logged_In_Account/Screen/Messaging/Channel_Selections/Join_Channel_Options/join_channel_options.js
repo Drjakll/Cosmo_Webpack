@@ -24,6 +24,7 @@ class Join_Channel_Options extends Component {
     Set_Channel_Name = (e)=>{
 
         this.setState({new_channel_name: e.target.value});
+        
     }
 
     Create_Channel = (e)=>{

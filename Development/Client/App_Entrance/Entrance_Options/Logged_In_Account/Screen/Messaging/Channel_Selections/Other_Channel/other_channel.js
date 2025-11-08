@@ -23,8 +23,7 @@ class Other_Channel extends Component {
 
         this.setState(this.props);
     }
-
-
+    
 
     render(){
 

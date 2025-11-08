@@ -70,7 +70,7 @@ class Channel_Selections extends Component {
 
                     <div id="available-channels">
 
-                        {/* this will always stay here */}
+                        {/* this is fixed */}
                         <div className="channel-button-wrapper">
             
                             <Connection_Channel

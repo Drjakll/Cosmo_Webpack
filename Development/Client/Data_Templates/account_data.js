@@ -29,7 +29,8 @@ let Account_Data_Template = function(initial){
         block_list: "{}",
         last_posted: null,
         created_on: null,
-        is_online: false
+        is_online: false,
+        favorite_public_channel: '{}'
     };
     
     for(let i in initial){
