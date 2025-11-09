@@ -31,7 +31,7 @@ class Messaging extends Component {
 
         this.Init_IO();
 
-        this.Get_Conversations();
+        this.Get_Private_Conversations();
 
     }
 
@@ -51,7 +51,7 @@ class Messaging extends Component {
         });
     }
 
-    Get_Conversations = async () => {
+    Get_Private_Conversations = async () => {
 
         let {get_conversations} = this.context.Request_URLs;
 
@@ -158,7 +158,7 @@ class Messaging extends Component {
 
         this.msg_socket?.on('refresh_conversation_list', ()=>{
 
-            this.Get_Conversations();
+            this.Get_Private_Conversations();
 
         });
 

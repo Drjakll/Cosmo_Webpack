@@ -4,7 +4,7 @@ let Wrapper = function(){
         
         this.socket.leave(room_tag);
         
-        //refresh themself's conversation list
+        //refresh theirselve's conversation list
         this.socket.emit('refresh_conversation_list', {});
 
         for(let user of remaining_users){
