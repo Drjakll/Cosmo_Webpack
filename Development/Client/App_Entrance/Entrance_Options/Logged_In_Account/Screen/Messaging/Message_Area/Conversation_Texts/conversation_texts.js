@@ -14,13 +14,14 @@ class Conversation_Texts extends Component {
 
         Conversation_Texts.contextType = window.Context;
 
-        let {my_account, conversation, user_status, current_users_info} = this.props;
+        let {my_account, conversation, user_status, current_users_info, private_or_public} = this.props;
 
         this.state = {
             my_account,
             conversation,
             user_status,
-            current_users_info
+            current_users_info,
+            private_or_public
         };
     }
 
@@ -60,11 +61,11 @@ class Conversation_Texts extends Component {
 
     render(){
 
-        let {conversation, my_account, current_users_info, user_status} = this.state;
+        let {conversation, my_account, current_users_info, user_status, private_or_public} = this.state;
 
         let {messages, seen_by} = conversation || {};
 
-        let time_joined = user_status?.time_joined;
+        let time_joined = user_status?.time_joined || 0;
 
         let emails = Object.keys(seen_by || {});
 
@@ -72,11 +73,7 @@ class Conversation_Texts extends Component {
 
         return <div id="conversation-texts">
 
-            {user_status?.joined_status === "pending" ? 
-                <div id="wait-for-acceptance">
-                    Waiting for acceptance...
-                </div>
-             : <div id="conversation-msges" ref={this.containerRef}>
+            <div id="conversation-msges" ref={this.containerRef}>
 
                 {messages?.map((value, index)=>{
 
@@ -94,11 +91,11 @@ class Conversation_Texts extends Component {
 
                 })}
 
-            </div>}
+            </div>
 
             <div id="seen-by">
 
-                {emails.length === 0 ? "" : <pre>Seen by </pre>} 
+                {emails.length === 0 || private_or_public === "public" ? "" : <pre>Seen by </pre>} 
                 {emails.map((email, ind)=>{
 
                     let {first_name, last_name} = this.state.current_users_info[email] || {};

@@ -7,11 +7,11 @@ class Other_Channel extends Component {
         
         super(props);
 
-        let {channel_name} = this.props;
+        let {channel_name, online_users} = this.props;
 
         this.state = {
             channel_name,
-            users: {}
+            online_users
         };  
     }
 
@@ -24,11 +24,18 @@ class Other_Channel extends Component {
         this.setState(this.props);
     }
     
+    Switch_Channel = ()=>{
+
+        let {online_users, channel_name} = this.state;
+
+        this.props.switch_channel(online_users, channel_name, "public");
+
+    }
 
     render(){
 
         return (
-                <div id="other-channel">
+                <div id="other-channel" onClick={this.Switch_Channel}>
 
                     <label>{this.state.channel_name}</label>
                     

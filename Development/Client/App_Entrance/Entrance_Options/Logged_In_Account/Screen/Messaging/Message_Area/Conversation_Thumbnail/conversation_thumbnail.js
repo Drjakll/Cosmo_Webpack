@@ -180,7 +180,7 @@ class Conversation_Thumbnail extends Component {
 
     render(){
 
-        let {seen_by, room_tag, online_users} = this.state.conversation_info;
+        let {seen_by, room_tag, online_users} = this.state.conversation_info || {};
 
         return <div id="conversation-thumbnail" onClick={(e)=>{
    
@@ -193,7 +193,7 @@ class Conversation_Thumbnail extends Component {
             className={`${this.state.conversation_info.room_tag === this.state.selected_room_tag ? "selected-tag" : ""}`}
         >
 
-            {seen_by[this.state.account_data.email] ? "" : <div id="attention-mark">!</div>}
+            {(seen_by || {})[this.state.account_data.email] ? "" : <div id="attention-mark">!</div>}
 
             <div id="small-user-icons-wrapper">
 

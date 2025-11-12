@@ -77,7 +77,9 @@ class Users extends Component {
 
                             let user = visible_users[key];
 
-                            return <div key={index} className="user-wrapper">
+                            return user.email === this.state.account_data.email ? "" : 
+                            
+                            <div key={index} className="user-wrapper">
 
                                 <User_Thumbnail 
                                     key={index} 

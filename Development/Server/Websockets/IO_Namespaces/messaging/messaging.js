@@ -1,8 +1,12 @@
 import fs from 'fs';
 
+//This is a intended for a trie data structure
 let Existing_Public_Channels = {
     channel_name: null
 };
+
+//This is to have a list of all the channel names in a list. It is for checking if channel name exists and/or who are the users currently in the channel
+let Public_Channel_List = {};
 
 let Wrapper = function (){
 
@@ -54,6 +58,7 @@ let Wrapper = function (){
             events[i].channel_storage = this.channel_storage;
             events[i].existing_public_channels = Existing_Public_Channels;
             events[i].email_socket = this.email_socket;
+            events[i].public_channel_list = Public_Channel_List;
         }
 
         socket.on('report_presence', events.report_presence.event);
@@ -66,7 +71,7 @@ let Wrapper = function (){
         socket.on('clear_seen_by', events.clear_seen_by.event);
         socket.on('ping', events.ping.event);
         socket.on('send_report_online', events.send_report_online.event);
-        socket.on('create_public_channel', events.create_public_channel.event);
+        socket.on('join_public_channels', events.join_public_channels.event);
 
     };
 };

@@ -5,9 +5,10 @@
     justify-content: center;
     align-items: center;
     transition: 1s;
+    background: rgba(0,0,0,0);
 
     &:hover {
-        background-color: rgba(0,0,0,0.1);
+        background-color: rgba(0,0,0,0.1) !important;
         cursor: pointer;
     }
 
@@ -25,4 +26,8 @@
             cursor: pointer;
         }
     }
+}
+
+#connection-channel.selected-channel {
+    background-color: rgba(0,0,0,0.2);
 }

@@ -7,16 +7,19 @@
 
     #available-channels {
         height: 100%;
-        display: block-inline;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
         overflow-x: auto;
         overflow-y: hidden;
+        scrollbar-width: none;
 
         .channel-button-wrapper {
             height: 100%;
             width: auto;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            display: inline-block;
+            flex-wrap: nowrap;
+            flex-shrink: 0;
         }
     }
 

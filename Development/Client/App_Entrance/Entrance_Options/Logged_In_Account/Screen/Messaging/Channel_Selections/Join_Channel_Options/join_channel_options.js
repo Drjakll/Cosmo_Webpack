@@ -31,7 +31,11 @@ class Join_Channel_Options extends Component {
 
         let {new_channel_name} = this.state;
 
-        this.props.create_public_channel({channel_name: new_channel_name});
+        let new_channel_obj = {};
+
+        new_channel_obj[new_channel_name] = {channel_name: new_channel_name, messages: []};
+
+        this.props.join_public_channels(new_channel_obj);
 
     }
 

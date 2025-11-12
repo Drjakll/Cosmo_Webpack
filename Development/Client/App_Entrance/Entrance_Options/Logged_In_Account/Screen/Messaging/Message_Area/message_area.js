@@ -19,7 +19,7 @@ class Message_Area extends Component {
             connection_list: this.props.connection_list,
             selected_room_tag: this.props.selected_room_tag,
             selected_users: this.props.selected_users, //Selected users for any purpose, (example: add selected users to a conversation)
-            current_users_info: {} //Current user information that are currently in the chat room
+            current_users_info: this.props.current_users_info //Current user information that are currently in the chat room
         };  
     }
 
@@ -124,19 +124,20 @@ class Message_Area extends Component {
 
     Update_Conversation = async (conversation)=>{
 
-        let {users, messages, room_tag, seen_by} = conversation;
+        let {users, messages, room_tag, seen_by, id} = conversation;
 
         let body = {
+            id,
             messages,
             room_tag,
             users,
             seen_by
         };
 
-        let {update_conversation} = this.context.Request_URLs;
+        let {update_conversation, delete_conversation} = this.context.Request_URLs;
 
         let data = await(await fetch(
-            update_conversation,
+            users.length === 0 ? delete_conversation : update_conversation,
             {
                 method: "POST",
                 body: JSON.stringify(body),
@@ -154,6 +155,7 @@ class Message_Area extends Component {
 
         let conversation = conversations[private_or_public][selected_room_tag];
 
+        //User status contains the time when this user joined the private conversation, used to prevent from reading old conversation before he was invited
         let user_status = conversation?.users?.find((u)=>{ return u.email === this.state.account_data.email; });
 
         return (
@@ -190,7 +192,8 @@ class Message_Area extends Component {
                                 <Conversation_Texts conversation={conversation} 
                                                     my_account={this.state.account_data}
                                                     user_status={user_status}
-                                                    current_users_info={this.state.current_users_info[conversation?.room_tag]}
+                                                    //public conversation have the object channel_name, while private conversation have the object room_tag
+                                                    current_users_info={this.state.current_users_info[conversation?.room_tag || conversation?.channel_name]} 
                                     />
 
                             </div>
@@ -200,7 +203,7 @@ class Message_Area extends Component {
                                 <Conversation_Input 
                                     send_msg={this.props.send_message}
                                     has_selected_conversation={this.Has_Selected_Conversation}
-                                    leave_conversation={this.Leave_Conversation}
+                                    leave_conversation={this.Leave_Private_Conversation}
                                 />
 
                             </div>
@@ -221,9 +224,9 @@ class Message_Area extends Component {
 
                             <div id="list-of-conversations">
 
-                                {Object.keys(this.state.conversations[private_or_public]).map((key, index)=>{
+                                {Object.keys(this.state.conversations.private).map((key, index)=>{
 
-                                    let value = this.state.conversations[private_or_public][key];
+                                    let value = this.state.conversations.private[key];
 
                                     return <div className={`conversation-thumbnail-wrapper`}
                                                 key={value.room_tag}>

@@ -4,7 +4,7 @@ function request() {
         
         let {id} = req.body;
         
-        let query = `delete from messaging where id = ${id}`;
+        let query = `delete from Messaging where id = ${id}`;
         
         this.sql.query(query, (err, results) => {
         

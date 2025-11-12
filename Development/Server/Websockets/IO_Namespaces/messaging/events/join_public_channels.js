@@ -1,10 +1,29 @@
 let Wrapper = function(){
 
-    this.event = ({public_channels}) => {
+    this.event = ({public_channels, user_data}) => {
         
-        for(let room_tag in public_channels){
+        for(let channel_name in public_channels){
 
-            this.socket.join(room_tag);
+            this.socket.join(channel_name);
+
+            let channel = public_channels[channel_name];
+
+            if(!this.public_channel_list[channel_name]){
+
+                this.public_channel_list[channel_name] = {online_users: {}};
+
+                //If online users is attached to the channel object
+                delete channel.online_users;
+
+                this.channel_storage.Store(channel);
+
+            }
+
+            this.public_channel_list[channel_name].online_users[user_data.email] = user_data;
+
+            let {online_users} = this.public_channel_list[channel_name];
+
+            this.io.to(channel_name).emit('update_public_online_users', {online_users, channel_name});
 
         }
 

@@ -10,14 +10,14 @@ class Channel_Selections extends Component {
         
         super(props);
 
-        let {connection_list, account_data} = this.props;
+        let {connection_list, account_data, public_channels, selected_channel} = this.props;
 
         this.state = {
             connection_list,
             account_data,
-            channels: {}, //example: {'Channel 1': {channel_name: 'Channel 1'}}
+            public_channels, //example: {'Channel 1': {channel_name: 'Channel 1'}}
             show_join_channel: false, // A trigger for opening options for creating/joining a channel
-            selected_channel: null
+            selected_channel
         };  
     }
 
@@ -61,12 +61,12 @@ class Channel_Selections extends Component {
 
     render(){
 
-        let {channels, show_join_channel} = this.state;
+        let {public_channels, show_join_channel} = this.state;
 
         return (
                 <div id="channel-selections">
 
-                    {show_join_channel ? <Join_Channel_Options exit={this.Show_Join_Channel} create_public_channel={this.props.create_public_channel} /> : ""}
+                    {show_join_channel ? <Join_Channel_Options exit={this.Show_Join_Channel} join_public_channels={this.props.join_public_channels} /> : ""}
 
                     <div id="available-channels">
 
@@ -76,22 +76,27 @@ class Channel_Selections extends Component {
                             <Connection_Channel
                                 connection_list={this.state.connection_list}
                                 account_data={this.state.account_data}
-                                update_visible_users={this.props.update_visible_users}
+                                switch_channel={this.props.switch_channel}
+                                selected={this.state.selected_channel === "connections" ? true : false}
                             />
 
                         </div>
 
-                        {Object.keys(channels).map((key)=>{
+                        {Object.keys(public_channels).sort().map((key)=>{
 
-                            let channel_data = channels[key];
+                            let channel_data = public_channels[key];
                             
-                            let {channel_name} = channel_data;
+                            let {channel_name, online_users} = channel_data;
 
                             return <div className="channel-button-wrapper" key={key}>
 
                                 <Other_Channel 
                                     account_data={this.state.account_data}
                                     channel_name={channel_name}
+                                    online_users={online_users}
+                                    selected={this.state.selected_channel === channel_name ? true : false}
+                                    switch_channel={this.props.switch_channel}
+                                    set_msg_area_user_info={this.props.set_msg_area_user_info}
                                 />
 
                             </div>;
