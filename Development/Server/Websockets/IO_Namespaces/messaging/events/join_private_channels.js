@@ -6,10 +6,10 @@ let Wrapper = function(){
 
             this.socket.join(room_tag);
 
-            this.socket.rooms_joined[room_tag] = room_tag;
+            this.socket.private.rooms_joined[room_tag] = room_tag;
             
             //The reason why massive_send_out is true is because this report is sent out to the mass amount of users
-            this.socket.to(room_tag).emit('report_online', {email, room_tag, massive_send_out: true});
+            this.socket.to(room_tag).emit('report_private_online', {email, room_tag, massive_send_out: true});
         }
 
     };

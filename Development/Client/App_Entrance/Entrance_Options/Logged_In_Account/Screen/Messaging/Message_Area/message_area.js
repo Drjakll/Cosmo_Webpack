@@ -26,6 +26,7 @@ class Message_Area extends Component {
     componentDidMount(){
 
 
+
     }
 
     componentDidUpdate(prevProps, prevState){
@@ -71,7 +72,7 @@ class Message_Area extends Component {
 
         await this.Update_Conversation(selected_conversation);
 
-        this.props.leave_channel(selected_room_tag, selected_conversation.users);
+        this.props.leave_private_channel(selected_room_tag, selected_conversation.users);
         
     }
 
@@ -167,7 +168,6 @@ class Message_Area extends Component {
 
                             <div id="public-messages-button" 
                                 className={`msg-type-button ${this.state.private_or_public === "public" ? "selected" : ""}`}
-                                onClick={(e)=>{this.Select_Button("public"); }}
                             >
 
                                 Public
@@ -176,7 +176,6 @@ class Message_Area extends Component {
 
                             <div id="private-messages-button" 
                                 className={`msg-type-button ${this.state.private_or_public === "private" ? "selected" : ""}`}
-                                onClick={(e)=>{this.Select_Button("private"); }}
                             >
 
                                 Private

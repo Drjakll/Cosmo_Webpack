@@ -7,7 +7,7 @@ import './messaging.less';
 
 class Messaging extends Component {
 
-    All_Room_Tags = {}; //Use for pinging
+    All_Room_Tags = {public: {}, private: {}}; //Use for pinging
 
     constructor(props){
         
@@ -90,7 +90,7 @@ class Messaging extends Component {
                 ptr.seen_by = JSON.parse(ptr.seen_by);
                 ptr.online_users = {};
 
-                this.All_Room_Tags[convers.room_tag] = convers.room_tag;
+                this.All_Room_Tags.private[convers.room_tag] = convers.room_tag;
 
                 private_conv_json_format[convers.room_tag] = ptr;
             }
@@ -115,6 +115,7 @@ class Messaging extends Component {
             //Report user's presence within the socket namespace
             this.msg_socket.emit('report_presence', {email: this.state.account_data.email});
 
+            //Join all the previous private channels/rooms
             this.msg_socket.emit('join_private_channels', this.state.conversations.private);
 
         });
@@ -134,10 +135,12 @@ class Messaging extends Component {
 
         this.msg_socket?.on('save_conversation', ({selected_room_tag})=>{
 
+            //Only for private channels/rooms
             this.Save_Conversation(selected_room_tag);
 
         });
 
+        //Only apply to private channels/rooms
         this.msg_socket?.on('clear_seen_by', async ({room_tag, signal_sent_by})=>{
 
             let {conversations, account_data} = this.state;
@@ -176,7 +179,7 @@ class Messaging extends Component {
         });
 
         //massive_send_out means this report is being sent to a massive amount of users
-        this.msg_socket?.on('report_online', ({email, room_tag, massive_send_out})=>{
+        this.msg_socket?.on('report_private_online', ({email, room_tag, massive_send_out})=>{
 
             let {conversations, account_data} = this.state;
 
@@ -191,43 +194,61 @@ class Messaging extends Component {
 
         });
 
-        this.msg_socket?.on('report_offline', ({room_tag, email})=>{
+        this.msg_socket?.on('report_private_offline', ({room_tag, email})=>{
 
-            let {conversations} = this.state;
+            let {conversations} = this.state; 
 
-            delete conversations.private[room_tag].online_users[email];
+            delete conversations.private[room_tag]?.online_users[email];
 
             this.setState({conversations});
+
+        });
+
+
+        this.msg_socket?.on('report_public_offline', ({room_tag, email})=>{
+
+            let {conversations, visible_users, selected_room_tag} = this.state; 
+
+            delete conversations.public[room_tag]?.online_users[email];
+
+            //In case that the room_tag doesn't exist, that's why I used new_visible_users || visible_users. And if it's not the selected room tag, kee the original visible users
+            let new_visible_users = (selected_room_tag === room_tag ? conversations.public[room_tag]?.online_users || visible_users : visible_users);
+
+            this.setState({conversations, visible_users: new_visible_users});
 
         });
 
         //Send a ping to the websocket every 10 seconds to ensure that this user is online
         setInterval(()=>{
 
-            this.msg_socket?.emit('ping', {email: this.state.account_data.email, room_tags: this.All_Room_Tags});
+            this.msg_socket?.emit('ping', {user_account: this.state.account_data, room_tags: this.All_Room_Tags});
 
         }, 10000);
 
         this.msg_socket?.on('update_public_online_users', ({online_users, channel_name})=>{
 
-            let {conversations} = this.state;
+            let {conversations, visible_users, selected_room_tag} = this.state;
 
             conversations.public[channel_name]?.online_users = online_users;
 
-            this.setState({conversations});
+            //In case that the room_tag doesn't exist, that's why I used new_visible_users || visible_users. And if it's not the selected room tag, kee the original visible users            
+            visible_users = selected_room_tag == channel_name ? conversations.public[channel_name]?.online_users || visible_users : visible_users;
+
+            this.setState({conversations, visible_users});
 
         });
     }
 
-    Leave_Channel = (room_tag, remaining_users)=>{
+    Leave_Private_Channel = (room_tag, remaining_users)=>{
 
         this.msg_socket?.emit('leave_conversation', {room_tag, remaining_users});
 
-        delete this.All_Room_Tags[room_tag];
+        delete this.All_Room_Tags.private[room_tag];
     }
 
     Refresh_Conversation_List = (other_party_emails)=>{
 
+        //Private conversation list
         this.msg_socket?.emit('refresh_conversation_list', {other_party_emails});
 
     }
@@ -378,7 +399,7 @@ class Messaging extends Component {
 
         let {favorite_public_channel} = account_data;
 
-        //It's possible that the favorite_public_channel is still an object string
+        //It's possible that the favorite_public_channel is still a string
         favorite_public_channel = typeof favorite_public_channel === "string" ? JSON.parse(favorite_public_channel) || {} : favorite_public_channel;
 
         for(let channel_name in public_channels){
@@ -405,6 +426,7 @@ class Messaging extends Component {
 
         this.setState({conversations});
 
+        //If it's the first time joining the public channel, it needs to update the favorite_public_channel object
         if(update_profile === true){
 
             this.Update_Profile(account_data);
@@ -488,7 +510,7 @@ class Messaging extends Component {
                             selected_users={this.state.selected_users}
                             refresh_conversation_list={this.Refresh_Conversation_List}
                             clear_selected_users={this.Clear_Selected_Users}
-                            leave_channel={this.Leave_Channel}
+                            leave_private_channel={this.Leave_Private_Channel}
                             clear_seen_by={this.Clear_Seen_By}
                             seen_by={this.Seen_By}
                             save_conversation={this.Save_Conversation}

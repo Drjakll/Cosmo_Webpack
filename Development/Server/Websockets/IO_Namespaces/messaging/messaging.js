@@ -5,15 +5,15 @@ let Existing_Public_Channels = {
     channel_name: null
 };
 
-//This is to have a list of all the channel names in a list. It is for checking if channel name exists and/or who are the users currently in the channel
-let Public_Channel_List = {};
-
 let Wrapper = function (){
 
     //An object that which has the email as key and socket as value
     this.email_socket = {};
 
     this.channel_storage = new this.storage(Existing_Public_Channels);
+
+    //This is to have a list of all the channel names in a list. It is for checking if channel name exists and/or who are the users currently in the channel
+    this.public_channel_list = {};
     
     (async () => {
         
@@ -47,7 +47,8 @@ let Wrapper = function (){
     this.namespace = (socket) => {
         
         let events = {};
-        socket.rooms_joined = {};
+        socket.public = {rooms_joined: {}};
+        socket.private = {rooms_joined: {}};
         
         for(let i in this.events){
             events[i] = new this.events[i]();
@@ -58,7 +59,7 @@ let Wrapper = function (){
             events[i].channel_storage = this.channel_storage;
             events[i].existing_public_channels = Existing_Public_Channels;
             events[i].email_socket = this.email_socket;
-            events[i].public_channel_list = Public_Channel_List;
+            events[i].public_channel_list = this.public_channel_list;
         }
 
         socket.on('report_presence', events.report_presence.event);

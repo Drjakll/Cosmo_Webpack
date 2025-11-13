@@ -31,6 +31,7 @@ let websocket = async (server) => {
     setInterval(async ()=>{
 
         let email_socket = namespaces.messaging.email_socket;
+        let public_channel_list = namespaces.messaging.public_channel_list;
 
         let time_now = Date.now();
 
@@ -40,13 +41,23 @@ let websocket = async (server) => {
 
             if(time_now - soc.last_pinged > 11000){
 
-                for(let name in soc.rooms_joined){
+                for(let name in soc.private.rooms_joined){
 
-                    messaging_namespace.to(name).emit('report_offline', {room_tag: name, email});
+                    messaging_namespace.to(name).emit('report_private_offline', {room_tag: name, email});
 
-                }
+
+                }        
 
                 delete email_socket[email];
+
+                for(let name in soc.public.rooms_joined){
+
+                    messaging_namespace.to(name).emit('report_public_offline', {room_tag: name, email});
+
+                    //Delete the online user from the public record
+                    delete public_channel_list[name]?.online_users[email];
+
+                }
             }
         }
 

@@ -6,8 +6,12 @@ let Wrapper = function(){
 
             this.socket.join(channel_name);
 
+            //Keep a record of the specific socket to have all the public channels joined
+            this.socket.public.rooms_joined[channel_name] = channel_name;
+
             let channel = public_channels[channel_name];
 
+            //If no channel name is attached to public channel yet
             if(!this.public_channel_list[channel_name]){
 
                 this.public_channel_list[channel_name] = {online_users: {}};
