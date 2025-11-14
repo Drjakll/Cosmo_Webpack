@@ -9,6 +9,8 @@ class Messaging extends Component {
 
     All_Room_Tags = {public: {}, private: {}}; //Use for pinging
 
+    Pong = Date.now();
+
     constructor(props){
         
         super(props);
@@ -36,6 +38,20 @@ class Messaging extends Component {
         this.Get_Private_Conversations();
 
         this.Init_Public_Channels();
+        
+        //Send a ping to the websocket every 10 seconds to ensure that this user is online
+        setInterval(()=>{
+
+            let now = Date.now();
+
+            if(now - this.Pong > 30000){ //If no pong received in the last 30 seconds, re-initialize the IO connection
+                this.Init_IO();
+                return;
+            }
+
+            this.msg_socket?.emit('ping', {user_account: this.state.account_data, room_tags: this.All_Room_Tags});
+
+        }, 10000);
 
     }
 
@@ -115,8 +131,11 @@ class Messaging extends Component {
             //Report user's presence within the socket namespace
             this.msg_socket.emit('report_presence', {email: this.state.account_data.email});
 
-            //Join all the previous private channels/rooms
-            this.msg_socket.emit('join_private_channels', this.state.conversations.private);
+        });
+
+        this.msg_socket?.on('pong', ()=>{
+            
+            this.Pong = Date.now();
 
         });
 
@@ -218,12 +237,15 @@ class Messaging extends Component {
 
         });
 
-        //Send a ping to the websocket every 10 seconds to ensure that this user is online
-        setInterval(()=>{
+        this.msg_socket?.on('reconnect_all_rooms', ()=>{
 
-            this.msg_socket?.emit('ping', {user_account: this.state.account_data, room_tags: this.All_Room_Tags});
+            
+            //Re-join all the rooms again
+            this.msg_socket?.emit('join_private_channels', {private_conversations: this.state.conversations.private, email: this.state.account_data.email});
 
-        }, 10000);
+            this.msg_socket?.emit('join_public_channels', {public_channels: this.state.conversations.public, user_data: this.state.account_data});
+
+        });
 
         this.msg_socket?.on('update_public_online_users', ({online_users, channel_name})=>{
 

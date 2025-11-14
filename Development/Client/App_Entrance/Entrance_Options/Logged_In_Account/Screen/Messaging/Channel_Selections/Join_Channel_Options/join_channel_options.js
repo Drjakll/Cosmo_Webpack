@@ -31,6 +31,11 @@ class Join_Channel_Options extends Component {
 
         let {new_channel_name} = this.state;
 
+        if(new_channel_name.length === 0){
+            alert("Channel name cannot be empty");
+            return;
+        }
+
         let new_channel_obj = {};
 
         new_channel_obj[new_channel_name] = {channel_name: new_channel_name, messages: []};

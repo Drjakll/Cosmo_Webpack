@@ -9,6 +9,10 @@ let Wrapper = function(){
 
             this.email_socket[email] = this.socket;
 
+            this.socket.emit('reconnect_all_rooms', {});
+            /*
+
+
             for(let i in room_tags.private){
 
                 let room_name = room_tags.private[i];
@@ -31,10 +35,13 @@ let Wrapper = function(){
 
                 this.socket.to(public_room_name).emit('update_public_online_users', {channel_name: public_room_name, online_users: online_users || {}});
             }
+            */
 
         }
 
-        this.email_socket[email].last_pinged = Date.now();
+        this.socket.last_pinged = Date.now();
+
+        this.socket.emit('pong', {});
 
     };
     
