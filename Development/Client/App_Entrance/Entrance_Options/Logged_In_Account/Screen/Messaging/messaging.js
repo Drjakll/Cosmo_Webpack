@@ -293,6 +293,7 @@ class Messaging extends Component {
 
     Save_Conversation = async (current_room_tag)=>{
 
+        //Saving conversation only applies to private conversations
         let conversation_info = this.state.conversations.private[current_room_tag];
 
         if(!conversation_info){
@@ -363,6 +364,7 @@ class Messaging extends Component {
         this.setState({selected_users: this.state.selected_users});
     }
 
+    //Only apply to private conversations
     Seen_By = async (room_tag)=>{
 
         let {account_data, conversations, private_or_public} = this.state;
@@ -377,6 +379,7 @@ class Messaging extends Component {
 
         let {seen_by} = conversations.private[room_tag] || {};
 
+        //If it's already seen by this user, do nothing
         if(!seen_by || seen_by[account_data.email] !== undefined){
             return;
         }
@@ -386,7 +389,8 @@ class Messaging extends Component {
 
     Clear_Seen_By = (room_tag, from_email)=>{
 
-        if(!room_tag){
+        //Only apply to private conversations
+        if(!room_tag || this.state.private_or_public === "public"){
             return;
         }
 
@@ -401,18 +405,23 @@ class Messaging extends Component {
     Init_Public_Channels = async ()=>{
 
         let {account_data, conversations} = this.state;
+
         let {favorite_public_channel} = account_data;
 
+        //It's possible that the favorite_public_channel is still a string
         favorite_public_channel = typeof favorite_public_channel === "string" ? JSON.parse(favorite_public_channel) || {} : favorite_public_channel;
 
         conversations.public = favorite_public_channel;
 
         await this.setState({conversations});
 
+        
         this.Join_Public_Channels(favorite_public_channel, false);
 
     }
 
+
+    //update_profile indicates whether it should update the profile's favorite_public_channel object. Normally only updates when it's the first time joining the public channels
     Join_Public_Channels = (public_channels, update_profile = true)=>{
 
         let {account_data, conversations} = this.state;
