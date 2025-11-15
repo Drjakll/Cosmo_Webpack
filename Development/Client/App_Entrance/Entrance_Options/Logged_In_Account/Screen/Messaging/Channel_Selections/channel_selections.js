@@ -10,14 +10,15 @@ class Channel_Selections extends Component {
         
         super(props);
 
-        let {connection_list, account_data, public_channels, selected_channel} = this.props;
+        let {connection_list, account_data, public_channels, selected_channel, msg_socket} = this.props;
 
         this.state = {
             connection_list,
             account_data,
             public_channels, //example: {'Channel 1': {channel_name: 'Channel 1'}}
             show_join_channel: false, // A trigger for opening options for creating/joining a channel
-            selected_channel
+            selected_channel,
+            msg_socket
         };  
     }
 
@@ -66,7 +67,13 @@ class Channel_Selections extends Component {
         return (
                 <div id="channel-selections">
 
-                    {show_join_channel ? <Join_Channel_Options exit={this.Show_Join_Channel} join_public_channels={this.props.join_public_channels} /> : ""}
+                    {show_join_channel ? 
+                    <Join_Channel_Options 
+                        exit={this.Show_Join_Channel} 
+                        join_public_channels={this.props.join_public_channels} 
+                        msg_socket={this.state.msg_socket}
+                    /> 
+                    : ""}
 
                     <div id="available-channels">
 

@@ -108,6 +108,7 @@ let Storage = function(store_obj){
 
         let vSplit = value.toLowerCase().split("");
 
+        //This is the key for identifying the entry, must be manually added to the entry object
         let {key} = entry;
 
         let recursion = async (i, sub_ptr)=>{
@@ -179,6 +180,7 @@ let Storage = function(store_obj){
 
     };
 
+    //The store_info object must have a "key" field as a string for identifying the entry
     this.Store = (store_info)=>{
 
         for(let key in store_info){

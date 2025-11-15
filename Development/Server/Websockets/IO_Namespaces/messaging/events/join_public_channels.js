@@ -18,6 +18,10 @@ let Wrapper = function(){
 
                 //If online users is attached to the channel object
                 delete channel.online_users;
+                delete channel.messages;
+
+                //Must have a "key" field for storage purposes
+                channel.key = channel_name;
 
                 this.channel_storage.Store(channel);
 

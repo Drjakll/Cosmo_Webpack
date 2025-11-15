@@ -27,7 +27,8 @@ class Messaging extends Component {
             selected_room_tag: "",
             selected_users: {}, //Selected users for any purpose, (example: add selected users to a private conversation)
             private_or_public: "private",
-            current_users_info: {} //Current user information that are currently in the chat room
+            current_users_info: {}, //Current user information that are currently in the chat room,
+            msg_socket: null
         };  
     }
 
@@ -130,6 +131,8 @@ class Messaging extends Component {
 
             //Report user's presence within the socket namespace
             this.msg_socket.emit('report_presence', {email: this.state.account_data.email});
+
+            this.setState({msg_socket: this.msg_socket});
 
         });
 
@@ -509,6 +512,7 @@ class Messaging extends Component {
                             public_channels={this.state.conversations.public}
                             selected_channel={this.state.conversations.public[this.state.selected_room_tag]?.channel_name || "connections"}
                             set_msg_area_user_info={this.Set_Current_Users_Info}
+                            msg_socket={this.state.msg_socket}
                         />
 
                     </div>
