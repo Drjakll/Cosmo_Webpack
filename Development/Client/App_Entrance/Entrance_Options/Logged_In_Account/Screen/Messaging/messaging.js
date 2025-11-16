@@ -28,7 +28,8 @@ class Messaging extends Component {
             selected_users: {}, //Selected users for any purpose, (example: add selected users to a private conversation)
             private_or_public: "private",
             current_users_info: {}, //Current user information that are currently in the chat room,
-            msg_socket: null
+            msg_socket: null,
+            public_channels_search_results: {}
         };  
     }
 
@@ -261,6 +262,11 @@ class Messaging extends Component {
 
             this.setState({conversations, visible_users});
 
+        });
+
+        this.msg_socket?.on('catch_public_chats', ({channels})=>{
+
+            this.setState({public_channels_search_results: channels});
         });
     }
 
@@ -513,6 +519,7 @@ class Messaging extends Component {
                             selected_channel={this.state.conversations.public[this.state.selected_room_tag]?.channel_name || "connections"}
                             set_msg_area_user_info={this.Set_Current_Users_Info}
                             msg_socket={this.state.msg_socket}
+                            public_channels_search_results={this.state.public_channels_search_results}
                         />
 
                     </div>

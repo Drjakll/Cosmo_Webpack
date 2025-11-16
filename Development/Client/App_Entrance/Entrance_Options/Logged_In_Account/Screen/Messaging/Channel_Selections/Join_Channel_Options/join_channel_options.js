@@ -19,10 +19,13 @@ class Join_Channel_Options extends Component {
         
         super(props);
 
+        let {public_channels_search_results} = this.props;
+
         this.state = {
             new_channel_name: "",
             available_search_options: this.Search_Options,
-            attached_search_requirements: {}
+            attached_search_requirements: {},
+            public_channels_search_results
         };  
     }
 
@@ -89,7 +92,7 @@ class Join_Channel_Options extends Component {
 
     Search_Channels = ()=>{
 
-        let search_req = {};
+        this.props.msg_socket.emit('search_public_chats', {search_req: this.Requirement_Input});
 
     }
 
@@ -129,6 +132,39 @@ class Join_Channel_Options extends Component {
                             <div id="join-channel-inner-wrapper">
 
                                 <div id="existing-channel-name-wrapper">
+
+                                    {Object.keys(this.state.public_channels_search_results).length === 0 ? 
+                                    
+                                        <div id="no-channels-found-label">
+                                            No Channels Found
+                                        </div>
+                                    
+                                    :
+
+                                        Object.keys(this.state.public_channels_search_results).map((key, index)=>{
+
+                                            let channel_obj = this.state.public_channels_search_results[key];
+
+                                            return (
+                                                <div key={index} className="existing-channel-option">
+
+                                                    <label>{channel_obj.channel_name}</label>
+
+                                                    <div id="join-existing-channel-button-wrapper">
+
+                                                        <button onClick={()=>{
+                                                            
+                                                        }}>
+                                                            Join Channel
+                                                        </button>
+
+                                                    </div>
+
+                                                </div>
+                                            );
+
+                                        })
+                                    }
 
                                 </div>
 

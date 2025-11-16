@@ -10,12 +10,12 @@
         position: relative;
         height: 100%;
         width: 100%;
-        background-color: rgba(0,0,0,0.2);
+        background-color: rgba(0,0,0,0.4);
         transition: 1s;
 
         &:hover {
             cursor: pointer;
-            background-color: rgba(0,0,0,0.4);
+            background-color: rgba(0,0,0,0.1);
         }
     }
 
@@ -53,6 +53,7 @@
                     font-size: 24px;
                     border-radius: 25px;
                     text-align: center;
+                    border: rgba(0,0,0,0.5) solid 0.5px;
                 }
 
                 #characters-remain {
@@ -105,6 +106,50 @@
                     width: calc(100% - 30px);
                     display: block;
                     border: rgba(75,75,75,1) solid 0.5px;
+                    overflow-y: auto;
+                    overflow-x: hidden;
+
+                    #no-channels-found-label {
+                        width: 100%;
+                        height: 100%;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        font-size: 18px;
+                        color: rgba(150,150,150,1);
+                    }
+
+                    .existing-channel-option {
+                        width: 100%;
+                        display: block;
+                        border-bottom: rgba(0,0,0,0.5) solid 1px;
+
+                        label {
+                            width: calc(100% - 10px);
+                            min-height: 30px;
+                            display: flex;
+                            align-items: center;
+                            padding-left: 10px;
+                            border-bottom: rgba(0,0,0,0.25) solid 0.25px;
+                            transition: 1s;
+                            background-color: rgba(0,0,0,0.1);
+                            color: rgba(75,75,75,1);
+
+                            &:hover {
+                                cursor: pointer;
+                                background-color: rgb(51, 166, 99);
+                                color: whitesmoke;
+                            }
+                        }
+                        
+                        #join-existing-channel-button-wrapper {
+                            width: 100%;
+                            height: 30px;
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                        }
+                    }
                 }
             }
 
@@ -130,8 +175,8 @@
                         color: whitesmoke;
                         font-size: 16px;
                         font-weight: 500;
-                        border-bottom: rgba(0,0,0,0.5) solid 1px;
-                        box-shadow: rgba(0,0,0,0.5) 5px 5px 7px;
+                        border-bottom: rgba(0,0,0,0.5) solid 0px;
+                        //box-shadow: rgba(0,0,0,0.5) 5px 5px 7px;
                         z-index: 9999;
                         //text-decoration: underline;
                         user-select: none;
@@ -165,6 +210,77 @@
                 #attached-search-requirements {
                     width: 100%;
                     height: 70%;
+                    overflow-y: auto;
+                    scrollbar-width: none;
+                    display: block;
+
+                    .attached-search-requirement-option {
+                        width: 100%;
+                        display: block;
+                        border-bottom: rgba(0,0,0,0.5) solid 1px;
+
+                        label {
+                            width: 100%;
+                            height: 25px;
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                        }
+
+                        #attached-search-requirement-element {
+                            width: 100%;
+                            padding: 10px 0px 10px 0px;
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+
+                            input {
+                                margin: 0;
+                                padding: 0;
+                                width: 80%;
+                                height: 25px;
+                                text-align: center;
+                                font-size: 16px;
+                                border: rgba(0,0,0,0.5) solid 0.5px;
+                                border-radius: 15px;
+                            }
+                        }
+
+                        #remove-attached-requirement-button {
+                            width: 100%;
+                            height: 25px;
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                            transition: 1s;
+                            color: rgba(0,0,0,0.75);
+
+                            &:hover {
+                                cursor: pointer;
+                                background-color: rgba(151, 14, 14, 0.758);
+                                color: whitesmoke;
+                            }
+                        }
+                    }
+
+                    #search-channels-button-wrapper {
+                        width: 100%;
+                        height: 50px;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+
+                        button {
+                            width: 80%;
+                            height: 70%;
+                            border: rgba(75,75,75,1) solid 1px;
+                            border-radius: 25px;
+
+                            &:hover {
+                                cursor: pointer;
+                            }   
+                        }
+                    }
                 }
             }
         }

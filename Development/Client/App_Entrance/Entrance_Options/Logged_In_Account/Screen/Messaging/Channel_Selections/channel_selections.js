@@ -10,7 +10,7 @@ class Channel_Selections extends Component {
         
         super(props);
 
-        let {connection_list, account_data, public_channels, selected_channel, msg_socket} = this.props;
+        let {connection_list, account_data, public_channels, selected_channel, msg_socket, public_channels_search_results} = this.props;
 
         this.state = {
             connection_list,
@@ -18,7 +18,8 @@ class Channel_Selections extends Component {
             public_channels, //example: {'Channel 1': {channel_name: 'Channel 1'}}
             show_join_channel: false, // A trigger for opening options for creating/joining a channel
             selected_channel,
-            msg_socket
+            msg_socket,
+            public_channels_search_results 
         };  
     }
 
@@ -72,6 +73,7 @@ class Channel_Selections extends Component {
                         exit={this.Show_Join_Channel} 
                         join_public_channels={this.props.join_public_channels} 
                         msg_socket={this.state.msg_socket}
+                        public_channels_search_results={this.state.public_channels_search_results}
                     /> 
                     : ""}
 

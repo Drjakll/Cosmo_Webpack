@@ -73,6 +73,7 @@ let Wrapper = function (){
         socket.on('ping', events.ping.event);
         socket.on('send_report_online', events.send_report_online.event);
         socket.on('join_public_channels', events.join_public_channels.event);
+        socket.on('search_public_chats', events.search_public_chats.event);
 
     };
 };
