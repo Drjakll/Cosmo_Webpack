@@ -7,7 +7,7 @@ class Join_Channel_Options extends Component {
         channel_name: {
             display_name: "Channel Name", 
             type: "text",
-            element: <input type="text" placeHolder="Channel Name" onChange={(e)=>{ this.Set_Text_Requirement("channel_name", e.target.value); }}/>
+            element: <input type="text" placeholder="Channel Name" onChange={(e)=>{ this.Set_Text_Requirement("channel_name", e.target.value); }}/>
         }
     }
 
@@ -153,7 +153,9 @@ class Join_Channel_Options extends Component {
                                                     <div id="join-existing-channel-button-wrapper">
 
                                                         <button onClick={()=>{
-                                                            
+
+                                                            this.props.join_public_channels({[channel_obj.channel_name]: channel_obj});
+
                                                         }}>
                                                             Join Channel
                                                         </button>

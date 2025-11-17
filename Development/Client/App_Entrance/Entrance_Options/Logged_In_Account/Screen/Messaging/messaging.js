@@ -24,7 +24,7 @@ class Messaging extends Component {
             connection_list: this.props.connection_list,
             visible_users: [],
             conversations: {public: {}, private: {}},
-            selected_room_tag: "",
+            selected_room_tag: null,
             selected_users: {}, //Selected users for any purpose, (example: add selected users to a private conversation)
             private_or_public: "private",
             current_users_info: {}, //Current user information that are currently in the chat room,
@@ -268,11 +268,13 @@ class Messaging extends Component {
 
             this.setState({public_channels_search_results: channels});
         });
+
+
     }
 
     Leave_Private_Channel = (room_tag, remaining_users)=>{
 
-        this.msg_socket?.emit('leave_conversation', {room_tag, remaining_users});
+        this.msg_socket?.emit('leave_private_conversation', {room_tag, remaining_users});
 
         delete this.All_Room_Tags.private[room_tag];
     }
@@ -474,6 +476,31 @@ class Messaging extends Component {
         }
     }
 
+    Leave_Public_Channel = (channel_name)=>{
+
+        let {conversations, account_data} = this.state;
+
+        let channel_obj = conversations.public[channel_name];
+
+        if(!channel_obj){
+            alert("Invalid public channel selected");
+            return;
+        }
+
+        this.msg_socket?.emit('leave_public_channel', {channel_obj, user_email: this.state.account_data.email});
+
+        delete this.All_Room_Tags.public[channel_name];
+
+        delete conversations.public[channel_name];
+
+        account_data.favorite_public_channel = conversations.public;
+
+        this.setState({conversations, account_data});
+
+        this.Update_Profile(account_data);
+
+    }
+
     Update_Profile = async (account_data)=>{
 
         let {update_profile} = this.context.Request_URLs;
@@ -559,6 +586,7 @@ class Messaging extends Component {
                             private_or_public={this.state.private_or_public}
                             set_public_private={this.Set_Public_Private}
                             current_users_info={this.state.current_users_info}
+                            leave_public_channel={this.Leave_Public_Channel}
                         />
 
                     </div>

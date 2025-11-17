@@ -50,7 +50,7 @@ class Message_Area extends Component {
 
     Has_Selected_Conversation = ()=>{
 
-        return this.state.selected_room_tag ? true : false;
+        return this.state.selected_room_tag !== null ? true : false;
     }
 
     Leave_Private_Conversation = async ()=>{
@@ -74,6 +74,21 @@ class Message_Area extends Component {
 
         this.props.leave_private_channel(selected_room_tag, selected_conversation.users);
         
+    }
+
+    Leave_Public_Conversation = async ()=>{
+
+        let {conversations, selected_room_tag} = this.state;
+
+        let selected_conversation = conversations.public[selected_room_tag];
+        
+        if(!selected_conversation){
+            alert("Invalid conversation selected");
+            return;
+        }           
+
+        this.props.leave_public_channel(selected_room_tag);
+
     }
 
     Select_Button = (selection) => {
@@ -202,7 +217,7 @@ class Message_Area extends Component {
                                 <Conversation_Input 
                                     send_msg={this.props.send_message}
                                     has_selected_conversation={this.Has_Selected_Conversation}
-                                    leave_conversation={this.Leave_Private_Conversation}
+                                    leave_conversation={private_or_public === "private" ? this.Leave_Private_Conversation : this.Leave_Public_Conversation}
                                 />
 
                             </div>

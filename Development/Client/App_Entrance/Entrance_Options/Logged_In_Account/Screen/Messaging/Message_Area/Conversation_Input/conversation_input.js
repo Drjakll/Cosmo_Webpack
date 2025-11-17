@@ -10,7 +10,7 @@ class Conversation_Input extends Component {
     Misc_Buttons = [
         {
             label: "Leave",
-            action: ()=>{
+            action: (e)=>{
 
                 if(!this.props.has_selected_conversation()){
                     alert("No conversation is selected");
@@ -23,7 +23,11 @@ class Conversation_Input extends Component {
                     return;
                 }
 
-                this.props.send_msg(`I am leaving this conversation...`);
+                if(this.props.private_or_public === "private"){
+
+                    this.props.send_msg(`I am leaving this conversation...`);
+
+                }
 
                 this.props.leave_conversation();
             }
@@ -33,7 +37,6 @@ class Conversation_Input extends Component {
     constructor(props){
 
         super(props);
-
         
     }
 

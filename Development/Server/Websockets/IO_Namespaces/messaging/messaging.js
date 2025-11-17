@@ -67,13 +67,14 @@ let Wrapper = function (){
         socket.on('join_single_private_channel', events.join_single_private_channel.event);
         socket.on('send_msg_to_channel', events.send_msg_to_channel.event);
         socket.on('refresh_conversation_list', events.refresh_conversation_list.event);
-        socket.on('leave_conversation', events.leave_conversation.event);
+        socket.on('leave_private_conversation', events.leave_private_conversation.event);
         socket.on('update_seen_by', events.update_seen_by.event);
         socket.on('clear_seen_by', events.clear_seen_by.event);
         socket.on('ping', events.ping.event);
         socket.on('send_report_online', events.send_report_online.event);
         socket.on('join_public_channels', events.join_public_channels.event);
         socket.on('search_public_chats', events.search_public_chats.event);
+        socket.on('leave_public_channel', events.leave_public_channel.event);
 
     };
 };
