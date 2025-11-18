@@ -8,6 +8,13 @@ let Wrapper = function(){
         
         let results = await this.channel_storage.Search(search_req);
 
+        for(let i in results){
+
+            let number_of_users = Object.keys(this.public_channel_list[results[i].channel_name]?.online_users || {}).length;
+
+            results[i].number_of_users = number_of_users;
+        }
+
         this.socket.emit('catch_public_chats', {channels: results});
     };
     

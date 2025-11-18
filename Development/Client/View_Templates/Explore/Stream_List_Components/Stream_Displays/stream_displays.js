@@ -34,15 +34,25 @@ class Stream_Displays extends Component {
 
     
     render(){
+
+        let { active_streams } = this.state;
+
+        let active_streams_keys = Object.keys(active_streams);
         
         return (
                 <div id="stream-displays">
                     
                     <div id="thumbnails-wrapper">
                     
-                        {Object.keys(this.state.active_streams)?.map((key, index)=>{
+                        {active_streams_keys.length === 0 ? 
+                        
+                        <div id="no-streams-message">No Active Streams</div> 
+                        
+                        : 
 
-                            let stream_info = this.state.active_streams[key];
+                        active_streams_keys?.map((key, index)=>{
+
+                            let stream_info = active_streams[key];
 
                             return <div className="thumbnail-wrapper" key={index}>
 

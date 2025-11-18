@@ -146,9 +146,11 @@ class Join_Channel_Options extends Component {
                                             let channel_obj = this.state.public_channels_search_results[key];
 
                                             return (
-                                                <div key={index} className="existing-channel-option">
+                                                <div key={index} className="existing-channel-entry">
 
-                                                    <label>{channel_obj.channel_name}</label>
+                                                    <label>{channel_obj.channel_name}</label> 
+
+                                                    <div id="number-of-users">{channel_obj.number_of_users} users</div>
 
                                                     <div id="join-existing-channel-button-wrapper">
 
