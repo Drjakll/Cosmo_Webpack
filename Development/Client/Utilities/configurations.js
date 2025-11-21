@@ -54,6 +54,19 @@ const UTC_Time_Now = function () {
     return { year, month, date, hours, minutes, seconds };
 }
 
+const Local_Time_Now = function () {
+       let now = new Date();
+
+    let year = parseInt(now.getFullYear());
+    let month = parseInt(now.getMonth()) + 1;
+    let date = parseInt(now.getDate());
+    let hours = parseInt(now.getHours());
+    let minutes = parseInt(now.getMinutes());
+    let seconds = parseInt(now.getSeconds());
+
+    return { year, month, date, hours, minutes, seconds };
+}
+
 
 export default {
     Cookie_Expire_Days: 1,
@@ -61,5 +74,6 @@ export default {
     Verify_Password: Verify_Password,
     Months: Months,
     Weekdays: Weekdays,
-    UTC_Time_Now: UTC_Time_Now
+    UTC_Time_Now: UTC_Time_Now,
+    Local_Time_Now: Local_Time_Now
 }

@@ -73,6 +73,8 @@ class Conversation_Texts extends Component {
 
         return <div id="conversation-texts">
 
+            {this.props.hast_selected_conversation() ? 
+            
             <div id="conversation-msges" ref={this.containerRef}>
 
                 {messages?.map((value, index)=>{
@@ -91,7 +93,15 @@ class Conversation_Texts extends Component {
 
                 })}
 
-            </div>
+            </div> 
+
+            : 
+
+            <div id="no-conversation-selected">
+
+                <pre>No conversation selected</pre>     
+
+            </div>}
 
             <div id="seen-by">
 
@@ -102,7 +112,7 @@ class Conversation_Texts extends Component {
                     
                     return <pre className="seen-by-name" key={email}>
                         
-                        {` ${first_name} ${last_name} ${ind === emails.length - 1 ? "" : ", "}`}
+                        {` ${first_name || ""} ${last_name || ""} ${ind === emails.length - 1 ? "" : ", "}`}
 
                     </pre>;
 

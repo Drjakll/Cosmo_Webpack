@@ -7,18 +7,16 @@ class Connection_Channel extends Component {
         
         super(props);
 
-        let {connection_list, account_data, selected} = this.props;
+        let {connection_list, account_data, channel_selected} = this.props;
 
         this.state = {
             connection_list,
             account_data,
-            selected
+            channel_selected
         };  
     }
 
     componentDidMount(){
-
-        //this.props.switch_channel(this.state.connection_list, "connections");
 
     }
 
@@ -29,19 +27,25 @@ class Connection_Channel extends Component {
         }
 
         this.setState(this.props);
+
+        let {channel_selected, connection_list} = this.props;
+
+        if(JSON.stringify(connection_list) !== JSON.stringify(prevProps.connection_list)){
+            this.props.switch_channel(connection_list, "connections", "public");
+        }
     }
 
     Switch_Channel = (e)=>{
 
         let {switch_channel} = this.props;
 
-        switch_channel(this.state.connection_list, "connections", "private");
+        switch_channel(this.state.connection_list, "connections", "public");
     }
 
     render(){
 
         return (
-                <div id="connection-channel" onClick={this.Switch_Channel} className={`${this.state.selected ? "selected-channel" : ""}`}>
+                <div id="connection-channel" onClick={this.Switch_Channel} className={`${this.state.channel_selected === "connections" ? "selected-channel" : ""}`}>
 
                     <label>Connections</label>
                     

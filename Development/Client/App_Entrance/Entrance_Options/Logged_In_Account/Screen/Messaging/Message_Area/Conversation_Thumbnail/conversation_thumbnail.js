@@ -107,7 +107,7 @@ class Conversation_Thumbnail extends Component {
 
     Create_Small_User_Icon = (user_info, index, is_online)=>{
 
-        if(!user_info || user_info.email === this.state.account_data.email){
+        if(!user_info){
             return "";
         }
 
@@ -121,7 +121,7 @@ class Conversation_Thumbnail extends Component {
                 <img src={`${aws_s3_url}${profile_picture_link}`} />
             </div>
 
-            <div id="is-online" className={is_online ? "online" : "offline"}>
+            <div id="is-online" className={is_online || this.state.account_data.email === user_info.email ? "online" : "offline"}>
 
             </div>
 
@@ -134,49 +134,6 @@ class Conversation_Thumbnail extends Component {
         </div>;
 
     }
-
-    /* Was thinking to add a reject or accept to an invitation to the conversation, but then I change my mind not to
-    
-    Reject_Or_Accept_Buttons = ()=>{
-
-        let Accept = async ()=>{
-
-            let {user_status, conversation_info} = this.state;
-
-            user_status.join_status = "accepted";
-
-            await this.props.update_conversation(conversation_info);
-
-            console.log(conversation_info.users);
-
-            this.props.refresh_conversation_list(conversation_info.users);
-
-        };
-
-        let Reject = async ()=>{
-
-            let {conversation_info, account_data} = this.state;
-
-            let {users, room_tag} = conversation_info;
-
-            conversation_info.users = users.filter((u)=>{ return u.email !== account_data.email; });
-
-            await this.props.update_conversation(conversation_info);
-
-            this.props.refresh_conversation_list(conversation_info.users);
-
-        };
-
-        return <div id="accept-or-reject">
-
-            <div id="accept" onClick={Accept}>Accept</div>
-
-            <div id="reject" onClick={Reject}>Reject</div>
-
-        </div>;
-
-    };
-    */
 
     render(){
 
@@ -197,7 +154,7 @@ class Conversation_Thumbnail extends Component {
 
             <div id="small-user-icons-wrapper">
 
-                {Object.keys(this.state.users_info).map((email, key)=>{
+                {Object.keys(this.state.users_info).reverse().map((email, key)=>{
 
                     let user_info = this.state.users_info[email];
 

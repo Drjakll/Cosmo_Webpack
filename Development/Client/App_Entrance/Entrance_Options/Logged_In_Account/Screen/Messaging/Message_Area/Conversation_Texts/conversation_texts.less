@@ -14,12 +14,24 @@
         overflow-y: auto;
         overflow-x: hidden;
         transition: 1s;
+        background-color: rgba(0,0,0,0.0);
 
         .msg-entry-wrapper {
             width: 100%;
             position: relative;
             margin-bottom: 30px;
         }
+    }
+
+    #no-conversation-selected {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 24px;
+        color: gray;
+        user-select: none;
     }
 
     #seen-by {

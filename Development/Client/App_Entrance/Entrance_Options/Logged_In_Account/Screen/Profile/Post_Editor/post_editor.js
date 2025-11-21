@@ -51,21 +51,19 @@ class Post_Editor extends Component {
 
         let { UTC_Time_Now } = Configurations;
 
-        let utc_now = UTC_Time_Now();
+        let utc_now = new Date().getTime();
 
         let { last_posted } = account_info;
 
         if (last_posted !== 'null' && last_posted !== undefined) {
 
-            let split_date = last_posted.split("T")[0].split("-");
+            let last_posted_in_ms = new Date(last_posted).getTime();
 
-            let l_year = parseInt(split_date[0]);
-            let l_month = parseInt(split_date[1]);
-            let l_day = parseInt(split_date[2]);
+            let time_difference = utc_now - last_posted_in_ms;
 
-            let { year, month, date } = utc_now; 
+            let one_day_in_ms = 24 * 60 * 60 * 1000;
 
-            if (year === l_year && month === l_month && date === l_day) {
+            if (time_difference < one_day_in_ms) {
 
                 await this.setState({ disable_create_new_post: true });
             }
@@ -139,7 +137,22 @@ class Post_Editor extends Component {
 
                 <div className={`post-button ${this.state.disable_create_new_post ? "disabled" : ""}`} id="create-new-post-button" onClick={(e) => {
                     if (this.state.disable_create_new_post) {
-                        alert("Only one post can be created per day."); 
+
+                        let {last_posted} = this.state.account_info;
+
+                        let last_posted_ms = new Date(last_posted).getTime();
+                        let now_ms = new Date().getTime();
+
+                        let time_diff = now_ms - last_posted_ms;
+
+                        let hours_left = Math.ceil((24 * 60 * 60 * 1000 - time_diff) / (60 * 60 * 1000));
+                        
+                        let minutes_left = Math.ceil((24 * 60 * 60 * 1000 - time_diff) % (60 * 60 * 1000) / (60 * 1000));
+
+                        let seconds_left = Math.ceil((24 * 60 * 60 * 1000 - time_diff) % (60 * 1000) / 1000);
+
+                        alert(`You can create your next post in ${hours_left} hours, ${minutes_left} minutes, and ${seconds_left} seconds.`);
+                        
                         return;
                     }
 

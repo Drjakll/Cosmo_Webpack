@@ -50,7 +50,9 @@ class Message_Area extends Component {
 
     Has_Selected_Conversation = ()=>{
 
-        return this.state.selected_room_tag !== null ? true : false;
+        let {selected_room_tag} = this.state;
+
+        return selected_room_tag !== null && selected_room_tag !== "connections" ? true : false;
     }
 
     Leave_Private_Conversation = async ()=>{
@@ -208,6 +210,7 @@ class Message_Area extends Component {
                                                     user_status={user_status}
                                                     //public conversation have the object channel_name, while private conversation have the object room_tag
                                                     current_users_info={this.state.current_users_info[conversation?.room_tag || conversation?.channel_name]} 
+                                                    hast_selected_conversation={this.Has_Selected_Conversation}
                                     />
 
                             </div>
@@ -230,7 +233,7 @@ class Message_Area extends Component {
 
                         <div id="top-right-message-area">
 
-                            Conversations
+                            Private Conversations
     
                         </div>
 

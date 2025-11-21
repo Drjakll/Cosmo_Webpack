@@ -56,13 +56,13 @@ class Posts extends Component {
         if (account_data) {
             
             let { last_posted } = account_data;
+
+            let last_posted_local = new Date(last_posted);
             
-            let post_date_parts = last_posted?.split("T")[0]?.split("-");
-            
-            if(post_date_parts){
+            if(last_posted_local){
                 
-                let year = parseInt(post_date_parts[0]);
-                let month = parseInt(post_date_parts[1]);
+                let year = last_posted_local.getFullYear();
+                let month = last_posted_local.getMonth() + 1;
                 
                 this.Change_Month({year: year, month: month});
                 

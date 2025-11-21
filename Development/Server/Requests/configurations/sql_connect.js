@@ -10,7 +10,8 @@ let Connect = async () => {
         host: host,
         user: user,
         password: password,
-        database: databaseName
+        database: databaseName,
+        timezone: 'Z' // UTC
     });
 
     SQL.connect((err) => {

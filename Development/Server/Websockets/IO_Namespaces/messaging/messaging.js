@@ -76,6 +76,42 @@ let Wrapper = function (){
         socket.on('search_public_chats', events.search_public_chats.event);
         socket.on('leave_public_channel', events.leave_public_channel.event);
 
+        //Checking every 10 seconds if any socket has not been pinged for over 11 seconds
+        setInterval(async ()=>{
+
+            let email_socket = this.email_socket;
+            let public_channel_list = this.public_channel_list;
+
+            let time_now = Date.now();
+
+            for(let email in email_socket){
+
+                let soc = email_socket[email];
+
+                if(time_now - soc.last_pinged > 11000){
+
+                    for(let name in soc.private.rooms_joined){
+
+                        this.io.to(name).emit('report_private_offline', {room_tag: name, email});
+
+                    }        
+
+                    delete email_socket[email];
+
+                    for(let name in soc.public.rooms_joined){
+
+                        this.io.to(name).emit('report_public_offline', {room_tag: name, email});
+
+                        //Delete the online user from the public record
+                        delete public_channel_list[name]?.online_users[email];
+
+                    }
+                }
+            }
+
+
+        }, 10000);
+
     };
 };
 

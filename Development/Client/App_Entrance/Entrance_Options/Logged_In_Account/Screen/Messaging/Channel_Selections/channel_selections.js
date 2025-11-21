@@ -86,7 +86,7 @@ class Channel_Selections extends Component {
                                 connection_list={this.state.connection_list}
                                 account_data={this.state.account_data}
                                 switch_channel={this.props.switch_channel}
-                                selected={this.state.selected_channel === "connections" ? true : false}
+                                channel_selected={this.state.selected_channel}
                             />
 
                         </div>
