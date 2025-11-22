@@ -145,11 +145,11 @@ class Post_Editor extends Component {
 
                         let time_diff = now_ms - last_posted_ms;
 
-                        let hours_left = Math.ceil((24 * 60 * 60 * 1000 - time_diff) / (60 * 60 * 1000));
+                        let hours_left = Math.floor((24 * 60 * 60 * 1000 - time_diff) / (60 * 60 * 1000));
                         
-                        let minutes_left = Math.ceil((24 * 60 * 60 * 1000 - time_diff) % (60 * 60 * 1000) / (60 * 1000));
+                        let minutes_left = Math.floor((24 * 60 * 60 * 1000 - time_diff) % (60 * 60 * 1000) / (60 * 1000));
 
-                        let seconds_left = Math.ceil((24 * 60 * 60 * 1000 - time_diff) % (60 * 1000) / 1000);
+                        let seconds_left = Math.floor((24 * 60 * 60 * 1000 - time_diff) % (60 * 1000) / 1000);
 
                         alert(`You can create your next post in ${hours_left} hours, ${minutes_left} minutes, and ${seconds_left} seconds.`);
                         

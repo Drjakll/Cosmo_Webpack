@@ -18,6 +18,7 @@ class Single_Post extends Component {
         'December'
     ]
 
+    //Needed for to set innerHTML for post body
     bodyRef = createRef();
 
     constructor(props) {
@@ -117,13 +118,31 @@ class Single_Post extends Component {
 
                 <pre ref={this.bodyRef}>
                 </pre>
-        
+
             </div>
             
-            <div id="time-created">
-                
-                {this.Generate_Beautiful_Date(date_created)}
-                
+            <div id="bottom-body">
+
+                <div id="comments-count-wrapper" className="bottom-body-section">
+
+                    <div id="open-to-comment-button">
+
+                        Comments 
+                        
+                    </div>
+
+                </div>
+
+                <div id="time-created" className="bottom-body-section">
+                    
+                    {this.Generate_Beautiful_Date(date_created)}
+                    
+                </div>
+
+                <div className="bottom-body-section">
+
+                </div>
+
             </div>
 
         </div>;
