@@ -1,4 +1,5 @@
 import React, { Component, createRef } from 'react';
+import Comments_Container from './Comments_Container/comments_container.js';
 import './single_post.less';
 
 class Single_Post extends Component {
@@ -31,7 +32,7 @@ class Single_Post extends Component {
 
         this.state = {
             post: post,
-            post_photos: []
+            open_comments_container: false
         };
     }
 
@@ -39,7 +40,6 @@ class Single_Post extends Component {
 
         this.bodyRef.current.innerHTML = this.state.post.body;
 
-        this.Get_Post_Photos();
     }
     
     async componentDidUpdate(prevProps, prevState){
@@ -52,7 +52,6 @@ class Single_Post extends Component {
 
         this.bodyRef.current?.innerHTML = this.state.post?.body;
 
-        this.Get_Post_Photos();
     }
     
     Generate_Beautiful_Date = (date_str)=>{
@@ -75,38 +74,36 @@ class Single_Post extends Component {
         
     }
 
-    Get_Post_Photos = async () => {
+    Open_Comments_Container = (e)=>{
+        
+        this.setState({open_comments_container: true});
 
-        let { post } = this.state;
+    }
 
-        if (!post || !post.id) {
-            return;
-        }
+    Close_Comments_Container = (e)=>{
 
-        let { get_post_photo_links } = this.context.Request_URLs;
+        this.setState({open_comments_container: false});
 
-        let res = await (await fetch(get_post_photo_links, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(post)
-        })).json();
-
-        if (res && res.photos.length > 0) {
-
-            this.setState({
-                post_photos: res.photos
-            })
-        }
     }
 
     render() {
         
-        let {post} = this.state;
+        let {post, open_comments_container} = this.state;
         let {title, date_created} = post;
 
         return <div id="single-post">
+
+            {open_comments_container ? 
+
+            <div id="comments-container-wrapper">
+
+                <div id="comments-container-exit-button" onClick={this.Close_Comments_Container}>
+                
+                </div>
+
+                <Comments_Container post={post} generate_beautiful_date={this.Generate_Beautiful_Date} /> 
+
+            </div> : null}
         
             <div id="title">
         
@@ -117,6 +114,7 @@ class Single_Post extends Component {
             <div id="body">
 
                 <pre ref={this.bodyRef}>
+                    
                 </pre>
 
             </div>
@@ -125,7 +123,7 @@ class Single_Post extends Component {
 
                 <div id="comments-count-wrapper" className="bottom-body-section">
 
-                    <div id="open-to-comment-button">
+                    <div id="open-to-comment-button" onClick={this.Open_Comments_Container}>
 
                         Comments 
                         

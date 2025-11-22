@@ -133,20 +133,22 @@ text-node {
         }
 
         #text-node {
-            color: rgb(48, 79, 166);
+            color: rgb(7, 54, 156);
             margin: 0px !important;
             padding: 0px !important;
             width: 0px !important;
             height: 0px !important;
             white-space: pre;
             display: inline-block;
-            transition: 1s;
-            font-style: italic;
+            transition: 0.75s;
+            text-decoration: underline 0px transparent;
+            font-weight: 700;
             //user-select: none;
 
             &:hover {
                 cursor: pointer;
                 color: darkorange;
+                text-decoration: underline 1px;
             }
         }
     }

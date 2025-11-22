@@ -131,7 +131,7 @@ class Post_Editor extends Component {
 
         return <div id="post-editor">
             
-            {this.state.editor_opened ? this.Create_Editor() : <></> }
+            {this.state.editor_opened ? this.Create_Editor() : null }
 
             <div id="buttons-wrapper">
 

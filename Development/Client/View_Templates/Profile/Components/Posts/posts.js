@@ -47,7 +47,7 @@ class Posts extends Component {
         
         if(!this.props.properties){
             return;
-        }
+        }2
         
         this.setState(this.props.properties);
         
@@ -234,7 +234,7 @@ class Posts extends Component {
                             connection_list={this.state.connection_list}
                         />
                     </div>
-                    : <></>}
+                    : null}
 
                 <div id="bottom">
 
