@@ -42,29 +42,33 @@ class Comments_Container extends Component {
 
                 <div id="post-wrapper">
 
-                    <div id="post-title">
+                    <div id="post-inner-wrapper">
 
-                        {title} 
+                        <div id="post-title">
+
+                            <pre>{title}</pre> 
+
+                        </div>
+
+                        <div id="post-body">
+
+                            <pre ref={this.postBodyRef}>
+
+                            </pre>
+
+                        </div>
+
+                        <div id="post-date-created">
+
+                            {this.props.generate_beautiful_date(date_created)}
+
+                        </div>
 
                     </div>
-
-                    <div id="post-body">
-
-                        <pre ref={this.postBodyRef}>
-
-                        </pre>
-
-                    </div>
-
-                    <div id="post-date-created">
-
-                        {this.props.generate_beautiful_date(date_created)}
-
-                    </div>
-
+                    
                 </div>
 
-                <div id="comments-section">
+                <div id="comments-section-wrapper">
 
                     
 

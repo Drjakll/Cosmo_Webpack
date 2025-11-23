@@ -37,15 +37,16 @@ class Single_Comment extends Component {
         const {Request_URLs} = this.context;
         const { aws_s3_url } = Request_URLs;
 
-        const { Comment_Editor, Get_Photo_Comments } = this.props;
-        
+        const { Comment_Editor, reload_comments, delete_comment } = this.props;
+
         return <div id="single-comment-wrapper">
 
             {Comment_Editor ?
                 <div id="comment-editor-wrapper">
                     <Comment_Editor
                         comment_info={this.state.comment}
-                        Get_Photo_Comments={Get_Photo_Comments}
+                        reload_comments={reload_comments}
+                        delete_comment={delete_comment}
                     />
                 </div>
                 : <></>}

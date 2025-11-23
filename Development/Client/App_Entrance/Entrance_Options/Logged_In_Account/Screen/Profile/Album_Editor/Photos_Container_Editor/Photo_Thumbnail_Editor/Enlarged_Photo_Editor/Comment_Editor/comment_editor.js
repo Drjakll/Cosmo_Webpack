@@ -29,22 +29,11 @@ class Comment_Editor extends Component {
 
         let delete_comment = async (e) => {
 
-            let { Request_URLs } = this.context;
+            let {delete_comment, reload_comments} = this.props;
 
-            let { delete_photo_comment } = Request_URLs;
+            await delete_comment(this.state.comment_info);
 
-            let res = await (await fetch(
-                delete_photo_comment,
-                {
-                    method: "POST",
-                    body: JSON.stringify(this.state.comment_info),
-                    headers: {
-                        'Content-Type': "application/json"
-                    }
-                }
-            )).json();
-
-            this.props.Get_Photo_Comments();
+            reload_comments();
 
         }
 

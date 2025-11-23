@@ -19,6 +19,7 @@ import Explore_Template from './View_Templates/Explore/explore_template.js';
 import Calendar from './Misc_Components/Calendar/calendar.js';
 import Profile_Popup from './Popup_Templates/Profile_Popup/profile_popup.js';
 import Search_Parameters from './Data_Templates/Search_Parameters/search_parameters.js';
+import Single_Comment from './Universal_Components/Single_Comment/single_comment.js';
 import './react_entry.less';
 
 class Entry extends Component {
@@ -56,7 +57,8 @@ class Entry extends Component {
                 Calendar,
                 Profile_Popup, //Profile template but a popup
                 Upload_Files_To_S3, //Use for uploading files to aws s3
-                Search_Parameters
+                Search_Parameters,
+                Single_Comment, //Single comment component
             }}
         
         >

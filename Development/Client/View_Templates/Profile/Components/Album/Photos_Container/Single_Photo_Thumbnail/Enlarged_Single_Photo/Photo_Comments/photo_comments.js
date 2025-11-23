@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import { io } from 'socket.io-client';
 import Comment_Input from './Comment_Input/comment_input.js';
-import Single_Comment from './Single_Comment/single_comment.js';
 import './photo_comments.less';
 
 class Photo_Comments extends Component {
@@ -77,6 +76,24 @@ class Photo_Comments extends Component {
         this.setState({photo_comments: photo_comments});
         
     }
+
+    Delete_Photo_Comment = async (comment_info)=>{
+
+        let { Request_URLs } = this.context;
+
+        let { delete_photo_comment } = Request_URLs;
+
+        let res = await (await fetch(
+            delete_photo_comment,
+            {
+                method: "POST",
+                body: JSON.stringify(comment_info),
+                headers: {
+                    'Content-Type': "application/json"
+                }
+            }
+        )).json();
+    }
     
     Set_Reply = (reply) => {
         
@@ -86,6 +103,8 @@ class Photo_Comments extends Component {
     render() {
 
         let { Comment_Editor } = this.props;
+
+        let {Single_Comment} = this.context;
         
         return <div id="photo-comments-wrapper">
         
@@ -99,7 +118,8 @@ class Photo_Comments extends Component {
                             comment={comment}
                             set_reply={this.Set_Reply}
                             Comment_Editor={Comment_Editor}
-                            Get_Photo_Comments={this.Get_Photo_Comments}
+                            reload_comments={this.Get_Photo_Comments}
+                            delete_comment={this.Delete_Photo_Comment}
                         />
                         
                     </div>;

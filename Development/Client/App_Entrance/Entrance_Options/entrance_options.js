@@ -67,8 +67,11 @@ class Entrance_Options extends Component {
             //Setting the expiration date that's set on the configurations
             date.setTime(date.getTime() + Configurations.Cookie_Expire_Days * 24 * 60 * 60 * 1000);
 
-            //Convert the account data into cookie strings
-            const cookieStrs = Cookie_Tools.cookie_converter(acc_info, {"expires":date.toUTCString(), "path": "/"});
+            //saving only the email and password
+            let acc_info_auth = {email: acc_info.email, password: acc_info.password};
+
+            //Convert the account_data_copy into cookie strings
+            const cookieStrs = Cookie_Tools.cookie_converter(acc_info_auth, {"expires":date.toUTCString(), "path": "/"});
 
             //Store the cookie strings into cookie
             for(let cookieStr of cookieStrs){

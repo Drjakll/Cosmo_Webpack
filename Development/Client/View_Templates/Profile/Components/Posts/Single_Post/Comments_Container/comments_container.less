@@ -6,4 +6,90 @@
     border-radius: 15px;
     position: relative;
     z-index: 1000000;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    #post-wrapper {
+        width: 50%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        #post-inner-wrapper {
+            width: calc(100% - 40px);
+            height: calc(100% - 40px);
+            display: block;
+
+            #post-title {
+                width: 100%;
+                height: 75px;
+                font-size: 24px;
+                font-weight: bold;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                border-radius: 50px;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                border: rgba(0,0,0,0.5) solid 0.5px;
+                background-color: rgba(0,0,0,0.1);
+                box-shadow: rgba(0,0,0,0.25) 0px 0px 5px;
+
+                pre {
+                    max-width: calc(100% - 25px);
+                    max-height: 95%;
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
+                    color: rgb(30, 29, 29);
+                }
+
+            }
+
+            #post-body {
+                width: 100%;
+                height: calc(100% - 75px - 50px);
+                margin-top: 15px;
+                overflow: hidden;
+                border-radius: 10px;
+                border: rgba(0,0,0,0.5) solid 0.5px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                background-color: rgba(0,0,0,0.05);
+                box-shadow: rgba(0,0,0,0.25) 0px 0px 5px;
+                
+                pre {
+                    width: calc(100% - 30px);
+                    height: calc(100% - 30px);
+                    //margin: 15px;
+                    overflow-y: auto;
+                    white-space: pre-wrap;
+                    word-wrap: break-word;
+                    text-overflow: ellipsis;
+                    color: rgb(30, 29, 29);
+                }
+            }
+
+            #post-date-created {
+                width: 100%;
+                height: 30px;
+                margin-top: 10px;
+                font-size: 14px;
+                font-weight: bold;
+                display: flex;
+                justify-content: space-evenly;
+                align-items: center;
+                color: rgb(30, 29, 29);
+            }
+        }
+    }
+
+    #comments-section-wrapper {
+        width: 50%;
+        height: 100%;
+    }
 }
