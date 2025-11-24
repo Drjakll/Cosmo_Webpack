@@ -70,7 +70,18 @@ class Comments_Container extends Component {
 
                 <div id="comments-section-wrapper">
 
-                    
+                    <div id="comments-section-title">
+                        Comments
+                    </div>
+
+                    <div id="comments-section-inner-wrapper">
+
+                    </div>
+
+                    <div id="comment-input-wrapper">
+
+
+                    </div>
 
                 </div>
                 

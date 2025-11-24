@@ -33,6 +33,12 @@ const set_last_post = '/set_last_post';
 const add_post_photo_links = '/add_post_photo_links';
 const get_post_photo_links = '/get_post_photo_links';
 
+//Photo comments
+const get_post_comments = '/get_post_comments';
+const submit_post_comment = '/submit_post_comment';
+const update_post_comment = '/update_post_comment';
+const delete_post_comment = '/delete_post_comment';
+
 //Profile details
 const update_profile = '/update_profile';
 
@@ -101,6 +107,12 @@ export default {
     set_last_post: set_last_post,
     add_post_photo_links: add_post_photo_links,
     get_post_photo_links: get_post_photo_links,
+
+    //Post comments
+    get_post_comments: get_post_comments,
+    submit_post_comment: submit_post_comment,
+    update_post_comment: update_post_comment,
+    delete_post_comment: delete_post_comment,
 
     //Profile details
     update_profile: update_profile,

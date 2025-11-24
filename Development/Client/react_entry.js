@@ -1,4 +1,4 @@
-import React, { Component, createRef } from 'react';
+import React, { Component } from 'react';
 import {createRoot} from 'react-dom/client';
 import Context from './Context/context.js';
 import Logo from './Logo//logo.js';
@@ -19,7 +19,8 @@ import Explore_Template from './View_Templates/Explore/explore_template.js';
 import Calendar from './Misc_Components/Calendar/calendar.js';
 import Profile_Popup from './Popup_Templates/Profile_Popup/profile_popup.js';
 import Search_Parameters from './Data_Templates/Search_Parameters/search_parameters.js';
-import Single_Comment from './Universal_Components/Single_Comment/single_comment.js';
+import Single_Comment from './Universal_Components/Comments/Single_Comment/single_comment.js';
+import Comment_Editor from './Universal_Components/Comments/Comment_Editor/comment_editor.js';
 import './react_entry.less';
 
 class Entry extends Component {
@@ -59,6 +60,7 @@ class Entry extends Component {
                 Upload_Files_To_S3, //Use for uploading files to aws s3
                 Search_Parameters,
                 Single_Comment, //Single comment component
+                Comment_Editor //Comment editor component
             }}
         
         >

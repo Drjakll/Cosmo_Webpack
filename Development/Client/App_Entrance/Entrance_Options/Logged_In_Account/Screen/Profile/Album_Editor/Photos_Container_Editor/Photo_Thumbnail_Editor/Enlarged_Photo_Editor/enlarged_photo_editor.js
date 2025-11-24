@@ -1,18 +1,16 @@
 import React, { Component } from 'react';
-import Comment_Editor from './Comment_Editor/comment_editor.js';
+//import Comment_Editor from './Comment_Editor/comment_editor.js';
 import './enlarged_photo_editor.less';
 
 class Enlarged_Photo_Editor extends Component {
-
-    static Comment_Editor = Comment_Editor;
 
     constructor(props){
         
         super(props);
 
-        Enlarged_Photo_Editor.contextType = window.Context;
+        let { photo_info, album_info } = this.props;
 
-        let { photo_info, album_info} = this.props;
+        Enlarged_Photo_Editor.contextType = window.Context;
         
         this.state = {
             photo_info: photo_info,
@@ -30,7 +28,7 @@ class Enlarged_Photo_Editor extends Component {
     }
 
     Set_As_Album_Thumbnail_Button = (key) => {
-
+ 
         let set_album_thumbnail = async (e) => {
 
             let { Request_URLs } = this.context;

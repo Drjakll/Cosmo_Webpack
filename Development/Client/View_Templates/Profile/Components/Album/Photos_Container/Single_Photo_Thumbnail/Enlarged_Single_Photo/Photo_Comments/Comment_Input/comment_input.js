@@ -64,7 +64,7 @@ class Comment_Input extends Component {
             }
         });
         
-        let resJson = await res.json();
+        //let resJson = await res.json();
         
         this.props.Get_Photo_Comments();
         

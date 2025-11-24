@@ -144,6 +144,9 @@ var clientConfig = {
             net: false,
             tls: false,
             https: require.resolve("https-browserify"),            
+        },
+        alias: {
+            "@context": path.resolve(__dirname, 'Development/Client/Context')
         }
     }
 };

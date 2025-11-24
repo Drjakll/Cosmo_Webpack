@@ -82,10 +82,11 @@ app.post("/set_last_post", requests.user_accounts.profile.post_data.set_last_pos
 app.post("/add_post_photo_links", requests.user_accounts.profile.post_data.add_post_photo_links.req);
 app.post("/get_post_photo_links", requests.user_accounts.profile.post_data.get_post_photo_links.req);
 
-//Video Streaming
-app.post("/create_stream_room", requests.stream_rooms.create_stream_room.req);
-app.post("/disband_stream_room", requests.stream_rooms.disband_stream_room.req);
-app.post("/search_streams", requests.stream_rooms.search_streams.req);
+//Post Comments
+app.post("/submit_post_comment", requests.user_accounts.profile.comments.post_comments.submit_post_comment.req);
+app.post("/get_post_comments", requests.user_accounts.profile.comments.post_comments.get_post_comments.req);
+app.post("/update_post_comment", requests.user_accounts.profile.comments.post_comments.update_post_comment.req);
+app.post("/delete_post_comment", requests.user_accounts.profile.comments.post_comments.delete_post_comment.req);
 
 //Connections
 app.post("/get_connection_list", requests.connections.get_connection_requests.req, requests.connections.get_connection_list.req, (req, res)=>{ res.json({results: req.body.connection_list}); });

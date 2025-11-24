@@ -1,5 +1,4 @@
 import React, { Component, createRef } from 'react';
-import { createRoot } from "react-dom/client";
 import Text_Node from './Text_Node/text_node.js';   
 import './the_texts.less';
 
@@ -133,6 +132,8 @@ class The_Texts extends Component {
 
         let child = null;
 
+
+        //Make sure that the selection is within the text editor
         while (parent && parent.id !== "the-body-input") {
 
             child = parent;
@@ -143,6 +144,7 @@ class The_Texts extends Component {
         if (!parent || parent.id !== "the-body-input") {
             return;
         }
+        //End of making sure selection is within text editor
 
         if (child && child.nodeType !== 3) {
             parent.removeChild(child);

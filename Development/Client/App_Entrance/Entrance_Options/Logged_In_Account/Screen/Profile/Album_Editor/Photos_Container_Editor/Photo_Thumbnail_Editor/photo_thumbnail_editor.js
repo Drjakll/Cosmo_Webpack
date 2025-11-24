@@ -10,6 +10,8 @@ class Single_Photo_Thumbnail_Editor extends Component {
 
         super(props);
 
+        Single_Photo_Thumbnail_Editor.contextType = window.Context;
+
         this.state = {
             photo_info: this.props.photo_info,
             photos_to_be_deleted: {}
@@ -19,6 +21,11 @@ class Single_Photo_Thumbnail_Editor extends Component {
     componentDidMount(){
 
         this.Insert_Photo_To_Delete = Single_Photo_Thumbnail_Editor.Insert_Photo_To_Delete;
+
+        let { Comment_Editor } = this.context;
+
+        // Attach Comment_Editor to Enlarged_Photo_Editor before it gets mounted
+        Single_Photo_Thumbnail_Editor.Enlarged_Photo_Editor.Comment_Editor = Comment_Editor;
         
     }
 

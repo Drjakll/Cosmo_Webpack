@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Context from '@context/context.js';
 import './comment_editor.less';
 
 class Comment_Editor extends Component {
@@ -7,7 +8,7 @@ class Comment_Editor extends Component {
 
         super(props);
 
-        Comment_Editor.contextType = window.Context;
+        Comment_Editor.contextType = Context;
 
         let { comment_info } = props;
 

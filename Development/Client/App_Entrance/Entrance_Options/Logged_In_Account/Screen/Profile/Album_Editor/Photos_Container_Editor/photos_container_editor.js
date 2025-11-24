@@ -141,7 +141,6 @@ class Photos_Container_Editor extends Component {
 
             await this.props.Get_Photo_Links(album_info);
 
-            //alert(res.message);
         }
 
         return <div id="add-photos-section">
