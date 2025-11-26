@@ -11,8 +11,11 @@ class Profile_Info extends Component {
 
         Profile_Info.contextType = window.Context;
 
+        let {owner_user_account, visitor_user_account} = this.props.properties;
+
         this.state = {
-            account_data: {}
+            owner_user_account,
+            visitor_user_account
         };
         
     }
@@ -25,13 +28,7 @@ class Profile_Info extends Component {
         
         let properties = this.props.properties;
         
-        for(let i in properties){
-            
-            this.state[i] = properties[i];
-             
-        }
-        
-        this.setState(this.state);
+        this.setState(properties);
         
     }
 
@@ -51,13 +48,13 @@ class Profile_Info extends Component {
                     
                     <div id="profile-picture-wrapper">
 
-                        <Profile_Picture account_data={this.state.account_data} generate_editors={profile_photo_editor} refresh_account_data={this.Refresh_Account_Data} />
+                        <Profile_Picture owner_user_account={this.state.owner_user_account} generate_editors={profile_photo_editor} refresh_account_data={this.Refresh_Account_Data} />
                         
                     </div>
                     
                     <div id="profile-info-wrapper">
                         
-                        <Profile_Info_Data account_data={this.state.account_data} generate_editors={profile_data_editor} refresh_account_data={this.Refresh_Account_Data} />
+                        <Profile_Info_Data owner_user_account={this.state.owner_user_account} generate_editors={profile_data_editor} refresh_account_data={this.Refresh_Account_Data} />
                         
                     </div>
                     

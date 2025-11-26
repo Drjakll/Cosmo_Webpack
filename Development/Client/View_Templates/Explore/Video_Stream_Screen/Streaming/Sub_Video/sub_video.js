@@ -10,7 +10,6 @@ class Sub_Video extends Component {
         super(props);
         
         this.state = {
-            account_data: this.props.account_data
         };
        
     }

@@ -9,11 +9,12 @@ class Profile_Thumbnail extends Component {
 
         Profile_Thumbnail.contextType = window.Context;
 
-        let {connection_profile, current_user_account_data} = this.props;
+        let {connection_profile, owner_user_account, visitor_user_account} = this.props;
 
         this.state = {
-            connection_profile: connection_profile,
-            current_user_account_data: current_user_account_data,
+            connection_profile,
+            owner_user_account,
+            visitor_user_account,
             view_profile_data: false //The profile selected for popup view
         };
     }
@@ -32,7 +33,11 @@ class Profile_Thumbnail extends Component {
 
         const {Profile_Popup} = this.context;
 
-        return open_view ? <Profile_Popup account_data={this.state.connection_profile} Exit={this.Exit_Popup}/> : "";
+        return open_view ? 
+        <Profile_Popup owner_user_account={this.state.connection_profile} 
+                        visitor_user_account={this.state.visitor_user_account} 
+                        Exit={this.Exit_Popup}/> 
+        : "";
     }
 
     Exit_Popup = ()=>{
@@ -46,7 +51,7 @@ class Profile_Thumbnail extends Component {
 
         let {aws_s3_url} = this.context.Request_URLs;
 
-        let {connection_profile, current_user_account_data} = this.state;
+        let {connection_profile} = this.state;
 
         let {profile_picture_link, first_name, last_name} = connection_profile;
 

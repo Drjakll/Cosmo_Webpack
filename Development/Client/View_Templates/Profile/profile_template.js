@@ -14,25 +14,30 @@ class Profile_Template extends Component {
         super(props);
         
         Profile_Template.contextType = window.Context;
+
+        let {owner_user_account, visitor_user_account} = this.props;
         
         this.state = {
             components: {
-                "Profile Info": {component: Profile_Info, props: {}, classname: "profile-info-wrapper"},
-                "Albums": {component: Albums, props: {}, classname: "albums-wrapper"}, 
-                "Posts": {component: Posts, props: {}, classname: "posts-wrapper"},
-                "Connections": {component: Connections, props: {}, classname: "connections-wrapper"},
+                "Profile Info": {component: Profile_Info, props: {owner_user_account, visitor_user_account}, classname: "profile-info-wrapper"},
+                "Albums": {component: Albums, props: {owner_user_account, visitor_user_account}, classname: "albums-wrapper"}, 
+                "Posts": {component: Posts, props: {owner_user_account, visitor_user_account}, classname: "posts-wrapper"},
+                "Connections": {component: Connections, props: {owner_user_account, visitor_user_account}, classname: "connections-wrapper"},
             }
         };
     }
     
     componentDidMount(){
-        if (this.props.account_data) {
-            this.UpdateAllComponentProps({ account_data: this.props.account_data, connection_list: this.props.connection_list });
+
+        if (this.props.owner_user_account) {
+
+            this.UpdateAllComponentProps({
+                visitor_user_account: this.props.visitor_user_account || {},
+                owner_user_account: this.props.owner_user_account || {}, 
+                connection_list: this.props.connection_list || {} 
+            });
+
         }
-        else if (this.props.get_account_data) {
-            this.props.get_account_data(this.UpdateAllComponentProps);
-        }
-        
         
         if(this.props.add_editors){
             
@@ -51,11 +56,15 @@ class Profile_Template extends Component {
             return;
         }
         
-        if(!this.props.account_data){
+        if(!this.props.owner_user_account){
             return;
         }
         
-        this.UpdateAllComponentProps({account_data: this.props.account_data, connection_list: this.props.connection_list});
+        this.UpdateAllComponentProps({
+            visitor_user_account: this.props.visitor_user_account || {},
+            owner_user_account: this.props.owner_user_account || {},
+            connection_list: this.props.connection_list || {}
+        });
     }
     
     UpdateComponentProps = (index, newProps) => {

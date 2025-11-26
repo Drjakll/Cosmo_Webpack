@@ -1,5 +1,6 @@
 import React, {Component, createRef} from 'react';
 import Reply_To_Comment_Quote from './Reply/reply.js';
+import Context from '@context/context.js';
 import './comment_input.less';
 
 class Comment_Input extends Component {
@@ -9,14 +10,15 @@ class Comment_Input extends Component {
     constructor(props){
         
         super(props);
+
+        let {owner_user_account, reply_to_comment} = this.props;
         
         this.state = {
-            account_data: this.props.account_data,
-            photo_info: this.props.photo_info,
-            reply_to_comment: this.props.reply_to_comment
+            owner_user_account,
+            reply_to_comment
         };
         
-        Comment_Input.contextType = window.Context;
+        Comment_Input.contextType = Context;
     }
     
     componentDidUpdate(prevProps, prevState){
@@ -25,57 +27,32 @@ class Comment_Input extends Component {
             return;
         }
         
-        let properties = this.props;
-        
-        for(let i in properties){
-            
-            this.state[i] = properties[i];
-            
-        }
-        
-        this.setState(this.state);
+        this.setState(this.props);
     }
     
     Submit_Comment = async () => {
         
         const comment = this.commentRef.current.textContent;
-        const reply_to_comment = this.state.reply_to_comment;
-        const account_data = this.state.account_data;
-        const photo_info = this.state.photo_info;
 
         if(comment === "" || !comment || comment.replace(' ', '') === ''){
             alert("Comment cannot be empty");
             return;
         }
-        
-        const {Comment_Data_Templates, Request_URLs} = this.context;
-        
-        let comment_object = Comment_Data_Templates.Photo_Comment_Data_Template(account_data);
-        
-        comment_object.comment = comment;
-        comment_object.belongs_to_photo_id = photo_info.id;
-        comment_object.reply_to_comment = reply_to_comment ? JSON.stringify(reply_to_comment) : null;
-        
-        let res = await fetch(Request_URLs.submit_photo_comment, {
-            method: "POST",
-            body: JSON.stringify(comment_object),
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        });
-        
-        //let resJson = await res.json();
-        
-        this.props.Get_Photo_Comments();
-        
-        this.props.socket.emit('submit_comment', this.state.photo_info.id);
-        
-        this.commentRef.current.textContent = "";
+
+        let {owner_user_account, reply_to_comment} = this.state;
+
+        let {submit_comment} = this.props;
+                        
+        submit_comment({comment, reply_to_comment, owner_user_account});
+
+        this.commentRef.current.textContent = '';
         
     }
     
     Close_Reply = ()=>{
+
         this.setState({reply_to_comment: null});
+
     }
     
     render(){

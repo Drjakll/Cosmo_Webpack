@@ -4,6 +4,7 @@ import Profile_Data_Editor from './Profile_Data_Editor/profile_data_editor.js';
 import Album_Editor from './Album_Editor/album_editor.js';
 import Post_Editor from './Post_Editor/post_editor.js';
 import Connections_Editor from './Connections_Editor/connections_editor.js';
+import Context from '@context/context.js';
 import './profile.less';
 
 class Profile extends Component {
@@ -12,19 +13,12 @@ class Profile extends Component {
         
         super(props);
         
-        Profile.contextType = window.Context;
+        Profile.contextType = Context;
 
         this.state = {
-            account_data: props.account_data,
-            connection_list: props.connection_list
+            owner_user_account: props.owner_user_account || {},
+            connection_list: props.connection_list || {}
         }
-    }
-    
-    GetAccountData = async (UpdateAllComponentProps) => {
-        
-        this.profile_data = await window.LoginAttempt();
-        
-        this.setState({account_data: this.profile_data});
     }
 
     componentDidUpdate(prevProps, prevState){
@@ -33,14 +27,14 @@ class Profile extends Component {
             return;
         }
 
-        let {account_data, connection_list} = this.props;
+        let {owner_user_account, connection_list} = this.props;
 
-        this.setState({account_data, connection_list});
+        this.setState({owner_user_account, connection_list});
     }
     
-    Generate_Profile_Photo_Editor = ({ account_data, refresh_account_data }) => {
+    Generate_Profile_Photo_Editor = ({ owner_user_account, refresh_account_data }) => {
         
-        return <Profile_Photo_Editor account_data={account_data} refresh_account_data={refresh_account_data} />;
+        return <Profile_Photo_Editor owner_user_account={owner_user_account} refresh_account_data={refresh_account_data} />;
 
     }
     
@@ -52,9 +46,9 @@ class Profile extends Component {
             <div id="profile">
 
                 <Profile_Template
-                    account_data={this.state.account_data}
+                    owner_user_account={this.state.owner_user_account}
+                    visitor_user_account={this.state.owner_user_account}
                     connection_list={this.state.connection_list}
-                    get_account_data={this.GetAccountData}
                     add_editors={{
                         "Profile Info": {
                             profile_photo_editor: this.Generate_Profile_Photo_Editor,

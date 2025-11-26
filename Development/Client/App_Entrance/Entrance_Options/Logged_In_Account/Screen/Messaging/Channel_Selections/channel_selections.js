@@ -10,11 +10,11 @@ class Channel_Selections extends Component {
         
         super(props);
 
-        let {connection_list, account_data, public_channels, selected_channel, msg_socket, public_channels_search_results} = this.props;
+        let {connection_list, owner_user_account, public_channels, selected_channel, msg_socket, public_channels_search_results} = this.props;
 
         this.state = {
             connection_list,
-            account_data,
+            owner_user_account,
             public_channels, //example: {'Channel 1': {channel_name: 'Channel 1'}}
             show_join_channel: false, // A trigger for opening options for creating/joining a channel
             selected_channel,
@@ -84,7 +84,7 @@ class Channel_Selections extends Component {
             
                             <Connection_Channel
                                 connection_list={this.state.connection_list}
-                                account_data={this.state.account_data}
+                                owner_user_account={this.state.owner_user_account}
                                 switch_channel={this.props.switch_channel}
                                 channel_selected={this.state.selected_channel}
                             />
@@ -100,7 +100,7 @@ class Channel_Selections extends Component {
                             return <div className="channel-button-wrapper" key={key}>
 
                                 <Other_Channel 
-                                    account_data={this.state.account_data}
+                                    owner_user_account={this.state.owner_user_account}
                                     channel_name={channel_name}
                                     online_users={online_users}
                                     selected={this.state.selected_channel === channel_name ? true : false}

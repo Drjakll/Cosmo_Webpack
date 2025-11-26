@@ -15,7 +15,7 @@ class Users extends Component {
         this.state = {
             visible_users,
             selected_user_profile: null, //To handle user selection for profile viewing
-            account_data: this.props.account_data,
+            owner_user_account: this.props.owner_user_account,
             selected_users: this.props.selected_users
         };  
     }
@@ -50,7 +50,11 @@ class Users extends Component {
         return (
                 <div id="users">
 
-                    {selected_user_profile ? <Profile_Popup account_data={selected_user_profile} Exit={(e)=>{ this.Show_User_Profile(null); }}/> : ""}
+                    {selected_user_profile ? 
+                    <Profile_Popup visitor_user_account={this.state.owner_user_account} 
+                        owner_user_account={selected_user_profile} 
+                        Exit={(e)=>{ this.Show_User_Profile(null); }}/> 
+                    : ""}
 
                     <div id="users-list"
 
@@ -77,7 +81,7 @@ class Users extends Component {
 
                             let user = visible_users[key];
 
-                            return user.email === this.state.account_data.email ? "" : 
+                            return user.email === this.state.owner_user_account.email ? "" : 
                             
                             <div key={index} className="user-wrapper">
 
@@ -85,7 +89,7 @@ class Users extends Component {
                                     key={index} 
                                     user_profile_data={user} 
                                     show_user_profile={this.Show_User_Profile} 
-                                    account_data={this.state.account_data}
+                                    owner_user_account={this.state.owner_user_account}
                                     refresh_conversation_list={this.props.refresh_conversation_list}
                                     selected={selected_users[user.email] ? true : false}
                                     select_user={this.props.select_user}

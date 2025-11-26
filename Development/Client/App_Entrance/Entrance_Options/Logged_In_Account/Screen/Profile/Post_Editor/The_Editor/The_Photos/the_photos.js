@@ -9,13 +9,13 @@ class The_Photos extends Component {
 
         super(props);
 
-        let { photos, account_info, post_info } = props;
+        let { photos, owner_user_account, post_info } = props;
 
         The_Photos.contextType = window.Context;
 
         this.state = {
             photos: photos ? photos : [],
-            account_info: account_info,
+            owner_user_account,
             post_info: post_info ? post_info : {},
             selected_photos: {}
         };
@@ -50,8 +50,8 @@ class The_Photos extends Component {
         let { Post_Photo_Template } = Post_Data_Templates;
         let { add_post_photo_links, upload_photos } = Request_URLs;
 
-        let { account_info, post_info } = this.state;
-        let { email } = account_info;
+        let { owner_user_account, post_info } = this.state;
+        let { email } = owner_user_account;
 
         if (!post_info || !post_info.id) {
             alert("Please save the post before adding photos.");

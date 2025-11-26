@@ -23,29 +23,21 @@ class Json_Type extends Component {
             return;
         }
         
-        for(let i in this.props){
-            
-            this.state[i] = this.props[i];
-            
-        }
-        
-        this.setState(this.state);
+        this.setState(this.props);
     }
 
     Update_Account_Data = async (value) => {
 
-        let { account_data, variable_name } = this.state;
+        let { owner_user_account, variable_name } = this.state;
         let { Request_URLs, Cookie_Tools, Configurations } = this.context;
         let { update_profile } = Request_URLs;
         const { cookie_converter } = Cookie_Tools;
 
-        account_data[variable_name] = value;
-
-        let body = account_data;
+        owner_user_account[variable_name] = value;
 
         let res = await fetch(update_profile, {
             method: "POST",
-            body: JSON.stringify(body),
+            body: JSON.stringify(owner_user_account),
             headers: {
                 'Content-Type': 'application/json'
             }
@@ -53,22 +45,9 @@ class Json_Type extends Component {
 
         let resJson = await res.json();
 
-        if (resJson) {
+        const { refresh_account_data } = this.props;
 
-            let date = new Date();
-
-            date.setTime(date.getTime() + Configurations.Cookie_Expire_Days * 24 * 60 * 60 * 1000);
-
-            let cookieStrs = cookie_converter(account_data, { "expires": date.toUTCString(), "path": "/" });
-
-            for (let cookieStr of cookieStrs) {
-                document.cookie = cookieStr;
-            }
-
-            const { refresh_account_data } = this.props;
-
-            refresh_account_data();
-        }
+        refresh_account_data();
 
     }
 
@@ -101,11 +80,8 @@ class Json_Type extends Component {
         }
         
         //The items below are for the editor
-        let Editor = this.props.editor;
-        let account_data = this.props.account_data;
-        let refresh_account_data = this.props.refresh_account_data;
-        let options = this.props.options;
-        let variable_name = this.props.variable_name;
+
+        let {Editor, owner_user_account, refresh_account_data, options, variable_name} = this.props;
         //End of the item list
 
         return <div id="json-type-popup">
@@ -118,7 +94,7 @@ class Json_Type extends Component {
 
                 {Editor ? <div id="add-content-editor-wrapper">
 
-                    <Editor account_data={account_data}
+                    <Editor owner_user_account={owner_user_account}
                         refresh_account_data={refresh_account_data}
                         data_config={options}
                         variable_name={variable_name}

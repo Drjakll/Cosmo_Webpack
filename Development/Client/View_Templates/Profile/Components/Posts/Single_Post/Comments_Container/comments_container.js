@@ -1,17 +1,23 @@
 import React, { Component, createRef } from 'react';
+import Context from '@context/context.js';
 import './comments_container.less';
 
 class Comments_Container extends Component {
 
+    static contextType = Context;
+    
     postBodyRef = createRef();
 
     constructor(props){
         super(props);
 
-        let {post} = this.props;
+        let {post, owner_user_account, visitor_user_account} = this.props;
 
         this.state = {
-            post
+            post,
+            post_comments: [],
+            owner_user_account,
+            visitor_user_account
         };
     }
 
@@ -29,6 +35,72 @@ class Comments_Container extends Component {
         this.setState(this.props);
 
         this.postBodyRef.current?.innerHTML = this.props.post?.body;
+    }
+
+    Get_Post_Comments = async ()=>{
+     
+        const {Request_URLs} = this.context;
+        
+        const {get_post_comments} = Request_URLs;
+        
+        let res = await fetch(get_post_comments, {
+           method: "POST",
+           body: JSON.stringify(this.state.post),
+           headers: {
+               'Content-Type': "application/json"
+           }
+        });
+        
+        let resJson = await res.json();
+        
+        let {post_comments} = resJson;
+        
+        this.setState({post_comments: post_comments});
+        
+    }
+
+    Delete_Post_Comment = async (comment_info)=>{
+
+        let { Request_URLs } = this.context;
+
+        let { delete_post_comment } = Request_URLs;
+
+        let res = await (await fetch(
+            delete_post_comment,
+            {
+                method: "POST",
+                body: JSON.stringify(comment_info),
+                headers: {
+                    'Content-Type': "application/json"
+                }
+            }
+        )).json();
+    }
+
+    Submit_Comment = async ({comment, reply_to_comment, user_account}) => {
+
+        const post_info = this.state.post;
+        
+        const {Comment_Data_Templates, Request_URLs} = this.context;
+        
+        let comment_object = Comment_Data_Templates.Post_Comment_Data_Template(user_account);
+        
+        comment_object.comment = comment;
+        comment_object.belongs_to_post_id = post_info.id;
+        comment_object.reply_to_comment = reply_to_comment ? JSON.stringify(reply_to_comment) : null;
+        
+        let res = await fetch(Request_URLs.submit_post_comment, {
+            method: "POST",
+            body: JSON.stringify(comment_object),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+        
+        this.Get_Post_Comments();
+        
+        this.socket.emit('submit_comment', post_info.id);
+        
     }
 
     render(){
@@ -71,7 +143,9 @@ class Comments_Container extends Component {
                 <div id="comments-section-wrapper">
 
                     <div id="comments-section-title">
+
                         Comments
+
                     </div>
 
                     <div id="comments-section-inner-wrapper">

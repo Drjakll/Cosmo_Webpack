@@ -27,7 +27,7 @@ class Streaming extends Component {
         this.socket = io('/video_streams'); //this.props.stream_socket;
         
         this.state = {
-            account_data: this.props.account_data,
+            owner_user_account: this.props.owner_user_account,
             is_host: this.props.is_host,
             stream_id: this.props.stream_id, //The stream_id is the host socket.id + Date.now()
             room_title: "New Room",
@@ -116,7 +116,7 @@ class Streaming extends Component {
                     
                     //this.my_media_source = await this.Capture_Video();
                     
-                    this.socket.emit('join_stream', {room_tag: this.my_room_tag, account_data: this.state.account_data});
+                    this.socket.emit('join_stream', {room_tag: this.my_room_tag, account_data: this.state.owner_user_account});
                     
                 }
                 
@@ -233,7 +233,7 @@ class Streaming extends Component {
         
         let {Stream_Room_Data_Templates} = this.context;
 
-        let acc_copy = JSON.parse(JSON.stringify(this.state.account_data));
+        let acc_copy = JSON.parse(JSON.stringify(this.state.owner_user_account));
 
         let { Stream_Room_Data_Template } = Stream_Room_Data_Templates;
 
@@ -366,7 +366,7 @@ class Streaming extends Component {
 
     Go_Live_To_All = async () => {
 
-        this.socket.emit('join_stream', { room_tag: this.my_room_tag, account_data: this.state.account_data });
+        this.socket.emit('join_stream', { room_tag: this.my_room_tag, account_data: this.state.owner_user_account });
 
 
         //for (let i in this.participants) {
@@ -394,7 +394,7 @@ class Streaming extends Component {
 
         const { Profile_Popup } = this.context;
 
-        return account_data ? <Profile_Popup account_data={account_data} Exit={this.Close_Profile_Popup} /> : "";
+        return account_data ? <Profile_Popup owner_user_account={account_data} visitor_user_account={this.state.owner_user_account} Exit={this.Close_Profile_Popup} /> : "";
 
     }
 
@@ -429,7 +429,7 @@ class Streaming extends Component {
                     
                 <div id="big-stream-screen">
 
-                    <Main_Video account_data={this.state.account_data}
+                    <Main_Video owner_user_account={this.state.owner_user_account}
                         media_source={this.state.streamer_big_screen}
                         is_self={this.state.big_screen_id === this.state.my_room_tag?.id ? true : false} />
                         
@@ -461,7 +461,7 @@ class Streaming extends Component {
 
                     <Chat_Box socket={this.socket} 
                                 my_room_tag={this.state.my_room_tag} 
-                                account_data={this.state.account_data}
+                                owner_user_account={this.state.owner_user_account}
                                 set_account_view={this.Set_Account_View}
                                 the_host={this.state.the_host}
                                 change_screen={this.props.root_change_screen}

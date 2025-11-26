@@ -21,6 +21,7 @@ import Profile_Popup from './Popup_Templates/Profile_Popup/profile_popup.js';
 import Search_Parameters from './Data_Templates/Search_Parameters/search_parameters.js';
 import Single_Comment from './Universal_Components/Comments/Single_Comment/single_comment.js';
 import Comment_Editor from './Universal_Components/Comments/Comment_Editor/comment_editor.js';
+import Comment_Input from './Universal_Components/Comments/Comment_Input/comment_input.js';
 import './react_entry.less';
 
 class Entry extends Component {
@@ -60,7 +61,8 @@ class Entry extends Component {
                 Upload_Files_To_S3, //Use for uploading files to aws s3
                 Search_Parameters,
                 Single_Comment, //Single comment component
-                Comment_Editor //Comment editor component
+                Comment_Editor, //Comment editor component
+                Comment_Input //Comment input component
             }}
         
         >

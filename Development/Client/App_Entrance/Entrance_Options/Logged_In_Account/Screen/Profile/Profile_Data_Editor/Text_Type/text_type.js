@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Context from '@context/context.js';
 import './text_type.less';
 
 class Text_Type extends Component {
@@ -7,24 +8,22 @@ class Text_Type extends Component {
 
         super(props);
 
-        Text_Type.contextType = window.Context;
+        Text_Type.contextType = Context;
 
     }
 
     Update_Account_Data = async () => {
 
-        let { account_data, variable_name, value } = this.props;
+        let { owner_user_account, variable_name, value } = this.props;
         let { Request_URLs, Cookie_Tools, Configurations } = this.context;
         let { update_profile } = Request_URLs;
         const { cookie_converter } = Cookie_Tools;
 
-        account_data[variable_name] = value;
-
-        let body = account_data;
+        owner_user_account[variable_name] = value;
 
         let res = await fetch(update_profile, {
             method: "POST",
-            body: JSON.stringify(body),
+            body: JSON.stringify(owner_user_account),
             headers: {
                 'Content-Type': 'application/json'
             }
@@ -33,16 +32,6 @@ class Text_Type extends Component {
         let resJson = await res.json();
 
         if (resJson) {
-
-            let date = new Date();
-
-            date.setTime(date.getTime() + Configurations.Cookie_Expire_Days * 24 * 60 * 60 * 1000);
-
-            let cookieStrs = cookie_converter(account_data, { "expires": date.toUTCString(), "path": "/" });
-
-            for (let cookieStr of cookieStrs) {
-                document.cookie = cookieStr;
-            }
 
             const { refresh_account_data } = this.props;
 

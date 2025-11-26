@@ -20,7 +20,7 @@ class Messaging extends Component {
         this.Msg_Area_Ref = createRef();
         
         this.state = {
-            account_data: this.props.account_data,
+            owner_user_account: this.props.owner_user_account,
             connection_list: this.props.connection_list,
             visible_users: [],
             conversations: {public: {}, private: {}},
@@ -51,7 +51,7 @@ class Messaging extends Component {
                 return;
             }
 
-            this.msg_socket?.emit('ping', {user_account: this.state.account_data, room_tags: this.All_Room_Tags});
+            this.msg_socket?.emit('ping', {user_account: this.state.owner_user_account, room_tags: this.All_Room_Tags});
 
         }, 10000);
 
@@ -82,7 +82,7 @@ class Messaging extends Component {
         let {get_conversations} = this.context.Request_URLs;
 
         let requirements = {
-            users: [this.state.account_data.email]
+            users: [this.state.owner_user_account.email]
         };
 
         let data = await( await fetch(get_conversations,
@@ -120,7 +120,7 @@ class Messaging extends Component {
             this.setState({conversations});
 
             //Join all the conversations in the websocket under the name room_tag
-            this.msg_socket?.emit('join_private_channels', {private_conversations: private_conv_json_format, email: this.state.account_data.email});
+            this.msg_socket?.emit('join_private_channels', {private_conversations: private_conv_json_format, email: this.state.owner_user_account.email});
         }
     }
 
@@ -131,7 +131,7 @@ class Messaging extends Component {
         this.msg_socket?.on('connect', ()=>{
 
             //Report user's presence within the socket namespace
-            this.msg_socket.emit('report_presence', {email: this.state.account_data.email});
+            this.msg_socket.emit('report_presence', {email: this.state.owner_user_account.email});
 
             this.setState({msg_socket: this.msg_socket});
 
@@ -166,7 +166,7 @@ class Messaging extends Component {
         //Only apply to private channels/rooms
         this.msg_socket?.on('clear_seen_by', async ({room_tag, signal_sent_by})=>{
 
-            let {conversations, account_data} = this.state;
+            let {conversations, owner_user_account} = this.state;
 
             conversations.private[room_tag]?.seen_by = {};
 
@@ -175,21 +175,21 @@ class Messaging extends Component {
             await this.setState({conversations});
 
             //Only wanted the person who sent the signal to update the conversation once
-            if(signal_sent_by === account_data.email){
+            if(signal_sent_by === owner_user_account.email){
                 this.Save_Conversation(room_tag);
             }
         });
 
         this.msg_socket?.on('update_seen_by', async ({room_tag, seen_by})=>{
 
-            let {conversations, account_data} = this.state;
+            let {conversations, owner_user_account} = this.state;
 
             conversations.private[room_tag]?.seen_by[seen_by] = seen_by;
 
             await this.setState({conversations});
 
             //Only wanted the person who sent the signal to update the conversation once
-            if(seen_by === account_data.email){
+            if(seen_by === owner_user_account.email){
                 this.Save_Conversation(room_tag);
             }
 
@@ -204,7 +204,7 @@ class Messaging extends Component {
         //massive_send_out means this report is being sent to a massive amount of users
         this.msg_socket?.on('report_private_online', ({email, room_tag, massive_send_out})=>{
 
-            let {conversations, account_data} = this.state;
+            let {conversations, owner_user_account} = this.state;
 
             conversations.private[room_tag].online_users[email] = true;
 
@@ -212,7 +212,7 @@ class Messaging extends Component {
 
             //If it's being sent to a massive amount of users, that mean each individual user of that mass must send back to acknowledge their own online status back to the sender
             if(massive_send_out){
-                this.msg_socket?.emit('send_report_online', {from_email: account_data.email, to_email: email, room_tag});
+                this.msg_socket?.emit('send_report_online', {from_email: owner_user_account.email, to_email: email, room_tag});
             }
 
         });
@@ -245,9 +245,9 @@ class Messaging extends Component {
 
             
             //Re-join all the rooms again
-            this.msg_socket?.emit('join_private_channels', {private_conversations: this.state.conversations.private, email: this.state.account_data.email});
+            this.msg_socket?.emit('join_private_channels', {private_conversations: this.state.conversations.private, email: this.state.owner_user_account.email});
 
-            this.msg_socket?.emit('join_public_channels', {public_channels: this.state.conversations.public, user_data: this.state.account_data});
+            this.msg_socket?.emit('join_public_channels', {public_channels: this.state.conversations.public, user_data: this.state.owner_user_account});
 
         });
 
@@ -288,14 +288,14 @@ class Messaging extends Component {
 
     Send_Message = (msg)=>{
 
-        let {selected_room_tag, account_data, private_or_public} = this.state;
+        let {selected_room_tag, owner_user_account, private_or_public} = this.state;
 
         if(!selected_room_tag){
             alert("No conversation is selected");
             return;
         }
 
-        let from = {email: account_data.email};
+        let from = {email: owner_user_account.email};
 
         let msg_obj = {from, msg, timestamp: 0};
 
@@ -378,7 +378,7 @@ class Messaging extends Component {
     //Only apply to private conversations
     Seen_By = async (room_tag)=>{
 
-        let {account_data, conversations, private_or_public} = this.state;
+        let {owner_user_account, conversations, private_or_public} = this.state;
 
         if(private_or_public === "public"){
             return;
@@ -391,11 +391,11 @@ class Messaging extends Component {
         let {seen_by} = conversations.private[room_tag] || {};
 
         //If it's already seen by this user, do nothing
-        if(!seen_by || seen_by[account_data.email] !== undefined){
+        if(!seen_by || seen_by[owner_user_account.email] !== undefined){
             return;
         }
 
-        this.msg_socket?.emit('update_seen_by', {room_tag: room_tag, seen_by: account_data.email});
+        this.msg_socket?.emit('update_seen_by', {room_tag: room_tag, seen_by: owner_user_account.email});
     }
 
     Clear_Seen_By = (room_tag, from_email)=>{
@@ -415,9 +415,9 @@ class Messaging extends Component {
 
     Init_Public_Channels = async ()=>{
 
-        let {account_data, conversations} = this.state;
+        let {owner_user_account, conversations} = this.state;
 
-        let {favorite_public_channel} = account_data;
+        let {favorite_public_channel} = owner_user_account;
 
         //It's possible that the favorite_public_channel is still a string
         favorite_public_channel = typeof favorite_public_channel === "string" ? JSON.parse(favorite_public_channel) || {} : favorite_public_channel;
@@ -435,11 +435,11 @@ class Messaging extends Component {
     //update_profile indicates whether it should update the profile's favorite_public_channel object. Normally only updates when it's the first time joining the public channels
     Join_Public_Channels = (public_channels, update_profile = true)=>{
 
-        let {account_data, conversations} = this.state;
+        let {owner_user_account, conversations} = this.state;
 
-        this.msg_socket?.emit('join_public_channels', {public_channels, user_data: account_data});
+        this.msg_socket?.emit('join_public_channels', {public_channels, user_data: owner_user_account});
 
-        let {favorite_public_channel} = account_data;
+        let {favorite_public_channel} = owner_user_account;
 
         //It's possible that the favorite_public_channel is still a string
         favorite_public_channel = typeof favorite_public_channel === "string" ? JSON.parse(favorite_public_channel) || {} : favorite_public_channel;
@@ -464,21 +464,21 @@ class Messaging extends Component {
             }
         }
 
-        account_data.favorite_public_channel = favorite_public_channel;
+        owner_user_account.favorite_public_channel = favorite_public_channel;
 
         this.setState({conversations});
 
         //If it's the first time joining the public channel, it needs to update the favorite_public_channel object
         if(update_profile === true){
 
-            this.Update_Profile(account_data);
+            this.Update_Profile(owner_user_account);
 
         }
     }
 
     Leave_Public_Channel = (channel_name)=>{
 
-        let {conversations, account_data} = this.state;
+        let {conversations, owner_user_account} = this.state;
 
         let channel_obj = conversations.public[channel_name];
 
@@ -487,21 +487,21 @@ class Messaging extends Component {
             return;
         }
 
-        this.msg_socket?.emit('leave_public_channel', {channel_obj, user_email: this.state.account_data.email});
+        this.msg_socket?.emit('leave_public_channel', {channel_obj, user_email: this.state.owner_user_account.email});
 
         delete this.All_Room_Tags.public[channel_name];
 
         delete conversations.public[channel_name];
 
-        account_data.favorite_public_channel = conversations.public;
+        owner_user_account.favorite_public_channel = conversations.public;
 
-        this.setState({conversations, account_data});
+        this.setState({conversations, owner_user_account});
 
-        this.Update_Profile(account_data);
+        this.Update_Profile(owner_user_account);
 
     }
 
-    Update_Profile = async (account_data)=>{
+    Update_Profile = async (owner_user_account)=>{
 
         let {update_profile} = this.context.Request_URLs;
 
@@ -509,14 +509,14 @@ class Messaging extends Component {
             update_profile,
             {
                 method: "POST",
-                body: JSON.stringify(account_data),
+                body: JSON.stringify(owner_user_account),
                 headers: {
                     'Content-Type': 'application/json'
                 }
             }
         )).json();
 
-        this.setState({account_data});
+        this.setState({owner_user_account});
     }
 
     Set_Current_Users_Info = (room_tag, users_info)=>{
@@ -539,7 +539,7 @@ class Messaging extends Component {
 
                         <Channel_Selections 
                             connection_list={this.state.connection_list} 
-                            account_data={this.state.account_data}
+                            owner_user_account={this.state.owner_user_account}
                             switch_channel={this.Switch_Channel}
                             join_public_channels={this.Join_Public_Channels}
                             public_channels={this.state.conversations.public}
@@ -555,7 +555,7 @@ class Messaging extends Component {
 
                         <Users
                             visible_users={this.state.visible_users}
-                            account_data={this.state.account_data}
+                            owner_user_account={this.state.owner_user_account}
                             refresh_conversation_list={this.Refresh_Conversation_List}
                             selected_users={this.state.selected_users}
                             select_user={this.Select_User}
@@ -571,7 +571,7 @@ class Messaging extends Component {
 
                         <Message_Area 
                             connection_list={this.state.connection_list}
-                            account_data={this.state.account_data}
+                            owner_user_account={this.state.owner_user_account}
                             conversations={this.state.conversations}
                             selected_room_tag={this.state.selected_room_tag}
                             switch_conversation={this.Switch_Conversation}

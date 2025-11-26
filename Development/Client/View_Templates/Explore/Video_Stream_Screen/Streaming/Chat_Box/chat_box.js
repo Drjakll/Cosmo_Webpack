@@ -21,7 +21,7 @@ class Chat_Box extends Component {
             conversation: [],
             socket: this.props.socket,
             my_room_tag: this.props.my_room_tag,
-            account_data: this.props.account_data,
+            owner_user_account: this.props.owner_user_account,
             the_host: this.props.the_host
         };
     }
@@ -171,7 +171,7 @@ class Chat_Box extends Component {
 
                         <div id="controls">
 
-                            <Text_Input socket={this.state.socket} my_room_tag={this.state.my_room_tag} account_data={this.state.account_data} />
+                            <Text_Input socket={this.state.socket} my_room_tag={this.state.my_room_tag} owner_user_account={this.state.owner_user_account} />
 
                         </div>
                         
@@ -181,7 +181,7 @@ class Chat_Box extends Component {
                         
                         <Viewer_Display 
                             socket={this.state.socket} 
-                            my_account_data={this.state.account_data}
+                            my_account_data={this.state.owner_user_account}
                             my_room_tag={this.state.my_room_tag}
                             set_account_view={this.props.set_account_view}
                         />

@@ -15,7 +15,7 @@ class Message_Area extends Component {
         this.state = {
             conversations: this.props.conversations,
             private_or_public: this.props.private_or_public,
-            account_data: this.props.account_data,
+            owner_user_account: this.props.owner_user_account,
             connection_list: this.props.connection_list,
             selected_room_tag: this.props.selected_room_tag,
             selected_users: this.props.selected_users, //Selected users for any purpose, (example: add selected users to a conversation)
@@ -57,7 +57,7 @@ class Message_Area extends Component {
 
     Leave_Private_Conversation = async ()=>{
 
-        let {conversations, selected_room_tag, account_data} = this.state;
+        let {conversations, selected_room_tag, owner_user_account} = this.state;
 
         let selected_conversation = conversations.private[selected_room_tag];
 
@@ -70,7 +70,7 @@ class Message_Area extends Component {
 
         users = typeof users === "string" ? JSON.parse(users) : users || [];
 
-        selected_conversation.users = users.filter((value)=>{ return value.email !== account_data.email; });
+        selected_conversation.users = users.filter((value)=>{ return value.email !== owner_user_account.email; });
 
         await this.Update_Conversation(selected_conversation);
 
@@ -174,7 +174,7 @@ class Message_Area extends Component {
         let conversation = conversations[private_or_public][selected_room_tag];
 
         //User status contains the time when this user joined the private conversation, used to prevent from reading old conversation before he was invited
-        let user_status = conversation?.users?.find((u)=>{ return u.email === this.state.account_data.email; });
+        let user_status = conversation?.users?.find((u)=>{ return u.email === this.state.owner_user_account.email; });
 
         return (
                 <div id="message-area">
@@ -206,7 +206,7 @@ class Message_Area extends Component {
                             <div id="conversation-texts-wrapper">
 
                                 <Conversation_Texts conversation={conversation} 
-                                                    my_account={this.state.account_data}
+                                                    my_account={this.state.owner_user_account}
                                                     user_status={user_status}
                                                     //public conversation have the object channel_name, while private conversation have the object room_tag
                                                     current_users_info={this.state.current_users_info[conversation?.room_tag || conversation?.channel_name]} 
@@ -251,7 +251,7 @@ class Message_Area extends Component {
                                         <Conversation_Thumbnail 
                                             conversation_info={value} 
                                             connection_list={this.state.connection_list}
-                                            account_data={this.state.account_data}
+                                            owner_user_account={this.state.owner_user_account}
                                             switch_conversation={this.props.switch_conversation}
                                             selected_room_tag={this.state.selected_room_tag}
                                             add_users_to_conversation={this.Add_Users_To_Conversation}

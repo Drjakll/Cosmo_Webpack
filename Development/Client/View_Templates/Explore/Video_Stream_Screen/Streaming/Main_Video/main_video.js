@@ -10,7 +10,6 @@ class Main_Video extends Component {
         super(props);
         
         this.state = {
-            account_data: this.props.account_data
         };
     }
     
@@ -25,8 +24,6 @@ class Main_Video extends Component {
         if(prevProps === this.props){
             return;
         }
-        
-        this.setState({account_data: this.props.account_data});
         
         this.videoRef.current.srcObject = this.props.media_source;
         this.videoRef.current.play = true;

@@ -20,15 +20,7 @@ class Reply_To_Comment_Quote extends Component {
             return;
         }
         
-        let properties = this.props;
-        
-        for(let i in properties){
-            
-            this.state[i] = properties[i];
-            
-        }
-        
-        this.setState(this.state);
+        this.setState(this.props);
     }
     
     render(){

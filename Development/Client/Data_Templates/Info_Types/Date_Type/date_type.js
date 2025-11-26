@@ -73,10 +73,7 @@ class Date_Type extends Component {
     
     render() {
 
-        let Editor = this.props.editor;
-        let variable_name = this.props.variable_name;
-        let account_data = this.props.account_data;
-        const refresh_account_data = this.props.refresh_account_data;
+        let {Editor, variable_name, owner_user_account, refresh_account_data} = this.props;
         
         return (
             <div id="date-type" className="info">
@@ -97,7 +94,7 @@ class Date_Type extends Component {
 
                     {Editor ? <Editor variable_name={variable_name}
                         value={this.state.value}
-                        account_data={account_data}
+                        owner_user_account={owner_user_account}
                         current_value={this.state.value}
                         refresh_account_data={refresh_account_data}
                     /> : <></>}

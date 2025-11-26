@@ -16,7 +16,7 @@ class Photos_Container_Editor extends Component {
         
         this.state = {
             photo_links: [],
-            account_data: {},
+            owner_user_account: {},
             album_info: {}
         };    
     }
@@ -115,9 +115,9 @@ class Photos_Container_Editor extends Component {
 
             let { add_photo_links, upload_photos } = Request_URLs;
 
-            let { album_info, account_data } = this.state;
+            let { album_info, owner_user_account } = this.state;
 
-            let jsonBody = { email: account_data.email, album: album_info.title };
+            let jsonBody = { email: owner_user_account.email, album: album_info.title };
 
 
             let res = await Upload_Files_To_S3(upload_photos, uploadRef.current.files, jsonBody);
@@ -126,7 +126,7 @@ class Photos_Container_Editor extends Component {
 
             for (let url of res.photo_urls) {
 
-                let obj = Photo_Data({ owner_email: account_data.email, link: url, belongs_to_album: album_info.id });
+                let obj = Photo_Data({ owner_email: owner_user_account.email, link: url, belongs_to_album: album_info.id });
 
                 photo_objs.push(obj);
             }

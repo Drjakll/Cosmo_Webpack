@@ -1,5 +1,6 @@
 import React, { Component, createRef } from 'react';
 import Profile_Thumbnail from './Profile_Thumbnail/profile_thumbnail.js';
+import  Context from '@context/context.js';
 import './connections_template.less';
 
 class Connections_Temnplate extends Component {
@@ -8,13 +9,14 @@ class Connections_Temnplate extends Component {
 
         super(props);
 
-        let { account_data, connection_list } = this.props.properties;
+        let { owner_user_account, visitor_user_account, connection_list } = this.props.properties;
 
-        Connections_Temnplate.contextType = window.Context;
+        Connections_Temnplate.contextType = Context;
 
         this.state = {
-            account_data: account_data,
-            connection_list: connection_list
+            owner_user_account,
+            visitor_user_account,
+            connection_list
         };
     }
 
@@ -48,7 +50,7 @@ class Connections_Temnplate extends Component {
 
                 {Editor ? 
                 <div id="connections-editor-wrapper">
-                    <Editor Profile_Thumbnail={Profile_Thumbnail} account_data={this.state.account_data} connection_list={this.state.connection_list}/>
+                    <Editor Profile_Thumbnail={Profile_Thumbnail} account_data={this.state.owner_user_account} connection_list={this.state.connection_list}/>
                 </div> : 
                 <></>}
 
@@ -80,7 +82,11 @@ class Connections_Temnplate extends Component {
 
                     let data = this.state.connection_list[key];
 
-                    return <div key={index} className="profile-thumbnail-wrapper"><Profile_Thumbnail connection_profile={data} current_user_account_data={this.state.account_data} /></div>;
+                    return <div key={index} className="profile-thumbnail-wrapper">
+
+                        <Profile_Thumbnail connection_profile={data} owner_user_account={this.state.owner_user_account} visitor_user_account={this.state.visitor_user_account}/>
+                        
+                    </div>;
 
                 })}
 

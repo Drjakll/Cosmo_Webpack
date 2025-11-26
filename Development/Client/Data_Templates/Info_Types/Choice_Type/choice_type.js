@@ -20,12 +20,7 @@ class Choice_Type extends Component {
             return;
         }
         
-        for(let i in this.props){
-            
-            this.state[i] = this.props[i];
-        }
-        
-        this.setState(this.state);
+        this.setState(this.props);
     }
 
     Generate_Options = () => {
@@ -55,10 +50,7 @@ class Choice_Type extends Component {
     
     render() {
 
-        let Editor = this.props.editor;
-        let variable_name = this.props.variable_name;
-        let account_data = this.props.account_data;
-        const refresh_account_data = this.props.refresh_account_data;
+        let {Editor, variable_name, owner_user_account, refresh_account_data} = this.props;
         
         return (
             <div id="choice-type" className="info">
@@ -79,7 +71,7 @@ class Choice_Type extends Component {
 
                     {Editor ? <Editor variable_name={variable_name}
                         value={this.state.value}
-                        account_data={account_data}
+                        owner_user_account={owner_user_account}
                         current_value={this.state.value}
                         refresh_account_data={refresh_account_data}
                     /> : <></>}

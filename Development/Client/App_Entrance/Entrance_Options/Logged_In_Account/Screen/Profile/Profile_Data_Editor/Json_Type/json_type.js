@@ -9,12 +9,12 @@ class Json_Type extends Component {
         
         Json_Type.contextType = window.Context;
         
-        let {account_data, refresh_account_data, variable_name, update_account_data, data_config, value } = this.props;
+        let {owner_user_account, refresh_account_data, variable_name, update_account_data, data_config, value } = this.props;
 
         this.state = {
             current_value: value,
             json_obj: {},
-            account_data: account_data,
+            owner_user_account,
             variable_name: variable_name,
             update_account_data: update_account_data,
             refresh_account_data: refresh_account_data,

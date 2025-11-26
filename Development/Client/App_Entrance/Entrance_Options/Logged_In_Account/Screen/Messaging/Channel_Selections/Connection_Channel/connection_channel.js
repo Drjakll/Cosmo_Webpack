@@ -7,11 +7,11 @@ class Connection_Channel extends Component {
         
         super(props);
 
-        let {connection_list, account_data, channel_selected} = this.props;
+        let {connection_list, owner_user_account, channel_selected} = this.props;
 
         this.state = {
             connection_list,
-            account_data,
+            owner_user_account,
             channel_selected
         };  
     }

@@ -29,17 +29,21 @@ class Posts extends Component {
         
         let today = new Date();
 
+        let {owner_user_account, visitor_user_account} = props;
+
         this.state = {
             selected_year: today.getFullYear(),
             selected_month: today.getMonth() + 1,
             selected_date: today.getDate(),
             selected_post: {title: "No post selected", body: "", date_created: ""},
             properties_for_calendar_dates: [],
-            connection_list: this.props.connection_list || {} //For sending out websocket events to particular connected user
+            connection_list: this.props.connection_list || {}, //For sending out websocket events to particular connected user
+            owner_user_account,
+            visitor_user_account
         };
     }
     
-    componentDidUpdate(prevProps, prevState){
+    async componentDidUpdate(prevProps, prevState){
         
         if(this.props === prevProps){
             return;
@@ -47,15 +51,15 @@ class Posts extends Component {
         
         if(!this.props.properties){
             return;
-        }2
+        }
         
         this.setState(this.props.properties);
         
-        let {account_data} = this.state;
+        let {owner_user_account} = this.props.properties;
         
-        if (account_data) {
+        if (owner_user_account) {
             
-            let { last_posted } = account_data;
+            let { last_posted } = owner_user_account;
 
             let last_posted_local = new Date(last_posted);
             
@@ -72,7 +76,7 @@ class Posts extends Component {
     
     Change_Month = ({year, month}) => {
         
-        let { email } = this.state.account_data;
+        let { email } = this.state.owner_user_account || {};
 
         let last_day_of_month = new Date(year, month, 0).getDate();
 
@@ -230,7 +234,7 @@ class Posts extends Component {
                         <Post_Editor
                             Get_Posts_On_This_Month={this.Change_Month}
                             selected_post={this.state.selected_post}
-                            account_info={this.state.account_data}
+                            owner_user_account={this.state.owner_user_account}
                             connection_list={this.state.connection_list}
                         />
                     </div>

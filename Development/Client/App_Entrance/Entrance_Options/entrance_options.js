@@ -22,7 +22,7 @@ class Entrance_Options extends Component {
 
         this.state = {
             selected_screen: "Login Account",
-            account_info: null
+            owner_user_account: null
         };
         
     }
@@ -59,7 +59,7 @@ class Entrance_Options extends Component {
 
             await this.setState({
                 selected_screen: "Logged In Account", 
-                account_info: acc_info
+                owner_user_account: acc_info
             });
         
             let date = new Date();
@@ -102,7 +102,7 @@ class Entrance_Options extends Component {
         return (
                 <div id="entrance-options">
                     
-                    <Selected_Screen account_data={this.state.account_info}/>
+                    <Selected_Screen owner_user_account={this.state.owner_user_account}/>
                     
                 </div>
             );

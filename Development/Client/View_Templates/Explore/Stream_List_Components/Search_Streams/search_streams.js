@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import Context from '@context/context.js';
 import './search_streams.less';
 
 class Search_Streams extends Component {
@@ -8,7 +9,7 @@ class Search_Streams extends Component {
         
         super(props);
 
-        Search_Streams.contextType = window.Context;
+        Search_Streams.contextType = Context;
 
         this.search_requirements = {};
         

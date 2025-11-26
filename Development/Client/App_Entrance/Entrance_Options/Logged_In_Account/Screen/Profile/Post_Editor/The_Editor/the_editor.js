@@ -11,14 +11,14 @@ class The_Editor extends Component {
 
         The_Editor.contextType = window.Context;
 
-        let { selected_post, account_info, connection_list } = props;
+        let { selected_post, owner_user_account, connection_list } = props;
 
         this.state = {
             selected_post: selected_post,
             post_photos: [],
             selected_photos: {},
-            account_info: account_info,
-            connection_list: connection_list
+            owner_user_account,
+            connection_list
         };
     }
 
@@ -84,7 +84,7 @@ class The_Editor extends Component {
             <div id="the-texts-outer-wrapper" className="the-outer-wrapper">
 
                 <The_Texts post={this.state.selected_post}
-                    account_info={this.state.account_info}
+                    owner_user_account={this.state.owner_user_account}
                     update={this.state.selected_post ? this.Save_Post : this.Create_Post}
                     Get_Posts={this.props.Get_Posts}
                     post_photos={this.state.post_photos}
@@ -98,7 +98,7 @@ class The_Editor extends Component {
 
                 <The_Photos
                     post_info={this.state.selected_post}
-                    account_info={this.state.account_info}
+                    owner_user_account={this.state.owner_user_account}
                     Set_Post_Photos={this.Set_Post_Photos}
                     Set_Selected_Photos={this.Set_Selected_Photos}
                 />

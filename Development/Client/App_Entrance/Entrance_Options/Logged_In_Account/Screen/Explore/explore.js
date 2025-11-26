@@ -8,7 +8,7 @@ class Explore extends Component {
         super(props);
         
         this.state = {
-            account_data: this.props.account_data
+            owner_user_account: this.props.owner_user_account
         };
         
         Explore.contextType = window.Context;
@@ -32,7 +32,7 @@ class Explore extends Component {
         return (
                 <div id="explore">
 
-                    <Explore_Template account_data={this.state.account_data} />
+                    <Explore_Template owner_user_account={this.state.owner_user_account} />
                     
                 </div>
             );

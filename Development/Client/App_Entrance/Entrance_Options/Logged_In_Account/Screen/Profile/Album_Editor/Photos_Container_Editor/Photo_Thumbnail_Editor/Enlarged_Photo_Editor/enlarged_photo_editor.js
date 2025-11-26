@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-//import Comment_Editor from './Comment_Editor/comment_editor.js';
+import Context from '@context/context.js';
 import './enlarged_photo_editor.less';
 
 class Enlarged_Photo_Editor extends Component {
@@ -10,7 +10,7 @@ class Enlarged_Photo_Editor extends Component {
 
         let { photo_info, album_info } = this.props;
 
-        Enlarged_Photo_Editor.contextType = window.Context;
+        Enlarged_Photo_Editor.contextType = Context;
         
         this.state = {
             photo_info: photo_info,

@@ -37,7 +37,7 @@ class Logged_In_Account extends Component {
                 { screen: "News", is_main: false, id: "News" },
                 { screen: "Messaging", is_main: false, id: "Messaging" },
             ],
-            account_data: this.props.account_data,
+            owner_user_account: this.props.owner_user_account,
             connection_list: {}
         };
     }
@@ -48,14 +48,14 @@ class Logged_In_Account extends Component {
         //Delete the user key from the websocket backend before exiting
         window.addEventListener("beforeunload", (e)=>{
 
-            global_connection_socket.emit("logging_off", {email: this.state.account_data.email});
+            global_connection_socket.emit("logging_off", {email: this.state.owner_user_account.email});
 
         });
 
         global_connection_socket.on("connect", async ()=>{
 
             //Signal to create the user key at the websocket backend
-            global_connection_socket.emit("newly_logged_in", {email: this.state.account_data.email});
+            global_connection_socket.emit("newly_logged_in", {email: this.state.owner_user_account.email});
 
         });
 
@@ -67,23 +67,24 @@ class Logged_In_Account extends Component {
 
         global_connection_socket.on("refresh_connection_list", ({})=>{
 
-            this.Get_Connection_List(this.state.account_data);
+            this.Get_Connection_List(this.state.owner_user_account);
 
         });
 
 
-        await this.Get_Connection_List(this.state.account_data);
+        await this.Get_Connection_List(this.state.owner_user_account);
+
         this.RotateScreen(1);
 
     }
     
-    async omponentDidUpdate(prevProps, prevState){
+    async componentDidUpdate(prevProps, prevState){
         
         if(this.props === prevProps){
             return;
         }
 
-        await this.Get_Connection_List(this.props.account_data);
+        await this.Get_Connection_List(this.props.owner_user_account);
 
     }
     
@@ -119,16 +120,16 @@ class Logged_In_Account extends Component {
 
     }
     
-    Get_Connection_List = async (account_data)=>{
+    Get_Connection_List = async (owner_user_account)=>{
 
-        if(!account_data){
+        if(!owner_user_account){
             return;
         }
 
         let { get_connection_list } = this.context.Request_URLs;
 
         let body = {
-            request: account_data,
+            request: owner_user_account,
             status: "accepted"
         };
 
@@ -152,7 +153,7 @@ class Logged_In_Account extends Component {
                 jsonObj_results[entry.email] = entry;
             }
 
-            await this.setState({account_data, connection_list: jsonObj_results});
+            await this.setState({owner_user_account, connection_list: jsonObj_results});
 
         }
 
@@ -177,15 +178,14 @@ class Logged_In_Account extends Component {
 
             })}
 
-        </div>;
-                            
+        </div>;      
         
         return (
             <div id="logged-in-account">
 
                 <div id="upper-bar-wrapper">
 
-                    <Upper_Bar account_data={this.state.account_data} connection_list={this.state.connection_list}/>
+                    <Upper_Bar account_data={this.state.owner_user_account} connection_list={this.state.connection_list}/>
 
                 </div>
 
@@ -197,7 +197,7 @@ class Logged_In_Account extends Component {
                             
                             <div className="screen-wrapper">
 
-                                <Screen account_data={this.state.account_data} screen_type={info.screen} connection_list={this.state.connection_list}/>
+                                <Screen owner_user_account={this.state.owner_user_account} screen_type={info.screen} connection_list={this.state.connection_list}/>
 
                             </div>
 

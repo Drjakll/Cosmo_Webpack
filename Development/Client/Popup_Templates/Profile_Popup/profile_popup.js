@@ -9,17 +9,18 @@ class Profile_Popup extends Component {
 
         Profile_Popup.contextType = window.Context;
 
-        let {account_data} = props;
+        let {owner_user_account, visitor_user_account} = props;
 
         this.state = {
-            account_data,
+            owner_user_account,
+            visitor_user_account,
             connection_list: {}
         };
     }
 
     componentDidMount(){
 
-        this.Get_Connection_List(this.state.account_data);
+        this.Get_Connection_List(this.state.owner_user_account);
     }
 
     componentDidUpdate(prevProps, prevState){
@@ -30,19 +31,19 @@ class Profile_Popup extends Component {
 
         this.setState(this.props);
 
-        this.Get_Connection_List(this.props.account_data);
+        this.Get_Connection_List(this.props.owner_user_account);
     }
 
-    Get_Connection_List = async (account_data)=>{
+    Get_Connection_List = async (owner_user_account)=>{
 
-        if(!account_data){
+        if(!owner_user_account){
             return;
         }
 
         let { get_connection_list } = this.context.Request_URLs;
 
         let body = {
-            request: account_data,
+            request: owner_user_account,
             status: "accepted"
         };
 
@@ -75,13 +76,13 @@ class Profile_Popup extends Component {
 
         const { Profile_Template, Drag } = this.context;
 
-        let {account_data} = this.state;
+        let {owner_user_account, visitor_user_account} = this.state;
 
         let drag = new Drag();
 
         let profile_bar_ref = createRef();
 
-        return account_data ? <div id="profile-popup-wrapper" ref={profile_bar_ref}>
+        return owner_user_account ? <div id="profile-popup-wrapper" ref={profile_bar_ref}>
 
             <div id="profile-drag-bar"
                 onMouseDown={(e) => { drag.init_child(e, profile_bar_ref.current); }}
@@ -98,7 +99,7 @@ class Profile_Popup extends Component {
 
             <div id="profile-template-inner-wrapper">
 
-                <Profile_Template account_data={account_data} connection_list={this.state.connection_list}/>
+                <Profile_Template visitor_user_account={visitor_user_account} owner_user_account={owner_user_account} connection_list={this.state.connection_list}/>
 
             </div>
 

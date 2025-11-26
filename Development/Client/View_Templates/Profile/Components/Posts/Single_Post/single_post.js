@@ -26,11 +26,13 @@ class Single_Post extends Component {
 
         super(props);
         
-        let { post } = this.props;
+        let { post, owner_user_account, visitor_user_account } = this.props;
 
         Single_Post.contextType = window.Context;
 
         this.state = {
+            owner_user_account,
+            visitor_user_account,
             post: post,
             open_comments_container: false
         };
@@ -88,7 +90,7 @@ class Single_Post extends Component {
 
     render() {
         
-        let {post, open_comments_container} = this.state;
+        let {post, open_comments_container, visitor_user_account, owner_user_account} = this.state;
         let {title, date_created} = post;
 
         return <div id="single-post">
@@ -101,7 +103,12 @@ class Single_Post extends Component {
                 
                 </div>
 
-                <Comments_Container post={post} generate_beautiful_date={this.Generate_Beautiful_Date} /> 
+                <Comments_Container 
+                    post={post} 
+                    generate_beautiful_date={this.Generate_Beautiful_Date} 
+                    visitor_user_account={visitor_user_account}
+                    owner_user_account={owner_user_account}
+                    /> 
 
             </div> : null}
         

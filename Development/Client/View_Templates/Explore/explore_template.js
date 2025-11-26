@@ -16,7 +16,7 @@ class Explore_Template extends Component {
         super(props);
         
         this.state = {
-            account_data: this.props.account_data,
+            owner_user_account: this.props.owner_user_account,
             current_screen: "Stream_List_Components",
             is_host: false,
             stream_id: null,
@@ -94,7 +94,7 @@ class Explore_Template extends Component {
         return (
             <div id="explore-template">
 
-                <Com account_data={this.state.account_data} 
+                <Com owner_user_account={this.state.owner_user_account} 
                     set_current_screen={this.Set_Current_Screen} 
                     is_host={this.state.is_host}
                     stream_id={this.state.stream_id}

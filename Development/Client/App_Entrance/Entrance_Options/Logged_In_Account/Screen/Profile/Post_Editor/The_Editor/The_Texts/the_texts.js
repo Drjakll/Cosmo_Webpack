@@ -20,14 +20,14 @@ class The_Texts extends Component {
 
         super(props);
 
-        let { post, account_info, post_photos, selected_photos, connection_list } = props;
+        let { post, owner_user_account, post_photos, selected_photos, connection_list } = props;
 
         The_Texts.contextType = window.Context;
 
         this.state = {
             post: post,
             post_photos: post_photos,
-            account_info: account_info,
+            owner_user_account,
             selected_photos: selected_photos,
             connection_list: connection_list
         };
@@ -52,7 +52,7 @@ class The_Texts extends Component {
 
     Update_Post = (e) => {
 
-        let { post, account_info } = this.state;
+        let { post, owner_user_account } = this.state;
 
         let { Post_Data_Templates } = this.context;
         let { Post_Data_Template } = Post_Data_Templates;
@@ -60,7 +60,7 @@ class The_Texts extends Component {
         let title = this.titleRef.current.innerText;
         let body = this.bodyRef.current.innerHTML;
 
-        post = post ? post : Post_Data_Template({ owner_email: account_info.email });
+        post = post ? post : Post_Data_Template({ owner_email: owner_user_account.email });
 
         post.title = title;
         post.body = body;
@@ -78,7 +78,7 @@ class The_Texts extends Component {
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify({ id: this.state.post.id, owner_email: this.state.account_info?.email })
+            body: JSON.stringify({ id: this.state.post.id, owner_email: this.state.owner_user_account?.email })
         })).json();
 
         await this.Delete_Post_Photos(this.state.post_photos);

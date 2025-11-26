@@ -9,11 +9,11 @@ class Conversation_Thumbnail extends Component {
 
         Conversation_Thumbnail.contextType = window.Context;
 
-        let {connection_list, account_data, conversation_info, selected_room_tag, user_status} = props;
+        let {connection_list, owner_user_account, conversation_info, selected_room_tag, user_status} = props;
 
         this.state = {
             connection_list,
-            account_data,
+            owner_user_account,
             conversation_info,
             users_info: {},
             selected_room_tag,
@@ -121,7 +121,7 @@ class Conversation_Thumbnail extends Component {
                 <img src={`${aws_s3_url}${profile_picture_link}`} />
             </div>
 
-            <div id="is-online" className={is_online || this.state.account_data.email === user_info.email ? "online" : "offline"}>
+            <div id="is-online" className={is_online || this.state.owner_user_account.email === user_info.email ? "online" : "offline"}>
 
             </div>
 
@@ -150,7 +150,7 @@ class Conversation_Thumbnail extends Component {
             className={`${this.state.conversation_info.room_tag === this.state.selected_room_tag ? "selected-tag" : ""}`}
         >
 
-            {(seen_by || {})[this.state.account_data.email] ? "" : <div id="attention-mark">!</div>}
+            {(seen_by || {})[this.state.owner_user_account.email] ? "" : <div id="attention-mark">!</div>}
 
             <div id="small-user-icons-wrapper">
 

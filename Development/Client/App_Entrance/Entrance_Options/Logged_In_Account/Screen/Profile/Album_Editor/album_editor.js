@@ -36,15 +36,15 @@ class Album_Editor extends Component {
             return;
         }
 
-        let {account_data} = this.state;
+        let {owner_user_account} = this.state;
         let {Photo_Album_Data_Templates, Request_URLs} = this.context;
         let {Photo_Album_Data} = Photo_Album_Data_Templates;
         let {add_photo_album} = Request_URLs;
 
 
-        let param = Photo_Album_Data({title: album_name, brief_description: "My adventure", owner_email: account_data.email});
+        let param = Photo_Album_Data({title: album_name, brief_description: "My adventure", owner_email: owner_user_account.email});
 
-        if(!account_data){
+        if(!owner_user_account){
             return;
         }
 

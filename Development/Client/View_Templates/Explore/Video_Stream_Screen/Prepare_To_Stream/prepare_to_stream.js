@@ -11,7 +11,7 @@ class Prepare_To_Stream extends Component {
         super(props);
         
         this.state = {
-            account_data: this.props.account_data
+            owner_user_account: this.props.owner_user_account
         };
     }
     
@@ -27,13 +27,13 @@ class Prepare_To_Stream extends Component {
                     
                     <div id="video-playback-wrapper">
                     
-                        <Video_Playback account_data={this.state.account_data} />
+                        <Video_Playback owner_user_account={this.state.owner_user_account} />
 
                     </div>
                     
                     <div id="init-stream-buttons-wrapper">
                 
-                        <Init_Streaming_Buttons account_data={this.state.account_data} start_streaming={this.Start_Streaming}/>
+                        <Init_Streaming_Buttons owner_user_account={this.state.owner_user_account} start_streaming={this.Start_Streaming}/>
                         
                     </div>
                     

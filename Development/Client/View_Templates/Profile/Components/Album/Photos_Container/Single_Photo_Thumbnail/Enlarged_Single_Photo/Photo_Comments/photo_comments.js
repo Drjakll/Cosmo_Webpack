@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import { io } from 'socket.io-client';
-import Comment_Input from './Comment_Input/comment_input.js';
+import Context from '@context/context.js';
 import './photo_comments.less';
 
 class Photo_Comments extends Component {
@@ -9,12 +9,15 @@ class Photo_Comments extends Component {
         
         super(props);
         
-        Photo_Comments.contextType = window.Context;
+        Photo_Comments.contextType = Context;
+
+        let {photo_info, visitor_user_account, owner_user_account} = this.props;
         
         this.state = {
-            photo_info: this.props.photo_info,
+            photo_info,
             photo_comments: [],
-            account_data: this.props.account_data,
+            visitor_user_account,
+            owner_user_account,
             reply_to_comment: null
         };
     }
@@ -99,12 +102,40 @@ class Photo_Comments extends Component {
         
         this.setState({reply_to_comment: reply});
     }
+
+    Submit_Comment = async ({comment, reply_to_comment, user_account}) => {
+
+        const photo_info = this.state.photo_info;
+        
+        const {Comment_Data_Templates, Request_URLs} = this.context;
+        
+        let comment_object = Comment_Data_Templates.Photo_Comment_Data_Template(user_account);
+        
+        comment_object.comment = comment;
+        comment_object.belongs_to_photo_id = photo_info.id;
+        comment_object.reply_to_comment = reply_to_comment ? JSON.stringify(reply_to_comment) : null;
+        
+        let res = await fetch(Request_URLs.submit_photo_comment, {
+            method: "POST",
+            body: JSON.stringify(comment_object),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+        
+        this.Get_Photo_Comments();
+        
+        this.socket.emit('submit_comment', this.state.photo_info.id);
+        
+    }
     
     render() {
 
         let { Comment_Editor } = this.props;
 
         let {Single_Comment} = this.context;
+
+        let {Comment_Input} = this.context;
         
         return <div id="photo-comments-wrapper">
         
@@ -130,11 +161,9 @@ class Photo_Comments extends Component {
             
             <div id="comment-input-area">
         
-                <Comment_Input account_data={this.state.account_data} 
-                                photo_info={this.state.photo_info} 
-                                Get_Photo_Comments={this.Get_Photo_Comments}
-                                socket={this.socket}
+                <Comment_Input user_account={this.state.visitor_user_account}
                                 reply_to_comment={this.state.reply_to_comment}
+                                submit_comment={this.Submit_Comment}
                                 />
         
             </div>

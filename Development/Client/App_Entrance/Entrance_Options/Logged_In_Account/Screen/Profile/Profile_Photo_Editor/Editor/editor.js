@@ -9,10 +9,10 @@ class Editor extends Component {
         
         Editor.contextType = window.Context;
         
-        let {account_data} = this.props;
+        let {owner_user_account} = this.props;
         
         this.state = {
-            account_data: account_data,
+            owner_user_account,
             profile_pictures: [],
             selected_to_delete: {}
         };
@@ -38,7 +38,7 @@ class Editor extends Component {
         
         let {get_all_profile_pictures} = Request_URLs;
         
-        let {email} = this.state.account_data;
+        let {email} = this.state.owner_user_account;
         
         
         let res = await fetch(get_all_profile_pictures, {
@@ -69,13 +69,13 @@ class Editor extends Component {
 
         let { set_as_profile_picture } = Request_URLs;
 
-        let { account_data } = this.state;
+        let { owner_user_account } = this.state;
 
         let res = await fetch(set_as_profile_picture, {
             method: "POST",
             body: JSON.stringify({
                 src_path: photo_url,
-                account_details: account_data
+                account_details: owner_user_account
             }),
             headers: {
                 'Content-Type': 'application/json'
@@ -85,22 +85,6 @@ class Editor extends Component {
         let resJson = await res.json();
 
         if (resJson) {
-
-            //Update the cookie in the local machine to avoid sending another request to the server
-
-            account_data.profile_picture_link = photo_url;
-
-            let date = new Date();
-
-            date.setTime(date.getTime() + Configurations.Cookie_Expire_Days * 24 * 60 * 60 * 1000);
-
-            const cookieStrs = cookie_converter(account_data, { "expires": date.toUTCString(), "path": "/" });
-
-            for (let cookieStr of cookieStrs) {
-                document.cookie = cookieStr;
-            }
-
-            //Refresh the account data by pulling the cookie data
 
             const { refresh_account_data } = this.props;
 
@@ -112,13 +96,13 @@ class Editor extends Component {
 
         const { Request_URLs, Upload_Files_To_S3 } = this.context;
 
-        let jsonBody = { email: this.state.account_data.email, album: "Profile Pictures" };
+        let jsonBody = { email: this.state.owner_user_account.email, album: "Profile Pictures" };
 
         let resData = await Upload_Files_To_S3(Request_URLs.upload_photos, files, jsonBody);
 
         if (resData) {
 
-            let body = { url: resData.photo_urls[0], belongs_to_user_email: this.state.account_data.email };
+            let body = { url: resData.photo_urls[0], belongs_to_user_email: this.state.owner_user_account.email };
 
             let res = await fetch(Request_URLs.insert_profile_photo_data, {
                 method: "POST",

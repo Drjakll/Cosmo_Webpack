@@ -9,9 +9,11 @@ class Profile_Picture extends Component {
         super(props);
         
         Profile_Picture.contextType = window.Context;
+
+        let { owner_user_account } = this.props
         
         this.state = {
-            account_data: {},
+            owner_user_account,
             enlarge_photo: false
         };
     }
@@ -21,14 +23,8 @@ class Profile_Picture extends Component {
         if(this.props === prevProps){
             return;
         }
-        
-        for(let i in this.props){
-            
-            this.state[i] = this.props[i];
-            
-        }
-        
-        this.setState(this.state);
+
+        this.setState(this.props);
         
     }
 
@@ -43,8 +39,8 @@ class Profile_Picture extends Component {
         const { Request_URLs } = this.context;
         const { aws_s3_url } = Request_URLs;
         
-        let {account_data} = this.state;
-        const { profile_picture_link } = account_data;
+        let {owner_user_account} = this.state;
+        const { profile_picture_link } = owner_user_account;
 
         const { generate_editors, refresh_account_data } = this.state;
 
@@ -53,7 +49,7 @@ class Profile_Picture extends Component {
 
                 {this.state.enlarge_photo ? <Enlarged_Profile_Photo turn_off_enlarge={this.Turn_Off_Enlarge} full_url={`${aws_s3_url}${profile_picture_link}`} /> : <></>}
                 
-                {generate_editors ? generate_editors({ account_data, refresh_account_data }) : <></>}
+                {generate_editors ? generate_editors({ owner_user_account, refresh_account_data }) : <></>}
                 
                 <div id="profile-picture-image-wrapper">
                         

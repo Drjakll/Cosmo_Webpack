@@ -11,7 +11,7 @@ class Video_Playback extends Component {
         super(props);
         
         this.state = {
-            account_data: this.props.account_data
+            owner_user_account: this.props.owner_user_account
         };
 
     }

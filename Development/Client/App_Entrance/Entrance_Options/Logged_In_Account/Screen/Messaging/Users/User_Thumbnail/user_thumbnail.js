@@ -12,13 +12,13 @@ class User_Thumbnail extends Component {
         
         super(props);
 
-        let {user_profile_data, account_data, selected} = this.props;
+        let {user_profile_data, owner_user_account, selected} = this.props;
 
         User_Thumbnail.contextType = window.Context;
 
         this.state = {
             user_profile_data,
-            account_data,
+            owner_user_account,
             selected
         };  
     }
@@ -38,7 +38,7 @@ class User_Thumbnail extends Component {
         let {create_conversation} = this.context.Request_URLs;
         
         let users = {
-            initiator_email: this.state.account_data.email,
+            initiator_email: this.state.owner_user_account.email,
             oppose_email: this.state.user_profile_data.email
         };
 

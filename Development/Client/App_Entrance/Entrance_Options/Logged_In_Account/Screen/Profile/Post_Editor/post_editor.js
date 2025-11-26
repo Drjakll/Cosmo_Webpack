@@ -15,7 +15,7 @@ class Post_Editor extends Component {
         this.state = {
             editor_opened: false,
             selected_post: null,
-            account_info: props.account_info,
+            owner_user_account: props.owner_user_account,
             disable_create_new_post: false,
             connection_list: props.connection_list
         };
@@ -41,9 +41,9 @@ class Post_Editor extends Component {
 
     Disable_Create_New_Post = async () => {
 
-        let { account_info } = this.state;
+        let { owner_user_account } = this.state;
 
-        if(!account_info){
+        if(!owner_user_account){
             return;
         }
 
@@ -53,7 +53,7 @@ class Post_Editor extends Component {
 
         let utc_now = new Date().getTime();
 
-        let { last_posted } = account_info;
+        let { last_posted } = owner_user_account;
 
         if (last_posted !== 'null' && last_posted !== undefined) {
 
@@ -81,7 +81,7 @@ class Post_Editor extends Component {
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify({ email: this.state.account_info.email })
+            body: JSON.stringify({ email: this.state.owner_user_account.email })
         })).json();
 
         let last_date_posted = res?.last_posted;
@@ -102,11 +102,11 @@ class Post_Editor extends Component {
 
             await window.LoginAttempt();
 
-            let { account_info } = this.state;
+            let { owner_user_account } = this.state;
 
-            account_info.last_posted = last_posted.str;
+            owner_user_account.last_posted = last_posted.str;
 
-            await this.setState({ account_info });
+            await this.setState({ owner_user_account });
 
             await this.Disable_Create_New_Post();
         }
@@ -122,7 +122,7 @@ class Post_Editor extends Component {
 
             <div id="the-editor-exit-button" onClick={Exit}></div>
 
-            <The_Editor Get_Posts={Get_Posts_On_This_Month} account_info={this.state.account_info} selected_post={this.state.selected_post} connection_list={this.state.connection_list} />
+            <The_Editor Get_Posts={Get_Posts_On_This_Month} owner_user_account={this.state.owner_user_account} selected_post={this.state.selected_post} connection_list={this.state.connection_list} />
 
         </div>;
     }
@@ -138,7 +138,7 @@ class Post_Editor extends Component {
                 <div className={`post-button ${this.state.disable_create_new_post ? "disabled" : ""}`} id="create-new-post-button" onClick={(e) => {
                     if (this.state.disable_create_new_post) {
 
-                        let {last_posted} = this.state.account_info;
+                        let {last_posted} = this.state.owner_user_account;
 
                         let last_posted_ms = new Date(last_posted).getTime();
                         let now_ms = new Date().getTime();

@@ -16,7 +16,7 @@ class Video_Stream_Screen extends Component {
         super(props);
 
         this.state = {
-            account_data: this.props.account_data,
+            owner_user_account: this.props.owner_user_account,
             //If stream_id exists, jump directly to streaming; if no stream_id exists, jump to prepare to stream
             current_screen: this.props.stream_id ? "Streaming" : "Prepare_To_Stream",
             is_host: this.props.is_host,
@@ -47,7 +47,7 @@ class Video_Stream_Screen extends Component {
         return (
                 <div id="video-stream-screen">
                     
-                <Com account_data={this.state.account_data}
+                <Com owner_user_account={this.state.owner_user_account}
                     change_screen={this.Change_Screen}
                     root_change_screen={this.props.set_current_screen}
                     is_host={this.state.is_host}

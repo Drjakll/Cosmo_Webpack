@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import Context from '@context/context.js';
 import './album_cover.less';
 
 class Album_Cover extends Component {
@@ -7,7 +8,7 @@ class Album_Cover extends Component {
         
         super(props);
         
-        Album_Cover.contextType = window.Context;
+        Album_Cover.contextType = Context;
         
         this.state = {
             album_info: props.album_info,

@@ -9,13 +9,16 @@ class Single_Photo extends Component {
         super(props);
         
         Single_Photo.contextType = window.Context;
+
+        let { owner_user_account, visitor_user_account, photo_info, album_info} = this.props;
         
         this.state = {
-            photo_info: this.props.photo_info,
+            photo_info,
             enlarge_photo: false,
-            account_data: this.props.account_data,
+            owner_user_account,
+            visitor_user_account,
             photos_to_be_deleted: {},
-            album_info: this.props.album_info
+            album_info
         };
     }
     
@@ -25,14 +28,7 @@ class Single_Photo extends Component {
             return;
         }
         
-        let properties = this.props;
-        
-        for(let i in properties){
-            
-            this.state[i] = properties[i];
-        }
-        
-        this.setState(this.state);
+        this.setState(this.props);
     }
     
     Exit_Enlarge_Mode = () => {
@@ -61,7 +57,8 @@ class Single_Photo extends Component {
                         photo_info={this.state.photo_info}
                         aws_s3_url={`${aws_s3_url}`}
                         exit_enlarge_mode={this.Exit_Enlarge_Mode}
-                        account_data={this.state.account_data}
+                        owner_user_account={this.state.owner_user_account}
+                        visitor_user_account={this.state.visitor_user_account}
                         Enlarged_Photo_Editor={Editor?.Enlarged_Photo_Editor}
                         album_info={this.state.album_info}
                         Get_Albums={this.props.Get_Albums}

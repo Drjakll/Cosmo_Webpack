@@ -10,7 +10,7 @@ class Profile_Info_Data extends Component {
         Profile_Info_Data.contextType = window.Context;
 
         this.state = {
-            account_data: this.props.accound_data,
+            owner_user_account: this.props.owner_user_account,
             info_templates: {}
         };
     }
@@ -54,13 +54,13 @@ class Profile_Info_Data extends Component {
 
     Update_Info_Templates = () => {
 
-        for (let i in this.state.account_data) {
-
+        for (let i in this.state.owner_user_account) {
+            
             if (!this.state.info_templates[i]) {
                 continue;
             }
 
-            this.state.info_templates[i].value = this.state.account_data[i];
+            this.state.info_templates[i].value = this.state.owner_user_account[i];
         }
     }
 
@@ -94,7 +94,7 @@ class Profile_Info_Data extends Component {
         
         let infoWrapperRef = createRef();
         
-        let { account_data, refresh_account_data } = this.props;
+        let { owner_user_account, refresh_account_data } = this.props;
         
         return (
             <div id="profile-info-data">
@@ -165,8 +165,8 @@ class Profile_Info_Data extends Component {
                                 <Com variable_name={key}
                                     value={value}
                                     label={label}
-                                    editor={editor}
-                                    account_data={account_data}
+                                    Editor={editor}
+                                    owner_user_account={owner_user_account}
                                     refresh_account_data={refresh_account_data}
                                     options={options}
                                 />

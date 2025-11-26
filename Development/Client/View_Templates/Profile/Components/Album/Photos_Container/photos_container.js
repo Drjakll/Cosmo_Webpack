@@ -7,11 +7,14 @@ class Photos_Container extends Component {
     constructor(props){
         
         super(props);
+
+        let {owner_user_account, visitor_user_account, album_info, photos} = this.props
         
         this.state = {
-            photos: this.props.photos,
-            album_info: this.props.album_info,
-            account_data: this.props.account_data,
+            photos,
+            album_info,
+            owner_user_account,
+            visitor_user_account,
             photos_to_be_deleted: {}
         };
     }
@@ -22,11 +25,7 @@ class Photos_Container extends Component {
             return;
         }
 
-        for (let i in this.props) {
-            this.state[i] = this.props[i];
-        }
-
-        this.setState(this.state);
+        this.setState(this.props);
     }
 
     Update_Photos_To_Be_Deleted = (photos_to_be_deleted) => {
@@ -56,7 +55,8 @@ class Photos_Container extends Component {
                     {Editor ? <div id="editor-wrapper">
                         <Editor photo_links={this.state.photos}
                             album_info={this.state.album_info}
-                            account_data={this.state.account_data}
+                            owner_user_account={this.state.owner_user_account}
+                            visitor_user_account={this.state.visitor_user_account}
                             Close_Photo_Album={this.props.Close_Photo_Album}
                             Get_Albums={this.props.Get_Albums}
                             Get_Photo_Links={this.props.Get_Photo_Links}
@@ -73,7 +73,8 @@ class Photos_Container extends Component {
 
                                 <Single_Photo_Thumbnail
                                     photo_info={photo_info}
-                                    account_data={this.state.account_data}
+                                    owner_user_account={this.state.owner_user_account}
+                                    visitor_user_account={this.state.visitor_user_account}
                                     Thumbnail_Editor={Photo_Thumbnail_Editor}
                                     photos_to_be_deleted={this.state.photos_to_be_deleted}
                                     album_info={this.state.album_info}

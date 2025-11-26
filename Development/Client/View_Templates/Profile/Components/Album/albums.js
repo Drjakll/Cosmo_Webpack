@@ -5,19 +5,22 @@ import './albums.less';
 
 class Albums extends Component {
     
-    state = {
-        account_data: null,
-        albums: [],
-        photos: [],
-        selected_album: {},
-        open_album: false
-    }
-    
     constructor(props){
         
         super(props);
         
         Albums.contextType = window.Context;
+
+        let {visitor_user_account, owner_user_account} = this.props    
+
+        this.state = {
+            owner_user_account,
+            visitor_user_account,
+            albums: [],
+            photos: [],
+            selected_album: {},
+            open_album: false
+        }
     }
     
     componentDidMount(){
@@ -33,14 +36,9 @@ class Albums extends Component {
         
         let properties = this.props.properties;
         
-        for(let i in properties){
-            
-            this.state[i] = properties[i];
-        }
+        await this.setState(properties);
         
-        await this.setState(this.state);
-        
-        if(properties.account_data){
+        if(properties.owner_user_account){
         
             this.Get_Albums();
             
@@ -49,9 +47,9 @@ class Albums extends Component {
     
     Get_Albums = async () => {
 
-        let {account_data} = this.state;
+        let {owner_user_account} = this.state;
 
-        if(!account_data){
+        if(!owner_user_account){
             return;
         }
         
@@ -59,7 +57,7 @@ class Albums extends Component {
         
         let res = await fetch(Request_URLs.get_photo_albums, {
             method: "POST",
-            body: JSON.stringify(account_data),
+            body: JSON.stringify(owner_user_account),
             headers: {
                 'Content-Type': "application/json"
             }
@@ -123,7 +121,8 @@ class Albums extends Component {
                         photos={this.state.photos}
                         album_info={this.state.selected_album}
                         Close_Photo_Album={this.Close_Photo_Album}
-                        account_data={this.state.account_data}
+                        owner_user_account={this.state.owner_user_account}
+                        visitor_user_account={this.state.visitor_user_account}
                         Get_Albums={this.Get_Albums}
                         Get_Photo_Links={this.Get_Photo_Links}
                 /> : <></>}
@@ -134,7 +133,7 @@ class Albums extends Component {
                         {Album_Editor ? 
                             <Album_Editor 
                                 get_albums={this.Get_Albums}
-                                account_data={this.state.account_data}
+                                account_data={this.state.owner_user_account}
                             /> : <></>}
                     </div>
 
