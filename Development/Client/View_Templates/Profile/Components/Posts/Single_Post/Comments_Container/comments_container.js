@@ -56,6 +56,8 @@ class Comments_Container extends Component {
                 }
             }
         )).json();
+
+        this.props.socket.emit('reload_comments_to_all', this.state.post.id);
     }
 
     Submit_Comment = async ({comment, reply_to_comment, user_account}) => {
@@ -80,7 +82,7 @@ class Comments_Container extends Component {
         
         await this.props.get_post_comments();
         
-        this.props.socket.emit('submit_comment', post_info.id);
+        this.props.socket.emit('reload_comments_to_all', post_info.id);
         
     }
 
@@ -148,6 +150,7 @@ class Comments_Container extends Component {
                                     Comment_Editor={Comment_Editor}
                                     reload_comments={this.props.get_post_comments}
                                     delete_comment={this.Delete_Post_Comment}
+                                    socket={this.state.socket}
                                 />
                                 
                             </div>;

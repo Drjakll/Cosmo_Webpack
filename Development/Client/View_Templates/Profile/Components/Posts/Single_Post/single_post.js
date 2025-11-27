@@ -45,11 +45,9 @@ class Single_Post extends Component {
     componentDidMount() {
 
 
-        this.socket = io('/photo_comments');
+        this.socket = io('/post_comments');
         
         this.socket.on('connect', ()=>{
-            
-            this.socket.emit('join_comment_group', this.state.post.id);
             
             this.socket.on('reload_comments', (data)=>{
                 
@@ -74,6 +72,8 @@ class Single_Post extends Component {
         }
         
         await this.setState(this.props);
+
+        this.socket?.emit('join_comment_group', {post_id: this.state.post.id});
 
         this.bodyRef.current?.innerHTML = this.state.post?.body;
 
@@ -101,7 +101,6 @@ class Single_Post extends Component {
         
         this.setState({post_comments: post_comments});
 
-        
     }
     
     Generate_Beautiful_Date = (date_str)=>{

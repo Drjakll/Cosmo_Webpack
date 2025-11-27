@@ -28,7 +28,7 @@ class Photo_Comments extends Component {
         
         this.socket.on('connect', ()=>{
             
-            this.socket.emit('join_comment_group', this.state.photo_info.id);
+            this.socket.emit('join_comment_group', {photo_id: this.state.photo_info.id});
             
             this.socket.on('reload_comments', (data)=>{
                 
@@ -96,6 +96,8 @@ class Photo_Comments extends Component {
                 }
             }
         )).json();
+
+       this.socket.emit('reload_comments_to_all', this.state.photo_info.id);
     }
     
     Set_Reply = (reply) => {
@@ -125,7 +127,7 @@ class Photo_Comments extends Component {
         
         this.Get_Photo_Comments();
         
-        this.socket.emit('submit_comment', this.state.photo_info.id);
+        this.socket.emit('reload_comments_to_all', this.state.photo_info.id);
         
     }
     

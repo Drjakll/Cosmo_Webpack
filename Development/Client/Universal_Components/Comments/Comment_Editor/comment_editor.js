@@ -13,7 +13,7 @@ class Comment_Editor extends Component {
         let { comment_info } = props;
 
         this.state = {
-            comment_info: comment_info
+            comment_info
         };
     }
 
@@ -32,7 +32,7 @@ class Comment_Editor extends Component {
 
             let {delete_comment, reload_comments} = this.props;
 
-            await delete_comment(this.state.comment_info);
+            await delete_comment(comment_info);
 
             reload_comments();
 

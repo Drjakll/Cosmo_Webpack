@@ -44,7 +44,7 @@ let Wrapper = function (){
         }
         
         socket.on('join_comment_group', events.join_comment_group.event);
-        socket.on('submit_comment', events.submit_a_comment.event);
+        socket.on('reload_comments_to_all', events.reload_comments_to_all.event);
         
     };
 };
