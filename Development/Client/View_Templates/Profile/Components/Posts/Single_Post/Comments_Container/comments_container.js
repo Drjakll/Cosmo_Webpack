@@ -11,19 +11,22 @@ class Comments_Container extends Component {
     constructor(props){
         super(props);
 
-        let {post, owner_user_account, visitor_user_account} = this.props;
+        let {post, owner_user_account, visitor_user_account, Comment_Editor, post_comments} = this.props;
 
         this.state = {
             post,
-            post_comments: [],
+            post_comments,
+            Comment_Editor,
             owner_user_account,
-            visitor_user_account
+            visitor_user_account,
+            reply_to_comment: null
         };
     }
 
     componentDidMount(){
 
         this.postBodyRef.current?.innerHTML = this.state.post.body;
+
     }
 
     componentDidUpdate(prevProps, prevState){
@@ -35,28 +38,6 @@ class Comments_Container extends Component {
         this.setState(this.props);
 
         this.postBodyRef.current?.innerHTML = this.props.post?.body;
-    }
-
-    Get_Post_Comments = async ()=>{
-     
-        const {Request_URLs} = this.context;
-        
-        const {get_post_comments} = Request_URLs;
-        
-        let res = await fetch(get_post_comments, {
-           method: "POST",
-           body: JSON.stringify(this.state.post),
-           headers: {
-               'Content-Type': "application/json"
-           }
-        });
-        
-        let resJson = await res.json();
-        
-        let {post_comments} = resJson;
-        
-        this.setState({post_comments: post_comments});
-        
     }
 
     Delete_Post_Comment = async (comment_info)=>{
@@ -87,9 +68,9 @@ class Comments_Container extends Component {
         
         comment_object.comment = comment;
         comment_object.belongs_to_post_id = post_info.id;
-        comment_object.reply_to_comment = reply_to_comment ? JSON.stringify(reply_to_comment) : null;
+        comment_object.reply_to_comment = reply_to_comment && JSON.stringify(reply_to_comment);
         
-        let res = await fetch(Request_URLs.submit_post_comment, {
+        let response = await fetch(Request_URLs.submit_post_comment, {
             method: "POST",
             body: JSON.stringify(comment_object),
             headers: {
@@ -97,17 +78,24 @@ class Comments_Container extends Component {
             }
         });
         
-        this.Get_Post_Comments();
+        await this.props.get_post_comments();
         
-        this.socket.emit('submit_comment', post_info.id);
+        this.props.socket.emit('submit_comment', post_info.id);
         
+    }
+
+    Set_Reply = (reply) => {
+        
+        this.setState({reply_to_comment: reply});
     }
 
     render(){
 
-        let {post} = this.state;
+        let {post, Comment_Editor} = this.state;
 
         let {title, date_created} = post || {};
+
+        let {Comment_Input, Single_Comment} = this.context;
 
         return (
             <div id="comments-container">
@@ -150,10 +138,31 @@ class Comments_Container extends Component {
 
                     <div id="comments-section-inner-wrapper">
 
+                        {this.state.post_comments.map((comment, index)=>{
+                            
+                            return <div className="comment-wrapper" key={index}>
+                                
+                                <Single_Comment
+                                    comment={comment}
+                                    set_reply={this.Set_Reply}
+                                    Comment_Editor={Comment_Editor}
+                                    reload_comments={this.props.get_post_comments}
+                                    delete_comment={this.Delete_Post_Comment}
+                                />
+                                
+                            </div>;
+                            
+                        })}                        
+
                     </div>
 
                     <div id="comment-input-wrapper">
 
+                        <Comment_Input 
+                            user_account={this.state.visitor_user_account}
+                            reply_to_comment={this.state.reply_to_comment}
+                            submit_comment={this.Submit_Comment}
+                        />
 
                     </div>
 

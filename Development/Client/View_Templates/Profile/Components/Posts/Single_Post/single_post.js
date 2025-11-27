@@ -1,5 +1,7 @@
 import React, { Component, createRef } from 'react';
 import Comments_Container from './Comments_Container/comments_container.js';
+import Context from '@context/context.js';
+import { io } from 'socket.io-client';
 import './single_post.less';
 
 class Single_Post extends Component {
@@ -28,19 +30,40 @@ class Single_Post extends Component {
         
         let { post, owner_user_account, visitor_user_account } = this.props;
 
-        Single_Post.contextType = window.Context;
+        Single_Post.contextType = Context;
 
         this.state = {
             owner_user_account,
             visitor_user_account,
             post: post,
-            open_comments_container: false
+            open_comments_container: false,
+            post_comments: [],
+            socket: null
         };
     }
 
     componentDidMount() {
 
+
+        this.socket = io('/photo_comments');
+        
+        this.socket.on('connect', ()=>{
+            
+            this.socket.emit('join_comment_group', this.state.post.id);
+            
+            this.socket.on('reload_comments', (data)=>{
+                
+                this.Get_Post_Comments();
+                
+            });
+            
+        });
+
+        this.setState({socket: this.socket});
+
         this.bodyRef.current.innerHTML = this.state.post.body;
+
+        this.Get_Post_Comments();
 
     }
     
@@ -54,6 +77,31 @@ class Single_Post extends Component {
 
         this.bodyRef.current?.innerHTML = this.state.post?.body;
 
+        this.Get_Post_Comments();
+
+    }
+
+    Get_Post_Comments = async ()=>{
+     
+        const {Request_URLs} = this.context;
+        
+        const {get_post_comments} = Request_URLs;
+        
+        let res = await fetch(get_post_comments, {
+           method: "POST",
+           body: JSON.stringify(this.state.post),
+           headers: {
+               'Content-Type': "application/json"
+           }
+        });
+        
+        let resJson = await res.json();
+        
+        let {post_comments} = resJson;
+        
+        this.setState({post_comments: post_comments});
+
+        
     }
     
     Generate_Beautiful_Date = (date_str)=>{
@@ -90,7 +138,7 @@ class Single_Post extends Component {
 
     render() {
         
-        let {post, open_comments_container, visitor_user_account, owner_user_account} = this.state;
+        let {post, open_comments_container, visitor_user_account, owner_user_account, comment_editor, post_comments, socket} = this.state;
         let {title, date_created} = post;
 
         return <div id="single-post">
@@ -108,7 +156,11 @@ class Single_Post extends Component {
                     generate_beautiful_date={this.Generate_Beautiful_Date} 
                     visitor_user_account={visitor_user_account}
                     owner_user_account={owner_user_account}
-                    /> 
+                    Comment_Editor={comment_editor}
+                    get_post_comments={this.Get_Post_Comments}
+                    post_comments={post_comments}
+                    socket={socket}
+                /> 
 
             </div> : null}
         
@@ -132,7 +184,7 @@ class Single_Post extends Component {
 
                     <div id="open-to-comment-button" onClick={this.Open_Comments_Container}>
 
-                        Comments 
+                        Comments({this.state.post_comments.length})
                         
                     </div>
 

@@ -40,7 +40,7 @@ class Profile extends Component {
     
     render(){
         
-        const { Profile_Template } = this.context;
+        const { Profile_Template, Comment_Editor } = this.context;
         
         return (
             <div id="profile">
@@ -58,7 +58,8 @@ class Profile extends Component {
                             album_editor: Album_Editor
                         },
                         "Posts": {
-                            post_editor: Post_Editor
+                            post_editor: Post_Editor,
+                            comment_editor: Comment_Editor
                         },
                         "Connections": {
                             connections_editor: Connections_Editor

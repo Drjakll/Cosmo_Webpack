@@ -11,10 +11,10 @@ class Comment_Input extends Component {
         
         super(props);
 
-        let {owner_user_account, reply_to_comment} = this.props;
+        let {user_account, reply_to_comment} = this.props;
         
         this.state = {
-            owner_user_account,
+            user_account,
             reply_to_comment
         };
         
@@ -39,11 +39,11 @@ class Comment_Input extends Component {
             return;
         }
 
-        let {owner_user_account, reply_to_comment} = this.state;
+        let {user_account, reply_to_comment} = this.state;
 
         let {submit_comment} = this.props;
                         
-        submit_comment({comment, reply_to_comment, owner_user_account});
+        submit_comment({comment, reply_to_comment, user_account});
 
         this.commentRef.current.textContent = '';
         

@@ -11,7 +11,7 @@ class Albums extends Component {
         
         Albums.contextType = window.Context;
 
-        let {visitor_user_account, owner_user_account} = this.props    
+        let {visitor_user_account, owner_user_account} = this.props;
 
         this.state = {
             owner_user_account,
@@ -36,7 +36,7 @@ class Albums extends Component {
         
         let properties = this.props.properties;
         
-        await this.setState(properties);
+        this.setState(properties);
         
         if(properties.owner_user_account){
         

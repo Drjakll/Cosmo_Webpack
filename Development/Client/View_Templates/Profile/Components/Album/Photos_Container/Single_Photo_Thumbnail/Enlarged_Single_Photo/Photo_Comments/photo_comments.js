@@ -164,7 +164,7 @@ class Photo_Comments extends Component {
                 <Comment_Input user_account={this.state.visitor_user_account}
                                 reply_to_comment={this.state.reply_to_comment}
                                 submit_comment={this.Submit_Comment}
-                                />
+                            />
         
             </div>
             

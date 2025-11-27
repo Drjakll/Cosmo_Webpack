@@ -192,9 +192,11 @@ class Posts extends Component {
 
         const { Calendar } = this.context;
         
-        let { selected_year, selected_month, selected_date, selected_post } = this.state;
+        let { selected_year, selected_month, selected_date, selected_post, visitor_user_account, owner_user_account } = this.state;
 
         const Post_Editor = this.state.post_editor;
+        const Comment_Editor = this.state.comment_editor;
+
         
         return (
             <div id="posts" tabIndex="0">
@@ -242,7 +244,10 @@ class Posts extends Component {
 
                 <div id="bottom">
 
-                    <Single_Post post={selected_post} />
+                    <Single_Post post={selected_post} 
+                                visitor_user_account={visitor_user_account} 
+                                owner_user_account={owner_user_account} 
+                                comment_editor={Comment_Editor} />
 
                 </div>
 

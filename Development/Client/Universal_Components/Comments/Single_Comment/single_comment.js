@@ -70,8 +70,8 @@ class Single_Comment extends Component {
                     <div id="reply-wrapper" className={`${this.state.comment.reply_to_comment ? 'active' : ''}`}>
                         
                         {this.state.comment.reply_to_comment ? 
-                        <Reply_To_Comment reply={this.state.comment.reply_to_comment} /> 
-                        : <></>}
+                            <Reply_To_Comment reply={this.state.comment.reply_to_comment} /> 
+                            : <></>}
                     
                     </div>
                     

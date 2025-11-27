@@ -6,7 +6,7 @@ let request = function() {
         let post_info = req.body;
  
         
-        let query = `select * from Post_Comments where belongs_to_post_id = ${post_info.id}`;
+        let query = `select * from Post_Comments where belongs_to_post_id = ${post_info.id || 0}`;
         
         this.sql.query(query, (err, result)=>{
            

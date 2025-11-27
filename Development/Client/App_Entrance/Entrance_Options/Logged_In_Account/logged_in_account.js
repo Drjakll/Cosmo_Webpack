@@ -197,7 +197,10 @@ class Logged_In_Account extends Component {
                             
                             <div className="screen-wrapper">
 
-                                <Screen owner_user_account={this.state.owner_user_account} screen_type={info.screen} connection_list={this.state.connection_list}/>
+                                <Screen 
+                                    owner_user_account={this.state.owner_user_account} 
+                                    screen_type={info.screen} 
+                                    connection_list={this.state.connection_list}/>
 
                             </div>
 
