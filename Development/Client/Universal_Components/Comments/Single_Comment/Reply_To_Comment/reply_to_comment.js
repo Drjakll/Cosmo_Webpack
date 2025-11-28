@@ -23,7 +23,7 @@ class Reply_To_Comment extends Component {
         return <div id="reply-to-comment">
             
             <div id="profile-info">
-                <div id="label">Replies To: </div>
+                <div id="label">Response to: </div>
                 <div id="profile-name">{this.state.reply.first_name} {this.state.reply.last_name} </div>
             </div>
             

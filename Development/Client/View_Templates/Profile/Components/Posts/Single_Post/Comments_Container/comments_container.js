@@ -81,6 +81,8 @@ class Comments_Container extends Component {
         });
         
         await this.props.get_post_comments();
+
+        this.setState({reply_to_comment: null});
         
         this.props.socket.emit('reload_comments_to_all', post_info.id);
         

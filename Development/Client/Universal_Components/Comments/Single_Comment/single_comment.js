@@ -39,7 +39,7 @@ class Single_Comment extends Component {
 
         const { Comment_Editor, reload_comments, delete_comment, socket } = this.props;
 
-        return <div id="single-comment-wrapper">
+        return <div id="single-comment-wrapper" className={`${this.state.comment.reply_to_comment ? "active-reply" : ""}`}>
 
             {Comment_Editor ?
                 <div id="comment-editor-wrapper">
@@ -53,11 +53,7 @@ class Single_Comment extends Component {
                 : <></>}
         
             <div id="user-info">
-                {this.state.comment.first_name} {this.state.comment.last_name}
-            </div>
-            
-            <div id="single-comment-inner-wrapper">
-            
+
                 <div id="profile-picture-wrapper">
                 
                     <div id="picture" style={{backgroundImage: `url('${aws_s3_url}${this.state.comment.profile_picture_link}')`}}>
@@ -65,6 +61,16 @@ class Single_Comment extends Component {
                     </div>
                 
                 </div>
+
+                <div id="user-info-name">
+
+                    {this.state.comment.first_name} {this.state.comment.last_name}
+
+                </div>
+
+            </div>
+            
+            <div id="single-comment-inner-wrapper">
             
                 <div id="comment-wrapper">
                 

@@ -140,6 +140,12 @@ class Photo_Comments extends Component {
         let {Comment_Input} = this.context;
         
         return <div id="photo-comments-wrapper">
+
+            <div id="comment-header">
+
+                Comments
+
+            </div>
         
             <div id="comments-list-area">
         

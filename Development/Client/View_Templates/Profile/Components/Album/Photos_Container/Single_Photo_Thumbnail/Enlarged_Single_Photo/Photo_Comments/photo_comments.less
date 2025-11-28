@@ -11,12 +11,26 @@ Click nbfs://nbhost/SystemFileSystem/Templates/ClientSide/style.less to edit thi
     width: 100%;
     height: 100%;
     display: block;
+
+    #comment-header {
+        width: 90%;
+        height: 75px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-bottom: rgba(0,0,0,0.5) solid 0.5px;
+        color: rgb(68, 59, 59);
+        font-size: 24px;
+        font-weight: bold;
+        position: relative;
+        left: 5%;
+    }
     
     #comments-list-area {
         width: 100%;
-        height: calc(100% - 75px);
+        height: calc(100% - 200px);
         overflow: auto;
-        display: scroll;
+        display: block;
         scrollbar-width: none;
         
         &::-webkit-scrollbar {
@@ -24,13 +38,19 @@ Click nbfs://nbhost/SystemFileSystem/Templates/ClientSide/style.less to edit thi
         }
 
         .comment-wrapper {
-            width: 100%;
+            width: 95%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 20px;
+            position: relative;
+            left: 2.5%;
         }
     }
     
     #comment-input-area {
         width: 100%;
-        height: 75px;
+        height: 125px;
         display: block;
     }
 }

@@ -43,7 +43,7 @@ class Comment_Input extends Component {
 
         let {submit_comment} = this.props;
                         
-        submit_comment({comment, reply_to_comment, user_account});
+        await submit_comment({comment, reply_to_comment, user_account});
 
         this.commentRef.current.textContent = '';
         
