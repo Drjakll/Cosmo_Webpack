@@ -62,16 +62,16 @@ class Single_Comment extends Component {
                 
                 </div>
 
+            </div>
+            
+            <div id="single-comment-inner-wrapper">
+
                 <div id="user-info-name">
 
                     {this.state.comment.first_name} {this.state.comment.last_name}
 
                 </div>
 
-            </div>
-            
-            <div id="single-comment-inner-wrapper">
-            
                 <div id="comment-wrapper">
                 
                     <div id="reply-wrapper" className={`${this.state.comment.reply_to_comment ? 'active' : ''}`}>
