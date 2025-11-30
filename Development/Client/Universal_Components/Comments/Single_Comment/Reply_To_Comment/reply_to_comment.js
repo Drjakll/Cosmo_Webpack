@@ -42,7 +42,7 @@ class Reply_To_Comment extends Component {
                 
                     <pre id="comment-reply">
 
-                        {this.state.reply.comment}
+                        "{this.state.reply.comment}"
 
                     </pre>
                     

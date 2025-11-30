@@ -9,7 +9,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/ClientSide/style.less to edit thi
 
 #single-comment-wrapper {
     width: 95%;
-    height: 150px;
+    height: 175px;
     display: flex;
     justify-content: space-evenly;
     align-items: center;
@@ -23,13 +23,19 @@ Click nbfs://nbhost/SystemFileSystem/Templates/ClientSide/style.less to edit thi
         margin-top: 30px;
     }
 
+    &:hover {
+        #comment-editor-wrapper {
+            display: flex;
+        }
+    }
+
     #comment-editor-wrapper {
         height: 25px;
         width: 25px;
         position: absolute;
         right: -9px;
         top: -9px;
-        display: flex;
+        display: none;
         justify-content: space-evenly;
         align-items: center;
     }
@@ -42,11 +48,11 @@ Click nbfs://nbhost/SystemFileSystem/Templates/ClientSide/style.less to edit thi
 
         #profile-picture-wrapper {
             width: 100%;
-            height: calc(80% * 0.8);
+            height: calc(65%);
             display: flex;
             justify-content: center;
             align-items: center;
-            margin-top: calc(0.2 * 150px);
+            margin-top: calc(15px);
             
             #picture {
                 width: calc(100%);
@@ -66,6 +72,16 @@ Click nbfs://nbhost/SystemFileSystem/Templates/ClientSide/style.less to edit thi
                     opacity: 0.75;
                 }
             }
+        }
+
+        #comment-time-stamp {
+            width: 100%;
+            height: 35%;
+            display: flex;
+            justify-content: space-evenly;
+            align-items: center;
+            font-size: 14px;
+            color: rgba(50,50,50,1) !important;
         }
     }
     
@@ -136,7 +152,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/ClientSide/style.less to edit thi
                 align-items: center;
                 
                 #reply {
-                    width: 25%;
+                    width: 50px;
                     height: 100%;
                     display: flex;
                     justify-content: flex-start;
@@ -149,7 +165,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/ClientSide/style.less to edit thi
                         display: flex;
                         justify-content: center;
                         align-items: center;
-                        font-size: 13px;
+                        font-size: 15px;
                         
                         &:hover {
                             color: slateblue;
@@ -158,9 +174,25 @@ Click nbfs://nbhost/SystemFileSystem/Templates/ClientSide/style.less to edit thi
                         }
                     }
                 }
+
+                #props-wrapper {
+                    width: 60%;
+                    height: 100%;
+                    display: flex;
+                    justify-content: space-evenly;
+                    align-items: center;
+
+                    #likes-wrapper, #dislikes-wrapper {
+                        width: 50%;
+                        height: 100%;
+                        display: flex;
+                        justify-content: space-evenly;
+                        align-items: center;
+                    }
+                }
                 
                 #emojis {
-                    width: 75%;
+                    width: calc(40% - 50px);
                     height: 100%;
                     display: flex;
                     justify-content: space-evenly;

@@ -1,5 +1,8 @@
 import React, {Component} from 'react';
 import Reply_To_Comment from './Reply_To_Comment/reply_to_comment.js';
+import Likes from './Likes/likes.js';
+import Dislikes from './Dislikes/dislikes.js';
+import Context from '@context/context.js';
 import './single_comment.less';
 
 class Single_Comment extends Component {
@@ -12,7 +15,7 @@ class Single_Comment extends Component {
             comment: this.props.comment
         };
         
-        Single_Comment.contextType = window.Context;
+        Single_Comment.contextType = Context;
     }
     
     componentDidUpdate(prevProps, prevState){
@@ -39,6 +42,8 @@ class Single_Comment extends Component {
 
         const { Comment_Editor, reload_comments, delete_comment, socket } = this.props;
 
+        let {comment} = this.state;
+
         return <div id="single-comment-wrapper" className={`${this.state.comment.reply_to_comment ? "active-reply" : ""}`}>
 
             {Comment_Editor ?
@@ -56,10 +61,16 @@ class Single_Comment extends Component {
 
                 <div id="profile-picture-wrapper">
                 
-                    <div id="picture" style={{backgroundImage: `url('${aws_s3_url}${this.state.comment.profile_picture_link}')`}}>
+                    <div id="picture" style={{backgroundImage: `url('${aws_s3_url}${comment.profile_picture_link}')`}}>
         
                     </div>
                 
+                </div>
+
+                <div id="comment-time-stamp">
+
+                    {new Date(comment.time_stamp).toLocaleString().replace(',', ' ')}
+
                 </div>
 
             </div>
@@ -68,23 +79,23 @@ class Single_Comment extends Component {
 
                 <div id="user-info-name">
 
-                    {this.state.comment.first_name} {this.state.comment.last_name}
+                    {comment.first_name} {comment.last_name}
 
                 </div>
 
                 <div id="comment-wrapper">
                 
-                    <div id="reply-wrapper" className={`${this.state.comment.reply_to_comment ? 'active' : ''}`}>
+                    <div id="reply-wrapper" className={`${comment.reply_to_comment ? 'active' : ''}`}>
                         
-                        {this.state.comment.reply_to_comment ? 
-                            <Reply_To_Comment reply={this.state.comment.reply_to_comment} /> 
+                        {comment.reply_to_comment ? 
+                            <Reply_To_Comment reply={comment.reply_to_comment} /> 
                             : <></>}
                     
                     </div>
                     
                     <pre id="comment">
         
-                        {this.state.comment.comment}
+                        {comment.comment}
                         
                     </pre>
                     
@@ -92,12 +103,29 @@ class Single_Comment extends Component {
                 
                         <div id="reply">
 
-                            <label onClick={(e)=>{this.props.set_reply(this.state.comment);}}>Reply</label>
+                            <label onClick={(e)=>{this.props.set_reply(comment);}}>Reply</label>
+
+                        </div>
+
+                        <div id="props-wrapper">
+
+                            <div id="likes-wrapper">
+
+                                <Likes likes={comment.likes}/>
+
+                            </div>
+
+                            <div id="dislikes-wrapper">
+
+                                <Dislikes dislikes={comment.dislikes}/>
+
+                            </div>
 
                         </div>
 
                         <div id="emojis">
                         
+                            
                         
                         </div>
 

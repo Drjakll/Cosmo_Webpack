@@ -12,9 +12,12 @@ let Photo_Comment_Data_Template = function(initial){
         last_name: "",
         profile_picture_link: "",
         comment: "",
-        time_stamp: null,
+        time_stamp: Date.now(),
         belongs_to_photo_id: null,
-        reply_to_comment: null
+        reply_to_comment: null,
+        likes: {},
+        dislikes: {},
+        emojis: {}
     };
     
     for(let i in initial){
@@ -39,9 +42,12 @@ let Post_Comment_Data_Template = function(initial){
         last_name: "",
         profile_picture_link: "",
         comment: "",
-        time_stamp: null,
+        time_stamp: Date.now(),
         belongs_to_post_id: null,
-        reply_to_comment: null
+        reply_to_comment: null,
+        likes: {},
+        dislikes: {},
+        emojis: {}
     };
     
     for(let i in initial){
