@@ -130,6 +130,24 @@ class Photo_Comments extends Component {
         this.socket.emit('reload_comments_to_all', this.state.photo_info.id);
         
     }
+
+    Update_Comment = async (comment)=>{
+
+        const {update_photo_comment} = this.context.Request_URLs;
+
+        let res = await(await fetch(
+            update_photo_comment,
+            {
+                method: "POST",
+                body: JSON.stringify(comment),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }
+        )).json();
+
+        this.props.socket.emit('reload_comments_to_all', post_info.id);
+    }
     
     render() {
 
@@ -159,6 +177,8 @@ class Photo_Comments extends Component {
                             Comment_Editor={Comment_Editor}
                             reload_comments={this.Get_Photo_Comments}
                             delete_comment={this.Delete_Photo_Comment}
+                            visitor_user_account={this.state.visitor_user_account}
+                            update_comment={this.Update_Comment}
                         />
                         
                     </div>;

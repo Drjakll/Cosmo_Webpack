@@ -23,6 +23,11 @@ class Dislikes extends Component {
         this.setState(this.props);
     }
 
+    Apply_Props = (e)=>{
+
+        this.props.apply_props && this.props.apply_props("dislikes");
+    }
+
     render(){
 
         let {dislikes} = this.state;
@@ -33,7 +38,7 @@ class Dislikes extends Component {
             
             <div id="dislikes-icon-wrapper">
 
-                <img src="./static/thumbs_down.png"/>
+                <img src="./static/thumbs_down.png" onClick={this.Apply_Props} />
 
             </div>
 

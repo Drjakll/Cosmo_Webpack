@@ -88,6 +88,26 @@ class Comments_Container extends Component {
         
     }
 
+    Update_Comment = async (comment)=>{
+
+        let {post} = this.state;
+
+        const {update_post_comment} = this.context.Request_URLs;
+
+        let res = await(await fetch(
+            update_post_comment,
+            {
+                method: "POST",
+                body: JSON.stringify(comment),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }
+        )).json();
+
+        this.props.socket.emit('reload_comments_to_all', post.id);
+    }
+
     Set_Reply = (reply) => {
         
         this.setState({reply_to_comment: reply});
@@ -153,6 +173,8 @@ class Comments_Container extends Component {
                                     reload_comments={this.props.get_post_comments}
                                     delete_comment={this.Delete_Post_Comment}
                                     socket={this.state.socket}
+                                    visitor_user_account={this.state.visitor_user_account}
+                                    update_comment={this.Update_Comment}
                                 />
                                 
                             </div>;

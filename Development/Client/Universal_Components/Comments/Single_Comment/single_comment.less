@@ -52,7 +52,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/ClientSide/style.less to edit thi
             display: flex;
             justify-content: center;
             align-items: center;
-            margin-top: calc(15px);
+            margin-top: 15%;
             
             #picture {
                 width: calc(100%);
@@ -76,10 +76,11 @@ Click nbfs://nbhost/SystemFileSystem/Templates/ClientSide/style.less to edit thi
 
         #comment-time-stamp {
             width: 100%;
-            height: 35%;
+            height: 25%;
             display: flex;
             justify-content: space-evenly;
             align-items: center;
+            text-align: center;
             font-size: 14px;
             color: rgba(50,50,50,1) !important;
         }
@@ -179,19 +180,20 @@ Click nbfs://nbhost/SystemFileSystem/Templates/ClientSide/style.less to edit thi
                     width: 60%;
                     height: 100%;
                     display: flex;
-                    justify-content: space-evenly;
+                    justify-content: flex-start;
                     align-items: center;
 
                     #likes-wrapper, #dislikes-wrapper {
-                        width: 50%;
+                        min-width: 75px;
                         height: 100%;
                         display: flex;
                         justify-content: space-evenly;
                         align-items: center;
+                        margin-right: 15px;
                     }
                 }
                 
-                #emojis {
+                #emojis-wrapper {
                     width: calc(40% - 50px);
                     height: 100%;
                     display: flex;

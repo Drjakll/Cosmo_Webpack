@@ -3,6 +3,13 @@ import './emojis.less';
 
 class Emojis extends Component {
 
+    Emoji_Icon_Names = [
+        "angry",
+        "laugh",
+        "sad",
+        "surprised"
+    ]
+
     constructor(props){
 
         super(props);
@@ -23,6 +30,26 @@ class Emojis extends Component {
         this.setState(this.props);
     }
 
+    Create_Emoji_Insertion = (emoji_label, emoji_obj, index)=>{
+
+        return <div className="emoji-insertion" key={index}>
+
+            <div id="emoji-icon">
+
+                <img src={`./static/${emoji_label}.png`}/>
+
+            </div>
+
+            <div id="emoji-value">
+
+                {Object.keys(emoji_obj).length}
+
+            </div>
+
+        </div>;
+
+    }
+
     render(){
 
         let {emojis} = this.state;
@@ -31,7 +58,23 @@ class Emojis extends Component {
 
         return (<div id="emojis">
 
-            
+            <div id="emojis-label">
+
+                Reactions
+
+            </div>
+
+            <div id="emoji-insertion-icons">
+
+                {this.Emoji_Icon_Names.map((name, index)=>{
+
+                    let emoji_obj = emojis[name] || {};
+
+                    return this.Create_Emoji_Insertion(name, emoji_obj, index);
+
+                })}
+
+            </div>
 
         </div>);
     }

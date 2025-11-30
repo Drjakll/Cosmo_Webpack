@@ -17,6 +17,8 @@ class Reply_To_Comment extends Component {
     render(){
         
         const {Request_URLs} = this.context;
+
+        let {reply} = this.state;
         
         const {aws_s3_url} = Request_URLs;
         
@@ -24,7 +26,7 @@ class Reply_To_Comment extends Component {
             
             <div id="profile-info">
                 <div id="label">Response to: </div>
-                <div id="profile-name">{this.state.reply.first_name} {this.state.reply.last_name} </div>
+                <div id="profile-name">{reply?.first_name} {reply?.last_name} </div>
             </div>
             
             <div id="reply-inner-wrapper">
@@ -32,7 +34,7 @@ class Reply_To_Comment extends Component {
                 <div id="profile-picture-wrapper">
                     
                     <div id="profile-picture" 
-                        style={{backgroundImage: `url('${aws_s3_url}${this.state.reply.profile_picture_link}')`}}>
+                        style={{backgroundImage: `url('${aws_s3_url}${reply?.profile_picture_link}')`}}>
         
                     </div>
                     
@@ -42,7 +44,7 @@ class Reply_To_Comment extends Component {
                 
                     <pre id="comment-reply">
 
-                        "{this.state.reply.comment}"
+                        "{reply?.comment}"
 
                     </pre>
                     

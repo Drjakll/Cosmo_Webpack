@@ -1,0 +1,85 @@
+#emojis {
+    min-width: 75px;
+    height: 100%;
+    position: relative;
+    display: block;
+    transition: 1s;
+    background-color: rgba(0,0,0,0);
+
+    &:hover {
+        cursor: pointer;
+        background-color: rgb(189, 205, 219);
+
+        #emoji-insertion-icons {
+            display: block;
+        }
+
+        #emojis-label {
+            //background-color: rgba(0,0,0,0.1);
+            color: rgb(50, 50, 50);
+        }
+    }
+
+    #emojis-label {
+        min-width: 75px;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        background-color: rgba(0,0,0,0);
+        font-size: 14px;
+    }
+
+    #emoji-insertion-icons {
+        min-width: 75px;
+        position: absolute;
+        display: none;
+        background-color: rgb(189, 205, 219);
+
+        .emoji-insertion {
+            min-width: 75px;
+            height: 35px;
+            display: flex;
+            justify-content: space-evenly;
+            align-items: center;
+            transition: 1s;
+            background-color: rgba(0,0,0,0);
+
+            &:hover {
+                cursor: pointer;
+                background-color: rgba(0,0,0,0.1);
+            }
+
+            #emoji-icon {
+                width: 50px;
+                height: 100%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+
+                img {
+                    object-fit: contain;
+                    object-position: center;
+                    height: 100%;
+                    width: 75%;
+                    border-radius: 50px;
+                    transition: 1s;
+
+                    &:hover {
+                        background-color: rgba(0,0,0,0.1);
+                    }
+                }
+            }
+
+            #emoji-value {
+                min-width: calc(25px);
+                height: 100%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                color: rgb(50, 50, 50);
+            }
+        }
+    }
+}

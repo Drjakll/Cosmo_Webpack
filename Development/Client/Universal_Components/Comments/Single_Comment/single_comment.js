@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import Reply_To_Comment from './Reply_To_Comment/reply_to_comment.js';
 import Likes from './Likes/likes.js';
 import Dislikes from './Dislikes/dislikes.js';
+import Emojis from './Emojis/emojis.js';
 import Context from '@context/context.js';
 import './single_comment.less';
 
@@ -10,9 +11,12 @@ class Single_Comment extends Component {
     constructor(props){
         
         super(props);
+
+        let {comment, visitor_user_account} = this.props;
         
         this.state = {
-            comment: this.props.comment
+            comment,
+            visitor_user_account
         };
         
         Single_Comment.contextType = Context;
@@ -33,6 +37,53 @@ class Single_Comment extends Component {
         }
         
         this.setState(this.state);
+    }
+
+    Apply_Props = (prop_type)=>{
+
+        let {comment, visitor_user_account} = this.state;
+
+        let {email, profile_picture_link, first_name, last_name} = visitor_user_account;
+
+        let props = {likes: JSON.parse(comment.likes) || comment.likes, dislikes: JSON.parse(comment.dislikes) || comment.dislikes};
+        
+        if(prop_type === "likes"){
+
+            if(props.likes[email]){
+
+                delete props.likes[email];
+
+            } else {
+
+                delete props.dislikes[email];
+
+                props.likes[email] = {profile_picture_link, first_name, last_name};
+            }
+
+        } else {
+
+            if(props.dislikes[email]){
+
+                delete props.dislikes[email];
+
+            } else {
+
+                delete props.likes[email];
+
+                props.dislikes[email] = {profile_picture_link, first_name, last_name};
+
+            }
+
+        }
+
+        comment.likes = JSON.stringify(props.likes);
+        comment.dislikes = JSON.stringify(props.dislikes);
+
+        this.setState({
+            comment
+        });
+
+        this.props.update_comment && this.props.update_comment(comment);
     }
     
     render(){
@@ -87,7 +138,7 @@ class Single_Comment extends Component {
                 
                     <div id="reply-wrapper" className={`${comment.reply_to_comment ? 'active' : ''}`}>
                         
-                        {comment.reply_to_comment ? 
+                        {JSON.parse(comment.reply_to_comment) ? 
                             <Reply_To_Comment reply={comment.reply_to_comment} /> 
                             : <></>}
                     
@@ -111,21 +162,21 @@ class Single_Comment extends Component {
 
                             <div id="likes-wrapper">
 
-                                <Likes likes={comment.likes}/>
+                                <Likes likes={comment.likes} apply_props={this.Apply_Props} />
 
                             </div>
 
                             <div id="dislikes-wrapper">
 
-                                <Dislikes dislikes={comment.dislikes}/>
+                                <Dislikes dislikes={comment.dislikes} apply_props={this.Apply_Props} />
 
                             </div>
 
                         </div>
 
-                        <div id="emojis">
+                        <div id="emojis-wrapper">
                         
-                            
+                            <Emojis emojis={comment.emojis} />
                         
                         </div>
 

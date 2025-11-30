@@ -22,6 +22,9 @@ import Search_Parameters from './Data_Templates/Search_Parameters/search_paramet
 import Single_Comment from './Universal_Components/Comments/Single_Comment/single_comment.js';
 import Comment_Editor from './Universal_Components/Comments/Comment_Editor/comment_editor.js';
 import Comment_Input from './Universal_Components/Comments/Comment_Input/comment_input.js';
+import Likes from './Universal_Components/Comments/Single_Comment/Likes/likes.js';
+import Dislikes from './Universal_Components/Comments/Single_Comment/Dislikes/dislikes.js';
+import Emojis from './Universal_Components/Comments/Single_Comment/Emojis/emojis.js';
 import './react_entry.less';
 
 class Entry extends Component {
@@ -62,7 +65,10 @@ class Entry extends Component {
                 Search_Parameters,
                 Single_Comment, //Single comment component
                 Comment_Editor, //Comment editor component
-                Comment_Input //Comment input component
+                Comment_Input, //Comment input component
+                Likes,
+                Dislikes,
+                Emojis
             }}
         
         >
