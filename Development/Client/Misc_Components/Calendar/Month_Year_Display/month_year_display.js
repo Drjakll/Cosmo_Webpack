@@ -155,7 +155,7 @@ class Month_Year_Display extends Component {
                 }}
             >
 
-                {`<`}
+                <label>{`<`}</label>
 
             </div>
 
@@ -201,7 +201,7 @@ class Month_Year_Display extends Component {
                 }}
             >
 
-                {`>`}
+                <label>{`>`}</label>
 
             </div>
 

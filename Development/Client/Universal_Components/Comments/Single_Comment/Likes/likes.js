@@ -28,6 +28,11 @@ class Likes extends Component {
         this.props.apply_props && this.props.apply_props("likes");
     }
 
+    Open_Who_Gave_Props = (e)=>{
+
+        this.props.open_who_gave_props && this.props.open_who_gave_props(true, "likes");
+    }
+
     render(){
 
         let {likes} = this.state;
@@ -44,7 +49,9 @@ class Likes extends Component {
 
             <div id="likes-value-wrapper">
 
-                <label>{Object.keys(likes).length}</label>
+                <label onClick={this.Open_Who_Gave_Props}>
+                    {Object.keys(likes).length}
+                </label>
 
             </div>
 

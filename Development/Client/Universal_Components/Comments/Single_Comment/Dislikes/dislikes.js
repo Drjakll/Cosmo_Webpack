@@ -28,6 +28,11 @@ class Dislikes extends Component {
         this.props.apply_props && this.props.apply_props("dislikes");
     }
 
+    Open_Who_Gave_Props = (e)=>{
+
+        this.props.open_who_gave_props && this.props.open_who_gave_props(true, "dislikes");
+    }
+
     render(){
 
         let {dislikes} = this.state;
@@ -44,7 +49,9 @@ class Dislikes extends Component {
 
             <div id="dislikes-value-wrapper">
 
-                <label>{Object.keys(dislikes).length}</label>
+                <label onClick={this.Open_Who_Gave_Props}>
+                    {Object.keys(dislikes).length}
+                </label>
 
             </div>
 

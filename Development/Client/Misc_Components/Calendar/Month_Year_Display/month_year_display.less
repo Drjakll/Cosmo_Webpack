@@ -5,6 +5,8 @@
     display: flex;
     justify-content: space-evenly;
     align-items: center;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
     
     .navigation {
         width: 10%;
@@ -12,12 +14,29 @@
         display: flex;
         justify-content: center;
         align-items: center;
+        transition: 1s;
+
+        label {
+            transition: 1s;
+
+            &:hover {
+                cursor: pointer;
+            }
+        }
         
         &:hover {
             cursor: pointer;
-            background-color: rgba(0,0,0,0.1);
             user-select: none;
+            background-color: rgba(0,0,0,0.1);
         }
+    }
+
+    .left {
+        border-top-left-radius: 10px;
+    }
+
+    .right {
+        border-top-right-radius: 10px;
     }
     
     #month-year-display {
@@ -60,7 +79,8 @@
                 height: 25vh;
                 display: none;
                 background-color: rgba(225,225,225,1);
-                border: rgba(0,0,0,0.5) solid 0.01vw;
+                border: rgba(0,0,0,0.5) solid 0.5px;
+                box-shadow: rgba(0,0,0,0.25) 0px 0px 10px;
 
                 #year-selections {
                     width: 100%;
@@ -97,7 +117,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            font-size: 0.75vw;
+            font-size: 14px;
             position: relative;
             
             &:hover {
@@ -123,6 +143,7 @@
                 position: absolute;
                 top: 100%;
                 background-color: rgb(225,225,225,1);
+                box-shadow: rgba(0,0,0,0.25) 0px 0px 10px;
                 
                 #month-selections {
                     width: 100%;
