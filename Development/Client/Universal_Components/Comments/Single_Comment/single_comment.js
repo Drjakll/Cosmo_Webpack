@@ -133,11 +133,13 @@ class Single_Comment extends Component {
 
         const { Comment_Editor, reload_comments, delete_comment, socket } = this.props;
 
-        let {comment, see_who_gave_props, show_likes_or_dislikes} = this.state;
+        let {comment, see_who_gave_props, show_likes_or_dislikes, visitor_user_account} = this.state;
 
-        let {emojis} = comment;
+        let {emojis, reply_to_comment} = comment;
 
-        return <div id="single-comment-wrapper" className={`${this.state.comment.reply_to_comment ? "active-reply" : ""}`}>
+        reply_to_comment = JSON.parse(reply_to_comment);
+
+        return <div id="single-comment-wrapper" className={`${reply_to_comment ? "active-reply" : ""}`}>
 
             {Comment_Editor ?
                 <div id="comment-editor-wrapper">
@@ -193,10 +195,10 @@ class Single_Comment extends Component {
 
                 <div id="comment-wrapper">
                 
-                    <div id="reply-wrapper" className={`${comment.reply_to_comment ? 'active' : ''}`}>
+                    <div id="reply-wrapper" className={`${reply_to_comment ? 'active' : ''}`}>
                         
-                        {JSON.parse(comment.reply_to_comment) ? 
-                            <Reply_To_Comment reply={comment.reply_to_comment} /> 
+                        {reply_to_comment ? 
+                            <Reply_To_Comment reply={reply_to_comment} /> 
                             : <></>}
                     
                     </div>
@@ -219,13 +221,13 @@ class Single_Comment extends Component {
 
                             <div id="likes-wrapper">
 
-                                <Likes likes={comment.likes} apply_props={this.Apply_Props} open_who_gave_props={this.Open_Who_Gave_Props} />
+                                <Likes likes={comment.likes} apply_props={this.Apply_Props} open_who_gave_props={this.Open_Who_Gave_Props} visitor_user_account={visitor_user_account} />
 
                             </div>
 
                             <div id="dislikes-wrapper">
 
-                                <Dislikes dislikes={comment.dislikes} apply_props={this.Apply_Props} open_who_gave_props={this.Open_Who_Gave_Props} />
+                                <Dislikes dislikes={comment.dislikes} apply_props={this.Apply_Props} open_who_gave_props={this.Open_Who_Gave_Props} visitor_user_account={visitor_user_account} />
 
                             </div>
 
@@ -233,7 +235,7 @@ class Single_Comment extends Component {
 
                         <div id="emojis-wrapper">
                         
-                            <Emojis emojis={comment.emojis} apply_emoji={this.Apply_Emoji} />
+                            <Emojis emojis={comment.emojis} apply_emoji={this.Apply_Emoji} visitor_user_account={visitor_user_account} />
                         
                         </div>
 

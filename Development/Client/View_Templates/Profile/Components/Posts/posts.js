@@ -148,7 +148,7 @@ class Posts extends Component {
             
             let style = {
                 backgroundColor: "darkorange",
-                boxShadow: "rgba(0,0,0,0.25) 2.5px 2.5px 5px"
+                boxShadow: "rgba(0,0,0,0.35) 0px 0px 5px"
             };
             
             let popup = <div style={{
@@ -162,7 +162,7 @@ class Posts extends Component {
                 minWidth: "50px",
                 maxHeight: "25px",
                 whiteSpace: "pre",
-                fontSize: "0.75vw",
+                fontSize: "13px",
                 boxShadow: "rgba(0,0,0,0.25) 2.5px 2.5px 5px"
             }}>{post.title}</div>;
             

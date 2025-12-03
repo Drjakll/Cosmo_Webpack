@@ -7,10 +7,11 @@ class Likes extends Component {
 
         super(props);
 
-        let {likes} = props;
+        let {likes, visitor_user_account} = props;
 
         this.state = {
-            likes
+            likes,
+            visitor_user_account
         };
     }
 
@@ -35,7 +36,7 @@ class Likes extends Component {
 
     render(){
 
-        let {likes} = this.state;
+        let {likes, visitor_user_account} = this.state;
 
         likes = typeof likes === "string" ? JSON.parse(likes) : likes;
 
@@ -43,7 +44,7 @@ class Likes extends Component {
 
             <div id="likes-icon-wrapper">
 
-                <img src="./static/thumbs_up.png" onClick={this.Apply_Props}/>
+                <img src="./static/thumbs_up.png" onClick={this.Apply_Props} className={`${likes[visitor_user_account.email] ? "selected" : ""}`}/>
 
             </div>
 

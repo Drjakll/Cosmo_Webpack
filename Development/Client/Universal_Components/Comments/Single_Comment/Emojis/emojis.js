@@ -7,17 +7,20 @@ class Emojis extends Component {
         "angry",
         "laugh",
         "sad",
-        "surprised"
+        "surprised",
+        "sympathy",
+        "love"
     ]
 
     constructor(props){
 
         super(props);
 
-        let {emojis} = props;
+        let {emojis, visitor_user_account} = props;
 
         this.state = {
-            emojis
+            emojis,
+            visitor_user_account
         };
     }
 
@@ -32,17 +35,19 @@ class Emojis extends Component {
 
     Create_Emoji_Insertion = (emoji_label, emoji_obj, index)=>{
 
+        let {visitor_user_account} = this.state;
+
         let Apply_Emoji = (e)=>{
 
             this.props.apply_emoji && this.props.apply_emoji(emoji_label);
 
         };
 
-        return <div className="emoji-insertion" key={index}>
+        return <div className={`emoji-insertion`} key={index}>
 
             <div id="emoji-icon">
 
-                <img src={`./static/${emoji_label}.png`} onClick={Apply_Emoji} />
+                <img src={`./static/${emoji_label}.png`} onClick={Apply_Emoji} className={` ${emoji_obj[visitor_user_account.email] ? "selected" : "" }`}/>
 
             </div>
 

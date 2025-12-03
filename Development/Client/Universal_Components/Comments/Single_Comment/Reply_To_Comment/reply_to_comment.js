@@ -8,10 +8,19 @@ class Reply_To_Comment extends Component {
         super(props);
         
         this.state = {
-            reply: JSON.parse(this.props.reply)
+            reply: this.props.reply
         };
         
         Reply_To_Comment.contextType = window.Context;
+    }
+
+    componentDidUpdate(prevProps, prevState){
+
+        if(prevProps === this.props){
+            return;
+        }
+
+        this.setState(this.props);
     }
     
     render(){

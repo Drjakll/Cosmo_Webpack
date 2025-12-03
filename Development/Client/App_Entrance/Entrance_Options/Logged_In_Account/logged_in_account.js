@@ -38,7 +38,8 @@ class Logged_In_Account extends Component {
                 { screen: "Messaging", is_main: false, id: "Messaging" },
             ],
             owner_user_account: this.props.owner_user_account,
-            connection_list: {}
+            connection_list: {},
+            focused_column: "Profile" //The column that is being focused on so that user won't lose clickability to other columns
         };
     }
 
@@ -189,11 +190,24 @@ class Logged_In_Account extends Component {
 
                 </div>
 
-                <div id="logged-in-columns-wrapper" >
+                <div id="logged-in-columns-wrapper">
 
                     {this.state.Columns.map((info, index) => {
 
-                        return <div className={`logged-in-column ${info.is_main ? "main" : ""}`} id={info.id} key={info.id}>
+                        return <div 
+                                className={`logged-in-column ${info.is_main ? "main" : ""} ${this.state.focused_column === info.id ? "focused": ""}`} 
+                                id={info.id}
+                                key={info.id}  
+                                tabIndex={0} 
+                                onClick={(e)=>{
+                                    
+                                    if(this.state.focused_column !== info.id){
+
+                                        this.setState({focused_column: info.id});
+                                    }
+                                    
+                                }}
+                            >
                             
                             <div className="screen-wrapper">
 
