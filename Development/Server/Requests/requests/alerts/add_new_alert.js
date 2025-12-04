@@ -1,10 +1,6 @@
 let request = function () {
 
     let alert_types = {
-        post: "post_id_ref",
-        photo_album: "photo_albums_id_ref",
-        profile_picture: "profile_picture_id_ref",
-        photo_link: "user_photo_links_id_ref",
         photo_comment: "photo_comments_id_ref",
         connection_request: "connection_request_id_ref",
     };
