@@ -3,9 +3,8 @@ let request = function() {
     this.req = (req, res, next) => { 
         
         let post_details = req.body;
-        
-        delete post_details.date_created;
-        delete post_details.last_edited;
+   
+        post_details.last_edited = Date.now();
         
         let query = this.generate_update_query("Post_Data", 
                                                 post_details,
@@ -29,12 +28,13 @@ let request = function() {
 
             } else {
 
-                let {title, body, id} = post_details;
+                let {title, body, id, date_created, owner_email} = post_details;
                 
                 req.body.type = "post";
-                req.body.data = {title, body};
+                req.body.data = {title, body, date_created, owner_email};
                 req.body.type_id = id;
-                req.body.alert_id = null;
+                req.body.news_id = null;
+                req.body.message = "";
 
                 next();
             }

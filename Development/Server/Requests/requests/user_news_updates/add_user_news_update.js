@@ -22,7 +22,11 @@ let request = function () {
                         values(
                             '${owner.email}', 
                             '${JSON.stringify(news_data || {})}', 
-                            '${type}', ${id_ref}, '${message}', ${time_created})`;
+                            '${type}', 
+                            ${id_ref}, 
+                            '${message}', 
+                            ${time_created})
+                        `;
 
         this.sql.query(query, (err, result) => {
 

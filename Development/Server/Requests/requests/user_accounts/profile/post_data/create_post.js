@@ -17,13 +17,13 @@ let request = function() {
 
             } else {
 
-                let {title, body, owner_email} = post_details;
+                let {title, body, owner_email, date_created} = post_details;
 
-                req.body.owner = {email: post_details.owner_email};
-                req.body.alert_data = {title, body, owner_email};
+                req.body.owner = {email: owner_email};
+                req.body.news_data = {title, body, owner_email, date_created};
                 req.body.type = "post";
                 req.body.id_ref = result.insertId;
-                req.body.target = "connection_list";
+                req.body.message = "";
 
                 next();
 

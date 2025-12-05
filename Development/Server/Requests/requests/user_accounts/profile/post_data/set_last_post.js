@@ -26,7 +26,7 @@ let request = function() {
             }
             else {
                 
-                timestamp = this.generate_time_string(new Date(results[0].date_created));
+                timestamp = Date.now();
                 
                 
                 query2 = `update User_Accounts set last_posted = '${timestamp}'

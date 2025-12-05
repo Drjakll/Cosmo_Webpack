@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Single_Post from './Single_Post/single_post.js';
+//import Single_Post from './Single_Post/single_post.js';
 import './posts.less';
 
 class Posts extends Component {
@@ -35,7 +35,7 @@ class Posts extends Component {
             selected_year: today.getFullYear(),
             selected_month: today.getMonth() + 1,
             selected_date: today.getDate(),
-            selected_post: {title: "No post selected", body: "", date_created: ""},
+            selected_post: {title: "No post selected", body: "", date_created: Date.now()},
             properties_for_calendar_dates: [],
             connection_list: this.props.connection_list || {}, //For sending out websocket events to particular connected user
             owner_user_account,
@@ -61,7 +61,7 @@ class Posts extends Component {
             
             let { last_posted } = owner_user_account;
 
-            let last_posted_local = new Date(last_posted);
+            let last_posted_local = new Date(last_posted || Date.now() );
             
             if(last_posted_local){
                 
@@ -88,12 +88,15 @@ class Posts extends Component {
         let {Request_URLs} = this.context;
         
         let {get_posts} = Request_URLs;
+
+        let start = new Date(`${year}-${month}-1`).getTime();
+        let end = new Date(`${year}-${month}-${last_day_of_month}`).getTime();
         
         let search_requirements = {
             owner_email: email,
             date_interval: {
-                start: `${year}-${month}-1`,
-                end: `${year}-${month}-${last_day_of_month}`
+                start,
+                end
             },
             order: 'asc'
         };
@@ -140,11 +143,11 @@ class Posts extends Component {
         
         
         for(let post of posts){
+
+            let date_created = new Date(post.date_created);
             
-            let whole_date = post.date_created.split("T")[0];
-            let date_parts = whole_date.split("-");
             
-            let date = parseInt(date_parts[2]);
+            let date = date_created.getDate();
             
             let style = {
                 backgroundColor: "darkorange",
@@ -190,7 +193,7 @@ class Posts extends Component {
 
     render() {
 
-        const { Calendar } = this.context;
+        const { Calendar, Single_Post } = this.context;
         
         let { selected_year, selected_month, selected_date, selected_post, visitor_user_account, owner_user_account } = this.state;
 

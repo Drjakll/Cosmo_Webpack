@@ -3,9 +3,9 @@ let Post_Data_Template = function (initial) {
     let template = {
         id: null,
         owner_email: "",
-        date_created: null,
+        date_created: Date.now(),
         title: "",
-        last_edited: null,
+        last_edited: Date.now(),
         body: ""
     };
 
@@ -28,7 +28,7 @@ let Post_Photo_Template = function(initial){
         id: null,
         owner_email: "",
         belongs_to_post: 0,
-        added_on: null,
+        added_on: Date.now(),
         link: "",
     };
     

@@ -103,23 +103,9 @@ class Single_Post extends Component {
 
     }
     
-    Generate_Beautiful_Date = (date_str)=>{
+    Generate_Beautiful_Date = (date_ms)=>{
         
-        if(!date_str)
-            return "";
-        
-        let parts = date_str.split("T")[0];
-        let date_parts = parts?.split("-");
-
-        if (!date_parts) {
-            return;
-        }
-        
-        let year = parseInt(date_parts[0]);
-        let month = parseInt(date_parts[1]);
-        let date = parseInt(date_parts[2]);
-        
-        return `${this.Months[month-1]} ${date}, ${year}`;
+        return new Date(date_ms).toLocaleDateString();
         
     }
 

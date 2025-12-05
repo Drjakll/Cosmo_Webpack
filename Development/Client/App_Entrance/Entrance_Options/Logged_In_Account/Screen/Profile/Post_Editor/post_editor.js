@@ -57,7 +57,7 @@ class Post_Editor extends Component {
 
         if (last_posted !== 'null' && last_posted !== undefined) {
 
-            let last_posted_in_ms = new Date(last_posted).getTime();
+            let last_posted_in_ms = last_posted;
 
             let time_difference = utc_now - last_posted_in_ms;
 
@@ -66,6 +66,7 @@ class Post_Editor extends Component {
             if (time_difference < one_day_in_ms) {
 
                 await this.setState({ disable_create_new_post: true });
+                
             }
 
         }
@@ -84,11 +85,11 @@ class Post_Editor extends Component {
             body: JSON.stringify({ email: this.state.owner_user_account.email })
         })).json();
 
-        let last_date_posted = res?.last_posted;
+        let last_posted_ms = res?.last_posted;
 
-        let split_data = last_date_posted?.split("T")[0]?.split("-");
+        let date_data = new Date(last_posted_ms);
 
-        return { year: parseInt(split_data[0]), month: parseInt(split_data[1]), str: last_date_posted };
+        return { year: date_data.getFullYear(), month: date_data.getMonth(), str: last_posted_ms };
 
     }
 

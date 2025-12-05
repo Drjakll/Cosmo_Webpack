@@ -25,6 +25,7 @@ import Comment_Input from './Universal_Components/Comments/Comment_Input/comment
 import Likes from './Universal_Components/Comments/Single_Comment/Likes/likes.js';
 import Dislikes from './Universal_Components/Comments/Single_Comment/Dislikes/dislikes.js';
 import Emojis from './Universal_Components/Comments/Single_Comment/Emojis/emojis.js';
+import Single_Post from './Universal_Components/Posts/Single_Post/single_post.js';
 import './react_entry.less';
 
 class Entry extends Component {
@@ -68,7 +69,8 @@ class Entry extends Component {
                 Comment_Input, //Comment input component
                 Likes,
                 Dislikes,
-                Emojis
+                Emojis,
+                Single_Post
             }}
         
         >

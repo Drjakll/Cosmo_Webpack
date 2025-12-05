@@ -64,6 +64,9 @@ const update_alert_data = '/update_alert_data';
 const get_connection_alerts = '/get_connection_alerts';
 const delete_alert = '/delete_alert';
 
+//User News Updates
+const get_user_news_updates = '/get_user_news_updates';
+
 //Messaging
 const create_conversation = "/create_conversation";
 const update_conversation = "/update_conversation";
@@ -138,6 +141,9 @@ export default {
     update_alert_data: update_alert_data,
     get_connection_alerts: get_connection_alerts,
     delete_alert: delete_alert,
+
+    //User News Updates
+    get_user_news_updates: get_user_news_updates,
 
     //Messaging
     get_conversations: get_conversations,

@@ -8,13 +8,15 @@ let request = function () {
 
     this.req = (req, res) => {
 
-        let {news_id, news_type_id, type, news_data , message} = req.body;
+        let {news_id, type_id, type, data , message} = req.body;
+
+        data = (typeof data === "object" ? JSON.stringify(data) : data).replace(/\\/g, "\\\\").replace(/\'/g, "\\'").replace(/\"/g, '\\"');
 
         let query = `update User_News_Updates set 
-                                news_data = '${typeof news_data === "object" ? JSON.stringify(news_data) : news_data}', 
+                                news_data = '${data}', 
                                 message = '${message}' 
                                 where id = ${news_id} or
-                                ${news_type[type]} = ${news_type_id}
+                                ${news_type[type]} = ${type_id}
                                 `;
 
         this.sql.query(query, (err, result) => {

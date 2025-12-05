@@ -74,7 +74,7 @@ app.post("/delete_photo_comment", requests.user_accounts.profile.comments.photo_
 
 //Post Data                           Note: Delete creating alert when updating and creating posts
 app.post("/create_post", requests.user_accounts.profile.post_data.create_post.req, requests.user_news_updates.add_user_news_update.req);
-app.post("/update_post", requests.user_accounts.profile.post_data.update_post.req, requests.alerts.update_alert_data.req);
+app.post("/update_post", requests.user_accounts.profile.post_data.update_post.req, requests.user_news_updates.modify_user_news_update.req);
 app.post("/get_posts", requests.user_accounts.profile.post_data.get_posts.req);
 app.post("/delete_post", requests.user_accounts.profile.post_data.delete_post.req);
 app.post("/delete_post_photo_links", requests.user_accounts.profile.post_data.delete_post_photo_links.req); 
@@ -103,6 +103,10 @@ app.post("/delete_alert", requests.alerts.delete_alert.req);
 app.post("/get_connection_alerts", requests.connections.get_connection_requests.req, 
                                             requests.connections.get_connection_list.req,
                                             requests.alerts.get_alerts.req);
+
+//User News Updates
+app.post("/get_user_news_updates", requests.user_news_updates.get_user_news_updates.req);
+
 
 //Messaging
 app.post("/create_conversation", requests.messaging.create_conversation.req);
