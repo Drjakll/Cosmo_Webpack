@@ -78,6 +78,8 @@ class News extends Component {
 
             }
 
+            console.log(results);
+
             return results;
         }
 

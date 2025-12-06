@@ -1,6 +1,6 @@
 let request = function() {
     
-    this.req = (req, res, next = null) => { 
+    this.req = (req, res, next) => { 
         
         let post_details = req.body;
         
@@ -25,7 +25,7 @@ let request = function() {
                 req.body.id_ref = result.insertId;
                 req.body.message = "";
 
-                next && next();
+                next();
 
             }
 

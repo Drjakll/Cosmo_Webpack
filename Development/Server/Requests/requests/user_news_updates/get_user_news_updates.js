@@ -6,7 +6,7 @@ let request = function () {
 
             let {email} = connection_list[i];
 
-            original_query += `owner_email = '${email}' or `
+            original_query += `nu.owner_email = '${email}' or `
         }
 
         return original_query.slice(0, -4);
@@ -22,7 +22,19 @@ let request = function () {
             return;
         }
 
-        let query = Modify_Query(`select * from User_News_Updates where `, connection_list);
+        let query = Modify_Query(`select 
+                                    nu.*, 
+                                    ua.profile_picture_link,
+                                    ua.first_name,
+                                    ua.last_name
+                                    from 
+                                        User_News_Updates as nu
+                                    join 
+                                        User_Accounts as ua 
+                                    on
+                                        ua.email = nu.owner_email
+                                    where 
+                                    `, connection_list);
 
         this.sql.query(query, (err, results) => {
 
