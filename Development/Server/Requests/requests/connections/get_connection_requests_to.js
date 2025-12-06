@@ -25,6 +25,7 @@ let request = function () {
                 }
 
                 req.body.list_of_emails = list_of_emails;
+                req.body.results = list_of_emails;
 
                 next();
 

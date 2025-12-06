@@ -1,6 +1,6 @@
 let request = function () {
 
-    this.req = (req, res, next) => {
+    this.req = (req, res, next = null) => {
 
         let { list_of_emails } = req.body;
 
@@ -31,6 +31,7 @@ let request = function () {
             } else {
 
                 req.body.connection_list = result;
+                req.body.results = result;
 
                 next();
             }

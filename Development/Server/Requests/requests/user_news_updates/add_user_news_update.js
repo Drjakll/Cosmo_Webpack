@@ -10,6 +10,8 @@ let request = function () {
 
         let { owner, news_data, type, id_ref, message} = req.body;
 
+        news_data = JSON.stringify(news_data || {}).replace(/\\/g, "\\\\").replace(/\'/g, "\\'").replace(/\"/g, '\\"');
+
         let time_created = Date.now();
 
         let query = `insert into User_News_Updates (
@@ -21,7 +23,7 @@ let request = function () {
                             time_created) 
                         values(
                             '${owner.email}', 
-                            '${JSON.stringify(news_data || {})}', 
+                            '${news_data}', 
                             '${type}', 
                             ${id_ref}, 
                             '${message}', 

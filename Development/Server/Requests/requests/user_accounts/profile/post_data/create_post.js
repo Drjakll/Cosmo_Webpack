@@ -1,6 +1,6 @@
 let request = function() {
     
-    this.req = (req, res, next) => { 
+    this.req = (req, res, next = null) => { 
         
         let post_details = req.body;
         
@@ -17,15 +17,15 @@ let request = function() {
 
             } else {
 
-                let {title, body, owner_email, date_created} = post_details;
+                let {body, title, owner_email, date_created, last_edited} = post_details;
 
                 req.body.owner = {email: owner_email};
-                req.body.news_data = {title, body, owner_email, date_created};
+                req.body.news_data = {id: result.insertId, body, title, owner_email, date_created, last_edited};
                 req.body.type = "post";
                 req.body.id_ref = result.insertId;
                 req.body.message = "";
 
-                next();
+                next && next();
 
             }
 

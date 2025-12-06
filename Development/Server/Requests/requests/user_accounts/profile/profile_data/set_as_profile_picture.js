@@ -1,15 +1,4 @@
 let request = function() {
-    
-    //var clone_file = async (copy_src, dest_src, bucket_name) => {
-
-    //    let input = {
-    //        "Bucket": bucket_name,
-    //        "CopySource": copy_src,
-    //        "Key": dest_src
-    //    };
-
-    //    await this.s3.copyObject(input).promise();
-    //};
 
     var update_photo_comments_profile_picture = (url, acc) => {
 
@@ -33,16 +22,7 @@ let request = function() {
         
         let path_parts = src_path.split('/');
         
-        //path_parts[3] = 'main_profile_picture.jpg';
-        
-        const {BucketName} = this.global_data;
-        
-        let copy_src = `/${BucketName}/${src_path}`;
-        
         let dest_src = `${path_parts[0]}/${path_parts[1]}/${path_parts[2]}/${path_parts[3]}`;
-        
-        //await clone_file(copy_src, dest_src, BucketName);
-        
         
         //Update the sql database
         

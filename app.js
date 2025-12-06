@@ -89,11 +89,11 @@ app.post("/update_post_comment", requests.user_accounts.profile.comments.post_co
 app.post("/delete_post_comment", requests.user_accounts.profile.comments.post_comments.delete_post_comment.req);
 
 //Connections
-app.post("/get_connection_list", requests.connections.get_connection_requests.req, requests.connections.get_connection_list.req, (req, res)=>{ res.json({results: req.body.connection_list}); res.end(); });
+app.post("/get_connection_list", requests.connections.get_connection_requests.req, requests.connections.get_connection_list.req, requests.dummy_middleware.dummy_middleware.req);
 app.post("/find_connections", requests.connections.find_connections.req);
 app.post("/send_connection_request", requests.connections.send_connection_request.req, requests.alerts.add_new_alert.req);
-app.post("/get_connection_requests_from", requests.connections.get_connection_requests_from.req, (req, res)=>{ res.json({results: req.body.list_of_emails}); res.end(); });
-app.post("/get_connection_request_to", requests.connections.get_connection_requests_to.req, (req, res)=>{ res.json({results: req.body.list_of_emails}); res.end(); });
+app.post("/get_connection_requests_from", requests.connections.get_connection_requests_from.req, requests.dummy_middleware.dummy_middleware.req);
+app.post("/get_connection_request_to", requests.connections.get_connection_requests_to.req, requests.dummy_middleware.dummy_middleware.req);
 app.post("/remove_connection_request", requests.connections.remove_connection_request.req);
 app.post("/accept_connection_request", requests.connections.update_connection_request.req);
 

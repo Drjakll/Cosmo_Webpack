@@ -25,8 +25,8 @@ let request = function () {
                 }
  
                 req.body.list_of_emails = list_of_emails;
-
-                //If next() exists, it should go to get_connection_list
+                req.body.results = list_of_emails;
+                
                 next();
 
             }

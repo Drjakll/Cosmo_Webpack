@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import Context from '@context/context.js';
+import Post_News from './News_Types/Post_News/post_news.js';
 import './news.less';
 
 class News extends Component {
@@ -38,10 +39,11 @@ class News extends Component {
         for(let i in this.props){
             stateObj[i] = this.props[i];
         }
-
-        stateObj.news_updates = await this.Get_User_News_Updates(this.state.connection_list);
+        
+        stateObj.news_updates = await this.Get_User_News_Updates(this.props.connection_list);
         
         this.setState(stateObj);
+
     }
 
     Get_User_News_Updates = async (connection_list) => {
@@ -85,13 +87,11 @@ class News extends Component {
     News_Types = {
         "post": ({news_data})=>{
 
-            let {Single_Post} = this.context;
-
             let {owner_user_account} = this.state;
 
             let {owner_email} = news_data;
 
-            return <Single_Post owner_user_account={{email: owner_email}} visitor_user_account={owner_user_account} post={news_data}/>;
+            return <Post_News owner_user_account={{email: owner_email}} visitor_user_account={owner_user_account} post={news_data}/>;
         }
     }
     
@@ -101,6 +101,12 @@ class News extends Component {
         
         return (
                 <div id="news">
+
+                    <div id="news-updates-headline">
+
+                        News Updates
+
+                    </div>
 
                     <div id="news-updates">
 
