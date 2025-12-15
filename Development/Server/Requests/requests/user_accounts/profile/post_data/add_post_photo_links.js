@@ -24,7 +24,7 @@ let request = function () {
             this.sql.query(query, (err, results) => {
 
                 if (err) {
-                    console.log(err.sqlMessage);
+                    console.log(query, err.sqlMessage);
                 } else {
                     completed++;
                 }

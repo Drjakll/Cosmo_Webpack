@@ -39,7 +39,7 @@ class Messaging extends Component {
 
         this.Get_Private_Conversations();
 
-        this.Init_Public_Channels();
+        this.Join_Favorite_Public_Channels();
         
         //Send a ping to the websocket every 10 seconds to ensure that this user is online
         setInterval(()=>{
@@ -81,8 +81,10 @@ class Messaging extends Component {
 
         let {get_conversations} = this.context.Request_URLs;
 
+        let {owner_user_account} = this.state;
+
         let requirements = {
-            users: [this.state.owner_user_account.email]
+            user: {email: owner_user_account.email}
         };
 
         let data = await( await fetch(get_conversations,
@@ -97,31 +99,66 @@ class Messaging extends Component {
 
         if(data){
 
-            let private_conv_json_format = {};
+            let {results} = data;
 
-            for(let convers of data.conversations){
+            let private_conversations = {};
 
-                let ptr = convers;
+            for(let user of results){
 
-                ptr.users = JSON.parse(ptr.users);
-                ptr.messages = JSON.parse(ptr.messages);
-                ptr.seen_by = JSON.parse(ptr.seen_by);
-                ptr.online_users = {};
+                let {conversation_id: id} = user;
 
-                this.All_Room_Tags.private[convers.room_tag] = convers.room_tag;
+                private_conversations[id] = private_conversations[id] || {};
 
-                private_conv_json_format[convers.room_tag] = ptr;
+                private_conversations[id].id = id;
+
+                private_conversations[id].users = private_conversations[id].users || [];
+
+                private_conversations[id].users.push(user);
+
+                private_conversations[id].online_users = {};
+
+                private_conversations[id].messages = await this.Get_Private_Conversation_Messages(id, Date.now());
+
+                this.All_Room_Tags.private[id] = id;
+                
             }
 
             let {conversations} = this.state;
 
-            conversations.private = private_conv_json_format;
+            conversations.private = private_conversations;
 
             this.setState({conversations});
 
-            //Join all the conversations in the websocket under the name room_tag
-            this.msg_socket?.emit('join_private_channels', {private_conversations: private_conv_json_format, email: this.state.owner_user_account.email});
+            this.msg_socket?.emit('join_private_channels', {private_conversations: private_conversations, email: owner_user_account.email});
         }
+    }
+
+    Get_Private_Conversation_Messages = async (id, created_on)=>{
+
+        if(!id){
+            return [];
+        }
+
+        let {get_messages} = this.context.Request_URLs;
+
+        let body = {
+            id, 
+            created_on
+        };
+
+        let data = await( await fetch (
+            get_messages,
+            {
+                method: "POST",
+                body: JSON.stringify(body),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }
+        )).json();
+
+        return data?.results;
+
     }
 
     Init_IO = ()=>{
@@ -152,46 +189,45 @@ class Messaging extends Component {
                 return;
             }
 
-            this.Clear_Seen_By(room_tag, msg_obj.from.email);
-
-        });
-
-        this.msg_socket?.on('save_conversation', ({selected_room_tag})=>{
-
-            //Only for private channels/rooms
-            this.Save_Conversation(selected_room_tag);
+            this.Clear_Seen_By(room_tag, msg_obj.email);
 
         });
 
         //Only apply to private channels/rooms
         this.msg_socket?.on('clear_seen_by', async ({room_tag, signal_sent_by})=>{
 
-            let {conversations, owner_user_account} = this.state;
+            let {conversations} = this.state;
 
-            conversations.private[room_tag]?.seen_by = {};
+            //Create a pointer to the users
+            let users = conversations.private[room_tag].users;
 
-            conversations.private[room_tag]?.seen_by[signal_sent_by] = signal_sent_by;
+            for(let i in users){
+
+                if(users[i].email === signal_sent_by){
+                    continue;
+                }
+
+                users[i].seen_last = false;
+            }
 
             await this.setState({conversations});
 
-            //Only wanted the person who sent the signal to update the conversation once
-            if(signal_sent_by === owner_user_account.email){
-                this.Save_Conversation(room_tag);
-            }
         });
 
         this.msg_socket?.on('update_seen_by', async ({room_tag, seen_by})=>{
 
-            let {conversations, owner_user_account} = this.state;
+            let {conversations} = this.state;
 
-            conversations.private[room_tag]?.seen_by[seen_by] = seen_by;
+            let users = conversations.private[room_tag].users;
+
+            for(let i in users){
+
+                if(users[i].email === seen_by){
+                    users[i].seen_last = true;
+                }
+            }
 
             await this.setState({conversations});
-
-            //Only wanted the person who sent the signal to update the conversation once
-            if(seen_by === owner_user_account.email){
-                this.Save_Conversation(room_tag);
-            }
 
         });
 
@@ -272,8 +308,33 @@ class Messaging extends Component {
 
     }
 
-    Leave_Private_Channel = (room_tag, remaining_users)=>{
+    Leave_Private_Channel = async (room_tag, remaining_users)=>{
 
+        let {leave_private_conversation, delete_conversation} = this.context.Request_URLs;
+        let {email} = this.state.owner_user_account;
+
+        let body = {
+            user_email: email,
+            conversation_id: room_tag
+        };
+
+        let result = await(await fetch(
+            remaining_users.length === 0 ? delete_conversation : leave_private_conversation,
+            {
+                method: "POST",
+                body: JSON.stringify(body),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }
+        )).json();
+
+        if(!result){
+            alert("Error leaving conversation!");
+            return;
+        }
+
+        //Let the users who remains know that this user has left the conversation
         this.msg_socket?.emit('leave_private_conversation', {room_tag, remaining_users});
 
         delete this.All_Room_Tags.private[room_tag];
@@ -286,7 +347,7 @@ class Messaging extends Component {
 
     }
 
-    Send_Message = (msg)=>{
+    Send_Message = async (msg)=>{
 
         let {selected_room_tag, owner_user_account, private_or_public} = this.state;
 
@@ -295,13 +356,50 @@ class Messaging extends Component {
             return;
         }
 
-        let from = {email: owner_user_account.email};
+        let created_on = Date.now();
 
-        let msg_obj = {from, msg, timestamp: 0};
+        if(private_or_public === "private"){
+
+            await this.Add_Msg_To_Conversation(selected_room_tag, msg, owner_user_account.email, created_on);
+
+        }
+
+        let {email, first_name, last_name, profile_picture_link} = owner_user_account;
+
+        let msg_obj = {email, first_name, last_name, profile_picture_link, text: msg, created_on};
 
         this.msg_socket?.emit('send_msg_to_channel', {room_tag: selected_room_tag, msg_obj, private_or_public});
     }
 
+    Add_Msg_To_Conversation = async (conversation_id, text, sender_email, created_on)=>{
+
+        let {insert_message} = this.context.Request_URLs;
+
+        let body = {
+            conversation_id,
+            text,
+            sender_email,
+            timestamp: created_on
+        };
+
+        let data = await(await fetch(
+            insert_message,
+            {
+                method: "POST",
+                body: JSON.stringify(body),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }
+        )).json();
+
+        if(!data){
+            alert("Something went wrong!");
+        }
+
+    }
+
+    
     Save_Conversation = async (current_room_tag)=>{
 
         //Saving conversation only applies to private conversations
@@ -331,12 +429,13 @@ class Messaging extends Component {
         )).json();
 
     }
+        
 
     Recieve_Msg = async (room_tag, msg_obj, private_or_public) => {
 
         let {conversations} = this.state;
         
-        conversations[private_or_public][room_tag].messages.push(msg_obj);
+        conversations[private_or_public][room_tag]?.messages.push(msg_obj);
 
         await this.setState({conversations});
     }
@@ -380,100 +479,171 @@ class Messaging extends Component {
 
         let {owner_user_account, conversations, private_or_public} = this.state;
 
-        if(private_or_public === "public"){
+        if(private_or_public === "public" || !conversations.private[room_tag]){
             return;
         }
 
-        if(!conversations.private[room_tag]){
+        let {user_seen_last_msg} = this.context.Request_URLs;
+
+        let body = {
+            conversation_id: room_tag,
+            user_email: owner_user_account.email
+        };
+
+        let result = await(await fetch(
+            user_seen_last_msg,
+            {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(body)
+            }
+        )).json();
+
+        if(!result){
+            alert("Something went wrong with updating seen by");
             return;
         }
 
-        let {seen_by} = conversations.private[room_tag] || {};
-
-        //If it's already seen by this user, do nothing
-        if(!seen_by || seen_by[owner_user_account.email] !== undefined){
-            return;
-        }
-
-        this.msg_socket?.emit('update_seen_by', {room_tag: room_tag, seen_by: owner_user_account.email});
+        this.msg_socket?.emit('update_seen_by', {room_tag, seen_by: body.user_email});
     }
 
-    Clear_Seen_By = (room_tag, from_email)=>{
+    Clear_Seen_By = async (room_tag, from_email)=>{
 
         //Only apply to private conversations
         if(!room_tag || this.state.private_or_public === "public"){
             return;
         }
 
+        let {clear_seen_by} = this.context.Request_URLs;
+
+        let body = {
+            conversation_id: room_tag
+        };
+
+        let result = await(await fetch(
+            clear_seen_by,
+            {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(body)
+            }
+        )).json();
+
+        if(!result){
+            alert("Something went wrong with updating clear seen by");
+        }
+
         this.msg_socket?.emit('clear_seen_by', {room_tag: room_tag, signal_sent_by: from_email});
     }
 
-    Set_Public_Private = (private_or_public)=>{
+    Initialize_Public_Channel = async (channel_name, channel_description)=>{
 
-        this.setState({private_or_public});
+        let {initialize_public_channel} = this.context.Request_URLs;
+
+        let body = {
+            channel_name,
+            channel_description
+        };
+
+        let result = await(await fetch(
+            initialize_public_channel,
+            {
+                method: "POST",
+                body: JSON.stringify(body),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }
+        )).json();
+
+        if(!result){
+            alert("Something went wrong initializing public channel");
+            return null;
+        }
+
+        return result.public_channel_id;
     }
 
-    Init_Public_Channels = async ()=>{
+    Join_Favorite_Public_Channels = async ()=>{
 
-        let {owner_user_account, conversations} = this.state;
+        let {get_favorite_public_channels} = this.context.Request_URLs;
 
-        let {favorite_public_channel} = owner_user_account;
-
-        //It's possible that the favorite_public_channel is still a string
-        favorite_public_channel = typeof favorite_public_channel === "string" ? JSON.parse(favorite_public_channel) || {} : favorite_public_channel;
-
-        conversations.public = favorite_public_channel;
-
-        await this.setState({conversations});
-
+        let {owner_user_account} = this.state;
         
-        this.Join_Public_Channels(favorite_public_channel, false);
+        let body = {
+            user_id: owner_user_account.id
+        };
+
+        let data = await( await fetch(get_favorite_public_channels,
+            {
+                method: "POST",
+                body: JSON.stringify(body),
+                headers: {
+                    'Content-Type': "application/json"
+                }
+            }
+        )).json();
+
+        if(!data || !data.channels){
+            return;
+        }
+        
+        this.Join_Public_Channels(data.channels);
 
     }
 
-
-    //update_profile indicates whether it should update the profile's favorite_public_channel object. Normally only updates when it's the first time joining the public channels
-    Join_Public_Channels = (public_channels, update_profile = true)=>{
+    Join_Public_Channels = (public_channels)=>{
 
         let {owner_user_account, conversations} = this.state;
 
         this.msg_socket?.emit('join_public_channels', {public_channels, user_data: owner_user_account});
 
-        let {favorite_public_channel} = owner_user_account;
+        for(let channel of public_channels){
 
-        //It's possible that the favorite_public_channel is still a string
-        favorite_public_channel = typeof favorite_public_channel === "string" ? JSON.parse(favorite_public_channel) || {} : favorite_public_channel;
+            let {channel_name} = channel;
 
-        for(let channel_name in public_channels){
-            
-            let channel = public_channels[channel_name];
+            channel.messages = [];
 
-            //In case if it doesn't have the messages object
-            if(!channel.messages){
-                channel.messages = [];
-            }
+            conversations.public[channel_name] = channel;
 
-            conversations.public[channel_name] = JSON.parse(JSON.stringify(channel));
-
-            if(favorite_public_channel[channel_name] === undefined){
-
-                //Do not save the online users, if it's attached
-                delete channel.online_users;
-
-                favorite_public_channel[channel_name] = channel;
-            }
+            this.All_Room_Tags.public[channel_name] = channel_name;
         }
-
-        owner_user_account.favorite_public_channel = favorite_public_channel;
 
         this.setState({conversations});
 
-        //If it's the first time joining the public channel, it needs to update the favorite_public_channel object
-        if(update_profile === true){
+    }
 
-            this.Update_Profile(owner_user_account);
+    Update_Public_Channels_Database = async (public_channel_id, leave = false)=>{
 
+        let {owner_user_account} = this.state;
+
+        let {join_public_channel, leave_public_channel} = this.context.Request_URLs;
+
+        let body = {
+            user_id: owner_user_account.id,
+            public_channel_id
+        };
+
+        let result = await(await fetch(
+            leave ? leave_public_channel : join_public_channel,
+            {
+                method: "POST",
+                body: JSON.stringify(body),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }
+        )).json();
+
+        if(!result){
+            alert("Something wrong joining public channel");
+            return;
         }
+
     }
 
     Leave_Public_Channel = (channel_name)=>{
@@ -487,17 +657,15 @@ class Messaging extends Component {
             return;
         }
 
-        this.msg_socket?.emit('leave_public_channel', {channel_obj, user_email: this.state.owner_user_account.email});
+        this.msg_socket?.emit('leave_public_channel', {channel_obj, user_email: owner_user_account.email});
 
         delete this.All_Room_Tags.public[channel_name];
 
         delete conversations.public[channel_name];
 
-        owner_user_account.favorite_public_channel = conversations.public;
+        this.setState({conversations});
 
-        this.setState({conversations, owner_user_account});
-
-        this.Update_Profile(owner_user_account);
+        this.Update_Public_Channels_Database(channel_obj.public_channel_id, true);
 
     }
 
@@ -542,6 +710,9 @@ class Messaging extends Component {
                             owner_user_account={this.state.owner_user_account}
                             switch_channel={this.Switch_Channel}
                             join_public_channels={this.Join_Public_Channels}
+                            initialize_public_channel={this.Initialize_Public_Channel}
+                            update_public_channels_database={this.Update_Public_Channels_Database}
+                            join_favorite_public_channels={this.Join_Favorite_Public_Channels}
                             public_channels={this.state.conversations.public}
                             selected_channel={this.state.conversations.public[this.state.selected_room_tag]?.channel_name || "connections"}
                             set_msg_area_user_info={this.Set_Current_Users_Info}
@@ -582,11 +753,11 @@ class Messaging extends Component {
                             leave_private_channel={this.Leave_Private_Channel}
                             clear_seen_by={this.Clear_Seen_By}
                             seen_by={this.Seen_By}
-                            save_conversation={this.Save_Conversation}
+                            add_msg_to_conversation={this.Add_Msg_To_Conversation}
                             private_or_public={this.state.private_or_public}
-                            set_public_private={this.Set_Public_Private}
                             current_users_info={this.state.current_users_info}
                             leave_public_channel={this.Leave_Public_Channel}
+                            get_private_conversation_messages={this.Get_Private_Conversation_Messages}
                         />
 
                     </div>

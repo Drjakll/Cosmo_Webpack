@@ -82,6 +82,10 @@ class Single_Post extends Component {
     }
 
     Get_Post_Comments = async ()=>{
+
+        if(!this.state.post?.id){
+            return;
+        }
      
         const {Request_URLs} = this.context;
         

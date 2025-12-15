@@ -12,7 +12,7 @@ let request = function() {
             
             if(err){
                 
-                console.log(err.sqlMessage);
+                console.log(query, err.sqlMessage);
                 res.json({message: "Error adding album", result: {}});
                 res.end();
                 
@@ -28,7 +28,7 @@ let request = function() {
                 this.sql.query(query, (err, results)=>{
                     
                     if(err){
-                        console.log(err.sqlMessage);
+                        console.log(query, err.sqlMessage);
                         res.json({messsage: "Error retrieving created album", album: {}});
                     } else if(results.length === 0){
                         res.json({message: "Error retrieving created album", album: {}});

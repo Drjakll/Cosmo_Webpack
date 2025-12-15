@@ -1,0 +1,36 @@
+#connections-bar {
+    width: 100%;
+    height: 40px;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    background-color: rgba(35,35,35,1);
+    margin: 15px 0px 15px 0px;
+    box-shadow: 0px 0px 10px rgba(0,0,0,0.25);
+
+    #connection-types {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: space-evenly;
+        align-items: center;
+
+        .follow-button {
+            width: 50%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+            font-weight: 700;
+            font-size: 14px;
+            color: rgb(235,235,235);
+            transition: 1s;
+
+            &:hover {
+                cursor: pointer;
+                background-color: rgba(55,55,55,1);
+            }
+        }
+    }
+}

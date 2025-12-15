@@ -23,7 +23,7 @@ let request = function() {
         this.sql.query(query, (err, result)=>{
            
             if(err){
-                console.log(err.sqlMessage);
+                console.log(query, err.sqlMessage);
                 res.json({message: "Error deleting photo"});
             }else {
                 res.json({message: `Successfully deleted ${result.affectedRows} photo links`});

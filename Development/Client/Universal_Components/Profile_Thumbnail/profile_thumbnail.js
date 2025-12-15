@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Context from '@context/context.js';
 import './profile_thumbnail.less';
 
 class Profile_Thumbnail extends Component {
@@ -7,15 +8,16 @@ class Profile_Thumbnail extends Component {
 
         super(props);
 
-        Profile_Thumbnail.contextType = window.Context;
+        Profile_Thumbnail.contextType = Context;
 
-        let {connection_profile, owner_user_account, visitor_user_account} = this.props;
+        let {connection_profile, owner_user_account, visitor_user_account, rounded_portrait} = this.props;
 
         this.state = {
             connection_profile,
             owner_user_account,
             visitor_user_account,
-            view_profile_data: false //The profile selected for popup view
+            view_profile_data: false, //The profile selected for popup view,
+            rounded_portrait: rounded_portrait || false
         };
     }
 
@@ -65,6 +67,7 @@ class Profile_Thumbnail extends Component {
                     src={`${aws_s3_url}${profile_picture_link}`} 
                     alt="Profile Thumbnail"
                     onClick={(e)=>{ this.setState({view_profile_data: true}); }}
+                    style={{ borderRadius: this.state.rounded_portrait ? "50%" : "" }}
                     draggable={false}
                 />
 

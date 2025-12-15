@@ -14,7 +14,7 @@ let request = function () {
 
             if (err || result.length === 0) {
 
-                console.log(err.sqlMessage);
+                console.log(query, err.sqlMessage);
                 res.end();
 
             } else {

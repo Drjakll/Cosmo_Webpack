@@ -44,7 +44,7 @@ class Join_Channel_Options extends Component {
         
     }
 
-    Create_Channel = (e)=>{
+    Create_Channel = async (e)=>{
 
         let {new_channel_name} = this.state;
 
@@ -53,11 +53,11 @@ class Join_Channel_Options extends Component {
             return;
         }
 
-        let new_channel_obj = {};
+        let channel_id = await this.props.initialize_public_channel(new_channel_name, "");
 
-        new_channel_obj[new_channel_name] = {channel_name: new_channel_name, messages: []};
+        await this.props.update_public_channels_database(channel_id);
 
-        this.props.join_public_channels(new_channel_obj);
+        this.props.join_favorite_public_channels();
 
     }
 
@@ -156,8 +156,9 @@ class Join_Channel_Options extends Component {
 
                                                         <button onClick={()=>{
 
-                                                            this.props.join_public_channels({[channel_obj.channel_name]: channel_obj});
-
+                                                            this.props.join_public_channels([channel_obj]);
+                                                            this.props.update_public_channels_database(channel_obj.public_channel_id);
+                                                            
                                                         }}>
                                                             Join Channel
                                                         </button>

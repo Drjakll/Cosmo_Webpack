@@ -45,7 +45,7 @@ let request = function () {
         this.sql.query(query, (err, results) => {
 
             if(err){
-                console.log(err.sqlMessage);
+                console.log(query, err.sqlMessage);
                 res.json({message: "Error retrieving alerts", results: []});
             } else {
                 res.json({message: `Successfully retrieved ${results.length} alerts!`, results: results});

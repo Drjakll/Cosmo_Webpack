@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import Albums from './Components/Album/albums.js';
 import Posts from './Components/Posts/posts.js';
 import Profile_Info from './Components/Profile_Info/profile_info.js';
-import Connections from './Components/Connections/connections_template.js';
+import Connections from './Components/Connections/connections.js';
 import './profile_template.less';
 
 class Profile_Template extends Component {
@@ -20,9 +20,9 @@ class Profile_Template extends Component {
         this.state = {
             components: {
                 "Profile Info": {component: Profile_Info, props: {owner_user_account, visitor_user_account}, classname: "profile-info-wrapper"},
+                "Connections": {component: Connections, props: {owner_user_account, visitor_user_account}, classname: "connections-wrapper"},
                 "Albums": {component: Albums, props: {owner_user_account, visitor_user_account}, classname: "albums-wrapper"}, 
                 "Posts": {component: Posts, props: {owner_user_account, visitor_user_account}, classname: "posts-wrapper"},
-                "Connections": {component: Connections, props: {owner_user_account, visitor_user_account}, classname: "connections-wrapper"},
             }
         };
     }

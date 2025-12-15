@@ -96,6 +96,16 @@ app.post("/get_connection_requests_from", requests.connections.get_connection_re
 app.post("/get_connection_request_to", requests.connections.get_connection_requests_to.req, requests.dummy_middleware.dummy_middleware.req);
 app.post("/remove_connection_request", requests.connections.remove_connection_request.req);
 app.post("/accept_connection_request", requests.connections.update_connection_request.req);
+app.post("/send_follow_request", requests.connections.find_public_user_info.req, requests.connections.send_follow_request.req);
+app.post("/unfollow_user_account", requests.connections.unfollow_user_account.req);
+app.post("/get_all_followers", requests.connections.get_all_followers.req);
+app.post("/get_all_followings", requests.connections.get_all_followings.req);
+app.post("/get_follow_requests", requests.connections.get_follow_requests.req, requests.dummy_middleware.dummy_middleware.req);
+app.post("/remove_follow_request", requests.connections.remove_follow_request.req);
+app.post("/update_follow_request", requests.connections.update_follow_request.req);
+app.post("/find_public_user_info", requests.connections.find_public_user_info.req);
+app.post("/search_within_followers", requests.connections.search_within_followers.req);
+app.post("/search_within_followings", requests.connections.search_within_followings.req);
 
 //Alerts
 app.post("/update_alert_data", requests.alerts.update_alert_data.req);
@@ -110,9 +120,18 @@ app.post("/get_user_news_updates", requests.user_news_updates.get_user_news_upda
 
 //Messaging
 app.post("/create_conversation", requests.messaging.create_conversation.req);
-app.post("/update_conversation", requests.messaging.update_conversation.req);
 app.post("/delete_conversation", requests.messaging.delete_conversation.req);
 app.post("/get_conversations", requests.messaging.get_conversations.req);
+app.post("/get_messages", requests.messaging.get_messages.req);
+app.post("/insert_message", requests.messaging.insert_message.req);
+app.post("/clear_seen_by", requests.messaging.clear_seen_by.req);
+app.post("/user_seen_last_msg", requests.messaging.user_seen_last_msg.req);
+app.post("/leave_private_conversation", requests.messaging.leave_private_conversation.req);
+app.post("/add_conversation_participants", requests.messaging.add_conversation_participants.req);
+app.post("/initialize_public_channel", requests.messaging.initialize_public_channel.req);
+app.post("/join_public_channel", requests.messaging.join_public_channel.req);
+app.post("/get_favorite_public_channels", requests.messaging.get_favorite_public_channels.req);
+app.post("/leave_public_channel", requests.messaging.leave_public_channel.req);
 
 server.listen(8080, () => {
    

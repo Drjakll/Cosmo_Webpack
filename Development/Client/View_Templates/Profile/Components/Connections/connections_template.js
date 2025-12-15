@@ -1,5 +1,4 @@
 import React, { Component, createRef } from 'react';
-import Profile_Thumbnail from './Profile_Thumbnail/profile_thumbnail.js';
 import  Context from '@context/context.js';
 import './connections_template.less';
 
@@ -36,7 +35,7 @@ class Connections_Temnplate extends Component {
 
     render() {
 
-        const { Drag_Scroll } = this.context;
+        const { Drag_Scroll, Profile_Thumbnail } = this.context;
         
         let drag_scroll = new Drag_Scroll();
 
@@ -84,7 +83,12 @@ class Connections_Temnplate extends Component {
 
                     return <div key={index} className="profile-thumbnail-wrapper">
 
-                        <Profile_Thumbnail connection_profile={data} owner_user_account={this.state.owner_user_account} visitor_user_account={this.state.visitor_user_account}/>
+                        <Profile_Thumbnail
+                            connection_profile={data}
+                            owner_user_account={this.state.owner_user_account} 
+                            visitor_user_account={this.state.visitor_user_account}
+                            rounded_portrait={true}
+                        />
                         
                     </div>;
 

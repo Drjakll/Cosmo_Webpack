@@ -9,7 +9,7 @@ let request = function() {
         this.sql.query(query, (err, results)=>{
             
             if(err){
-                console.log(err.sqlMessage);
+                console.log(query, err.sqlMessage);
                 res.json({message: "Error inserting profile photo"});
             } else if (results.affectedRows === 0){
                 res.json({message: "No data inserted"});

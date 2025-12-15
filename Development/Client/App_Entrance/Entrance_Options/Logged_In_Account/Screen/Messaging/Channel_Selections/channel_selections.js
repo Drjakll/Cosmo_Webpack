@@ -72,8 +72,11 @@ class Channel_Selections extends Component {
                     <Join_Channel_Options 
                         exit={this.Show_Join_Channel} 
                         join_public_channels={this.props.join_public_channels} 
+                        update_public_channels_database={this.props.update_public_channels_database}
+                        join_favorite_public_channels={this.props.join_favorite_public_channels}
                         msg_socket={this.state.msg_socket}
                         public_channels_search_results={this.state.public_channels_search_results}
+                        initialize_public_channel={this.props.initialize_public_channel}
                     /> 
                     : ""}
 

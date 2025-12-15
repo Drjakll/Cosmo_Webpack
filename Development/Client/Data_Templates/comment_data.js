@@ -8,9 +8,6 @@ let Photo_Comment_Data_Template = function(initial){
     let template = {
         id: null,
         email: "",
-        first_name: "",
-        last_name: "",
-        profile_picture_link: "",
         comment: "",
         time_stamp: Date.now(),
         belongs_to_photo_id: null,
@@ -38,9 +35,6 @@ let Post_Comment_Data_Template = function(initial){
     let template = {
         id: null,
         email: "",
-        first_name: "",
-        last_name: "",
-        profile_picture_link: "",
         comment: "",
         time_stamp: Date.now(),
         belongs_to_post_id: null,

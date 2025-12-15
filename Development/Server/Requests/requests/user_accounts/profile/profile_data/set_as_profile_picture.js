@@ -36,7 +36,7 @@ let request = function() {
 
             if (err) {
 
-                console.log(err.sqlMessage);
+                console.log(query, err.sqlMessage);
                 res.json({ message: "Error updating profile picture!", acc_info: account_details, status: 0 });
 
             } else {

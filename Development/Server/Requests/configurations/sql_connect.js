@@ -27,9 +27,11 @@ let sql = {
     query: async (query, callback) => {
 
         let SQL = await Connect();
+
+        SQL?.on('error', err => console.log("MYSQL ERROR:", err));
         
         await SQL?.query(query, callback);
-        
+
         SQL.end();
         
     }

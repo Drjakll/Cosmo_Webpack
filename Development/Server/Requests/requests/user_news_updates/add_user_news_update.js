@@ -33,7 +33,7 @@ let request = function () {
         this.sql.query(query, (err, result) => {
 
             if(err){
-                console.log(err.sqlMessage);
+                console.log(query, err.sqlMessage);
                 res.json({message: "Error adding a news update"});
             } else {
                 res.json({message: "Successfully added a news update!"});

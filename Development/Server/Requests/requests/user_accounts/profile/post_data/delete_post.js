@@ -9,7 +9,7 @@ let request = function() {
         this.sql.query(query, (err, result)=>{
             
             if(err){
-                console.log(err.sqlMessage);
+                console.log(query, err.sqlMessage);
                 res.json({message: "Error deleting post"});
             } else if (result.affectedRows === 0){
                 res.json({message: "No post found"});

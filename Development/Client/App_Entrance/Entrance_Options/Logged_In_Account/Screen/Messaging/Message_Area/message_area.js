@@ -68,11 +68,7 @@ class Message_Area extends Component {
 
         let {users} = selected_conversation;
 
-        users = typeof users === "string" ? JSON.parse(users) : users || [];
-
         selected_conversation.users = users.filter((value)=>{ return value.email !== owner_user_account.email; });
-
-        await this.Update_Conversation(selected_conversation);
 
         this.props.leave_private_channel(selected_room_tag, selected_conversation.users);
         
@@ -117,53 +113,51 @@ class Message_Area extends Component {
 
         let {users} = conversation;
 
-        let time_joined = Date.now();
+        let now = Date.now();
 
-        let join_status = "pending";
+        let new_users = [];
 
         for(let email of selected_users_email){
 
             //Check see if the user email is already added
-            if(users.some((user)=>{ return user.email === email})){
+            if(users.some((user)=>{ return user.user_email === email})){
                 alert("user already exists");
                 continue;
             }
 
-            users.push({email, time_joined, join_status});
+            new_users.push({user_email: email, conversation_id: room_tag, time_joined: now, seen_last: false});
             
         }
 
-        await this.Update_Conversation(conversation);
+        await this.Update_Conversation_Participants(new_users);
 
         this.props.clear_selected_users();
 
-        this.props.refresh_conversation_list(users);
+        this.props.refresh_conversation_list(new_users.concat(users));
     }
 
-    Update_Conversation = async (conversation)=>{
+    Update_Conversation_Participants = async (new_users)=>{
 
-        let {users, messages, room_tag, seen_by, id} = conversation;
+        if(new_users.length === 0){
+            return;
+        }
 
-        let body = {
-            id,
-            messages,
-            room_tag,
-            users,
-            seen_by
-        };
+        let {add_conversation_participants} = this.context.Request_URLs;
 
-        let {update_conversation, delete_conversation} = this.context.Request_URLs;
-
-        let data = await(await fetch(
-            users.length === 0 ? delete_conversation : update_conversation,
+        let result = (await fetch(
+            add_conversation_participants,
             {
                 method: "POST",
-                body: JSON.stringify(body),
+                body: JSON.stringify({new_users}),
                 headers: {
                     'Content-Type': 'application/json'
                 }
             }
         )).json();
+
+        if(!result){
+            alert("Something wrong add participants to conversation");
+        }
 
     }
 
@@ -210,7 +204,8 @@ class Message_Area extends Component {
                                                     user_status={user_status}
                                                     //public conversation have the object channel_name, while private conversation have the object room_tag
                                                     current_users_info={this.state.current_users_info[conversation?.room_tag || conversation?.channel_name]} 
-                                                    hast_selected_conversation={this.Has_Selected_Conversation}
+                                                    has_selected_conversation={this.Has_Selected_Conversation}
+                                                    get_private_conversation_messages={this.props.get_private_conversation_messages}
                                     />
 
                             </div>
@@ -258,7 +253,6 @@ class Message_Area extends Component {
                                             set_current_users_info={this.Set_Current_Users_Info}
                                             seen_by={this.props.seen_by}
                                             user_status={user_status}
-                                            update_conversation={this.Update_Conversation}
                                             refresh_conversation_list={this.props.refresh_conversation_list}
                                         />
 

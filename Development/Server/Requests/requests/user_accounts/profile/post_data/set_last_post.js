@@ -14,7 +14,7 @@ let request = function() {
             
             if(err){
                 
-                console.log(err.sqlMessage);
+                console.log(query, err.sqlMessage);
                 res.json({message: "Error retrieving post(s)", last_posted: null});
                 res.end();
                 return;
@@ -38,7 +38,7 @@ let request = function() {
                    
                 if(err2){
 
-                    console.log(err2.sqlMessage);
+                    console.log(query2, err2.sqlMessage);
                     res.json({message:"Error updating last posted", last_posted: null});
 
                 } else if (result.affectedRows === 0){

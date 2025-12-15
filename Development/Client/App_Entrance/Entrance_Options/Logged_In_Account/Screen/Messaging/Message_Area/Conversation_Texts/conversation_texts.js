@@ -8,19 +8,20 @@ class Conversation_Texts extends Component {
 
     prev_msg_length = 0; //The number of text messages
 
+    no_more_text_msg = false;
+
     constructor(props){
 
         super(props);
 
         Conversation_Texts.contextType = window.Context;
 
-        let {my_account, conversation, user_status, current_users_info, private_or_public} = this.props;
+        let {my_account, conversation, user_status, private_or_public} = this.props;
 
         this.state = {
             my_account,
             conversation,
             user_status,
-            current_users_info,
             private_or_public
         };
     }
@@ -59,60 +60,84 @@ class Conversation_Texts extends Component {
 
     }
 
+    Scroll_To_View_More_Messages = async (e)=>{
+        
+        if(e.target.scrollTop > 300 || this.no_more_text_msg === true){
+            return;
+        }
+
+        let {conversation} = this.state;
+
+        let {messages} = conversation;
+
+        let {conversation_id, created_on} = messages[0];
+
+        let more_msges = await this.props.get_private_conversation_messages(conversation_id, created_on);
+
+        if(more_msges.length === 0){
+            this.no_more_text_msg = true;
+            return;
+        }
+
+        conversation.messages = more_msges.concat(messages);
+
+        this.setState({conversation});
+
+    }
+
     render(){
 
-        let {conversation, my_account, current_users_info, user_status, private_or_public} = this.state;
+        let {conversation, my_account, user_status, private_or_public} = this.state;
 
-        let {messages, seen_by} = conversation || {};
+        let {messages, users} = conversation || {};
 
         let time_joined = user_status?.time_joined || 0;
 
-        let emails = Object.keys(seen_by || {});
-
-        emails = emails.filter((v)=>{ return v !== my_account.email; });
+        let seen_by = users?.filter((v)=>{ return v.email !== my_account.email && v.seen_last; });
 
         return <div id="conversation-texts">
 
-            {this.props.hast_selected_conversation() ? 
+            {this.props.has_selected_conversation() ? 
             
-            <div id="conversation-msges" ref={this.containerRef}>
+                <div id="conversation-msges" ref={this.containerRef} onScroll={this.Scroll_To_View_More_Messages}>
 
-                {messages?.map((value, index)=>{
+                    {messages?.map((value, index)=>{
 
-                    let time_added = parseInt(value.timestamp || 0);
+                        let time_added = value.created_on;
 
-                    return time_joined < time_added ? <div className="msg-entry-wrapper" key={`${value.from.email}${value.timestamp}`}>
+                        return time_joined < time_added ? <div className="msg-entry-wrapper" key={`${value.email}${value.created_on}`}>
 
-                        <Msg_Entry 
-                            msg_obj={value} 
-                            my_account={my_account}
-                            recipient_info={current_users_info[value?.from?.email]}
-                        />
+                            <Msg_Entry 
+                                msg_obj={value} 
+                                my_account={my_account}
+                            />
 
-                    </div> : "";
+                        </div> : "";
 
-                })}
+                    })}
 
-            </div> 
+                </div> 
 
             : 
 
-            <div id="no-conversation-selected">
+                <div id="no-conversation-selected">
 
-                <pre>No conversation selected</pre>     
+                    <pre>No conversation selected</pre>     
 
-            </div>}
+                </div>
+
+            }
 
             <div id="seen-by">
 
-                {emails.length === 0 || private_or_public === "public" ? "" : <pre>Seen by </pre>} 
-                {emails.map((email, ind)=>{
+                {!seen_by?.length || private_or_public === "public" ? "" : <pre>Noticed by </pre>} 
+                {seen_by?.map((user, ind)=>{
 
-                    let {first_name, last_name} = this.state.current_users_info[email] || {};
+                    let {first_name, last_name, email} = user;
                     
                     return <pre className="seen-by-name" key={email}>
                         
-                        {` ${first_name || ""} ${last_name || ""} ${ind === emails.length - 1 ? "" : ", "}`}
+                        {` ${first_name || ""} ${last_name || ""} ${ind === seen_by.length - 1 ? "" : ", "}`}
 
                     </pre>;
 

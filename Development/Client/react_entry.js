@@ -26,6 +26,7 @@ import Likes from './Universal_Components/Comments/Single_Comment/Likes/likes.js
 import Dislikes from './Universal_Components/Comments/Single_Comment/Dislikes/dislikes.js';
 import Emojis from './Universal_Components/Comments/Single_Comment/Emojis/emojis.js';
 import Single_Post from './Universal_Components/Posts/Single_Post/single_post.js';
+import Profile_Thumbnail from './Universal_Components/Profile_Thumbnail/profile_thumbnail.js';
 import './react_entry.less';
 
 class Entry extends Component {
@@ -70,7 +71,8 @@ class Entry extends Component {
                 Likes,
                 Dislikes,
                 Emojis,
-                Single_Post
+                Single_Post,
+                Profile_Thumbnail
             }}
         
         >

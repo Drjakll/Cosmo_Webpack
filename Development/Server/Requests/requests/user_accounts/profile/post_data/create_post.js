@@ -11,7 +11,7 @@ let request = function() {
             
             if (err) {
 
-                console.log(err.sqlMessage);
+                console.log(query, err.sqlMessage);
                 res.json({ message: "Error adding new post" });            
                 res.end();
 

@@ -10,7 +10,7 @@ let request = function() {
         this.sql.query(query, (err, results)=>{
             
             if(err){
-                console.log(err.sqlMessage);
+                console.log(query, err.sqlMessage);
                 res.json({message: "Error retreiving photos", profile_photos: []});
             } else if (results.length === 0){
                 res.json({message: "No data retrieved", profile_photos: []});

@@ -2,28 +2,25 @@ let Wrapper = function(){
 
     this.event = ({public_channels, user_data}) => {
         
-        for(let channel_name in public_channels){
+        for(let i in public_channels){
 
+            let {channel_name} = public_channels[i];
+            
             this.socket.join(channel_name);
 
             //Keep a record of the specific socket to have all the public channels joined
             this.socket.public.rooms_joined[channel_name] = channel_name;
 
-            let channel = public_channels[channel_name];
 
             //If no channel name is attached to public channel yet
             if(!this.public_channel_list[channel_name]){
 
                 this.public_channel_list[channel_name] = {online_users: {}};
 
-                //If online users is attached to the channel object
-                delete channel.online_users;
-                delete channel.messages;
-
                 //Must have a "key" field for storage purposes
-                channel.key = channel_name;
+                public_channels[i].key = channel_name;
 
-                this.channel_storage.Store(channel);
+                this.channel_storage.Store(public_channels[i]);
 
             }
 

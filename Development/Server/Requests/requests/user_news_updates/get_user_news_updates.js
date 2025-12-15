@@ -27,19 +27,19 @@ let request = function () {
                                     ua.profile_picture_link,
                                     ua.first_name,
                                     ua.last_name
-                                    from 
-                                        User_News_Updates as nu
-                                    join 
-                                        User_Accounts as ua 
-                                    on
-                                        ua.email = nu.owner_email
-                                    where 
-                                    `, connection_list);
+                                from 
+                                    User_News_Updates as nu
+                                join 
+                                    User_Accounts as ua 
+                                on
+                                    ua.email = nu.owner_email
+                                where 
+                                `, connection_list);
 
         this.sql.query(query, (err, results) => {
 
             if(err){
-                console.log(err.sqlMessage);
+                console.log(query, err.sqlMessage);
                 res.json({message: "Error getting news update", results: []});
             } else {
                 res.json({message: "Successfully retrieved news update!", results: results});

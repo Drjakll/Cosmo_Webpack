@@ -9,7 +9,7 @@ let request = function() {
         this.sql.query(query, (err, results)=>{
 
             if(err){
-                console.log(err.sqlMessage);
+                console.log(query, err.sqlMessage);
                 res.json({messsage: "Error retrieving albums", albums: []});
             } else if(results.length === 0){
                 res.json({message: "No albums retreived", albums: []});

@@ -7,19 +7,21 @@ class Msg_Entry extends Component {
 
         super(props);
 
-        let { msg_obj, my_account, recipient_info } = props;
+        let { msg_obj, my_account } = props;
 
-        let {from, msg, read_by, timestamp} = msg_obj;
+        let {email, first_name, last_name, profile_picture_link, text, read_by, created_on} = msg_obj;
 
         Msg_Entry.contextType = window.Context;
 
         this.state = {
-            from, 
-            msg,
+            email,
+            first_name,
+            last_name,
+            profile_picture_link, 
+            text,
             read_by,
-            timestamp,
-            my_account,
-            recipient_info
+            created_on,
+            my_account
         };
     }
 
@@ -31,17 +33,19 @@ class Msg_Entry extends Component {
 
         let { msg_obj, my_account, recipient_info } = this.props;
 
-        let {from, msg, read_by, timestamp} = msg_obj;
+        let {email, first_name, last_name, profile_picture_link, text, read_by, created_on} = msg_obj;
 
         //let recipient_info = await this.Get_Recipient_Info(this.state.from.email);
 
         this.setState({
-            from,
-            msg,
+            email,
+            first_name,
+            last_name,
+            profile_picture_link, 
+            text,
             read_by,
-            timestamp,
-            my_account,
-            recipient_info
+            created_on,
+            my_account
         });
 
     }
@@ -114,19 +118,17 @@ class Msg_Entry extends Component {
 
     render(){
 
-        let {from, msg, read_by, timestamp, recipient_info, my_account} = this.state;
-
-        let {first_name, last_name, profile_picture_link} = recipient_info || {};
+        let {email, first_name, last_name, profile_picture_link, text, read_by, created_on, my_account} = this.state;
 
         let {aws_s3_url} = this.context.Request_URLs;
 
-        return <div id="msg-entry"  className={`${from.email === my_account.email ? "myself" : "others"}`}>
+        return <div id="msg-entry"  className={`${email === my_account.email ? "myself" : "others"}`}>
 
             <div id="the-horizontal-bar"> 
 
                 <div id="time-stamp">
 
-                    {this.Local_Timestamp(timestamp)}
+                    {this.Local_Timestamp(created_on)}
                     
                 </div>
 
@@ -148,7 +150,7 @@ class Msg_Entry extends Component {
 
                 <div id="msg-wrapper">
 
-                    <pre>{msg}</pre>
+                    <pre>{text}</pre>
 
                 </div>
 

@@ -14,7 +14,7 @@ let request = function () {
         this.sql.query(query, (err, result) => {
 
             if(err){
-                console.log(err.sqlMessage);
+                console.log(query, err.sqlMessage);
                 res.json({message: "Error adding new alert"});
             } else {
                 res.json({message: "Request added new alert!"});
