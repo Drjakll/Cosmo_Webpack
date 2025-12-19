@@ -169,6 +169,7 @@ class Profile_Info_Data extends Component {
                                     owner_user_account={owner_user_account}
                                     refresh_account_data={refresh_account_data}
                                     options={options}
+                                    change_main_display={this.props.change_main_display}
                                 />
 
                             </div>

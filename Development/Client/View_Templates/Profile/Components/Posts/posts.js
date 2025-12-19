@@ -29,7 +29,7 @@ class Posts extends Component {
         
         let today = new Date();
 
-        let {owner_user_account, visitor_user_account} = props;
+        let {owner_user_account, visitor_user_account, connection_list, post_editor, comment_editor, change_display} = props.properties;
 
         this.state = {
             selected_year: today.getFullYear(),
@@ -37,10 +37,19 @@ class Posts extends Component {
             selected_date: today.getDate(),
             selected_post: {title: "No post selected", body: "", date_created: Date.now()},
             properties_for_calendar_dates: [],
-            connection_list: this.props.connection_list || {}, //For sending out websocket events to particular connected user
+            connection_list: connection_list || {}, //For sending out websocket events to particular connected user
             owner_user_account,
-            visitor_user_account
+            visitor_user_account,
+            post_editor,
+            comment_editor,
+            change_display
         };
+    }
+
+    componentDidMount(){
+
+        this.Setup_Calendar();
+
     }
     
     async componentDidUpdate(prevProps, prevState){
@@ -54,7 +63,13 @@ class Posts extends Component {
         }
         
         this.setState(this.props.properties);
+
+        this.Setup_Calendar();
         
+    }
+
+    Setup_Calendar = () => {
+
         let {owner_user_account} = this.props.properties;
         
         if (owner_user_account) {

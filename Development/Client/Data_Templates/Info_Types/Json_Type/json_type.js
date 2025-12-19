@@ -12,8 +12,7 @@ class Json_Type extends Component {
 
         this.state = {
             label: this.props.label,
-            value: this.props.value,
-            show_popup: false
+            value: this.props.value
         };
     }
     
@@ -43,8 +42,6 @@ class Json_Type extends Component {
             }
         });
 
-        let resJson = await res.json();
-
         const { refresh_account_data } = this.props;
 
         refresh_account_data();
@@ -65,7 +62,7 @@ class Json_Type extends Component {
 
     }
 
-    Pop_Up = () => { 
+    Contents = () => { 
         
         let array_data = [];
         
@@ -84,7 +81,7 @@ class Json_Type extends Component {
         let {Editor, owner_user_account, refresh_account_data, options, variable_name} = this.props;
         //End of the item list
 
-        return <div id="json-type-popup">
+        return <div id="json-type-contents">
 
             <div id="json-info-details">
 
@@ -154,24 +151,17 @@ class Json_Type extends Component {
 
             </div>
 
-            <div id="popup-wrapper" onClick={(e) => { this.setState({ show_popup: false }); }}>
-
-
-            </div>
-
         </div>;
     }
     
     render(){
         
         return (
-            <div id="json-type" className={`info ${this.state.show_popup ? 'popped': ''}`}>
-                
-                {this.state.show_popup ? this.Pop_Up() : <></>}
+            <div id="json-type">
                     
                 <div id="value-wrapper">
                     
-                    <div id="show-button" onClick={(e)=>{this.setState({show_popup: true}); }}>
+                    <div id="show-button" onClick={(e)=>{ this.props.change_main_display(this.Contents); }}>
                             
                         Show
                             

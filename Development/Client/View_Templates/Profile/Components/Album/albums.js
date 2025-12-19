@@ -11,15 +11,15 @@ class Albums extends Component {
         
         Albums.contextType = window.Context;
 
-        let {visitor_user_account, owner_user_account} = this.props;
+        let {visitor_user_account, owner_user_account, album_editor} = this.props.properties;
 
         this.state = {
             owner_user_account,
             visitor_user_account,
+            album_editor,
             albums: [],
             photos: [],
-            selected_album: {},
-            open_album: false
+            selected_album: {}
         }
     }
     
@@ -85,18 +85,35 @@ class Albums extends Component {
         });
         
         let resJson = await res.json();
+
+        let { state} = this;
+
+        state.photos = resJson.photos;
+        state.selected_album = album_info;
         
-        this.setState({
-            photos: resJson.photos, 
-            selected_album: album_info, 
-            open_album: true
-        });
-        
+        await this.setState(state);
+
+        this.props.properties.change_display(this.Open_Photo_Container);
     }
-    
-    Close_Photo_Album = () => {
+
+    Open_Photo_Container = () =>{
+
+        const Album_Editor = this.state.album_editor;
         
-        this.setState({open_album: false});
+        const Photos_Container_Editor  = Album_Editor?.Photos_Container_Editor;  
+
+        let {photos, selected_album, owner_user_account, visitor_user_account} = this.state;
+
+        return (<Photos_Container 
+                photos_container_editor={Photos_Container_Editor}
+                photos={photos}
+                album_info={selected_album}
+                owner_user_account={owner_user_account}
+                visitor_user_account={visitor_user_account}
+                Get_Albums={this.Get_Albums}
+                Get_Photo_Links={this.Get_Photo_Links}
+        />);
+        
     }
     
     render(){
@@ -106,26 +123,11 @@ class Albums extends Component {
         let drag_scroll = new Drag_Scroll();
         
         let albumsWrapperRef = createRef();
-        
+
         const Album_Editor = this.state.album_editor;
-        
-        const Photos_Container_Editor  = Album_Editor?.Photos_Container_Editor;  
         
         return (
              <div id="albums">
-        
-                {this.state.open_album ?
-
-                <Photos_Container 
-                        photos_container_editor={Photos_Container_Editor}
-                        photos={this.state.photos}
-                        album_info={this.state.selected_album}
-                        Close_Photo_Album={this.Close_Photo_Album}
-                        owner_user_account={this.state.owner_user_account}
-                        visitor_user_account={this.state.visitor_user_account}
-                        Get_Albums={this.Get_Albums}
-                        Get_Photo_Links={this.Get_Photo_Links}
-                /> : <></>}
                 
                 <div id="albums-top">
                     
@@ -159,6 +161,8 @@ class Albums extends Component {
                                 
                             <Album_Cover album_info={data} 
                                         Get_Photo_Links={this.Get_Photo_Links}
+                                        owner_user_account={this.state.owner_user_account}
+                                        visitor_user_account={this.state.visitor_user_account}
                             />
             
                         </div>;

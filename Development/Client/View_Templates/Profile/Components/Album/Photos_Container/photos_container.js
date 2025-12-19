@@ -42,10 +42,6 @@ class Photos_Container extends Component {
         return (
             <div id="photos-container" tabIndex="0">
                     
-                <div id="big-close-button" onClick={this.props.Close_Photo_Album}>
-                        
-                </div>
-                    
                 <div id="photo-container-wrapper">
                     
                     <div id="photo-container-title">

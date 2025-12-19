@@ -18,11 +18,14 @@ class Profile_Template extends Component {
         let {owner_user_account, visitor_user_account} = this.props;
         
         this.state = {
+            owner_user_account,
+            visitor_user_account,
+            render_callback: this.Display_Main_Components,
             components: {
-                "Profile Info": {component: Profile_Info, props: {owner_user_account, visitor_user_account}, classname: "profile-info-wrapper"},
-                "Connections": {component: Connections, props: {owner_user_account, visitor_user_account}, classname: "connections-wrapper"},
-                "Albums": {component: Albums, props: {owner_user_account, visitor_user_account}, classname: "albums-wrapper"}, 
-                "Posts": {component: Posts, props: {owner_user_account, visitor_user_account}, classname: "posts-wrapper"},
+                "Profile Info": {component: Profile_Info, props: {owner_user_account, visitor_user_account, change_display: this.Change_Display}, classname: "profile-info-wrapper"},
+                "Connections": {component: Connections, props: {owner_user_account, visitor_user_account, change_display: this.Change_Display}, classname: "connections-wrapper"},
+                "Albums": {component: Albums, props: {owner_user_account, visitor_user_account, change_display: this.Change_Display}, classname: "albums-wrapper"}, 
+                "Posts": {component: Posts, props: {owner_user_account, visitor_user_account, change_display: this.Change_Display}, classname: "posts-wrapper"}
             }
         };
     }
@@ -92,31 +95,60 @@ class Profile_Template extends Component {
         
         this.setState({components: this.state.components});
     }
-    
+
+    Display_Main_Components = () => {
+
+        let { components } = this.state;
+
+        return <div id="profile-template-components-wrapper">
+
+            {Object.keys(components).map((key, index) => {
+
+                const com = components[key];
+
+                const Com = com.component;
+
+                const prop = com.props;
+
+                return <div className={`profile-template-component ${com.classname}`} key={index}>
+
+                    <Com properties={prop} />
+
+                </div>;
+
+            })}
+
+        </div>
+    }
+
+    Change_Display = (render_callback) => {
+
+        this.setState({render_callback});
+
+    }
+
     render(){
         
-        let { components } = this.state;
+        let { render_callback } = this.state;
         
         return (
             <div id="profile-template">
 
-                <div id="profile-template-components-wrapper">
+                 {render_callback === this.Display_Main_Components ? 
 
-                    {Object.keys(components).map((key, index) => {
+                    render_callback() : 
 
-                        const com = components[key];
+                    <div id="content-with-back-button">
 
-                        const Com = com.component;
+                        <div id="back-button" onClick={(e)=>{ this.Change_Display(this.Display_Main_Components); }}>
+                            Back    
+                        </div>
 
-                        return <div className={`profile-template-component ${com.classname}`} key={key}>
-
-                            <Com properties={com.props} />
-
-                        </div>;
-
-                    })}
-
-                </div>
+                        <div id="contents">
+                            {render_callback()}
+                        </div>
+                    </div>
+                }
 
             </div>
         );

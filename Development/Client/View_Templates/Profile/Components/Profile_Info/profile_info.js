@@ -11,11 +11,13 @@ class Profile_Info extends Component {
 
         Profile_Info.contextType = window.Context;
 
-        let {owner_user_account, visitor_user_account} = this.props.properties;
+        let {owner_user_account, visitor_user_account, profile_photo_editor, profile_data_editor} = this.props.properties;
 
         this.state = {
             owner_user_account,
-            visitor_user_account
+            visitor_user_account,
+            profile_photo_editor,
+            profile_data_editor
         };
         
     }
@@ -42,6 +44,8 @@ class Profile_Info extends Component {
     render(){
         
         let { profile_photo_editor, profile_data_editor } = this.state;
+
+        let { change_display } = this.props.properties;
         
         return (
                 <div id="profile-info">
@@ -54,7 +58,12 @@ class Profile_Info extends Component {
                     
                     <div id="profile-info-wrapper">
                         
-                        <Profile_Info_Data owner_user_account={this.state.owner_user_account} generate_editors={profile_data_editor} refresh_account_data={this.Refresh_Account_Data} />
+                        <Profile_Info_Data 
+                            owner_user_account={this.state.owner_user_account} 
+                            generate_editors={profile_data_editor} 
+                            refresh_account_data={this.Refresh_Account_Data} 
+                            change_main_display={change_display}
+                        />
                         
                     </div>
                     

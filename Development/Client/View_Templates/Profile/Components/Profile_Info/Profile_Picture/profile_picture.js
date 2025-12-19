@@ -42,7 +42,7 @@ class Profile_Picture extends Component {
         let {owner_user_account} = this.state;
         const { profile_picture_link } = owner_user_account;
 
-        const { generate_editors, refresh_account_data } = this.state;
+        const { generate_editors, refresh_account_data } = this.props;
 
         return (
             <div id="profile-picture" className={this.state.enlarge_photo ? "enlarged-photo" : ""}>
