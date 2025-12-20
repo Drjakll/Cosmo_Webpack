@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import The_Editor from './The_Editor/the_editor.js';
+import Context from '@context/context.js';
+import {Posts} from '@profile_template';
 import './post_editor.less';
 
-class Post_Editor extends Component {
+class Post_Editor extends Posts {
 
     constructor(props) {
 
@@ -10,15 +12,19 @@ class Post_Editor extends Component {
 
         this.existing_post = null; // This will hold the post that is being edited, if any
 
-        Post_Editor.contextType = window.Context;
+        Post_Editor.contextType = Context;
 
-        this.state = {
+        let state = {
             editor_opened: false,
             selected_post: null,
             owner_user_account: props.owner_user_account,
             disable_create_new_post: false,
             connection_list: props.connection_list
         };
+
+        for(let key in state){
+            this.state[key] = state[key];
+        }
     }
 
     async componentDidUpdate(prevProps, prevState){
@@ -27,14 +33,16 @@ class Post_Editor extends Component {
             return;
         }
 
-        this.existing_post = this.props.selected_post;
+        super.componentDidUpdate(prevProps, prevState);
 
-        await this.setState(this.props);
+        this.existing_post = this.props.selected_post;
 
         this.Disable_Create_New_Post();
     }
 
     componentDidMount() {
+
+        super.componentDidMount();
 
         this.Disable_Create_New_Post();
     }
@@ -175,6 +183,8 @@ class Post_Editor extends Component {
                 </div>
 
             </div>
+
+            {super.render()}
 
         </div>;
     }

@@ -16,12 +16,6 @@ class Profile extends Profile_Template {
         
         Profile.contextType = Context;
 
-    }
-
-    componentDidMount(){
-
-        super.componentDidMount();
-
         let { components} = this.state;
 
         components["Profile Info"].component = this.Generate_Profile_Info;
@@ -29,7 +23,11 @@ class Profile extends Profile_Template {
         components["Albums"].component = this.Generate_Albums;
         components["Posts"].component = this.Generate_Posts;
 
-        this.setState({components});
+    }
+
+    componentDidMount(){
+
+        super.componentDidMount();
 
     }
 
@@ -37,12 +35,6 @@ class Profile extends Profile_Template {
 
         super.componentDidUpdate(prevProps, prevState);
         
-    }
-    
-    Generate_Profile_Photo_Editor = ({ owner_user_account, refresh_account_data }) => {
-        
-        //return <Profile_Photo_Editor owner_user_account={owner_user_account} refresh_account_data={refresh_account_data} />;
-
     }
 
     Generate_Profile_Info = (general_props, unique_props)=>{

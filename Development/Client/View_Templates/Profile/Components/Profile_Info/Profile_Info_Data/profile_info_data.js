@@ -1,4 +1,5 @@
 import React, {Component, createRef} from 'react';
+import Context from '@context/context.js';
 import './profile_info_data.less';
 
 class Profile_Info_Data extends Component {
@@ -7,11 +8,14 @@ class Profile_Info_Data extends Component {
 
         super(props);
 
-        Profile_Info_Data.contextType = window.Context;
+        Profile_Info_Data.contextType = Context;
+
+        let {owner_user_account} = this.props;
 
         this.state = {
-            owner_user_account: this.props.owner_user_account,
-            info_templates: {}
+            owner_user_account,
+            info_templates: {},
+            editors: {}
         };
     }
 
@@ -20,15 +24,9 @@ class Profile_Info_Data extends Component {
         //Account_Info_Data_Template is located at the Data_Templates folder
         let {Account_Info_Data_Template} = this.context.Account_Data_Templates;
 
-        let info_template = await Account_Info_Data_Template(null);
+        let info_templates = await Account_Info_Data_Template(null);
 
-        this.state.info_templates = info_template;
-
-        this.Update_Info_Templates();
-
-        this.Attach_Editors();
-
-        this.setState(this.state);
+        this.setState({info_templates});
         
     }
 
@@ -38,52 +36,8 @@ class Profile_Info_Data extends Component {
             return;
         }
 
-        for (let i in this.props) {
-
-            this.state[i] = this.props[i];
-
-        }
-
-        this.Update_Info_Templates();
-
-        this.Attach_Editors();
-
-        this.setState(this.state);
-
-    }
-
-    Update_Info_Templates = () => {
-
-        for (let i in this.state.owner_user_account) {
-            
-            if (!this.state.info_templates[i]) {
-                continue;
-            }
-
-            this.state.info_templates[i].value = this.state.owner_user_account[i];
-        }
-    }
-
-    Attach_Editors = () => {
-
-        const { generate_editors } = this.props;
-
-        if (!generate_editors) {
-            return;
-        }
-
-        let editors = generate_editors();
-
-        for (let i in editors) { 
-
-            if (!this.state.info_templates[i]) {
-                continue;
-            }
-
-            this.state.info_templates[i].editor = editors[i];
-
-        }
-
+        this.setState(this.props);
+        
     }
     
     render(){
@@ -94,7 +48,9 @@ class Profile_Info_Data extends Component {
         
         let infoWrapperRef = createRef();
         
-        let { owner_user_account, refresh_account_data } = this.props;
+        let {refresh_account_data, change_main_display } = this.props;
+
+        let {owner_user_account, editors} = this.state;
         
         return (
             <div id="profile-info-data">
@@ -138,8 +94,6 @@ class Profile_Info_Data extends Component {
                     onMouseMove={(e) => {
                         drag_scroll.move_drag(e, infoWrapperRef.current);
                     }}
-
-                    tabIndex="0"
                 >
 
                     {Object.keys(this.state.info_templates).map((key, index) => {
@@ -147,10 +101,9 @@ class Profile_Info_Data extends Component {
                         const template = this.state.info_templates[key];
 
                         const Com = template.component;
-                        let value = template.value;
-                        const label = template.label;
-                        let editor = template.editor;
-                        let options = template.options;
+                        let value = owner_user_account[key];
+                        let { label, options } = template;
+                        let editor = editors[key] || null;
 
                         return <div className="individual-info-wrapper" key={index}>
 
@@ -169,7 +122,7 @@ class Profile_Info_Data extends Component {
                                     owner_user_account={owner_user_account}
                                     refresh_account_data={refresh_account_data}
                                     options={options}
-                                    change_main_display={this.props.change_main_display}
+                                    change_main_display={change_main_display}
                                 />
 
                             </div>

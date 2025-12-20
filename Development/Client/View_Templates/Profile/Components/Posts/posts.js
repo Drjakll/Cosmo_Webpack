@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-//import Single_Post from './Single_Post/single_post.js';
 import './posts.less';
 
 class Posts extends Component {
@@ -242,21 +241,9 @@ class Posts extends Component {
 
                 </div>
 
-
-                {Post_Editor ?
-                    <div id="post-editor-wrapper">
-                        <Post_Editor
-                            Get_Posts_On_This_Month={this.Change_Month}
-                            selected_post={this.state.selected_post}
-                            owner_user_account={this.state.owner_user_account}
-                            connection_list={this.state.connection_list}
-                        />
-                    </div>
-                    : null}
-
                 <div id="bottom">
 
-                    <Single_Post post={selected_post} 
+                    <Single_Post post={selected_post || {}} 
                                 visitor_user_account={visitor_user_account} 
                                 owner_user_account={owner_user_account} 
                                 change_main_display={change_display}

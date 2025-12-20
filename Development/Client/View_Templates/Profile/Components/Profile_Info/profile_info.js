@@ -16,8 +16,8 @@ class Profile_Info extends Component {
         this.state = {
             owner_user_account,
             visitor_user_account,
-            profile_photo_editor,
-            profile_data_editor,
+            Profile_Picture, 
+            Profile_Info_Data,
             change_display
         };
         
@@ -45,10 +45,9 @@ class Profile_Info extends Component {
 
     }
     
-    
     render(){
         
-        let { profile_photo_editor, profile_data_editor } = this.state;
+        let { visitor_user_account, owner_user_account, Profile_Picture, Profile_Info_Data } = this.state;
 
         let { change_display } = this.props;
         
@@ -57,15 +56,19 @@ class Profile_Info extends Component {
                     
                     <div id="profile-picture-wrapper">
 
-                        <Profile_Picture owner_user_account={this.state.owner_user_account} generate_editors={profile_photo_editor} refresh_account_data={this.Refresh_Account_Data} />
+                        <Profile_Picture 
+                            owner_user_account={owner_user_account} 
+                            visitor_user_account={visitor_user_account} 
+                            refresh_account_data={this.Refresh_Account_Data} 
+                        />
                         
                     </div>
                     
                     <div id="profile-info-wrapper">
                         
                         <Profile_Info_Data 
-                            owner_user_account={this.state.owner_user_account} 
-                            generate_editors={profile_data_editor} 
+                            owner_user_account={owner_user_account} 
+                            visitor_user_account={visitor_user_account}
                             refresh_account_data={this.Refresh_Account_Data} 
                             change_main_display={change_display}
                         />

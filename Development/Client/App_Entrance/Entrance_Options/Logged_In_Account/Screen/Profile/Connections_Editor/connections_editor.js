@@ -1,23 +1,28 @@
 import React, {Component} from 'react';
 import Popup_Editor from './Popup_Editor/popup_editor.js';
+import {Connections} from '@profile_template';
 import './connections_editor.less';
 
-class Connections_Editor extends Component {
+class Connections_Editor extends Connections {
     
     constructor(props){
         
         super(props);
 
-        let {account_data, connection_list} = this.props;
+        let {owner_user_account, connection_list} = this.props;
 
         Connections_Editor.contextType = window.Context;
 
-        this.state = {
-            account_data: account_data,
-            connection_list: connection_list,
+        let state = {
+            owner_user_account,
+            connection_list,
             show_popup: false,
             popup_type: "Edit"
         };
+
+        for(let key in state){
+            this.state[key] = state[key];
+        }
     }
 
     componentDidUpdate(prevProps, prevState){
@@ -26,7 +31,7 @@ class Connections_Editor extends Component {
             return;
         }
 
-        this.setState(this.props);
+        super.componentDidUpdate(prevProps, prevState);
         
     }
 
@@ -39,37 +44,46 @@ class Connections_Editor extends Component {
         this.setState({show_popup: true, popup_type: type});
 
     }
+
+    Legacy = () =>{ 
+
+        return <div id="connections-editor">
+
+            {this.state.show_popup ? 
+            <div id="connections-editor-popup-wrapper">
+                <Popup_Editor account_data={this.state.owner_user_account} 
+                            release_popup={this.Release_Popup} 
+                            popup_type={this.state.popup_type} 
+                            Profile_Thumbnail={this.props.Profile_Thumbnail} 
+                            connection_list={this.state.connection_list}/>
+                </div> 
+            : <></>}
+
+            <div className="connections-editor-button" onClick={(e)=>{this.Show_Popup("Current");}}>
+
+                <div id="friends-icon" className="icon" style={{backgroundImage: `url(./static/friends_icon.png)`}}></div>
+
+                <label>Edit</label>
+                
+            </div>
+
+            <div className="connections-editor-button" onClick={(e)=>{this.Show_Popup("Find_New");}}>
+
+                <div id="friends-search-icon" className="icon" style={{backgroundImage: `url(./static/friends_search_icon.png)`}}></div>
+
+                <label>Search</label>
+
+            </div>
+
+        </div>;
+    }
     
     render(){
         
         return (
             <div id="connections-editor">
 
-                {this.state.show_popup ? 
-                <div id="connections-editor-popup-wrapper">
-                    <Popup_Editor account_data={this.state.account_data} 
-                                release_popup={this.Release_Popup} 
-                                popup_type={this.state.popup_type} 
-                                Profile_Thumbnail={this.props.Profile_Thumbnail} 
-                                connection_list={this.state.connection_list}/>
-                    </div> 
-                : <></>}
-
-                <div className="connections-editor-button" onClick={(e)=>{this.Show_Popup("Current");}}>
-
-                    <div id="friends-icon" className="icon" style={{backgroundImage: `url(./static/friends_icon.png)`}}></div>
-
-                    <label>Edit</label>
-                    
-                </div>
-
-                <div className="connections-editor-button" onClick={(e)=>{this.Show_Popup("Find_New");}}>
-
-                    <div id="friends-search-icon" className="icon" style={{backgroundImage: `url(./static/friends_search_icon.png)`}}></div>
-
-                    <label>Search</label>
-
-                </div>
+                {super.render()}
 
             </div>
         );

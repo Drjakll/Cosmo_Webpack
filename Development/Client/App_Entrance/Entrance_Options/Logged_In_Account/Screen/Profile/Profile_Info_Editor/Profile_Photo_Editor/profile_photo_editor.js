@@ -37,17 +37,19 @@ class Profile_Photo_Editor extends Profile_Picture {
     
     render(){
         
-        const { owner_user_account, refresh_account_data } = this.state;
+        const { owner_user_account, refresh_account_data, show_editor } = this.state;
         
         return <div id="profile-photo-editor" className={`${this.state.show_editor ? "enlarged-profile-photo-editor" : ""}`}>
 
-            {this.state.show_editor ? <Editor exit_editor={this.Exit_Editor} owner_user_account={owner_user_account} refresh_account_data={refresh_account_data} /> : <></>}
+            {show_editor ? <Editor exit_editor={this.Exit_Editor} owner_user_account={owner_user_account} refresh_account_data={refresh_account_data} /> : ""}
         
             <div id="editor-button" onClick={(e)=>{ this.setState({show_editor: true}); }} >
                 
                 Edit
                 
             </div>
+
+            {super.render()}
         
         </div>;
     }

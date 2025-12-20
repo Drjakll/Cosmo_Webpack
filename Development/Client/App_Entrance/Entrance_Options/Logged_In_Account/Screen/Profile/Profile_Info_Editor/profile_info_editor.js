@@ -1,6 +1,8 @@
 import {Profile_Info} from '@profile_template';
 import React, {Component} from 'react';
 import Context from '@context/context.js';
+import Profile_Picture from './Profile_Photo_Editor/profile_photo_editor.js';
+import Profile_Info_Data from './Profile_Data_Editor/profile_data_editor.js';
 import './profile_info_editor.less';
 
 class Profile_Info_Editor extends Profile_Info {
@@ -10,6 +12,9 @@ class Profile_Info_Editor extends Profile_Info {
         super(props);
         
         Profile_Info_Editor.contextType = Context;
+
+        this.state.Profile_Picture = Profile_Picture;
+        this.state.Profile_Info_Data = Profile_Info_Data;
 
     }
 

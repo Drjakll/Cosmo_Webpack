@@ -1,8 +1,10 @@
 import React, {Component} from 'react';
 import Photos_Container_Editor from './Photos_Container_Editor/photos_container_editor.js';
+import Context from '@context/context.js';
+import  {Albums} from '@profile_template';
 import './album_editor.less'
 
-class Album_Editor extends Component {
+class Album_Editor extends Albums {
 
     static Photos_Container_Editor = Photos_Container_Editor
     
@@ -10,13 +12,17 @@ class Album_Editor extends Component {
         
         super(props);
 
-        Album_Editor.contextType = window.Context;
-        
-        this.state = {};
+        Album_Editor.contextType = Context;
 
         for(let i in props){
             this.state[i] = props[i];
         }
+    }
+
+    componentDidMount(){
+
+        super.componentDidMount();
+
     }
 
     componentDidUpdate(prevProps, prevState) {
@@ -25,7 +31,7 @@ class Album_Editor extends Component {
             return;
         }
 
-        this.setState(this.props);
+        super.componentDidUpdate(prevProps, prevState);
     }
 
     Add_Photo_Album = async (e) => {
@@ -71,6 +77,8 @@ class Album_Editor extends Component {
                 <label>Add Album</label> 
 
             </div>
+
+            {super.render()}
         
         </div>;
     }
