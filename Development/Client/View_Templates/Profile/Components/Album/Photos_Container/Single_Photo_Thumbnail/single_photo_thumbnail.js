@@ -35,6 +35,30 @@ class Single_Photo extends Component {
         
         this.setState({enlarge_photo: false});
     }
+
+    Show_Enlarged_Photo = () => {
+
+        const {Request_URLs} = this.context;
+        
+        let {aws_s3_url} = Request_URLs;
+
+        const photo_link = this.state.photo_info?.link;
+
+        const Editor = this.props.Thumbnail_Editor;
+
+        //To avoid unecessary request to the aws s3 if there is no photo link available
+        aws_s3_url = photo_link ? aws_s3_url : "";
+
+        return  <Enlarged_Single_Photo 
+            photo_info={this.state.photo_info}
+            aws_s3_url={`${aws_s3_url}`}
+            owner_user_account={this.state.owner_user_account}
+            visitor_user_account={this.state.visitor_user_account}
+            Enlarged_Photo_Editor={Editor?.Enlarged_Photo_Editor}
+            album_info={this.state.album_info}
+            Get_Albums={this.props.Get_Albums} 
+        />;
+    }
     
     render(){
         
@@ -51,18 +75,6 @@ class Single_Photo extends Component {
         
         return (
             <div id="single-photo-thumbnail">
-        
-                {this.state.enlarge_photo ?
-                    <Enlarged_Single_Photo 
-                        photo_info={this.state.photo_info}
-                        aws_s3_url={`${aws_s3_url}`}
-                        exit_enlarge_mode={this.Exit_Enlarge_Mode}
-                        owner_user_account={this.state.owner_user_account}
-                        visitor_user_account={this.state.visitor_user_account}
-                        Enlarged_Photo_Editor={Editor?.Enlarged_Photo_Editor}
-                        album_info={this.state.album_info}
-                        Get_Albums={this.props.Get_Albums}
-                /> : <></>}
 
                 {Editor ?
                     <Editor photo_info={this.state.photo_info} photos_to_be_deleted={this.state.photos_to_be_deleted} />
@@ -74,7 +86,7 @@ class Single_Photo extends Component {
                     }}
                     onClick = {(e)=>{
                             
-                        this.setState({enlarge_photo: true});
+                        this.props.change_main_display(this.Show_Enlarged_Photo);
                     }}
                 >
                     

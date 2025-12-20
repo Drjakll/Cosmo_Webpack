@@ -8,46 +8,33 @@ Click nbfs://nbhost/SystemFileSystem/Templates/ClientSide/style.less to edit thi
 */
 
 #enlarged-single-photo-wrapper {
-    width: 100vw;
-    height: 100vh;
-    position: fixed;
-    top: 0px;
-    left: 0px;
+    width: 100%;
+    height: 100%;
+    position: relative;
     z-index: 9999999;
-    
-    #enlarged-single-photo-exit-button {
-        width: 100%;
-        height: 100%;
-        position: absolute;
-        background-color: rgba(0,0,0,0.25);
-        
-        &:hover {
-            cursor: pointer;
-        }
-    }
+
     
     #enlarged-single-photo {
-        width: 80%;
-        height: 95%;
+        width: 100%;
+        height: 100%;
         position: relative;
-        left: 10%;
-        top: 2.5%;
         background-color: rgba(220,220,220,1);
-        border-radius: 15px;
-        box-shadow: rgba(0,0,0,0.5) 0px 0px 10px;
+        //border-radius: 15px;
+        //box-shadow: rgba(0,0,0,0.5) 0px 0px 10px;
         display: flex;
+        flex-direction: column;
         justify-content: center;
         align-items: center;
         overflow: hidden;
         
         #enlarged-photo-wrapper {
-            height: 100%;
-            width: 65%;
+            height: 50%;
+            width: 100%;
             position: relative;
 
             #photo-editor-wrapper {
                 width: 100%;
-                height: 5%;
+                height: 25px;
                 display: flex;
                 justify-content: flex-end;
                 align-items: center;
@@ -62,13 +49,13 @@ Click nbfs://nbhost/SystemFileSystem/Templates/ClientSide/style.less to edit thi
                 background-repeat: no-repeat;
                 background-position: center;
                 background-color: rgba(25,25,25,1);
-                box-shadow: rgba(0,0,0,0.25) 5px 5px 10px;
+                //box-shadow: rgba(0,0,0,0.25) 5px 5px 10px;
             }
         }
         
         #comments-area-wrapper {
-            width: 35%;
-            height: 100%;
+            width: 100%;
+            height: 50%;
         }
     }
 }
@@ -78,8 +65,6 @@ Click nbfs://nbhost/SystemFileSystem/Templates/ClientSide/style.less to edit thi
     #enlarged-single-photo-wrapper {
 
         #enlarged-single-photo {
-            width: 90%;
-            left: 5%;
             flex-direction: column;
 
             #enlarged-photo-wrapper {

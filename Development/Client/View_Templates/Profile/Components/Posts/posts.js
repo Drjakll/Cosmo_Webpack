@@ -29,7 +29,7 @@ class Posts extends Component {
         
         let today = new Date();
 
-        let {owner_user_account, visitor_user_account, connection_list, post_editor, comment_editor, change_display} = props.properties;
+        let {owner_user_account, visitor_user_account, connection_list, post_editor, change_display} = props;
 
         this.state = {
             selected_year: today.getFullYear(),
@@ -41,7 +41,6 @@ class Posts extends Component {
             owner_user_account,
             visitor_user_account,
             post_editor,
-            comment_editor,
             change_display
         };
     }
@@ -58,11 +57,7 @@ class Posts extends Component {
             return;
         }
         
-        if(!this.props.properties){
-            return;
-        }
-        
-        this.setState(this.props.properties);
+        await this.setState(this.props);
 
         this.Setup_Calendar();
         
@@ -70,7 +65,7 @@ class Posts extends Component {
 
     Setup_Calendar = () => {
 
-        let {owner_user_account} = this.props.properties;
+        let {owner_user_account} = this.props;
         
         if (owner_user_account) {
             
@@ -210,10 +205,9 @@ class Posts extends Component {
 
         const { Calendar, Single_Post } = this.context;
         
-        let { selected_year, selected_month, selected_date, selected_post, visitor_user_account, owner_user_account } = this.state;
+        let { selected_year, selected_month, selected_date, selected_post, visitor_user_account, owner_user_account, change_display } = this.state;
 
         const Post_Editor = this.state.post_editor;
-        const Comment_Editor = this.state.comment_editor;
 
         
         return (
@@ -265,7 +259,8 @@ class Posts extends Component {
                     <Single_Post post={selected_post} 
                                 visitor_user_account={visitor_user_account} 
                                 owner_user_account={owner_user_account} 
-                                comment_editor={Comment_Editor} />
+                                change_main_display={change_display}
+                    />
 
                 </div>
 

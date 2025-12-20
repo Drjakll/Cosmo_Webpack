@@ -11,12 +11,11 @@ class Comments_Container extends Component {
     constructor(props){
         super(props);
 
-        let {post, owner_user_account, visitor_user_account, Comment_Editor, post_comments} = this.props;
+        let {post, owner_user_account, visitor_user_account, post_comments} = this.props;
 
         this.state = {
             post,
             post_comments,
-            Comment_Editor,
             owner_user_account,
             visitor_user_account,
             reply_to_comment: null
@@ -115,7 +114,9 @@ class Comments_Container extends Component {
 
     render(){
 
-        let {post, Comment_Editor} = this.state;
+        let {post} = this.state;
+
+        let {Comment_Editor} = this.context;
 
         let {title, date_created} = post || {};
 

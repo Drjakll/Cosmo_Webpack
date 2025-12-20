@@ -1,19 +1,20 @@
 import React, {Component} from 'react';
 import Albums from './Components/Album/albums.js';
 import Posts from './Components/Posts/posts.js';
-import Profile_Info from './Components/Profile_Info/profile_info.js';
+import {Profile_Info, Profile_Picture, Profile_Info_Data} from './Components/Profile_Info/profile_info.js';
 import Connections from './Components/Connections/connections.js';
+import Context from '@context/context.js';
 import './profile_template.less';
 
 class Profile_Template extends Component {
     
-    
+    last_render_callback = [];
     
     constructor(props){
-        
+
         super(props);
         
-        Profile_Template.contextType = window.Context;
+        Profile_Template.contextType = Context;
 
         let {owner_user_account, visitor_user_account} = this.props;
         
@@ -21,11 +22,31 @@ class Profile_Template extends Component {
             owner_user_account,
             visitor_user_account,
             render_callback: this.Display_Main_Components,
+            general_props: { //This props will be passed to all components
+                owner_user_account, 
+                visitor_user_account, 
+                change_display: this.Change_Display
+            },
             components: {
-                "Profile Info": {component: Profile_Info, props: {owner_user_account, visitor_user_account, change_display: this.Change_Display}, classname: "profile-info-wrapper"},
-                "Connections": {component: Connections, props: {owner_user_account, visitor_user_account, change_display: this.Change_Display}, classname: "connections-wrapper"},
-                "Albums": {component: Albums, props: {owner_user_account, visitor_user_account, change_display: this.Change_Display}, classname: "albums-wrapper"}, 
-                "Posts": {component: Posts, props: {owner_user_account, visitor_user_account, change_display: this.Change_Display}, classname: "posts-wrapper"}
+                "Profile Info": {
+                    component: this.Generate_Profile_Info, 
+                    props: {}, 
+                    classname: "profile-info-wrapper"
+                },
+                "Connections": {
+                    component: this.Generate_Connections, 
+                    props: {}, 
+                    classname: "connections-wrapper"
+                },
+                "Albums": {
+                    component: this.Generate_Albums, 
+                    props: {}, 
+                    classname: "albums-wrapper"
+                }, 
+                "Posts": {component: this.Generate_Posts, 
+                    props: {}, 
+                    classname: "posts-wrapper"
+                }
             }
         };
     }
@@ -41,16 +62,27 @@ class Profile_Template extends Component {
             });
 
         }
+
+    }
+
+    Generate_Profile_Info = (general_props, unique_props)=>{
+
+        return <Profile_Info {...general_props} {...unique_props} />;
+    }
+
+    Generate_Connections = (general_props, unique_props)=>{
         
-        if(this.props.add_editors){
-            
-            let {add_editors} = this.props;
-            
-            for(let key in add_editors){
-                
-                this.UpdateComponentProps(key, add_editors[key]);
-            }
-        }
+        return <Connections {...general_props} {...unique_props} />;
+    }   
+
+    Generate_Albums = (general_props, unique_props)=>{    
+
+        return <Albums {...general_props} {...unique_props} />;
+    }
+
+    Generate_Posts = (general_props, unique_props)=>{
+
+        return <Posts {...general_props} {...unique_props}/>;
     }
     
     componentDidUpdate(prevProps, prevState){
@@ -83,22 +115,22 @@ class Profile_Template extends Component {
     }
     
     UpdateAllComponentProps = (newProps) => {
-        
-        for(let h in this.state.components){
+
+        let {general_props} = this.state;
+
+        for(let i in newProps){
             
-            for(let i in newProps){
-            
-                this.state.components[h].props[i] = newProps[i];
-                
-            }
+            general_props[i] = newProps[i];
+
         }
-        
-        this.setState({components: this.state.components});
+
+        this.setState({general_props});
+
     }
 
     Display_Main_Components = () => {
 
-        let { components } = this.state;
+        let { components, general_props } = this.state;
 
         return <div id="profile-template-components-wrapper">
 
@@ -106,13 +138,13 @@ class Profile_Template extends Component {
 
                 const com = components[key];
 
-                const Com = com.component;
+                const Com_Render = com.component;
 
-                const prop = com.props;
+                const unique_props = com.props;
 
-                return <div className={`profile-template-component ${com.classname}`} key={index}>
+                return <div className={`profile-template-component ${com.classname}`} key={key}>
 
-                    <Com properties={prop} />
+                    {Com_Render(general_props, unique_props)}
 
                 </div>;
 
@@ -123,7 +155,21 @@ class Profile_Template extends Component {
 
     Change_Display = (render_callback) => {
 
+        this.last_render_callback.push(this.state.render_callback);
+
         this.setState({render_callback});
+
+    }
+
+    Return_Previous_Display = () => {
+
+        if(this.last_render_callback.length === 0){
+            return;
+        }
+
+        let previous_render_callback = this.last_render_callback.pop();
+
+        this.setState({render_callback: previous_render_callback});
 
     }
 
@@ -140,13 +186,14 @@ class Profile_Template extends Component {
 
                     <div id="content-with-back-button">
 
-                        <div id="back-button" onClick={(e)=>{ this.Change_Display(this.Display_Main_Components); }}>
+                        <div id="back-button" onClick={this.Return_Previous_Display}>
                             Back    
                         </div>
 
                         <div id="contents">
                             {render_callback()}
                         </div>
+
                     </div>
                 }
 
@@ -155,4 +202,4 @@ class Profile_Template extends Component {
     }
 }
 
-export default Profile_Template;
+export {Profile_Template, Profile_Info, Profile_Picture, Profile_Info_Data, Albums, Posts, Connections};

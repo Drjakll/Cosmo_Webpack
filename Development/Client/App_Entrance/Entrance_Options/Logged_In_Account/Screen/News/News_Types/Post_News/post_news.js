@@ -39,7 +39,12 @@ class Post_News extends Component {
 
                 <div id="the-post-contents">
 
-                    <Single_Post visitor_user_account={visitor_user_account} owner_user_account={owner_user_account} post={post}/>
+                    <Single_Post 
+                        visitor_user_account={visitor_user_account} 
+                        owner_user_account={owner_user_account} 
+                        post={post} 
+                        change_main_display={this.props.change_display}
+                    />
 
                 </div>
 

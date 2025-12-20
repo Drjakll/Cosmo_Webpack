@@ -36,7 +36,6 @@ class Single_Post extends Component {
             owner_user_account,
             visitor_user_account,
             post: post,
-            open_comments_container: false,
             post_comments: [],
             socket: null
         };
@@ -115,43 +114,40 @@ class Single_Post extends Component {
 
     Open_Comments_Container = (e)=>{
         
-        this.setState({open_comments_container: true});
+        this.props.change_main_display(this.Render_Comments_Container);
 
     }
 
-    Close_Comments_Container = (e)=>{
+    Render_Comments_Container = () => {
 
-        this.setState({open_comments_container: false});
+        let {post, visitor_user_account, owner_user_account, post_comments, socket} = this.state;
 
+
+        return <div id="comments-container-wrapper">
+
+            <div id="comments-container-exit-button" onClick={this.Close_Comments_Container}>
+            
+            </div>
+
+            <Comments_Container 
+                post={post} 
+                generate_beautiful_date={this.Generate_Beautiful_Date} 
+                visitor_user_account={visitor_user_account}
+                owner_user_account={owner_user_account}
+                get_post_comments={this.Get_Post_Comments}
+                post_comments={post_comments}
+                socket={socket}
+            /> 
+
+        </div>;
     }
 
     render() {
         
-        let {post, open_comments_container, visitor_user_account, owner_user_account, comment_editor, post_comments, socket} = this.state;
+        let {post, visitor_user_account, owner_user_account, post_comments, socket} = this.state;
         let {title, date_created} = post;
 
         return <div id="single-post">
-
-            {open_comments_container ? 
-
-            <div id="comments-container-wrapper">
-
-                <div id="comments-container-exit-button" onClick={this.Close_Comments_Container}>
-                
-                </div>
-
-                <Comments_Container 
-                    post={post} 
-                    generate_beautiful_date={this.Generate_Beautiful_Date} 
-                    visitor_user_account={visitor_user_account}
-                    owner_user_account={owner_user_account}
-                    Comment_Editor={comment_editor}
-                    get_post_comments={this.Get_Post_Comments}
-                    post_comments={post_comments}
-                    socket={socket}
-                /> 
-
-            </div> : null}
         
             <div id="title">
         

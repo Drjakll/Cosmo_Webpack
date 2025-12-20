@@ -1,13 +1,14 @@
 import React, {Component} from 'react';
-import Profile_Photo_Editor from './Profile_Photo_Editor/profile_photo_editor.js';
-import Profile_Data_Editor from './Profile_Data_Editor/profile_data_editor.js';
+import Profile_Info_Editor from './Profile_Info_Editor/profile_info_editor.js';
 import Album_Editor from './Album_Editor/album_editor.js';
 import Post_Editor from './Post_Editor/post_editor.js';
 import Connections_Editor from './Connections_Editor/connections_editor.js';
+import {Profile_Template} from '@profile_template';
 import Context from '@context/context.js';
 import './profile.less';
 
-class Profile extends Component {
+
+class Profile extends Profile_Template {
     
     constructor(props){
         
@@ -15,57 +16,63 @@ class Profile extends Component {
         
         Profile.contextType = Context;
 
-        this.state = {
-            owner_user_account: props.owner_user_account || {},
-            connection_list: props.connection_list || {}
-        }
+    }
+
+    componentDidMount(){
+
+        super.componentDidMount();
+
+        let { components} = this.state;
+
+        components["Profile Info"].component = this.Generate_Profile_Info;
+        components["Connections"].component = this.Generate_Connections;
+        components["Albums"].component = this.Generate_Albums;
+        components["Posts"].component = this.Generate_Posts;
+
+        this.setState({components});
+
     }
 
     componentDidUpdate(prevProps, prevState){
 
-        if(this.props === prevProps){
-            return;
-        }
-
-        let {owner_user_account, connection_list} = this.props;
-
-        this.setState({owner_user_account, connection_list});
+        super.componentDidUpdate(prevProps, prevState);
+        
     }
     
     Generate_Profile_Photo_Editor = ({ owner_user_account, refresh_account_data }) => {
         
-        return <Profile_Photo_Editor owner_user_account={owner_user_account} refresh_account_data={refresh_account_data} />;
+        //return <Profile_Photo_Editor owner_user_account={owner_user_account} refresh_account_data={refresh_account_data} />;
 
+    }
+
+    Generate_Profile_Info = (general_props, unique_props)=>{
+
+        return <Profile_Info_Editor {...general_props} {...unique_props} />;
+    }
+
+    Generate_Connections = (general_props, unique_props)=>{
+        
+        return <Connections_Editor {...general_props} {...unique_props} />;
+    }   
+
+    Generate_Albums = (general_props, unique_props)=>{    
+
+        return <Album_Editor {...general_props} {...unique_props} />;
+    }
+
+    Generate_Posts = (general_props, unique_props)=>{
+
+        return <Post_Editor {...general_props} {...unique_props}/>;
     }
     
     render(){
         
-        const { Profile_Template, Comment_Editor } = this.context;
+        //const { Profile_Template } = this.context;
         
         return (
             <div id="profile">
 
-                <Profile_Template
-                    owner_user_account={this.state.owner_user_account}
-                    visitor_user_account={this.state.owner_user_account}
-                    connection_list={this.state.connection_list}
-                    add_editors={{
-                        "Profile Info": {
-                            profile_photo_editor: this.Generate_Profile_Photo_Editor,
-                            profile_data_editor: Profile_Data_Editor,
-                        },
-                        "Albums": {
-                            album_editor: Album_Editor
-                        },
-                        "Posts": {
-                            post_editor: Post_Editor,
-                            comment_editor: Comment_Editor
-                        },
-                        "Connections": {
-                            connections_editor: Connections_Editor
-                        }
-                    }}
-                />
+                {super.render()}
 
             </div>
         );

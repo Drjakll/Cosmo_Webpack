@@ -6,6 +6,8 @@ import './news.less';
 class News extends Component {
 
     static contextType = Context;
+
+    Last_Render_Callback = [];
     
     constructor(props){
         
@@ -17,7 +19,8 @@ class News extends Component {
             connection_list,
             owner_user_account,
             news_updates: [],
-            news_types: {}
+            news_types: {},
+            render_callback: this.Render_Main_Display
         };
     }
 
@@ -84,6 +87,75 @@ class News extends Component {
         return [];
     }
 
+    Render_Main_Display = () => {
+
+        let {news_updates} = this.state;
+
+        return <div id="news">
+
+            <div id="news-updates-headline">
+
+                News Updates
+
+            </div>
+
+            <div id="news-updates">
+
+                {news_updates?.map((data, index)=>{
+
+                    let {news_type, news_data, time_created} = data;
+
+                    return (<div className="news-update-section">
+
+                        {this.News_Types[news_type]({news_data})}
+
+                    </div>);
+
+                })}
+
+            </div>
+            
+        </div>;
+
+    }
+
+    Change_Display = (render_callback) => {
+
+        this.Last_Render_Callback.push(this.state.render_callback);
+        
+        this.setState({render_callback});
+    }
+
+    Render_With_Go_Back_Button = () => {
+
+        let {render_callback} = this.state;
+
+        let Go_Back = (e) => {
+
+            if(this.Last_Render_Callback.length === 0){
+                return;
+            }
+
+            let last_callback = this.Last_Render_Callback.pop();
+
+            this.setState({render_callback: last_callback});
+
+        }   
+
+        return <div id="contents">
+
+            <div id="go-back-button" onClick={Go_Back}>
+
+                Back
+
+            </div>
+
+            {render_callback()}
+
+        </div>;
+
+    }
+
     News_Types = {
         "post": ({news_data})=>{
 
@@ -91,40 +163,26 @@ class News extends Component {
 
             let {owner_email} = news_data;
 
-            return <Post_News owner_user_account={{email: owner_email}} visitor_user_account={owner_user_account} post={news_data}/>;
+            return <Post_News 
+                owner_user_account={{email: owner_email}} 
+                visitor_user_account={owner_user_account} 
+                post={news_data}
+                change_display={this.Change_Display}
+            />;
         }
     }
     
     render(){
 
-        let {news_updates} = this.state;
+        let {render_callback} = this.state;
         
         return (
-                <div id="news">
+            <div id="display-wrapper">
 
-                    <div id="news-updates-headline">
+                {render_callback === this.Render_Main_Display ? render_callback() : this.Render_With_Go_Back_Button()}
 
-                        News Updates
-
-                    </div>
-
-                    <div id="news-updates">
-
-                        {news_updates?.map((data, index)=>{
-
-                            let {news_type, news_data, time_created} = data;
-
-                            return (<div className="news-update-section">
-
-                                    {this.News_Types[news_type]({news_data})}
-
-                                </div>);
-                        })}
-
-                    </div>
-                    
-                </div>
-            );
+            </div>
+        );
     }
 }
 

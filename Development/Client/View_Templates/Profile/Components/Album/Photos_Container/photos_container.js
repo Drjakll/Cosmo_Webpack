@@ -75,6 +75,7 @@ class Photos_Container extends Component {
                                     photos_to_be_deleted={this.state.photos_to_be_deleted}
                                     album_info={this.state.album_info}
                                     Get_Albums={this.props.Get_Albums}
+                                    change_main_display={this.props.change_main_display}
                                 />
 
                             </div>;

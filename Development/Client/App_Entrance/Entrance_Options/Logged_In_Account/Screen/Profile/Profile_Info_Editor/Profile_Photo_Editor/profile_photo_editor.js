@@ -1,8 +1,9 @@
 import React, {Component} from 'react';
 import Editor from './Editor/editor.js';
+import {Profile_Picture} from '@profile_template';
 import './profile_photo_editor.less';
 
-class Profile_Photo_Editor extends Component {
+class Profile_Photo_Editor extends Profile_Picture {
     
     constructor(props){
         
