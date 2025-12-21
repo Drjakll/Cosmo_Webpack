@@ -1,16 +1,15 @@
 import React, { Component } from 'react';
 import Enlarged_Photo_Editor from './Enlarged_Photo_Editor/enlarged_photo_editor.js';
+import {Albums} from '@profile_template';
 import './photo_thumbnail_editor.less';
 
-class Single_Photo_Thumbnail_Editor extends Component {
+let {Single_Photo} = Albums.Photos_Container.Single_Photo_Thumbnail;
 
-    static Enlarged_Photo_Editor = Enlarged_Photo_Editor
+class Single_Photo_Thumbnail_Editor extends Single_Photo {
 
     constructor(props) {
 
         super(props);
-
-        Single_Photo_Thumbnail_Editor.contextType = window.Context;
 
         this.state = {
             photo_info: this.props.photo_info,
@@ -25,7 +24,7 @@ class Single_Photo_Thumbnail_Editor extends Component {
         let { Comment_Editor } = this.context;
 
         // Attach Comment_Editor to Enlarged_Photo_Editor before it gets mounted
-        Single_Photo_Thumbnail_Editor.Enlarged_Photo_Editor.Comment_Editor = Comment_Editor;
+        //Single_Photo_Thumbnail_Editor.Enlarged_Photo_Editor.Comment_Editor = Comment_Editor;
         
     }
 

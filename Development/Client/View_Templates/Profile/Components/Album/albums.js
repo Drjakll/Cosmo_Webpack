@@ -4,6 +4,8 @@ import Photos_Container from './Photos_Container/photos_container.js';
 import './albums.less';
 
 class Albums extends Component {
+
+    Photos_Container = Photos_Container
     
     constructor(props){
         
@@ -20,7 +22,7 @@ class Albums extends Component {
             albums: [],
             photos: [],
             selected_album: {}
-        }
+        };
     }
     
     componentDidMount(){
@@ -90,29 +92,27 @@ class Albums extends Component {
 
         state.photos = resJson.photos;
         state.selected_album = album_info;
-        
+
         await this.setState(state);
 
-        this.props.properties.change_display(this.Open_Photo_Container);
+        this.props.change_display(this.Open_Photo_Container);
     }
 
     Open_Photo_Container = () =>{
 
-        const Album_Editor = this.state.album_editor;
-        
-        const Photos_Container_Editor  = Album_Editor?.Photos_Container_Editor;  
-
         let {photos, selected_album, owner_user_account, visitor_user_account} = this.state;
 
-        return (<Photos_Container 
-                photos_container_editor={Photos_Container_Editor}
-                photos={photos}
-                album_info={selected_album}
-                owner_user_account={owner_user_account}
-                visitor_user_account={visitor_user_account}
-                Get_Albums={this.Get_Albums}
-                Get_Photo_Links={this.Get_Photo_Links}
-                change_main_display={this.props.properties.change_display}
+        let {Photos_Container : Container} = this;
+
+        return (<Container 
+            photos={photos}
+            album_info={selected_album}
+            owner_user_account={owner_user_account}
+            visitor_user_account={visitor_user_account}
+            Get_Albums={this.Get_Albums}
+            Get_Photo_Links={this.Get_Photo_Links}
+            change_main_display={this.props.change_display}
+            return_previous_display={this.props.return_previous_display}
         />);
         
     }
@@ -124,21 +124,11 @@ class Albums extends Component {
         let drag_scroll = new Drag_Scroll();
         
         let albumsWrapperRef = createRef();
-
-        const Album_Editor = this.state.album_editor;
         
         return (
              <div id="albums">
                 
                 <div id="albums-top">
-                    
-                    <div id="editor-wrapper">
-                        {Album_Editor ? 
-                            <Album_Editor 
-                                get_albums={this.Get_Albums}
-                                account_data={this.state.owner_user_account}
-                            /> : <></>}
-                    </div>
 
                     <div id="albums-label">
 
@@ -177,4 +167,4 @@ class Albums extends Component {
     }
 }
 
-export default Albums;
+export default {Albums, Photos_Container};

@@ -25,7 +25,8 @@ class Profile_Template extends Component {
             general_props: { //This props will be passed to all components
                 owner_user_account, 
                 visitor_user_account, 
-                change_display: this.Change_Display
+                change_display: this.Change_Display,
+                return_previous_display: this.Return_Previous_Display
             },
             components: {
                 "Profile Info": {

@@ -2,11 +2,11 @@ import React, {Component} from 'react';
 import Photos_Container_Editor from './Photos_Container_Editor/photos_container_editor.js';
 import Context from '@context/context.js';
 import  {Albums} from '@profile_template';
-import './album_editor.less'
+import './album_editor.less';
 
-class Album_Editor extends Albums {
+let {Albums: Albums_Component} = Albums;
 
-    static Photos_Container_Editor = Photos_Container_Editor
+class Album_Editor extends Albums_Component {
     
     constructor(props){
         
@@ -17,6 +17,8 @@ class Album_Editor extends Albums {
         for(let i in props){
             this.state[i] = props[i];
         }
+
+        this.Photos_Container = Photos_Container_Editor
     }
 
     componentDidMount(){
@@ -63,7 +65,7 @@ class Album_Editor extends Albums {
         })).json();
 
 
-        this.props.get_albums();
+        this.Get_Albums();
     }
     
     render(){

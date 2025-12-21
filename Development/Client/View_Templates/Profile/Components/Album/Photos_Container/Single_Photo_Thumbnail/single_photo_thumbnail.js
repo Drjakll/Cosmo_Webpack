@@ -98,4 +98,4 @@ class Single_Photo extends Component {
     }
 }
 
-export default Single_Photo;
+export default {Single_Photo, Enlarged_Single_Photo};

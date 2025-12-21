@@ -18,6 +18,10 @@ class Enlarged_Single_Photo extends Component {
             album_info
         };
     }
+
+    componentDidMount(){
+        
+    }
     
     componentDidUpdate(prevProps, prevState){
         

@@ -3,6 +3,8 @@ import Single_Photo_Thumbnail from './Single_Photo_Thumbnail/single_photo_thumbn
 import './photos_container.less';
 
 class Photos_Container extends Component {
+
+    Single_Photo_Thumbnail = Single_Photo_Thumbnail
     
     constructor(props){
         
@@ -19,6 +21,10 @@ class Photos_Container extends Component {
         };
     }
 
+    componentDidMount(){
+
+    }
+
     componentDidUpdate(prevProps, prevState) {
 
         if (this.props === prevProps) {
@@ -30,36 +36,21 @@ class Photos_Container extends Component {
 
     Update_Photos_To_Be_Deleted = (photos_to_be_deleted) => {
 
-        this.setState({ photos_to_be_deleted: photos_to_be_deleted });
+        this.setState({ photos_to_be_deleted });
     }
     
     render(){
 
-        let Editor = this.props.photos_container_editor;
-
-        let Photo_Thumbnail_Editor = Editor?.Photo_Thumbnail_Editor;
+        let {Single_Photo_Thumbnail: Photo_Thumbnail} = this;
         
         return (
-            <div id="photos-container" tabIndex="0">
+            <div id="photos-container">
                     
                 <div id="photo-container-wrapper">
                     
                     <div id="photo-container-title">
                         {this.state.album_info.title}
                     </div>
-
-                    {Editor ? <div id="editor-wrapper">
-                        <Editor photo_links={this.state.photos}
-                            album_info={this.state.album_info}
-                            owner_user_account={this.state.owner_user_account}
-                            visitor_user_account={this.state.visitor_user_account}
-                            Close_Photo_Album={this.props.Close_Photo_Album}
-                            Get_Albums={this.props.Get_Albums}
-                            Get_Photo_Links={this.props.Get_Photo_Links}
-                            Update_Photos_To_Be_Deleted={this.Update_Photos_To_Be_Deleted}
-                        />
-                    </div>
-                        : <></>}
                     
                     <div id="photos">
                         
@@ -67,11 +58,10 @@ class Photos_Container extends Component {
 
                             return <div className="photo-thumbnail-wrapper" key={index}>
 
-                                <Single_Photo_Thumbnail
+                                <Photo_Thumbnail
                                     photo_info={photo_info}
                                     owner_user_account={this.state.owner_user_account}
                                     visitor_user_account={this.state.visitor_user_account}
-                                    Thumbnail_Editor={Photo_Thumbnail_Editor}
                                     photos_to_be_deleted={this.state.photos_to_be_deleted}
                                     album_info={this.state.album_info}
                                     Get_Albums={this.props.Get_Albums}
@@ -91,4 +81,4 @@ class Photos_Container extends Component {
     }
 }
 
-export default Photos_Container;
+export default {Photos_Container, Single_Photo_Thumbnail};

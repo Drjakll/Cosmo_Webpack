@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
 import Context from '@context/context.js';
+import {Albums} from '@profile_template'
 import './enlarged_photo_editor.less';
 
-class Enlarged_Photo_Editor extends Component {
+let {Enlarged_Single_Photo} = Albums.Photos_Container.Single_Photo_Thumbnail;
+
+class Enlarged_Photo_Editor extends Enlarged_Single_Photo {
 
     constructor(props){
         
@@ -12,19 +15,19 @@ class Enlarged_Photo_Editor extends Component {
 
         Enlarged_Photo_Editor.contextType = Context;
         
-        this.state = {
-            photo_info: photo_info,
-            album_info: album_info
-        };
+        for(let i in this.props){
+            this.state[i] = this.props[i];
+        }
+    }
+
+    componentDidMount(){
+
+        super.componentDidMount();
     }
 
     componentDidUpdate(prevProps, prevState) {
 
-        if (this.props === prevProps) {
-            return;
-        }
-
-        this.setState(this.props);
+        super.componentDidUpdate(prevProps, prevState);
     }
 
     Set_As_Album_Thumbnail_Button = (key) => {

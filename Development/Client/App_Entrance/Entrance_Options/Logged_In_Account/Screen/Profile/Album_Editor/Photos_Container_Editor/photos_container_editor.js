@@ -1,10 +1,12 @@
 import React, { Component, createRef } from 'react';
 import Photo_Thumbnail_Editor from './Photo_Thumbnail_Editor/photo_thumbnail_editor.js';
+import Context from '@context/context.js';
+import {Albums} from '@profile_template';
 import './photos_container_editor.less';
 
-class Photos_Container_Editor extends Component {
+let {Photos_Container} = Albums.Photos_Container;
 
-    static Photo_Thumbnail_Editor = Photo_Thumbnail_Editor
+class Photos_Container_Editor extends Photos_Container {
 
     Photos_To_Be_Deleted = {}
 
@@ -12,29 +14,30 @@ class Photos_Container_Editor extends Component {
         
         super(props);
 
-        Photos_Container_Editor.contextType = window.Context;
+        this.Single_Photo_Thumbnail = Photo_Thumbnail_Editor;
         
-        this.state = {
+        let state = {
             photo_links: [],
             owner_user_account: {},
             album_info: {}
-        };    
+        };   
+        
+        for(let i in state){
+
+            this.state[i] = state[i];
+        }
     }
 
     componentDidMount() {
 
-        this.setState(this.props);
+        this.Single_Photo_Thumbnail.Insert_Photo_To_Delete = this.Insert_Photo_To_Delete;
 
-        Photo_Thumbnail_Editor.Insert_Photo_To_Delete = this.Insert_Photo_To_Delete;
+        super.componentDidMount();
     }
 
     componentDidUpdate(prevProps, prevState) {
 
-        if (this.props === prevProps) {
-            return;
-        }
-
-        this.setState(this.props);
+        super.componentDidUpdate(prevProps, prevState);
     }
 
     Insert_Photo_To_Delete = (photo_info) => {
@@ -45,7 +48,7 @@ class Photos_Container_Editor extends Component {
             this.Photos_To_Be_Deleted[photo_info.id] = photo_info;
         }
 
-        this.props.Update_Photos_To_Be_Deleted(this.Photos_To_Be_Deleted);
+        this.Update_Photos_To_Be_Deleted(this.Photos_To_Be_Deleted);
 
     }
 
@@ -57,11 +60,14 @@ class Photos_Container_Editor extends Component {
 
             let { delete_photo_files, delete_photo_links, delete_album } = Request_URLs;
 
-            let { photo_links, album_info } = this.state;
+            let { photo_links } = this.state;
+
+            let { album_info } = this.props;
 
             let response = prompt("Enter the album's name to delete");
 
             if (response !== album_info.title) {
+                alert("You entered it wrong!");
                 return;
             }
 
@@ -93,7 +99,7 @@ class Photos_Container_Editor extends Component {
                 }
             })).json();
 
-            this.props.Close_Photo_Album();
+            this.props.return_previous_display();
 
             this.props.Get_Albums();
         }
@@ -209,6 +215,12 @@ class Photos_Container_Editor extends Component {
                 {this.Add_Photos_Button()}
 
                 {this.Delete_Selected_Photos_Button()}
+
+            </div>
+
+            <div id="photos-container-editor-photos-wrapper">
+
+                {super.render()}
 
             </div>
         
