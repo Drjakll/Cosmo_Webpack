@@ -8,7 +8,7 @@ let {Photos_Container} = Albums.Photos_Container;
 
 class Photos_Container_Editor extends Photos_Container {
 
-    Photos_To_Be_Deleted = {}
+    static contextType = Context
 
     constructor(props){
         
@@ -17,10 +17,10 @@ class Photos_Container_Editor extends Photos_Container {
         this.Single_Photo_Thumbnail = Photo_Thumbnail_Editor;
         
         let state = {
-            photo_links: [],
-            owner_user_account: {},
-            album_info: {}
-        };   
+
+        };  
+        
+        this.Photos_To_Be_Deleted = {}
         
         for(let i in state){
 
@@ -30,14 +30,13 @@ class Photos_Container_Editor extends Photos_Container {
 
     componentDidMount() {
 
-        this.Single_Photo_Thumbnail.Insert_Photo_To_Delete = this.Insert_Photo_To_Delete;
-
         super.componentDidMount();
     }
 
     componentDidUpdate(prevProps, prevState) {
 
         super.componentDidUpdate(prevProps, prevState);
+
     }
 
     Insert_Photo_To_Delete = (photo_info) => {
@@ -48,7 +47,7 @@ class Photos_Container_Editor extends Photos_Container {
             this.Photos_To_Be_Deleted[photo_info.id] = photo_info;
         }
 
-        this.Update_Photos_To_Be_Deleted(this.Photos_To_Be_Deleted);
+        this.setState({photos_to_be_deleted: this.Photos_To_Be_Deleted});
 
     }
 
@@ -60,7 +59,7 @@ class Photos_Container_Editor extends Photos_Container {
 
             let { delete_photo_files, delete_photo_links, delete_album } = Request_URLs;
 
-            let { photo_links } = this.state;
+            let { photos } = this.state;
 
             let { album_info } = this.props;
 
@@ -72,7 +71,7 @@ class Photos_Container_Editor extends Photos_Container {
             }
 
             let param = {
-                photos: photo_links
+                photos
             };
 
             let res = await (await fetch(delete_photo_files, {

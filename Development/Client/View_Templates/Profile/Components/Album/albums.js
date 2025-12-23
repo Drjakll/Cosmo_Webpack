@@ -1,5 +1,6 @@
 import React, {Component, createRef} from 'react';
 import Album_Cover from './Album_Cover/album_cover.js';
+import Context from '@context/context.js';
 import Photos_Container from './Photos_Container/photos_container.js';
 import './albums.less';
 
@@ -11,7 +12,7 @@ class Albums extends Component {
         
         super(props);
         
-        Albums.contextType = window.Context;
+        Albums.contextType = Context;
 
         let {visitor_user_account, owner_user_account, album_editor} = this.props;
 
@@ -103,6 +104,7 @@ class Albums extends Component {
         let {photos, selected_album, owner_user_account, visitor_user_account} = this.state;
 
         let {Photos_Container : Container} = this;
+
 
         return (<Container 
             photos={photos}

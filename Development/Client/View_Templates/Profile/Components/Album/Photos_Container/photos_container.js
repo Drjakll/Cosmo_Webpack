@@ -4,7 +4,10 @@ import './photos_container.less';
 
 class Photos_Container extends Component {
 
-    Single_Photo_Thumbnail = Single_Photo_Thumbnail
+    Single_Photo_Thumbnail = Single_Photo_Thumbnail 
+
+    Photos_To_Be_Deleted = null
+    Insert_Photo_To_Delete = null
     
     constructor(props){
         
@@ -32,11 +35,6 @@ class Photos_Container extends Component {
         }
 
         this.setState(this.props);
-    }
-
-    Update_Photos_To_Be_Deleted = (photos_to_be_deleted) => {
-
-        this.setState({ photos_to_be_deleted });
     }
     
     render(){
@@ -66,6 +64,7 @@ class Photos_Container extends Component {
                                     album_info={this.state.album_info}
                                     Get_Albums={this.props.Get_Albums}
                                     change_main_display={this.props.change_main_display}
+                                    insert_photo_to_delete={this.Insert_Photo_To_Delete}
                                 />
 
                             </div>;

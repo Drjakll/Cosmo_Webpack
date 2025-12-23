@@ -17,6 +17,7 @@ class Profile_Template extends Component {
         Profile_Template.contextType = Context;
 
         let {owner_user_account, visitor_user_account} = this.props;
+
         
         this.state = {
             owner_user_account,

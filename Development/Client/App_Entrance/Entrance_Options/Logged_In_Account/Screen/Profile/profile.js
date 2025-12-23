@@ -16,6 +16,10 @@ class Profile extends Profile_Template {
         
         Profile.contextType = Context;
 
+        for(let i in props){
+            this.state[i] = props[i];
+        }
+
         let { components} = this.state;
 
         components["Profile Info"].component = this.Generate_Profile_Info;

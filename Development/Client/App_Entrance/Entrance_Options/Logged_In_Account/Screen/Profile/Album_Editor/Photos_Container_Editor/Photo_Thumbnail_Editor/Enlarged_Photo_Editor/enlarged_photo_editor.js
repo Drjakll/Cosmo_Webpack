@@ -11,18 +11,18 @@ class Enlarged_Photo_Editor extends Enlarged_Single_Photo {
         
         super(props);
 
-        let { photo_info, album_info } = this.props;
-
         Enlarged_Photo_Editor.contextType = Context;
         
         for(let i in this.props){
             this.state[i] = this.props[i];
         }
+
     }
 
     componentDidMount(){
 
         super.componentDidMount();
+
     }
 
     componentDidUpdate(prevProps, prevState) {
@@ -69,15 +69,10 @@ class Enlarged_Photo_Editor extends Enlarged_Single_Photo {
         </div>;
     }
 
+    Render_Option_Buttons = () => {
 
-    Button_Objs = [
-        this.Set_As_Album_Thumbnail_Button
-    ]
-    
-    render(){
-        
-        return <div id="enlarged-photo-editor">
-        
+        return <div id="enlarged-photo-editor"> 
+
             <div id="dropdown-menu">
 
                 <label>Options</label>
@@ -93,8 +88,18 @@ class Enlarged_Photo_Editor extends Enlarged_Single_Photo {
                 </div>
 
             </div>
-        
+
         </div>;
+    }
+
+    Button_Objs = [
+        this.Set_As_Album_Thumbnail_Button
+    ]
+    
+    render(){
+        
+        return super.render && super.render();
+        
     }
     
 }

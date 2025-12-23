@@ -3,6 +3,8 @@ import Enlarged_Single_Photo from './Enlarged_Single_Photo/enlarged_single_photo
 import './single_photo_thumbnail.less';
 
 class Single_Photo extends Component {
+
+    Enlarged_Single_Photo = Enlarged_Single_Photo
     
     constructor(props){
         
@@ -20,6 +22,10 @@ class Single_Photo extends Component {
             photos_to_be_deleted: {},
             album_info
         };
+    }
+
+    componentDidMount(){
+
     }
     
     componentDidUpdate(prevProps, prevState){
@@ -49,7 +55,9 @@ class Single_Photo extends Component {
         //To avoid unecessary request to the aws s3 if there is no photo link available
         aws_s3_url = photo_link ? aws_s3_url : "";
 
-        return  <Enlarged_Single_Photo 
+        let {Enlarged_Single_Photo: Enlarged_Photo} = this;
+
+        return  <Enlarged_Photo 
             photo_info={this.state.photo_info}
             aws_s3_url={`${aws_s3_url}`}
             owner_user_account={this.state.owner_user_account}
@@ -67,18 +75,12 @@ class Single_Photo extends Component {
         let {aws_s3_url} = Request_URLs;
         
         const photo_link = this.state.photo_info?.link;
-
-        const Editor = this.props.Thumbnail_Editor;
         
         //To avoid unecessary request to the aws s3 if there is no photo link available
         aws_s3_url = photo_link ? aws_s3_url : "";
         
         return (
             <div id="single-photo-thumbnail">
-
-                {Editor ?
-                    <Editor photo_info={this.state.photo_info} photos_to_be_deleted={this.state.photos_to_be_deleted} />
-                    : <></>}
 
                 <div id="photo-thumbnail"
                     style={{
@@ -90,7 +92,6 @@ class Single_Photo extends Component {
                     }}
                 >
                     
-                
                 </div>
                     
             </div>

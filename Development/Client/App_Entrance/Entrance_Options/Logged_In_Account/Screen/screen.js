@@ -21,10 +21,13 @@ class Screen extends Component {
         
         super(props);
         
+        let {owner_user_account, screen_type, connection_list} = props;
+
         this.state = {
-            focus_screen: this.props.screen_type,
-            owner_user_account: this.props.owner_user_account || {},
-            connection_list: this.props.connection_list
+            focus_screen: screen_type,
+            owner_user_account: owner_user_account || {},
+            visitor_user_account: owner_user_account || {},
+            connection_list: connection_list
         };
 
     }
@@ -35,22 +38,23 @@ class Screen extends Component {
             return;
         }
         
-        this.setState({
-            focus_screen: this.props.screen_type,
-            owner_user_account: this.props.owner_user_account,
-            connection_list: this.props.connection_list
-        });
+        this.setState(this.props);
         
     }
     
     render(){
         
         const Screen_Type = this.Screen_Types[this.state.focus_screen];
+
+        let {owner_user_account, visitor_user_account} = this.state;
         
         return (
                 <div id="screen" tabIndex="0">
                     
-                    <Screen_Type owner_user_account={this.state.owner_user_account} connection_list={this.state.connection_list}/>
+                    <Screen_Type 
+                        owner_user_account={owner_user_account} 
+                        visitor_user_account={visitor_user_account} 
+                        connection_list={this.state.connection_list}/>
                     
                 </div>
             );

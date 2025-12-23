@@ -20,6 +20,8 @@ class Photo_Comments extends Component {
             owner_user_account,
             reply_to_comment: null
         };
+
+
     }
     
     componentDidMount(){
@@ -75,6 +77,8 @@ class Photo_Comments extends Component {
         let resJson = await res.json();
         
         let {photo_comments} = resJson;
+
+        console.log(photo_comments);
         
         this.setState({photo_comments: photo_comments});
         
@@ -146,7 +150,7 @@ class Photo_Comments extends Component {
             }
         )).json();
 
-        this.props.socket.emit('reload_comments_to_all', post_info.id);
+        this.socket.emit('reload_comments_to_all', post_info.id);
     }
     
     render() {

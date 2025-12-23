@@ -5,8 +5,11 @@ let request = function() {
         
         let comment_info = req.body;
  
+        let {comment, likes, dislikes, emojis} = comment_info;
         
-        let query = this.generate_update_query("Photo_Comments", comment_info, {id: comment_info.id});
+        //let query = this.generate_update_query("Photo_Comments", comment_info, {id: comment_info.id});
+
+        
         
         this.sql.query(query, (err, result)=>{
            

@@ -3,6 +3,10 @@ import Photo_Comments from './Photo_Comments/photo_comments.js';
 import './enlarged_single_photo.less';
 
 class Enlarged_Single_Photo extends Component {
+
+    Photo_Comments = Photo_Comments
+
+    Render_Option_Buttons = null;
     
     constructor(props){
         
@@ -34,31 +38,19 @@ class Enlarged_Single_Photo extends Component {
     
     render() {
 
+        let {Photo_Comments: Comments} = this;
+
         let { Enlarged_Photo_Editor } = this.props;
 
         let Comment_Editor = Enlarged_Photo_Editor?.Comment_Editor;
         
         return <div id="enlarged-single-photo-wrapper">
 
-            <div id="enlarged-single-photo-exit-button" onClick={(e) => { this.props.exit_enlarge_mode(); }}>
-
-            </div>
-
             <div id="enlarged-single-photo">
 
                 <div id="enlarged-photo-wrapper">
 
-                    {Enlarged_Photo_Editor ?
-
-                        <div id="photo-editor-wrapper">
-                            <Enlarged_Photo_Editor
-                                photo_info={this.state.photo_info}
-                                album_info={this.state.album_info}
-                                Get_Albums={this.props.Get_Albums}
-                            />
-                        </div>
-
-                        : <></>}
+                    <div id="photo-editor-wrapper">{this.Render_Option_Buttons && this.Render_Option_Buttons()}</div>
 
                     <div id="enlarged-photo"
                         style={{
@@ -72,7 +64,7 @@ class Enlarged_Single_Photo extends Component {
 
                 <div id="comments-area-wrapper">
 
-                    <Photo_Comments
+                    <Comments
                         photo_info={this.state.photo_info}
                         visitor_user_account={this.state.visitor_user_account}
                         owner_user_account={this.state.owner_user_account}
