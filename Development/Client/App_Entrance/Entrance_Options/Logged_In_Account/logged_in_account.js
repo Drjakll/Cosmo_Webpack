@@ -30,7 +30,7 @@ class Logged_In_Account extends Component {
 
         Logged_In_Account.contextType = window.Context;
 
-        let {owner_user_account} = props;
+        let {owner_user_account, visitor_user_account} = props;
 
         this.state = {
             Columns: [ //This Columns will dynamically rearrange by the user
@@ -39,8 +39,8 @@ class Logged_In_Account extends Component {
                 { screen: "News", is_main: false, id: "News" },
                 { screen: "Messaging", is_main: false, id: "Messaging" },
             ],
-            owner_user_account: owner_user_account,
-            visitor_user_account: owner_user_account,
+            owner_user_account,
+            visitor_user_account,
             connection_list: {},
             focused_column: "Profile" //The column that is being focused on so that user won't lose clickability to other columns
         };
@@ -137,6 +137,7 @@ class Logged_In_Account extends Component {
             status: "accepted"
         };
 
+        /*
         let data = await (await fetch(
             get_connection_list, {
                 method: "POST",
@@ -160,6 +161,7 @@ class Logged_In_Account extends Component {
             await this.setState({owner_user_account, connection_list: jsonObj_results});
 
         }
+        */
 
     }
 

@@ -11,31 +11,20 @@ import Text_Type from './Info_Types/Text_Type/text_type.js';
 let Account_Data_Template = function(initial){
   
     let template = {
-        id: null,
         email: "",
         password: "",
         first_name: "",
         last_name: "",
-        profile_picture_link: "",
         date_of_birth: "",
         gender: "",
-        location_of_birth: "[]",
-        schools: "[]",
-        hobbies: "[]",
-        professions: "[]",
         marital_status: "",
-        current_location: "[]",
-        relationships: "[]",
-        block_list: "{}",
-        last_posted: null,
-        created_on: null,
+        created_on: Date.now(),
         is_online: false,
-        favorite_public_channel: '{}'
     };
     
     for(let i in initial){
         
-        if(i === "id" || template[i] === undefined){
+        if(template[i] === undefined){
             continue;
         }
         
@@ -46,107 +35,92 @@ let Account_Data_Template = function(initial){
     return template;
 };
 
-let Account_Info_Data_Template = function(editor = null){
+let Account_Info_Data_Template = function(){
 
     let template = {
-                first_name: {
-                    component: Text_Type,
-                    label: "First Name",
-                    value: "",
-                    editor: null,
-                    options: []
-                },
-                last_name: {
-                    component: Text_Type,
-                    label: "Last Name",
-                    value: "",
-                    editor: null,
-                    options: []
-                },
-                date_of_birth: { 
-                    component: Date_Type,
-                    label: "Birth Date", 
-                    value: "", 
-                    editor: null, 
-                    options: [] 
-                },
-                gender: {
-                    component: Choice_Type,
-                    label: "Gender",
-                    value: "",
-                    editor: null,
-                    options: ["Male", "Female"]
-                },
-                marital_status: {
-                    component: Choice_Type,
-                    label: "Marital Status",
-                    value: "",
-                    editor: null,
-                    options: ["Single", "Dating", "Engaged", "Married", "Divorce", "Widow", "Unspecified"]
-                },
-                location_of_birth: {
-                    component: Json_Type,
-                    label: "Birthplace",
-                    value: "",
-                    editor: null,
-                    options: [
-                        { label: "Country", data_type: "string" },
-                        { label: "State/Province", data_type: "string" },
-                        { label: "City", data_type: "string" }
-                    ]
-                },
-                current_location: {
-                    component: Json_Type,
-                    label: "Current Location",
-                    value: "",
-                    editor: null,
-                    options: [
-                        { label: "Country", data_type: "string" },
-                        { label: "State/Province", data_type: "string" },
-                        { label: "City", data_type: "string" }
-                    ]
-                },
-                hobbies: {
-                    component: Json_Type,
-                    label: "Hobbies",
-                    value: "",
-                    editor: null,
-                    options: [
-                        { label: "Hobby", data_type: "string" },
-                        { label: "Date Started", data_type: "date" },
-                        { label: "Profeciency", data_type: "string" }
-                    ]
-                },
-                professions: {
-                    component: Json_Type,
-                    label: "Talent",
-                    value: "",
-                    editor: null,
-                    options: [
-                        { label: "Talent", data_type: "string" },
-                        { label: "Date Started", data_type: "date" },
-                        { label: "Profeciency", data_type: "string" }
-                    ]
-                },
-                schools: {
-                    component: Json_Type,
-                    label: "School",
-                    value: "",
-                    editor: null,
-                    options: [
-                        { label: "School", data_type: "string" },
-                        { label: "Type", data_type: "string" },
-                        { label: "Year Graduate", data_type: "date" }
-                    ]
-                }
-            };
-
-    if(editor){
-
-        for(let i in editor){
-            template[i].editor = editor[i];
+        first_name: {
+            component: Text_Type,
+            label: "First Name",
+            value: "",
+            options: []
+        },
+        last_name: {
+            component: Text_Type,
+            label: "Last Name",
+            value: "",
+            options: []
+        },
+        date_of_birth: { 
+            component: Date_Type,
+            label: "Date of Birth", 
+            value: "", 
+            options: [] 
+        },
+        gender: {
+            component: Choice_Type,
+            label: "Gender",
+            value: "",
+            options: ["Male", "Female", "Unspecified"]
+        },
+        marital_status: {
+            component: Choice_Type,
+            label: "Marital Status",
+            value: "",
+            options: ["Single", "Dating", "Engaged", "Married", "Divorce", "Widow", "Unspecified"]
+        },
+        User_Locations: {
+            component: Json_Type,
+            label: "Locations",
+            value: [],
+            options: [
+                { label: "Country", data_name: "country", data_type: "string" },
+                { label: "State/Province", data_name: "state", data_type: "string" },
+                { label: "City", data_name: "city", data_type: "string" },
+                { label: "Start Date", data_name: "start_date", data_type: "date"},
+                { label: "End Date", data_name: "end_date", data_type: "date"},
+                { label: "Type of Location", data_name: "location_type", data_type: "enum", choices: ["birth","hometown","current","previous"]},
+                { label: "Privacy", data_name: "privacy", data_type: "enum", choices: ["private", "public", "mutual"]  }
+            ]
+        },
+        User_Hobbies: {
+            component: Json_Type,
+            label: "Hobbies",
+            value: [],
+            options: [
+                { label: "Hobby Name", data_name: "hobby_name", data_type: "string" },
+                { label: "Date Started", data_name: "start_date", data_type: "date" },
+                { label: "Proficiency", data_name: "proficiency", data_type: "enum", choices: ["beginner", "intermediate", "advanced", "expert"]  },
+                { label: "Story", data_name: "story", data_type: "string" },
+                { label: "Privacy", data_name: "privacy", data_type: "enum", choices: ["private", "public", "mutual"]  }
+            ]
+        },
+        User_Professions: {
+            component: Json_Type,
+            label: "Professions",
+            value: [],
+            options: [
+                { label: "Profession Name", data_name: "profession_name", data_type: "string" },
+                { label: "Date Started", data_name: "start_date", data_type: "date" },
+                { label: "Proficiency", data_name: "proficiency", data_type: "enum", choices: ["beginner", "intermediate", "advanced", "expert"] },
+                { label: "Privacy", data_name: "privacy", data_type: "enum", choices: ["private", "public", "mutual"]  }
+            ]
+        },
+        User_Schools: {
+            component: Json_Type,
+            label: "Schools",
+            value: [],
+            options: [
+                { label: "School Name", data_name: "school_name", data_type: "string"},
+                { label: "Country", data_name: "country", data_type: "string" },
+                { label: "State/Province", data_name: "state", data_type: "string" },
+                { label: "City", data_name: "city", data_type: "string" },
+                { label: "Start Date", data_name: "start_date", data_type: "date"},
+                { label: "End Date", data_name: "end_date", data_type: "date"},
+                { label: "Type of School", data_name: "school_type", data_type: "enum", choices: ["elementary", "middle", "high", "college"]},
+                { label: "Privacy", data_name: "privacy", data_type: "enum", choices: ["private", "public", "mutual"]  }
+            ]
         }
-    }
+    };
 
     return template;
 }

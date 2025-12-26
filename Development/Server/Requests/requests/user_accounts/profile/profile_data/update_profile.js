@@ -1,47 +1,44 @@
 let request = function () {
-
-    var update_photo_comments_profile_picture = (changes, acc) => {
-
-        let credential = { email: acc.email };
-
-        let query = this.generate_update_query("Photo_Comments", changes, credential);
-
-        this.sql.query(query, (err, result) => {
-
-            if (err) {
-                console.log(err.sqlMessage);
-            }
-
-        });
-    };
     
-    this.req = (req, res) => { 
+    this.req = async (req, res) => { 
         
-        let acc_details = req.body;
+        let { to_update, credentials } = req.body;
         
-        let query = this.generate_update_query("User_Accounts", 
-                                                acc_details, 
-                                                {"email": acc_details.email});
-        
-        this.sql.query(query, (err, result)=>{
-            
-            if(err){
-                console.log(query, err.sqlMessage);
-                res.json({message: "Error updating profile data"});
-            } else if (result.affectedRows === 0){
-                res.json({message: "No account found"});
-            } else {
-                res.json({ message: "Profile data updated!" });
+        let query = `update User_Accounts set`;
 
-                let { first_name, last_name } = acc_details;
+        let place_holder = [];
 
-                //Need to update the Photo_Comments table as well
-                update_photo_comments_profile_picture({ first_name: first_name, last_name: last_name }, acc_details);
-            }
+        for(let key in to_update){
+
+            query += ` ${key} = ?,`;
+
+            place_holder.push(to_update[key]);
+        }
+
+        query = query.slice(0, -1) + " where";
+
+        for(let key in credentials){
+
+            query += ` ${key} = ? and`;
+
+            place_holder.push(credentials[key]);
+        }
+
+        query = query.slice(0, -4);
+
+
+
+                                                
+        try {
+
+            await this.sql.query(query, place_holder);
             
-            res.end();
-            
-        });
+        }catch(err){
+
+            console.log(query, err);
+        }
+
+        res.end();
 
     };
 };

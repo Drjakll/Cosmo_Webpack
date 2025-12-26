@@ -1,4 +1,6 @@
 import React, {Component} from 'react';
+import Login from '@root/Universal_Components/Account_Functions/login_account.js';
+import Context from '@context/context.js';
 import './entrance_options.less';
 import Login_Account from './Login_Account/login_account.js';
 import Logged_In_Account from './Logged_In_Account/logged_in_account.js';
@@ -16,67 +18,33 @@ class Entrance_Options extends Component {
         
         super(props);
 
-        window.LoginAttempt = this.LoginAttempt;
+        window.Refresh_Login = this.Refresh_Login;
         
-        Entrance_Options.contextType = window.Context;
+        Entrance_Options.contextType = Context;
 
         this.state = {
             selected_screen: "Login Account",
             owner_user_account: null
         };
         
+    }    
+    
+    componentDidMount(){
+        
+        this.Refresh_Login();
+        
     }
     
-    LoginAttempt = async () => {
+    Refresh_Login = async () => {
         
-        const {Cookie_Tools, Request_URLs, Configurations} = this.context;
+        let account = await Login(document);
         
-        let cookie_data = Cookie_Tools.cookie_parser(document.cookie);
-        
-        let email = cookie_data?.email;
-        let password = cookie_data?.password;
-        
-        if(!email || !password){
-            this.setState({selected_screen: "Login Account"});
-            return;
-        }
-        
-        let accJsonData = {email: email, password: password};
-        
-        let res = await fetch(Request_URLs.login_account, {
-           method: "POST",
-           body: JSON.stringify(accJsonData),
-           headers: {
-               'Content-Type': "application/json"
-           }
-        });
-        
-        let resJson = await res.json();
-        
-        let { acc_info, message } = resJson;
-        
-        if(acc_info){
+        if(account){
 
             await this.setState({
                 selected_screen: "Logged In Account", 
-                owner_user_account: acc_info
+                owner_user_account: account
             });
-        
-            let date = new Date();
-
-            //Setting the expiration date that's set on the configurations
-            date.setTime(date.getTime() + Configurations.Cookie_Expire_Days * 24 * 60 * 60 * 1000);
-
-            //saving only the email and password
-            let acc_info_auth = {email: acc_info.email, password: acc_info.password};
-
-            //Convert the account_data_copy into cookie strings
-            const cookieStrs = Cookie_Tools.cookie_converter(acc_info_auth, {"expires":date.toUTCString(), "path": "/"});
-
-            //Store the cookie strings into cookie
-            for(let cookieStr of cookieStrs){
-                document.cookie = cookieStr;
-            }
             
         } else {
             
@@ -84,25 +52,24 @@ class Entrance_Options extends Component {
             
         }
 
-        return acc_info;
+        return account;
+
     }
-    
-    componentDidMount(){
-        
-        this.LoginAttempt();
-        
-    }
+
     
     render(){
+
+        let {selected_screen, owner_user_account} = this.state;
         
-        let Selected_Screen = this.Screen_Options[this.state.selected_screen];
+        let Selected_Screen = this.Screen_Options[selected_screen];
         
         Selected_Screen = Selected_Screen ? Selected_Screen : this.Screen_Options["Login Account"];
         
         return (
                 <div id="entrance-options">
                     
-                    <Selected_Screen owner_user_account={this.state.owner_user_account}/>
+                    <Selected_Screen owner_user_account={owner_user_account} 
+                                    visitor_user_account={owner_user_account} />
                     
                 </div>
             );

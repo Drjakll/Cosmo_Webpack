@@ -14,6 +14,7 @@ import Configurations from './Utilities/configurations.js';
 import Drag_Scroll from './Utilities/drag_scroll.js';
 import Drag from './Utilities/drag.js';
 import Upload_Files_To_S3 from './Utilities/upload_files_to_s3.js';
+import {Profile_Template} from './View_Templates/Profile/profile_template.js';
 import Explore_Template from './View_Templates/Explore/explore_template.js';
 import Calendar from './Misc_Components/Calendar/calendar.js';
 import Profile_Popup from './Popup_Templates/Profile_Popup/profile_popup.js';
@@ -26,6 +27,7 @@ import Dislikes from './Universal_Components/Comments/Single_Comment/Dislikes/di
 import Emojis from './Universal_Components/Comments/Single_Comment/Emojis/emojis.js';
 import Single_Post from './Universal_Components/Posts/Single_Post/single_post.js';
 import Profile_Thumbnail from './Universal_Components/Profile_Thumbnail/profile_thumbnail.js';
+import Login from './Universal_Components/Account_Functions/login_account.js';
 import './react_entry.less';
 
 class Entry extends Component {
@@ -35,7 +37,6 @@ class Entry extends Component {
     }
     
     componentDidMount(){
-        
         
         
     } 
@@ -57,6 +58,7 @@ class Entry extends Component {
                 Request_URLs,
                 Cookie_Tools,  //Useful tools for parsing and stringifying cookies
                 Configurations, //The app's universal configurations
+                Profile_Template, //Template for viewing user profile
                 Explore_Template, //Template for viewing explore
                 Drag_Scroll, //For scrolling within the html element
                 Drag, //For dragging any html element
@@ -70,8 +72,9 @@ class Entry extends Component {
                 Likes,
                 Dislikes,
                 Emojis,
-                Single_Post,
-                Profile_Thumbnail
+                Single_Post, 
+                Profile_Thumbnail,
+                Login
             }}
         
         >

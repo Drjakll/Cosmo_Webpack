@@ -1,0 +1,209 @@
+
+#json-type-editor {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    border-bottom: rgba(0,0,0,0.5) solid 0.01vw;
+
+    #input-wrapper {
+        width: 100%;
+        display: block;
+        
+        .input-item {
+            width: 100%;
+            height: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            
+            #label {
+                width: 30%;
+                height: 100%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                font-size: calc(0.5vw + 0.5vh);
+            }
+            
+            #value {
+                width: 70%;
+                height: 100%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                position: relative;
+                
+                .input-data-type {
+                    width: 100%;
+                    height: 100%;
+                    position: relative;
+                    z-index: 9;
+
+                    &:hover {
+                        z-index: 999;
+
+                        #dropdown {
+                            display: flex;
+                        }
+                    }
+                    
+                    input {
+                        padding: 15px;
+                        margin: 0;
+                        text-align: center;
+                        border: rgba(0,0,0,0.5) solid 0.5px;
+                        width: 90%;
+                        border-radius: 10px;
+                    }
+                    
+                    #selected-value {
+                        width: 100%;
+                        height: 100%;
+                        display: flex;
+                        position: relative;
+                        justify-content: center;
+                        align-items: center;
+                    }
+
+                    #dropdown {
+                        min-height: 0px;
+                        width: 100%;
+                        display: none;
+                        position: absolute;
+                        top: 100%;
+                        justify-content: center;
+                        align-items: center;
+
+                        #selections {
+                            width: 50%;
+                            min-height: 0px;
+                            display: block;
+                            border: rgba(0,0,0,1) solid 0.5px;
+                            border-top: none;
+
+                            .option {
+                                width: 100%;
+                                height: 25px;
+                                display: flex;
+                                justify-content: center;
+                                align-items: center;
+                                border-top: rgba(0,0,0,1) solid 0.5px;
+                                background-color: rgba(245,245,245,1);
+                                transition: 0.5s;
+
+                                &:hover {
+                                    cursor: pointer;
+                                    background-color: rgba(235,235,235,1);
+                                }
+                            }
+                        }
+                    }
+                }
+                
+                .date {
+                    position: relative;
+                    display: block;
+                    
+                    &:hover {
+                        cursor: pointer;
+                        
+                        #dropdown {
+                            display: block;
+                        }
+                    }
+                    
+                    #selected-date {
+                        width: 100%;
+                        height: 100%;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        font-size: calc(0.35vh + 0.35vw);
+                    }
+                    
+                    #dropdown {
+                        width: calc(10vw + 10vh);
+                        height: 25vh;
+                        display: none;
+                        position: absolute;
+                        top: 100%;
+                    }
+                }
+            }
+        }
+    }
+    
+    #buttons-wrapper {
+        width: 100%;
+        height: 5vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        
+        #the-add-button {
+            padding: calc(0.25vh + 0.25vw);
+            border-radius: 15px;
+            box-shadow: 0px 0px 5px rgba(0,0,0,0.25);
+            border: rgba(0,0,0,0.5) solid 0.01vw;
+            background-color: rgba(255,255,255,1);
+            transition: 1s;
+            font-size: calc(0.5vh + 0.5vw);
+            
+            &:hover {
+                cursor: pointer;
+                background-color: rgba(0,0,0,0.1);
+            }
+            
+        }
+    }
+}
+
+@media only screen and (max-width: 1000px) {
+
+    #json-type-editor {
+
+        #input-wrapper {
+
+            .input-item {
+                height: 2vh;
+                
+                #label {
+                    font-size: calc(1vw + 0.5vh);
+
+                }
+
+                #value {
+
+                    .input-data-type {
+
+                        input {
+                            padding: 0% 1% 0% 1%;
+                        }
+                    }
+
+                    .date {
+
+                        #selected-date {
+                            font-size: calc(1vw + 0.5vh);
+                        }
+
+                        #dropdown {
+                            width: calc(15vh + 15vw);
+                        }
+                    }
+                }
+            }
+        }
+
+        #buttons-wrapper {
+
+            #the-add-button {
+                font-size: calc(1vw + 0.5vh);
+                padding: 1% 2% 1% 2%;
+            }
+        }
+
+    }
+}

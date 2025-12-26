@@ -1,40 +1,25 @@
-import mysql from 'mysql';
+import mysql from 'mysql2/promise';
 
 import config_data from './global_data.js'; 
 
 var {host, user, password, databaseName} = config_data.sql_data;
 
-let Connect = async () => {
+let Connect = () => {
 
-    let SQL = mysql.createConnection({
+    let SQL = mysql.createPool({
         host: host,
         user: user,
         password: password,
         database: databaseName,
-        timezone: 'Z' // UTC
-    });
-
-    SQL.connect((err) => {
-        if (err) {
-            console.log(err);
-        }
+        timezone: 'Z', // UTC
+        waitForConnections: true,
+        connectionLimit: 10,
+        queueLimit: 0
     });
     
     return SQL;
 };
 
-let sql = {
-    query: async (query, callback) => {
-
-        let SQL = await Connect();
-
-        SQL?.on('error', err => console.log("MYSQL ERROR:", err));
-        
-        await SQL?.query(query, callback);
-
-        SQL.end();
-        
-    }
-};
+let sql = Connect();
 
 export { sql };

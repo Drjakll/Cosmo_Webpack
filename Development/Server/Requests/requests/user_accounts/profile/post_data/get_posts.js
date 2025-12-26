@@ -2,12 +2,12 @@ let request = function() {
     
     this.req = (req, res) => { 
         
-        let {owner_email, order, date_interval} = req.body;
+        let {user_id, date_interval} = req.body;
         
-        let query = `select * from Post_Data where owner_email = '${owner_email}' 
-                                               and date_created >= ${date_interval.start}
-                                               and date_created <= ${date_interval.end}
-                                               order by date_created ${order}`;
+        let query = `select * from Post_Data where user_id = '${user_id}' 
+                                               and created_on >= ${date_interval.start}
+                                               and created_on <= ${date_interval.end}
+                                               order by created_on desc`;
 
         
         this.sql.query(query, (err, results)=>{

@@ -1,42 +1,29 @@
 let request = function() {
     
-    this.req = (req, res, next) => { 
+    this.req = (req, res) => { 
         
-        let post_details = req.body;
+        let {user_id, id, title, body} = req.body;
    
         post_details.last_edited = Date.now();
         
-        let query = this.generate_update_query("Post_Data", 
-                                                post_details,
-                                                {
-                                                id: post_details.id,
-                                                owner_email: post_details.owner_email
-                                                });
+        let query = `update Post_Data set title = ?, body = ? where id = ? and user_id = ?`;
+
+        let data = [title, body, id, user_id];
         
-        this.sql.query(query, (err, result)=>{
+        this.sql.query(query, data, (err, result)=>{
             
             if(err){
 
                 console.log(err.sqlMessage);
                 res.json({message: "Error editing post"});
-                res.end();
 
             } else if (result.affectedRows === 0){
 
                 res.json({message: "No post found"});
-                res.end();
 
             } else {
 
-                let {title, body, id, date_created, owner_email} = post_details;
-                
-                req.body.type = "post";
-                req.body.data = {title, body, date_created, owner_email};
-                req.body.type_id = id;
-                req.body.news_id = null;
-                req.body.message = "";
-
-                next();
+                res.json({message: "Post updated!"});
             }
             
         });

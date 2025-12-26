@@ -1,32 +1,28 @@
 let request = function() {
     
-    this.req = (req, res, next) => { 
+    this.req = (req, res) => { 
         
-        let post_details = req.body;
+        let {user_id, body, title} = req.body;
+
+        let created_on = Date.now();
+
+        let data = [
+            {created_on, user_id, body, title, last_edited: time_stamp}
+        ]
         
-        let query = this.generate_insert_query("Post_Data", 
-                                                post_details);
+        let query = `insert into Post_Data(title, body, user_id, created_on, last_edited) values ?`;
         
-        this.sql.query(query, (err, result)=>{
+        this.sql.query(query, [data], (err, result)=>{
             
             if (err) {
 
                 console.log(query, err.sqlMessage);
                 res.json({ message: "Error adding new post" });            
-                res.end();
 
             } else {
 
-                let {body, title, owner_email, date_created, last_edited} = post_details;
-
-                req.body.owner = {email: owner_email};
-                req.body.news_data = {id: result.insertId, body, title, owner_email, date_created, last_edited};
-                req.body.type = "post";
-                req.body.id_ref = result.insertId;
-                req.body.message = "";
-
-                next();
-
+                res.json({message: "Successfully added new post"});
+                
             }
 
             

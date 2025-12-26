@@ -10,11 +10,19 @@ class Date_Type extends Component {
 
         Date_Type.contextType = window.Context;
 
+        let {value, label, data_name, owner_user_account} = props;
+
         this.state = {
-            label: this.props.label,
-            value: this.props.value
+            label,
+            value,
+            data_name,
+            owner_user_account
         };
     }
+
+    Update_Account_Data = null
+
+    Generate_Calendar = null
     
     componentDidUpdate(prevProps, prevState){
         
@@ -22,58 +30,11 @@ class Date_Type extends Component {
             return;
         }
         
-        for(let i in this.props){
-            
-            this.state[i] = this.props[i];
-        }
-        
-        this.setState(this.state);
-    }
-    
-    ParseDate = (dateStr) => {
-        
-        const {Configurations} = this.context;
-        
-        const {Months} = Configurations;
-        
-        let date = dateStr.split("T")[0];
-        
-        let parts = date.split("-");
-        
-        return `${Months[parseInt(parts[1]) - 1]} ${parts[2]}, ${parts[0]}`;
-        
+        this.setState(this.props);
     }
 
-    Generate_Calendar = () => {
-
-        const { Calendar } = this.context;
-
-        let { value } = this.state;
-
-        let parts = value.split("-");
-
-        let year = parseInt(parts[0]);
-        let month = parseInt(parts[1]);
-
-        return <div id="calendar-wrapper">
-
-            <Calendar date_properties={[]} capture_date={this.Capture_Date} year={year} month={month} />
-
-        </div>
-    }
-
-    Capture_Date = ({ selected_year, selected_month, date }) => {
-
-        let dateStr = `${selected_year}-${selected_month}-${date}`;
-;
-
-        this.setState({ value: dateStr });
-
-    }
     
     render() {
-
-        let {Editor, variable_name, owner_user_account, refresh_account_data} = this.props;
         
         return (
             <div id="date-type" className="info">
@@ -86,18 +47,7 @@ class Date_Type extends Component {
 
                     </div>
 
-                    {Editor ? this.Generate_Calendar() : <></> }
-
-                </div>
-
-                <div id="editor">
-
-                    {Editor ? <Editor variable_name={variable_name}
-                        value={this.state.value}
-                        owner_user_account={owner_user_account}
-                        current_value={this.state.value}
-                        refresh_account_data={refresh_account_data}
-                    /> : <></>}
+                    {this.Generate_Calendar && this.Generate_Calendar()}
 
                 </div>
 

@@ -14,8 +14,7 @@ class Profile_Info_Data extends Component {
 
         this.state = {
             owner_user_account,
-            info_templates: {},
-            editors: {}
+            info_templates: {}
         };
     }
 
@@ -24,7 +23,7 @@ class Profile_Info_Data extends Component {
         //Account_Info_Data_Template is located at the Data_Templates folder
         let {Account_Info_Data_Template} = this.context.Account_Data_Templates;
 
-        let info_templates = await Account_Info_Data_Template(null);
+        let info_templates = await Account_Info_Data_Template();
 
         this.setState({info_templates});
         
@@ -48,9 +47,9 @@ class Profile_Info_Data extends Component {
         
         let infoWrapperRef = createRef();
         
-        let {refresh_account_data, change_main_display } = this.props;
+        let { change_main_display } = this.props;
 
-        let {owner_user_account, editors} = this.state;
+        let {owner_user_account, info_templates} = this.state;
         
         return (
             <div id="profile-info-data">
@@ -96,14 +95,13 @@ class Profile_Info_Data extends Component {
                     }}
                 >
 
-                    {Object.keys(this.state.info_templates).map((key, index) => {
+                    {Object.keys(info_templates).map((key, index) => {
 
-                        const template = this.state.info_templates[key];
+                        const template = info_templates[key];
 
                         const Com = template.component;
                         let value = owner_user_account[key];
                         let { label, options } = template;
-                        let editor = editors[key] || null;
 
                         return <div className="individual-info-wrapper" key={index}>
 
@@ -115,12 +113,12 @@ class Profile_Info_Data extends Component {
 
                             <div id="info-value">
 
-                                <Com variable_name={key}
+                                <Com 
+
                                     value={value}
                                     label={label}
-                                    Editor={editor}
+                                    column_name={key}
                                     owner_user_account={owner_user_account}
-                                    refresh_account_data={refresh_account_data}
                                     options={options}
                                     change_main_display={change_main_display}
                                 />

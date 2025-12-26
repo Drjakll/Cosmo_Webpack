@@ -67,23 +67,30 @@ class Profile_Template extends Component {
 
     }
 
+    //This may be override by child class
     Generate_Profile_Info = (general_props, unique_props)=>{
 
         return <Profile_Info {...general_props} {...unique_props} />;
     }
 
+    //This may be override by child class    
     Generate_Connections = (general_props, unique_props)=>{
         
+        return "";
         return <Connections {...general_props} {...unique_props} />;
     }   
 
+    //This may be override by child class    
     Generate_Albums = (general_props, unique_props)=>{    
 
+        return ""
         return <Albums {...general_props} {...unique_props} />;
     }
 
+    //This may be override by child class
     Generate_Posts = (general_props, unique_props)=>{
 
+        return ""
         return <Posts {...general_props} {...unique_props}/>;
     }
     

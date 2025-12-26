@@ -3,40 +3,33 @@ let request = function() {
     
     this.req = (req, res) => { 
         
-        let photo_data = req.body;
-        
-        let count = photo_data.length;
-        
-        let completed = 0;
-        
-        let recursion = (index)=>{
-            
-            if(index >= count){
-                res.json({message: `Added ${completed} out of ${count} entries`});
-                res.end();
-                return;
-            }
-            
-            let photo = photo_data[index];
-            
-            let query = this.generate_insert_query("User_Photo_Links", photo);
+        let {links, target_type, target_id} = req.body;
 
-            this.sql.query(query, (err, results)=>{
+        let time_uploaded = Date.now();
 
-                if(err){
-                    console.log(query, err.sqlMessage);
-                } else {
-                    completed++;
-                }
-                
-                recursion(index + 1);
-                
-            });
-        };
+        let to_be_inserted = [];
+
+        for(let link of links){
+
+            to_be_inserted.push({link, target_type, target_id, time_uploaded});
+
+        }
+
+        let query = `insert into Photo_Links(link, target_type, target_id, time_stamp) values ?`;
+
+        try {
+
+            this.sql(query, [to_be_inserted]);
+
+        } catch (err){
+
+            console.log(err, query);
+
+        }
+
+        res.end();
         
-        recursion(0);
-                
-    };
+    }
 };
 
 export default request;

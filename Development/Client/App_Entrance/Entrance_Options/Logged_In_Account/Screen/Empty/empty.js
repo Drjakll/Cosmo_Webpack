@@ -12,7 +12,7 @@ class Empty extends Component {
 
     render() {
 
-        return <div id="empty"></div>
+        return <div id="Profile"></div>
     }
 }
 

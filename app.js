@@ -38,100 +38,207 @@ app.set('trust proxy', true);
 
 import requests from './Development/Server/Requests/requests.js';
 
+let {user_accounts, messaging, get_web_pages, dummy_middleware, connections, alerts, user_news_updates} = requests;
+
+let {profile, create_account, login_account} = user_accounts;
+
+//User_Accounts -> Profile
+let { 
+        albums,
+        comments,
+        photos,
+        post_data,
+        profile_data
+
+    } = profile;
+
+//User_Accounts -> Profile -> Albums
+let {
+        add_album,
+        delete_album,
+        get_albums,
+        update_album
+
+    } = albums;
+
+//User_Accounts -> Profile -> Comments
+let {
+        delete_comment,
+        get_comments,
+        submit_comment,
+        update_comment
+
+    } = comments;
+
+//User_Accounts -> Profile -> Photos
+let {
+        add_photo_links,
+        delete_photo_files,
+        delete_photo_links,
+        get_photo_links,
+        set_photo_as_cover,
+        upload_photos
+
+    } = photos;
+
+//User_Accounts -> Profile -> Post_Data
+let {
+        create_post,
+        delete_post,
+        get_last_time_posted,
+        get_posts,
+        update_post
+
+    } = post_data
+
+//User_Accounts -> Profile -> Profile_Data
+let {update_profile, add_item_to_profile_table} = profile_data;
+
+//Messaging
+let {
+        add_conversation_participants, 
+        clear_seen_by, 
+        create_conversation,
+        delete_conversation,
+        get_conversations,
+        get_favorite_public_channels,
+        get_messages,
+        initialize_public_channel,
+        insert_message,
+        join_public_channel,
+        leave_private_conversation,
+        leave_public_channel,
+        user_seen_last_msg
+
+    } = messaging;
+
+//Get_Web_Pages
+let {entry_page} = get_web_pages;
+
+//Get_Web_Pages -> Entry_Page
+let {entry} = entry_page;
+
+//Dummy_Middle_Ware
+let {dummy_middleware: dummy} = dummy_middleware;
+
+//Connections
+let {
+        find_connections,
+        find_public_user_info,
+        get_all_followers,
+        get_all_followings,
+        get_connection_list,
+        get_connection_requests_from,
+        get_connection_requests_to,
+        get_connection_requests,
+        get_follow_requests,
+        remove_connection_request,
+        remove_follow_request,
+        search_within_followers,
+        search_within_followings,
+        send_connection_request,
+        send_follow_request,
+        unfollow_user_account,
+        update_connection_request,
+        update_follow_request
+
+    } = connections;
+
+//Alerts
+let {
+    get_alerts
+
+} = alerts;
+
+//User_News_Updates
+let {
+        get_user_news_updates
+
+    } = user_news_updates;
+
+
+
+//Below are the API routes
+
+
 //Entry page
-app.get("/", requests.get_web_pages.entry_page.entry.req);
+app.get("/", entry.req);
 
 //User account APIs
-app.post("/create_account", requests.user_accounts.create_account.req);
-app.post("/login_account", requests.user_accounts.login_account.req);
+app.post("/create_account", create_account.req);
+app.post("/login_account", login_account.req);
 
 
 //Profile Data
-app.post("/update_profile", requests.user_accounts.profile.profile_data.update_profile.req);
-app.post("/set_as_profile_picture", requests.user_accounts.profile.profile_data.set_as_profile_picture.req);
-app.post("/get_all_profile_pictures", requests.user_accounts.profile.profile_data.get_all_profile_pictures.req);
-app.post("/delete_profile_photo_files", requests.user_accounts.profile.profile_data.delete_profile_photo_files.req);
-app.post("/delete_data_base_profile_photo", requests.user_accounts.profile.profile_data.delete_database_profile_photos.req);
-app.post("/insert_profile_photo_data", requests.user_accounts.profile.profile_data.insert_profile_photo_data.req);
+app.post("/update_profile", update_profile.req);
+app.post("/add_item_to_profile_table", add_item_to_profile_table.req);
 
 
-//Album Photos
-app.post("/upload_pictures", uploads.array('files', 100), requests.user_accounts.profile.photos.upload_photos.req);
-app.post("/get_photo_links", requests.user_accounts.profile.photos.get_photo_links.req);
-app.post("/add_photo_album", requests.user_accounts.profile.photos.add_photo_album.req);
-app.post("/get_photo_albums", requests.user_accounts.profile.photos.get_photo_albums.req);
-app.post("/update_album", requests.user_accounts.profile.photos.update_album.req);
-app.post("/add_photo_links", requests.user_accounts.profile.photos.add_photo_links.req);
-app.post("/delete_photo_links", requests.user_accounts.profile.photos.delete_photo_links.req);
-app.post("/delete_photo_files", requests.user_accounts.profile.photos.delete_photo_files.req);
-app.post("/delete_album", requests.user_accounts.profile.photos.delete_album.req);
+//Albums
+app.post("/update_album", update_album.req);
+app.post("/add_album", add_album.req);
+app.post("/get_albums", get_albums.req);
+app.post("/delete_album", delete_album.req);
 
-//Album Photo Comments
-app.post("/submit_photo_comment", requests.user_accounts.profile.comments.photo_comments.submit_photo_comment.req);
-app.post("/get_photo_comments", requests.user_accounts.profile.comments.photo_comments.get_photo_comments.req);
-app.post("/update_photo_comment", requests.user_accounts.profile.comments.photo_comments.update_photo_comment.req);
-app.post("/delete_photo_comment", requests.user_accounts.profile.comments.photo_comments.delete_photo_comment.req);
+//Photos
+app.post("/upload_photos", uploads.array('files', 100), upload_photos.req, add_photo_links.req);
+app.post("/get_photo_links", get_photo_links.req);
+app.post("/delete_photos", delete_photo_links.req, delete_photo_files.req);
+app.post("/set_photo_as_cover", set_photo_as_cover.req);
+
+//Comments
+app.post("/submit_comment", submit_comment.req);
+app.post("/get_comments", get_comments.req);
+app.post("/update_comment", update_comment.req);
+app.post("/delete_comment", delete_comment.req);
 
 //Post Data                         
-app.post("/create_post", requests.user_accounts.profile.post_data.create_post.req, requests.user_news_updates.add_user_news_update.req);
-app.post("/update_post", requests.user_accounts.profile.post_data.update_post.req, requests.user_news_updates.modify_user_news_update.req);
-app.post("/get_posts", requests.user_accounts.profile.post_data.get_posts.req);
-app.post("/delete_post", requests.user_accounts.profile.post_data.delete_post.req);
-app.post("/delete_post_photo_links", requests.user_accounts.profile.post_data.delete_post_photo_links.req); 
-app.post("/set_last_post", requests.user_accounts.profile.post_data.set_last_post.req);
-app.post("/add_post_photo_links", requests.user_accounts.profile.post_data.add_post_photo_links.req);
-app.post("/get_post_photo_links", requests.user_accounts.profile.post_data.get_post_photo_links.req);
-
-//Post Comments
-app.post("/submit_post_comment", requests.user_accounts.profile.comments.post_comments.submit_post_comment.req);
-app.post("/get_post_comments", requests.user_accounts.profile.comments.post_comments.get_post_comments.req);
-app.post("/update_post_comment", requests.user_accounts.profile.comments.post_comments.update_post_comment.req);
-app.post("/delete_post_comment", requests.user_accounts.profile.comments.post_comments.delete_post_comment.req);
+app.post("/create_post", create_post.req);
+app.post("/update_post", update_post.req);
+app.post("/get_posts", get_posts.req);
+app.post("/delete_post", delete_post.req); 
+app.post("/get_last_time_posted", get_last_time_posted.req);
 
 //Connections
-app.post("/get_connection_list", requests.connections.get_connection_requests.req, requests.connections.get_connection_list.req, requests.dummy_middleware.dummy_middleware.req);
-app.post("/find_connections", requests.connections.find_connections.req);
-app.post("/send_connection_request", requests.connections.send_connection_request.req, requests.alerts.add_new_alert.req);
-app.post("/get_connection_requests_from", requests.connections.get_connection_requests_from.req, requests.dummy_middleware.dummy_middleware.req);
-app.post("/get_connection_request_to", requests.connections.get_connection_requests_to.req, requests.dummy_middleware.dummy_middleware.req);
-app.post("/remove_connection_request", requests.connections.remove_connection_request.req);
-app.post("/accept_connection_request", requests.connections.update_connection_request.req);
-app.post("/send_follow_request", requests.connections.find_public_user_info.req, requests.connections.send_follow_request.req);
-app.post("/unfollow_user_account", requests.connections.unfollow_user_account.req);
-app.post("/get_all_followers", requests.connections.get_all_followers.req);
-app.post("/get_all_followings", requests.connections.get_all_followings.req);
-app.post("/get_follow_requests", requests.connections.get_follow_requests.req, requests.dummy_middleware.dummy_middleware.req);
-app.post("/remove_follow_request", requests.connections.remove_follow_request.req);
-app.post("/update_follow_request", requests.connections.update_follow_request.req);
-app.post("/find_public_user_info", requests.connections.find_public_user_info.req);
-app.post("/search_within_followers", requests.connections.search_within_followers.req);
-app.post("/search_within_followings", requests.connections.search_within_followings.req);
+app.post("/get_connection_list", get_connection_requests.req, get_connection_list.req, dummy.req);
+app.post("/find_connections", find_connections.req);
+app.post("/send_connection_request", send_connection_request.req, dummy.req);
+app.post("/get_connection_requests_from", get_connection_requests_from.req, dummy.req);
+app.post("/get_connection_request_to", get_connection_requests_to.req, dummy.req);
+app.post("/remove_connection_request", remove_connection_request.req);
+app.post("/update_connection_request", update_connection_request.req);
+app.post("/send_follow_request", find_public_user_info.req, send_follow_request.req);
+app.post("/unfollow_user_account", unfollow_user_account.req);
+app.post("/get_all_followers", get_all_followers.req);
+app.post("/get_all_followings", get_all_followings.req);
+app.post("/get_follow_requests", get_follow_requests.req, dummy.req);
+app.post("/remove_follow_request", remove_follow_request.req);
+app.post("/update_follow_request", update_follow_request.req);
+app.post("/find_public_user_info", find_public_user_info.req);
+app.post("/search_within_followers", search_within_followers.req);
+app.post("/search_within_followings", search_within_followings.req);
 
 //Alerts
-app.post("/update_alert_data", requests.alerts.update_alert_data.req);
-app.post("/delete_alert", requests.alerts.delete_alert.req);
-app.post("/get_connection_alerts", requests.connections.get_connection_requests.req, 
-                                            requests.connections.get_connection_list.req,
-                                            requests.alerts.get_alerts.req);
+app.post("/get_alerts", get_alerts.req);
 
 //User News Updates
-app.post("/get_user_news_updates", requests.user_news_updates.get_user_news_updates.req);
+app.post("/get_user_news_updates", get_user_news_updates.req);
 
 
 //Messaging
-app.post("/create_conversation", requests.messaging.create_conversation.req);
-app.post("/delete_conversation", requests.messaging.delete_conversation.req);
-app.post("/get_conversations", requests.messaging.get_conversations.req);
-app.post("/get_messages", requests.messaging.get_messages.req);
-app.post("/insert_message", requests.messaging.insert_message.req);
-app.post("/clear_seen_by", requests.messaging.clear_seen_by.req);
-app.post("/user_seen_last_msg", requests.messaging.user_seen_last_msg.req);
-app.post("/leave_private_conversation", requests.messaging.leave_private_conversation.req);
-app.post("/add_conversation_participants", requests.messaging.add_conversation_participants.req);
-app.post("/initialize_public_channel", requests.messaging.initialize_public_channel.req);
-app.post("/join_public_channel", requests.messaging.join_public_channel.req);
-app.post("/get_favorite_public_channels", requests.messaging.get_favorite_public_channels.req);
-app.post("/leave_public_channel", requests.messaging.leave_public_channel.req);
+app.post("/create_conversation", create_conversation.req);
+app.post("/delete_conversation", delete_conversation.req);
+app.post("/get_conversations", get_conversations.req);
+app.post("/get_messages", get_messages.req);
+app.post("/insert_message", insert_message.req);
+app.post("/clear_seen_by", clear_seen_by.req);
+app.post("/user_seen_last_msg", user_seen_last_msg.req);
+app.post("/leave_private_conversation", leave_private_conversation.req);
+app.post("/add_conversation_participants", add_conversation_participants.req);
+app.post("/initialize_public_channel", initialize_public_channel.req);
+app.post("/join_public_channel", join_public_channel.req);
+app.post("/get_favorite_public_channels", get_favorite_public_channels.req);
+app.post("/leave_public_channel", leave_public_channel.req);
 
 server.listen(8080, () => {
    

@@ -2,9 +2,9 @@ let request = function() {
     
     this.req = (req, res) => { 
         
-        let album = req.body;
+        let {target_id, target_type} = req.body;
         
-        let query = `select * from User_Photo_Links where owner_email = '${album.owner_email}' and belongs_to_album = ${album.id}`;
+        let query = `select * from Photo_Links where target_id = ${target_id} and target_type = '${target_type}'`;
         
         this.sql.query(query, (err, results)=>{
             

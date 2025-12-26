@@ -3,9 +3,11 @@ function request() {
     this.req = (req, res) => {
         
         let acc_details = req.body;
+
+        let {email, password} = acc_details;
         
-        let query = this.generate_insert_query("User_Accounts", acc_details);
-      
+        let query = `insert into User_Accounts(email, password) values('${email}', '${password}')`;
+        
         
         this.sql.query(query, (err, result)=>{
             

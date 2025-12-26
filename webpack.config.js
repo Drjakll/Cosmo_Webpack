@@ -146,8 +146,10 @@ var clientConfig = {
             https: require.resolve("https-browserify"),            
         },
         alias: {
+            "@root": path.resolve(__dirname, "Development/Client"),
             "@context": path.resolve(__dirname, 'Development/Client/Context'),
-            "@profile_template": path.resolve(__dirname, 'Development/Client/View_Templates/Profile/profile_template.js')
+            "@profile_template": path.resolve(__dirname, 'Development/Client/View_Templates/Profile/profile_template.js'),
+            "@data_templates": path.resolve(__dirname, 'Development/Client/Data_Templates')
         }
     }
 };

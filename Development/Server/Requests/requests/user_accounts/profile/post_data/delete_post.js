@@ -1,25 +1,29 @@
 let request = function() {
     
-    this.req = (req, res) => { 
+    this.req = async (req, res, next) => { 
         
-        let {id, owner_email} = req.body;
+        let {id, user_id} = req.body;
         
-        let query = `delete from Post_Data where id = ${id} and owner_email = '${owner_email}'`;
+        let query = `delete from Post_Data where id = ${id} and user_id = ${user_id}`;
         
-        this.sql.query(query, (err, result)=>{
-            
-            if(err){
-                console.log(query, err.sqlMessage);
-                res.json({message: "Error deleting post"});
-            } else if (result.affectedRows === 0){
-                res.json({message: "No post found"});
-            } else {
-                res.json({message: "Post deleted"});
-            }
-            
-            res.end();
-            
-        });
+        try {
+
+            await this.sql.query(query);
+
+            //Query to select all the photo links belong to the post
+            query = `select * from Photo_Links where target_id = ${id} and target_type = 'post'`;
+
+            const [rows] = await this.sql(query);
+
+            res.body.photos = rows;
+
+            //On to erasing the post photo links in the data base
+            next();
+
+        } catch(err){
+
+            console.log(err, query);
+        }
 
     };
 };

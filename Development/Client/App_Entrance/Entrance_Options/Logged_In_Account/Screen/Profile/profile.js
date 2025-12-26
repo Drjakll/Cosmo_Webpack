@@ -47,23 +47,27 @@ class Profile extends Profile_Template {
     }
 
     Generate_Connections = (general_props, unique_props)=>{
+
+        return <div></div>
         
         return <Connections_Editor {...general_props} {...unique_props} />;
     }   
 
-    Generate_Albums = (general_props, unique_props)=>{    
+    Generate_Albums = (general_props, unique_props)=>{  
+        
+        return <div></div>
 
         return <Album_Editor {...general_props} {...unique_props} />;
     }
 
     Generate_Posts = (general_props, unique_props)=>{
 
+        return <div></div>
+
         return <Post_Editor {...general_props} {...unique_props}/>;
     }
     
     render(){
-        
-        //const { Profile_Template } = this.context;
         
         return (
             <div id="profile">
