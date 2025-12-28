@@ -11,10 +11,13 @@ class Profile_Data_Editor extends Profile_Info_Data {
 
     static contextType = Context
 
+    Account_Changes = {}
+
     constructor(props){
         
         super(props);
 
+        
     }
 
     componentDidMount(){
@@ -48,12 +51,57 @@ class Profile_Data_Editor extends Profile_Info_Data {
         User_Schools: Json_Type_Editor
     }
 
+    Update_Value = ({column_name, value})=>{
+
+        this.Account_Changes[column_name] = value;
+
+        let {owner_user_account} = this.state;
+
+        owner_user_account[column_name] = value;
+
+        this.setState({owner_user_account});
+    }
+
+    Save_Changes = async (e) => {
+
+        let { owner_user_account } = this.state;
+        let {id, email, password} = owner_user_account;
+        let { update_profile } = this.context.Request_URLs;
+
+        let body = {
+            credentials: {
+                email: email,
+                id: id,
+                password
+            },
+            to_update: this.Account_Changes
+        }
+
+        await fetch(update_profile, {
+            method: "POST",
+            body: JSON.stringify(body),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+    }
+
     render(){
 
         return (
             <div id="profile-data-editor">
 
-                {super.render()}      
+                <div id="profile-data-contents-wrapper">
+
+                    {super.render()}   
+
+                </div>
+
+                <div id="save-button-wrapper">
+
+                    <button onClick={this.Save_Changes}>Save</button>
+                    
+                </div>   
 
             </div>
         )

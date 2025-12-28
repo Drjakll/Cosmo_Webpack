@@ -8,7 +8,9 @@ class Choice_Type extends Component {
         
         super(props);
 
-        let { value, label, column_name, owner_user_account} = props;
+        let { value, label, column_name, owner_user_account, update_callback} = props;
+
+        this.Update_Value = this.Update_Value || update_callback;
         
         this.state = {
             value,
@@ -28,8 +30,12 @@ class Choice_Type extends Component {
     }
 
     Generate_Options = null
+
+    Update_Value = null
     
     render() {
+
+        let {value, label} = this.state;
         
         return (
             <div id="choice-type" className="info">
@@ -38,7 +44,7 @@ class Choice_Type extends Component {
 
                     <div id="value">
 
-                        {this.state.value ? this.state.value : ""}
+                        {value !== "" ? value : `Select ${label}`}
 
                     </div>
 

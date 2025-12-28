@@ -7,7 +7,9 @@ class Text_Type extends Component {
         
         super(props);
 
-        let {value, owner_user_account, column_name, label} = props;
+        let {value, owner_user_account, column_name, label, update_callback} = props;
+
+        this.Update_Value = this.Update_Value || update_callback;
 
         this.state = {
             value,
@@ -23,7 +25,7 @@ class Text_Type extends Component {
 
     }
 
-    Update_Account_Data = ()=>{};
+    Update_Value = null;
 
     componentDidUpdate(prevProps, prevState){
         
@@ -36,16 +38,18 @@ class Text_Type extends Component {
     
     render() {
 
+        let {value, column_name, label} = this.state;
+
         return (
             <div id="text-type" className="info">
 
                 <div id="value-wrapper">
 
                     <input id="value"
-                        onChange={(e) => { this.setState({ value: e.target.value }); }} 
-                        value={this.state.value} 
-                        onBlur={(e)=>{ this.Update_Account_Data && this.Update_Account_Data(); }}
-                        disabled={ this.Update_Account_Data === null ? true : false} />
+                        value={value} 
+                        placeholder={label}
+                        onChange={(e)=>{this.setState({ value: e.target.value }); this.Update_Value && this.Update_Value({column_name, value: e.target.value}); }}
+                        disabled={ !this.Update_Value ? true : false} />
 
                 </div>
 

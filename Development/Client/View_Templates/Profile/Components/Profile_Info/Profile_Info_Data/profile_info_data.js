@@ -10,10 +10,11 @@ class Profile_Info_Data extends Component {
 
         Profile_Info_Data.contextType = Context;
 
-        let {owner_user_account} = this.props;
+        let {owner_user_account, visitor_user_account} = this.props;
 
         this.state = {
             owner_user_account,
+            visitor_user_account,
             info_templates: {}
         };
     }
@@ -38,6 +39,8 @@ class Profile_Info_Data extends Component {
         this.setState(this.props);
         
     }
+
+    Update_Value = null;
     
     render(){
         
@@ -49,7 +52,7 @@ class Profile_Info_Data extends Component {
         
         let { change_main_display } = this.props;
 
-        let {owner_user_account, info_templates} = this.state;
+        let {owner_user_account, visitor_user_account, info_templates} = this.state;
         
         return (
             <div id="profile-info-data">
@@ -114,11 +117,12 @@ class Profile_Info_Data extends Component {
                             <div id="info-value">
 
                                 <Com 
-
                                     value={value}
                                     label={label}
                                     column_name={key}
+                                    update_callback={this.Update_Value}
                                     owner_user_account={owner_user_account}
+                                    visitor_user_account={visitor_user_account}
                                     options={options}
                                     change_main_display={change_main_display}
                                 />

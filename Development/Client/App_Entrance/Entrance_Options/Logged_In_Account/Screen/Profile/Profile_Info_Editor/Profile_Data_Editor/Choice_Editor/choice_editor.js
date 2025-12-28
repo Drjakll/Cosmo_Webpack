@@ -13,41 +13,13 @@ class Choice_Editor extends Choice {
 
     }
 
-    Update_Account_Data = async () => {
-
-        let { owner_user_account, column_name, value } = this.state;
-        let {id, email, password} = owner_user_account;
-        let { update_profile } = this.context.Request_URLs;
-
-        owner_user_account[column_name] = value;
-
-        let body = {
-            credentials: {
-                email: email,
-                id: id,
-                password
-            },
-            to_update: {
-                [column_name]: value
-            }
-        }
-
-        await fetch(update_profile, {
-            method: "POST",
-            body: JSON.stringify(body),
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        });
-
-        this.setState({owner_user_account});
-    }
-
     Change_Value = async (value)=>{
 
         await this.setState({value});
 
-        this.Update_Account_Data();
+        let {column_name} = this.state;
+
+        this.Update_Value && this.Update_Value({column_name, value});
     }
 
     Generate_Options = () => {
@@ -58,7 +30,7 @@ class Choice_Editor extends Choice {
 
             <div id="selections">
 
-                {options.map((option, index) => {
+                {options && options.map((option, index) => {
 
                     return <div className="option" onClick={(e) => { this.Change_Value(option); }} key={index}>
 

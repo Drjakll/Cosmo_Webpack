@@ -57,10 +57,12 @@ class Profile_Template extends Component {
 
         if (this.props.owner_user_account) {
 
+            let {visitor_user_account, owner_user_account, connection_list} = this.props
+
             this.UpdateAllComponentProps({
-                visitor_user_account: this.props.visitor_user_account || {},
-                owner_user_account: this.props.owner_user_account || {}, 
-                connection_list: this.props.connection_list || {} 
+                visitor_user_account,
+                owner_user_account, 
+                connection_list
             });
 
         }
@@ -103,11 +105,15 @@ class Profile_Template extends Component {
         if(!this.props.owner_user_account){
             return;
         }
+
+        let {visitor_user_account, owner_user_account, connection_list} = this.props
+
+        this.setState({owner_user_account, visitor_user_account, connection_list});
         
         this.UpdateAllComponentProps({
-            visitor_user_account: this.props.visitor_user_account || {},
-            owner_user_account: this.props.owner_user_account || {},
-            connection_list: this.props.connection_list || {}
+            visitor_user_account,
+            owner_user_account,
+            connection_list
         });
     }
     
@@ -184,14 +190,14 @@ class Profile_Template extends Component {
 
     render(){
         
-        let { render_callback } = this.state;
+        let { render_callback, owner_user_account } = this.state;
         
         return (
             <div id="profile-template">
 
                  {render_callback === this.Display_Main_Components ? 
 
-                    render_callback() : 
+                    this.Display_Main_Components() : 
 
                     <div id="content-with-back-button">
 
@@ -200,7 +206,10 @@ class Profile_Template extends Component {
                         </div>
 
                         <div id="contents">
-                            {render_callback()}
+
+                            {/* Pass owner_user_account to ensure updates for the other component, wherever render_callback is from */}
+                            {render_callback({owner_user_account})} 
+                            
                         </div>
 
                     </div>

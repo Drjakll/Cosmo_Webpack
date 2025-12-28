@@ -2,14 +2,14 @@ let request = function () {
     
     this.req = async (req, res) => { 
         
-        let { to_insert, table_name } = req.body;
+        let { remove_req, table_name } = req.body;
 
-        let query = `insert into ${table_name} set ?`;
+        let query = `delete from ${table_name} where ?`;
 
         
         try {
 
-            await this.sql.query(query, [to_insert]);
+            await this.sql.query(query, remove_req);
 
         } catch(err){
             console.log(query, err);

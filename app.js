@@ -92,7 +92,11 @@ let {
     } = post_data
 
 //User_Accounts -> Profile -> Profile_Data
-let {update_profile, add_item_to_profile_table} = profile_data;
+let {
+    update_profile, 
+    add_item_to_profile_table,
+    remove_item_from_profile_table
+} = profile_data;
 
 //Messaging
 let {
@@ -172,6 +176,7 @@ app.post("/login_account", login_account.req);
 //Profile Data
 app.post("/update_profile", update_profile.req);
 app.post("/add_item_to_profile_table", add_item_to_profile_table.req);
+app.post("/remove_item_from_profile_table", remove_item_from_profile_table.req);
 
 
 //Albums

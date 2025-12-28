@@ -1,21 +1,25 @@
 import React, {Component} from 'react';
-import Context from '@context/context.js';
+import Json_Screen from './Json_Screen/json_screen.js';
 import './json_type.less';
 
 class Json_Type extends Component {
 
+    Name_Map = {};
     
     constructor(props){
         
         super(props);
 
-        Json_Type.contextType = Context;
-
-        let {label, value} = props;
+        let {label, value, owner_user_account, visitor_user_account, options, column_name: table_name} = props;
 
         this.state = {
             label,
-            value
+            value,
+            visitor_user_account,
+            owner_user_account,
+            options,
+            table_name,
+            popup: false
         };
     }
     
@@ -30,80 +34,30 @@ class Json_Type extends Component {
 
     Delete_Item = null
 
-    Editor = null;
+    Editor = null
 
-    Contents = () => { 
-        
-        let {value, label} = this.state;
-        
+    Input_Data_Types = {}
 
-        return <div id="json-type-contents">
+    Contents = ({owner_user_account}) => { 
 
-            <div id="json-info-details">
+        let {label, value, visitor_user_account, options, table_name} = this.state;
 
-                <div id="json-data-label">
-                    {label}
-                </div>
+        //Because this function won't be call by this class, 
+        //it will be called by mostly likely profile_template.js, 
+        //value has to be pulled from owner_user_account else it won't display correctly
+        value = owner_user_account[table_name];
 
-                {this.Editor && this.Editor()}
-
-                <div id="details">
-
-                    {value?.map((table, index_0) => {
-
-                        return <div className="detail-wrapper" key={index_0}>
-
-                            <div id="detail-index">
-
-                                {index_0 + 1}
-
-                            </div>
-
-                            <div id="detail-segments-wrapper">
-
-                                {Object.keys(table).map((key, index_1) => {
-
-                                    return <div className="detail-segment" key={index_1}>
-
-                                        <div id="detail-segment-label">
-
-                                            {key}
-
-                                        </div>
-
-                                        <div id="detail-segment-value">
-
-                                            {table[key]}
-
-                                        </div>
-
-                                    </div>;
-
-                                })}
-
-                            </div>
-
-                            {this.Delete_Item !== null ? 
-
-                                <div id="delete-button-wrapper">
-
-                                    <div id="delete-button" onClick={(e) => { this.Delete_Item(table.id); }}>
-                                        Delete
-                                    </div>
-
-                                </div> 
-
-                            : ""}
-
-                        </div>;
-
-                    })}
-
-                </div>
-
-            </div>
-
-        </div>;
+        return <Json_Screen 
+                    label={label} 
+                    value={value}
+                    owner_user_account={owner_user_account} 
+                    visitor_user_account={visitor_user_account} 
+                    options={options} 
+                    Editor={this.Editor}
+                    Input_Data_Types={this.Input_Data_Types}
+                    Delete_Item={this.Delete_Item}
+                    table_name={table_name}
+                />
     }
     
     render(){

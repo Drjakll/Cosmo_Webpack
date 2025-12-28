@@ -1,5 +1,9 @@
 import React, { Component } from 'react';
 import Context from '@context/context.js';
+import New_Item from './New_Item/new_item.js';
+import Date_Editor from '@profile_data_editors/Date_Editor/date_editor.js';
+import Choice_Editor from '@profile_data_editors/Choice_Editor/choice_editor.js';
+import Text_Editor from '@profile_data_editors/Text_Editor/text_editor.js';
 import Json_Data from '@data_templates/Info_Types/Json_Type/json_type.js';
 import './json_editor.less';
 
@@ -21,132 +25,116 @@ class Json_Editor extends Json_Data {
         };
 
         for(let i in state){
+
             this.state[i] = state[i];
+
         }
 
     }
     
-    Input_Data_Types = {
-        "string" : ({data_name})=>{
-            
-            let onChange = (e) => { 
-                
-                value = e.target.value;
-                
-                let {json_obj} = this.state;
-
-                json_obj[data_name] = value;
-
-                json_obj = JSON.parse(JSON.stringify(json_obj));
-
-                this.setState({json_obj});  
-                
-            };
-            
-            return <div className="input-data-type string">
-            
-                <input type="text" onChange={onChange} />
-            
-            </div>;
-        },
-        "date" : ({data_name})=>{
-            
-            const {Calendar} = this.context;
-            
-            let onChange = ({selected_year, selected_month, date}) => {
-                
-                let value = `${selected_year}-${selected_month}-${date}`;
-
-                let {json_obj} = this.state;
-
-                json_obj[data_name] = value;
-
-                json_obj = JSON.parse(JSON.stringify(json_obj));
-                
-                this.setState({json_obj});    
-                
-            };
-            
-            let {json_obj} = this.state;
-            
-            return <div className="input-data-type date">
-            
-                <div id="selected-date">
-                    
-                    {json_obj[data_name] || "Select a date"}
-                    
-                </div>
-                
-                <div id="dropdown">
-                
-                    <Calendar capture_date={onChange} />
-                    
-                </div>
-                
-            </div>;
-        },
-        "enum" : ({data_name, choices})=>{
-
-            let select = (value)=>{
-
-                let {json_obj} = this.state;
-
-                json_obj[data_name] = value;
-
-                json_obj = JSON.parse(JSON.stringify(json_obj));
-
-                this.setState({json_obj});  
-
-            }
-
-            let {json_obj} = this.state;
-
-            return <div className="input-data-type enum">
-
-                <div id="selected-value">{json_obj[data_name] || "Select a value"}</div>
-
-                <div id="dropdown">
-
-                    <div id="selections">
-
-                        {choices.map((value, index)=>{
-
-                            let current_value = json_obj[data_name];
-
-                            return current_value === value ? "" : 
-                                <div className="option" key={value} onClick={(e)=>{
-                                    select(value);
-                                }}>
-
-                                    {value}
-
-                                </div>;
-
-                        })}
-
-                    </div>
-
-                </div>
-
-            </div>;
-        }
-    }   
-    
-    Add_New_Item = async ()=>{
+    componentDidUpdate(prevProps, prevState){
         
-        let {json_obj, owner_user_account, table_name} = this.state;
+        super.componentDidUpdate(prevProps, prevState);
+        
+    }
 
-        json_obj.user_id = owner_user_account.id;
-       
-        let {add_item_to_profile_data} = this.context;
+    Input_Data_Types = {
+        "string": ({data_name, label, value})=>{
+
+            let onChange = ({column_name, value})=>{
+
+                let {json_obj} = this.state;
+
+                json_obj[column_name] = value;
+
+                this.setState({json_obj});
+            };
+
+            let {owner_user_account} = this.state;
+
+            return <Text_Editor 
+                        value={value} 
+                        owner_user_account={owner_user_account} 
+                        column_name={data_name} 
+                        label={label} 
+                        update_callback={onChange}
+                    />
+
+        },
+        "date": ({data_name, label, value}) => {
+
+            let onChange = ({column_name, value})=>{
+
+                let [selected_year, selected_month, date] = value.split("T")[0].split("-");
+
+                let date_str = `${selected_year}-${selected_month}-${date}`;
+
+                let {json_obj} = this.state;
+
+                json_obj[column_name] = date_str;
+
+                this.setState({json_obj});
+
+            };
+
+            let {owner_user_account} = this.state;
+
+            return <Date_Editor
+                        value={value} 
+                        owner_user_account={owner_user_account} 
+                        column_name={data_name} 
+                        label={label} 
+                        update_callback={onChange}
+                    />
+
+        },
+        "enum": ({data_name, label, choices, value}) => {
+
+            let onChange = ({column_name, value})=>{
+
+                let {json_obj} = this.state;
+
+                json_obj[column_name] = value;
+
+                this.setState({json_obj});  
+            };
+
+            let {owner_user_account} = this.state;
+
+            return <Choice_Editor 
+                        value={value} 
+                        owner_user_account={owner_user_account} 
+                        column_name={data_name} 
+                        label={label} 
+                        options={choices} 
+                        update_callback={onChange}
+                    />
+        }
+    }
+    
+    Editor = ()=>{
+
+        let { options, owner_user_account, table_name } = this.state;
+
+        return <New_Item options={options} 
+                        owner_user_account={owner_user_account} 
+                        table_name={table_name} 
+                        input_data_types={this.Input_Data_Types} 
+                        add_new_item={this.Add_New_Item}/>
+    }
+
+    Delete_Item = async ({id, table_name})=>{
+
+        let {remove_item_from_profile_table} = this.context.Request_URLs;
+
+        let {value} = this.state;
 
         let body = {
-            to_insert: json_obj,
-            table_name
+            table_name,
+            remove_req: {id}
         };
 
-        await fetch(
-            add_item_to_profile_data,
+        await fetch(remove_item_from_profile_table,
             {
                 method: "POST",
                 body: JSON.stringify(body),
@@ -155,52 +143,45 @@ class Json_Editor extends Json_Data {
                 }
             }
         );
+
+        value = value.filter((v)=>{v.id !== id; });
+
+        this.setState({value});
+
+        window.Refresh_Login();
     }
-    
-    componentDidUpdate(prevProps, prevState){
+
+    Add_New_Item = async ()=>{
         
-        super.componentDidUpdate(prevProps, prevState);
-    }
-    
-    Editor = ()=>{
+        let {json_obj, owner_user_account, table_name, value} = this.state;
 
-        let { options } = this.state;
+        json_obj.user_id = owner_user_account.id;
+       
+        let {add_item_to_profile_table} = this.context.Request_URLs;
 
-        return <div id="json-type-editor">
-        
-            <div id="input-wrapper">
-                
-                {options.map((item, index)=>{
-                    
-                    let {label, data_type, data_name, choices} = item;
-                    
-                    return <div className="input-item" key={index}>
+        let body = {
+            to_insert: json_obj,
+            table_name
+        };
 
-                        <div id="label">
-                            {label}
-                        </div>
-                        
-                        <div id="value">
+        await fetch(
+            add_item_to_profile_table,
+            {
+                method: "POST",
+                body: JSON.stringify(body),
+                headers: {
+                    'Content-Type': "application/json"
+                }
+            }
+        );
 
-                            {this.Input_Data_Types[data_type]({data_name, choices})}
+        value.push(json_obj);
 
-                        </div>
+        this.setState({value, json_obj});
 
-                    </div>;
-                    
-                })}
-                
-            </div>
-            
-            <div id="buttons-wrapper">
-            
-                <div id="the-add-button" onClick={(e)=>{ this.Add_New_Item(); }}>
-                    Add
-                </div>
-                
-            </div>
+        json_obj = {};
 
-        </div>;
+        window.Refresh_Login();
     }
 
     render() {

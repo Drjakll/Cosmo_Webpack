@@ -88,6 +88,8 @@ class Logged_In_Account extends Component {
             return;
         }
 
+        this.setState(this.props);
+
         await this.Get_Connection_List(this.props.owner_user_account);
 
     }

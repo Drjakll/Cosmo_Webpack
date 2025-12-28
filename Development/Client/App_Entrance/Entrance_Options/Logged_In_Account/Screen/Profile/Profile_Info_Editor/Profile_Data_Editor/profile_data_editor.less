@@ -3,4 +3,35 @@
     height: 100%;
     display: block;
     position: relative;
+
+    #profile-data-contents-wrapper {
+        height: calc(100% - 50px);
+        width: 100%;
+    }
+
+    #save-button-wrapper {
+        position: relative;
+        height: 50px;
+        z-index: 999;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+
+        button {
+            border: rgba(0,0,0,0.5) solid 0.5px;
+            border-radius: 25px;
+            padding: 10px 20px 10px 20px;
+            font-size: 14px;        
+            transition: 0.5s;
+            background-color: rgb(105, 121, 36);
+            color: white;
+
+            &:hover {
+                cursor: pointer;
+                background-color: rgb(3, 61, 13); 
+                color: white;
+            }
+        }
+    }
 }

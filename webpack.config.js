@@ -149,7 +149,9 @@ var clientConfig = {
             "@root": path.resolve(__dirname, "Development/Client"),
             "@context": path.resolve(__dirname, 'Development/Client/Context'),
             "@profile_template": path.resolve(__dirname, 'Development/Client/View_Templates/Profile/profile_template.js'),
-            "@data_templates": path.resolve(__dirname, 'Development/Client/Data_Templates')
+            "@data_templates": path.resolve(__dirname, 'Development/Client/Data_Templates'),
+            "@logged_in_account": path.resolve(__dirname, 'Development/Client/App_Entrance/Entrance_Options/Logged_In_Account'),
+            "@profile_data_editors": path.resolve(__dirname, 'Development/Client/App_Entrance/Entrance_Options/Logged_In_Account/Screen/Profile/Profile_Info_Editor/Profile_Data_Editor')
         }
     }
 };

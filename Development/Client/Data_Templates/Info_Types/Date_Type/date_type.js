@@ -10,19 +10,40 @@ class Date_Type extends Component {
 
         Date_Type.contextType = window.Context;
 
-        let {value, label, data_name, owner_user_account} = props;
+        let {value, label, data_name, owner_user_account, update_callback, column_name} = props;
+
+        this.Update_Value = this.Update_Value || update_callback;
 
         this.state = {
             label,
             value,
             data_name,
+            column_name,
             owner_user_account
         };
     }
 
-    Update_Account_Data = null
-
     Generate_Calendar = null
+
+    Update_Value = null
+
+    ParseDate = (dateStr) => {
+
+        if(!dateStr){
+            return "Continue";
+        }
+
+        const {Configurations} = this.context;
+        
+        const {Months} = Configurations;
+        
+        let date = dateStr.split("T")[0];
+        
+        let parts = date.split("-");
+        
+        return `${Months[parseInt(parts[1]) - 1]} ${parts[2]}, ${parts[0]}`;
+        
+    }
     
     componentDidUpdate(prevProps, prevState){
         
@@ -33,8 +54,9 @@ class Date_Type extends Component {
         this.setState(this.props);
     }
 
-    
     render() {
+
+        let {value} = this.state;
         
         return (
             <div id="date-type" className="info">
@@ -43,7 +65,7 @@ class Date_Type extends Component {
 
                     <div id="value">
 
-                        {this.ParseDate(this.state.value)}
+                        {value !== "" ? this.ParseDate(value) : "Select a Date"}
 
                     </div>
 

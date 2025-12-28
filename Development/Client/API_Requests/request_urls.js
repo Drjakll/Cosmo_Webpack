@@ -5,6 +5,7 @@ const create_account = `/create_account`;
 //Profile_Data
 const update_profile = '/update_profile';
 const add_item_to_profile_table = '/add_item_to_profile_table';
+const remove_item_from_profile_table = '/remove_item_from_profile_table';
 
 //Albums
 const update_album = '/update_album';
@@ -80,6 +81,11 @@ export default {
     //Account
     login_account,
     create_account,
+
+    //Profile data
+    update_profile,
+    add_item_to_profile_table,
+    remove_item_from_profile_table,
         
     //Photos
     upload_photos,
@@ -107,10 +113,6 @@ export default {
     update_post,
     delete_post,
     get_last_time_posted,
-
-    //Profile data
-    update_profile,
-    add_item_to_profile_table,
 
 
     //Connections

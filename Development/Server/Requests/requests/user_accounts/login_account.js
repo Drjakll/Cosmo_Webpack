@@ -37,8 +37,7 @@ let request = function(){
                                     )
                                 ) as User_Hobbies
                             from 
-                                (select * 
-                                from User_Hobbies order by start_date desc) uh
+                                User_Hobbies
                             group by 
                                 user_id
                             ) as hobbies 
@@ -61,8 +60,7 @@ let request = function(){
                                     )
                                 ) as User_Locations
                             from
-                                (select * 
-                                from User_Locations order by start_date desc) ul
+                                User_Locations
                             group by 
                                 user_id
                             ) as locations
@@ -82,8 +80,7 @@ let request = function(){
                                     )
                                 ) as User_Professions
                             from
-                                (select * 
-                                from User_Professions order by start_date desc) up
+                                User_Professions
                             group by
                                 user_id
                             ) professions
@@ -97,18 +94,17 @@ let request = function(){
                                     json_object(
                                         'id', id,
                                         'school_name', school_name,
+                                        'school_type', school_type,
                                         'city', city,
                                         'state', state,
                                         'country', country,
                                         'start_date', start_date,
                                         'end_date', end_date,
-                                        'school_type', school_type,
                                         'privacy', privacy
                                     )
                                 ) as User_Schools
                             from
-                                (select * 
-                                from User_Schools order by start_date desc) us
+                                User_Schools
                             group by
                                 user_id
                             ) as schools   
@@ -133,7 +129,7 @@ let request = function(){
                 res.json({message: "Email and password don't match.", acc_info: null, status: 0b10});
 
             } else {
-                console.log(result);
+
                 res.json({message: "Login successfully", acc_info: result[0], status: 0b11});
 
             }

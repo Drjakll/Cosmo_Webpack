@@ -20,36 +20,6 @@ class Text_Editor extends Text_Type {
 
     }
 
-    Update_Account_Data = async () => {
-
-        let { owner_user_account, column_name, value } = this.state;
-        let {id, email, password} = owner_user_account;
-        let { update_profile } = this.context.Request_URLs;
-
-        owner_user_account[column_name] = value;
-
-        let body = {
-            credentials: {
-                email: email,
-                id: id,
-                password
-            },
-            to_update: {
-                [column_name]: value
-            }
-        }
-
-        await fetch(update_profile, {
-            method: "POST",
-            body: JSON.stringify(body),
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        });
-
-        this.setState({owner_user_account});
-    }
-
     render() {
 
 
