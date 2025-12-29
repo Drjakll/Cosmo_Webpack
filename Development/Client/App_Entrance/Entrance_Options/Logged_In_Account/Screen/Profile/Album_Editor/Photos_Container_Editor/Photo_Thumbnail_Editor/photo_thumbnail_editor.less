@@ -3,33 +3,35 @@
     width: 100%;
     
     #select-to-delete-button-wrapper {
-        width: 25%;
-        height: 25%;
+        width: 15px;
+        height: 15px;
         display: flex;
         justify-content: center;
         align-items: center;
         z-index: 9999;
         position: absolute;
-        right: 0%;
+        right: 0px;
+        background-color: rgba(0,0,0,0.5);
+        border-radius: 10px;
+
 
         #selected-to-delete-button {
-            width: 25%;
-            height: 25%;
+            width: 10px;
+            height: 10px;
             display: flex;
             justify-content: center;
             align-items: center;
-            border: rgba(255,255,255,0.5) solid 0.5px;
+            //border: rgba(255,255,255,1) solid 0.5px;
             transition: 1s;
-            background-color: rgba(255,255,50,0.25);
-            border-radius: 5px;
-            top: 0.2vh;
-            right: 0.2vw;
+            background-color: rgb(8, 127, 14);
+            border-radius: 10px;
             position: absolute;
 
             &:hover {
                 cursor: pointer;
                 background-color: antiquewhite;
-                border: rgba(100,100,100,1) solid 0.5px;
+                width: 15px;
+                height: 15px;
                 
                 #instruction {
                     display: flex;
@@ -39,7 +41,7 @@
             #instruction {
                 background-color: white;
                 border: rgba(0,0,0,0.25) solid 0.5px;
-                padding: 0.5vh 0.5vw 0.5vh 0.5vw;
+                padding: 5px 10px 5px 10px;
                 position: absolute;
                 border-radius: 5px;
                 top: 100%;
@@ -47,13 +49,13 @@
                 display: none;
                 justify-content: center;
                 align-items: center;
-                font-size: calc(0.35vh + 0.35vw);
+                font-size: 12px;
                 text-align: center;
             }
         }
 
         .selected-to-delete {
-            background-color: antiquewhite !important;
+            background-color: rgb(211, 43, 18) !important;
         }
     }
 }

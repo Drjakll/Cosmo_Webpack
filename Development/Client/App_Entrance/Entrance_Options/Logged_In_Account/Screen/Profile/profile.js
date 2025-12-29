@@ -54,8 +54,6 @@ class Profile extends Profile_Template {
     }   
 
     Generate_Albums = (general_props, unique_props)=>{  
-        
-        return <div></div>
 
         return <Album_Editor {...general_props} {...unique_props} />;
     }

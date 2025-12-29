@@ -32,23 +32,22 @@ Click nbfs://nbhost/SystemFileSystem/Templates/ClientSide/style.less to edit thi
             background-position: center 30%;
             background-size: cover;
             background-repeat: no-repeat;
-            border-bottom-right-radius: 5px;
+            border-bottom-right-radius: 25px;
             //border-radius: 250px;
-            border: rgba(55,55,55,1) solid 1px;
-            //box-shadow: 5px 5px 14px rgba(0,0,0,0.5);
+            border: rgba(55,55,55,1) solid 0.5px;
+            box-shadow: 0px 0px 10px rgba(0,0,0,0.5);
             transition: 0.5s;
-            //z-index: 99;
             
             &:hover {
                 cursor: pointer;
-                box-shadow: 0px 0px 10px rgba(0,0,0,0.5);
+                box-shadow: 0px 0px 20px rgba(0,0,0,0.75);
             }
         }
     }
 }
 
 .enlarged-photo {
-    z-index: 99999999;
+    z-index: 99999999 !important;
 }
 
 @media only screen and (max-width: 1000px){

@@ -123,11 +123,11 @@ class Json_Editor extends Json_Data {
                         add_new_item={this.Add_New_Item}/>
     }
 
-    Delete_Item = async ({id, table_name})=>{
+    Delete_Item = async ({id})=>{
 
         let {remove_item_from_profile_table} = this.context.Request_URLs;
 
-        let {value} = this.state;
+        let {value, table_name} = this.state;
 
         let body = {
             table_name,
@@ -180,6 +180,46 @@ class Json_Editor extends Json_Data {
         this.setState({value, json_obj});
 
         json_obj = {};
+
+        window.Refresh_Login();
+    }
+
+    Update_Items = async ({id})=>{
+
+        let {update_profile_table_data} = this.context.Request_URLs;
+        let {table_name, json_obj, value} = this.state;
+
+        let body = {
+            to_update: json_obj,
+            id,
+            table_name
+        };
+
+        await fetch(
+            update_profile_table_data,
+            {
+                method: "POST",
+                body: JSON.stringify(body),
+                headers: {
+                    'content-type': "application/json"
+                }
+            }
+        );
+
+        //Update only the array element of value where element.id === id
+        value = value.map((e, i)=>{
+
+            if(e.id === id){
+                for(let i in json_obj){
+                    e[i] = json_obj[i];
+                }
+            }
+
+            return e;
+        });
+
+        //Update value so that other array element will return to its original value
+        this.setState({json_obj: {}, value});
 
         window.Refresh_Login();
     }

@@ -21,7 +21,7 @@ class Albums extends Component {
             visitor_user_account,
             album_editor,
             albums: [],
-            photos: [],
+            photo_links: [],
             selected_album: {}
         };
     }
@@ -37,84 +37,86 @@ class Albums extends Component {
             return;
         }
         
-        let properties = this.props;
+        this.setState(this.props);
         
-        this.setState(properties);
-        
-        if(properties.owner_user_account){
-        
-            this.Get_Albums();
-            
-        }
+
+        this.Get_Albums();
+
     }
     
     Get_Albums = async () => {
 
-        let {owner_user_account} = this.state;
+        let {owner_user_account, albums} = this.state;
 
         if(!owner_user_account){
             return;
         }
         
-        const {Request_URLs} = this.context;
+        const {get_albums} = this.context.Request_URLs;
         
-        let res = await fetch(Request_URLs.get_photo_albums, {
+        let res = await fetch(get_albums, {
             method: "POST",
-            body: JSON.stringify(owner_user_account),
+            body: JSON.stringify({id: owner_user_account.id}),
             headers: {
                 'Content-Type': "application/json"
             }
         });
         
         let resJson = await res.json();
-        
-        if (resJson.albums === this.state.albums) {
+
+        if(!resJson){
             return;
         }
 
-        this.setState({albums: resJson.albums});
+        this.setState({albums: resJson.results});
     }
     
     Get_Photo_Links = async (album_info) => {
         
-        const {Request_URLs} = this.context;
+        const { get_photo_links } = this.context.Request_URLs;
+
+        let {id} = album_info;
+
+        let body = {
+            target_id: id,
+            target_type: "album"
+        }
         
-        let res = await fetch(Request_URLs.get_photo_links, {
+        let res = await fetch(get_photo_links, {
             method: "POST",
-            body: JSON.stringify(album_info),
+            body: JSON.stringify(body),
             headers: {
                 'Content-Type': "application/json"
             }
         });
         
-        let resJson = await res.json();
+        let {results} = (await res.json()) ?? {results: []};
 
-        let { state} = this;
+        this.state.selected_album = album_info;
+        this.state.photo_links = results;
 
-        state.photos = resJson.photos;
-        state.selected_album = album_info;
-
-        await this.setState(state);
+        await this.setState({ photo_links: results, selected_album: album_info});
 
         this.props.change_display(this.Open_Photo_Container);
     }
 
     Open_Photo_Container = () =>{
 
-        let {photos, selected_album, owner_user_account, visitor_user_account} = this.state;
+        let {photo_links, selected_album, owner_user_account, visitor_user_account} = this.state;
 
-        let {Photos_Container : Container} = this;
+        let {change_display, return_previous_display} = this.props;
 
+        let {Photos_Container : Container, Get_Albums, Get_Photo_Links} = this;
 
         return (<Container 
-            photos={photos}
+            photo_links={photo_links}
             album_info={selected_album}
             owner_user_account={owner_user_account}
             visitor_user_account={visitor_user_account}
-            Get_Albums={this.Get_Albums}
-            Get_Photo_Links={this.Get_Photo_Links}
-            change_main_display={this.props.change_display}
-            return_previous_display={this.props.return_previous_display}
+            Get_Albums={Get_Albums}
+            change_main_display={change_display}
+            return_previous_display={return_previous_display}
+            Get_Photo_Links={Get_Photo_Links}
         />);
         
     }
@@ -134,7 +136,7 @@ class Albums extends Component {
 
                     <div id="albums-label">
 
-                        <label><u>Albums</u></label>
+                        <label>Albums</label>
 
                     </div>
                         

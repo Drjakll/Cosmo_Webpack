@@ -11,11 +11,13 @@ let request = function () {
 
             await this.sql.query(query, [to_insert]);
 
+            res.json({message: "Successfully added item to the profile table!", failed: false});
+
         } catch(err){
             console.log(query, err);
-        }   
 
-        res.end();
+            res.json({message: "Error while adding to profile table!", failed: true});
+        }   
     };
 };
 

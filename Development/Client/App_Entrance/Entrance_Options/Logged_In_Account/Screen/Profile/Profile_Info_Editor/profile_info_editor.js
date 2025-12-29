@@ -13,10 +13,11 @@ class Profile_Info_Editor extends Profile_Info {
         
         Profile_Info_Editor.contextType = Context;
 
-        this.state.Profile_Picture = Profile_Picture;
-        this.state.Profile_Info_Data = Profile_Info_Data;
-
     }
+
+    Profile_Picture = Profile_Picture;
+
+    Profile_Info_Data = Profile_Info_Data;
 
     componentDidMount(){
 

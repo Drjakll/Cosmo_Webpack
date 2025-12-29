@@ -1,7 +1,7 @@
 let request = function() {
     
     
-    this.req = (req, res) => { 
+    this.req = async (req, res) => { 
         
         let {target_id, target_type, comment} = req.body;
  
@@ -11,18 +11,19 @@ let request = function() {
         
         let query = `insert into Comments (target_id, target_type, comment) values ?`;
         
-        this.sql.query(query, data, (err, result)=>{
-           
-            if(err){
-                console.log(query, err.sqlMessage);
-                res.json({message: "Error submitting comment"});
-            } else {
-                res.json({message: `Successfully submitted comment`});
-            }
-            
-            res.end();
-            
-        });
+        try {
+
+            await this.sql.query(query, data);
+
+            res.json({message: "Successfully submitted a comment", failed: false});
+
+        } catch(err){
+
+            console.log(err);
+
+            res.json({message: "Error submitting a comment", failed: true});
+
+        }
                 
     };
 };

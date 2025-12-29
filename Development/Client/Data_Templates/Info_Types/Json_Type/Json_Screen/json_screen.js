@@ -11,16 +11,20 @@ class Json_Popup extends Component {
 
     Input_Data_Types = null
 
+    Update_Items = null
+
 
     constructor(props){
 
         super(props);
 
-        let {label, table_name, value, owner_user_account, visitor_user_account, options, Editor, Delete_Item, Input_Data_Types} = props;
+        let {label, table_name, value, owner_user_account, visitor_user_account, options, Editor, Delete_Item, Input_Data_Types, Update_Items} = props;
 
         this.Delete_Item = this.Delete_Item || Delete_Item;
         this.Editor = this.Editor || Editor;
         this.Input_Data_Types = this.Input_Data_Types || Input_Data_Types;
+        this.Update_Items = this.Update_Items || Update_Items
+
 
         this.Name_Mapping(options);
 
@@ -130,12 +134,16 @@ class Json_Popup extends Component {
 
                             </div>
 
-                            {this.Delete_Item !== null ? 
+                            {this.Delete_Item !== null && this.Update_Items !== null ? 
 
-                                <div id="delete-button-wrapper">
+                                <div id="buttons-wrapper">
 
-                                    <div id="delete-button" onClick={(e) => { this.Delete_Item({id: table.id, table_name}); }}>
+                                    <div id="delete-button" className="button" onClick={(e) => { this.Delete_Item({id: table.id}); }}>
                                         Delete
+                                    </div>
+
+                                    <div id="save-button" className="button" onClick={(e) => { this.Update_Items({id: table.id}); }}>
+                                        Save
                                     </div>
 
                                 </div> 

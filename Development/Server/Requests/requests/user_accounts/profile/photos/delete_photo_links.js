@@ -1,32 +1,43 @@
 let request = function() {
     
-    this.req = (req, res, next) => { 
+    this.req = async (req, res, next) => { 
         
         let { photos } = req.body;
+
+        if(Object.keys(photos || {}).length === 0){
+            res.end();
+            return;
+        }
+
+        let ids = [], target_ids = [], target_types = [];
+
+        for(let i in photos){
+
+            let {id, target_id, target_type} = photos[i];
+
+            ids.push(id);
+            target_ids.push(target_id);
+            target_types.push(target_type);
+        }
         
         if(photos.length === 0){
             res.json({message:"No photo data has been deleted"});
             return;
         }
      
-        let query = `delete from User_Photo_Links where (id, target_id, target_type) in ?`;
+        let query = `delete from Photo_Links where id in (?) and target_id in (?) and target_type in (?)`;
         
-        
-        this.sql.query(query, [photos], (err, result)=>{
-           
-            if(err){
-                
-                console.log(query, err.sqlMessage);
-                res.json({message: "Error deleting photo"});
+        try {
 
-            }else {
+            await this.sql.query(query, [ids, target_ids, target_types]);
 
-                //On to erasing the data files from storage
-                next();
-            }
-            
-        });
-                
+            next();
+
+        } catch(err){
+
+            console.log(query, err);
+        }
+
     };
 };
 

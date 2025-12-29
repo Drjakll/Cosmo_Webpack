@@ -2,20 +2,18 @@ let request = function () {
     
     this.req = async (req, res) => { 
         
-        let { to_update, credentials } = req.body;
+        let { to_update, table_name, id } = req.body;
 
-        let {email, id} = credentials;
-
-        if(Object.keys(to_update).length === 0 || !email || !id){
+        if(Object.keys(to_update).length === 0 || !table_name || !id){
             res.end();
             return;
         }
         
-        let query = `update User_Accounts set ? where email = ? and id = ?`;
+        let query = `update ${table_name} set ? where id = ?`;
                                                 
         try {
 
-            await this.sql.query(query, [to_update, email, id]);
+            await this.sql.query(query, [to_update, id]);
             
         }catch(err){
 

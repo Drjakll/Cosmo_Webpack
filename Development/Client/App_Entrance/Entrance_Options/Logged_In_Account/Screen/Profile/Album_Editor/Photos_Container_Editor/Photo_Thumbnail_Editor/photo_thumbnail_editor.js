@@ -35,12 +35,12 @@ class Single_Photo_Thumbnail_Editor extends Single_Photo {
         return <div id="photo-thumbnail"> 
 
             <div id="select-to-delete-button-wrapper">
-
+                
                 <div id="selected-to-delete-button" onClick={(e) => {
 
-                    this.props.insert_photo_to_delete(photo_info);
+                        this.props.insert_photo_to_delete(photo_info);
 
-                }}
+                    }}
 
                     className={`${photos_to_be_deleted[photo_info.id] ? "selected-to-delete" : "" }`}
                 >

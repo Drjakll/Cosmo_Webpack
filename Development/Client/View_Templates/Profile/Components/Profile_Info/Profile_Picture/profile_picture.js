@@ -39,12 +39,12 @@ class Profile_Picture extends Component {
         const { Request_URLs } = this.context;
         const { aws_s3_url } = Request_URLs;
         
-        let {owner_user_account} = this.state;
+        let { owner_user_account } = this.state;
         const { profile_picture_link } = owner_user_account;
 
         return (
             <div id="profile-picture" className={this.state.enlarge_photo ? "enlarged-photo" : ""}>
-
+                
                 {this.state.enlarge_photo ? <Enlarged_Profile_Photo turn_off_enlarge={this.Turn_Off_Enlarge} full_url={`${aws_s3_url}${profile_picture_link}`} /> : <></>}
                 
                 <div id="profile-picture-image-wrapper">

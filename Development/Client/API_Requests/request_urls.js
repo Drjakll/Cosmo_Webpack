@@ -6,6 +6,7 @@ const create_account = `/create_account`;
 const update_profile = '/update_profile';
 const add_item_to_profile_table = '/add_item_to_profile_table';
 const remove_item_from_profile_table = '/remove_item_from_profile_table';
+const update_profile_table_data = '/update_profile_table_data';
 
 //Albums
 const update_album = '/update_album';
@@ -86,6 +87,7 @@ export default {
     update_profile,
     add_item_to_profile_table,
     remove_item_from_profile_table,
+    update_profile_table_data,
         
     //Photos
     upload_photos,

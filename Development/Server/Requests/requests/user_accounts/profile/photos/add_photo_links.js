@@ -1,7 +1,7 @@
 let request = function() {
     
     
-    this.req = (req, res) => { 
+    this.req = async (req, res) => { 
         
         let {links, target_type, target_id} = req.body;
 
@@ -11,15 +11,15 @@ let request = function() {
 
         for(let link of links){
 
-            to_be_inserted.push({link, target_type, target_id, time_uploaded});
+            to_be_inserted.push([link, target_type, target_id, time_uploaded]);
 
         }
 
-        let query = `insert into Photo_Links(link, target_type, target_id, time_stamp) values ?`;
+        let query = `insert into Photo_Links(link, target_type, target_id, time_uploaded) values ?`;
 
         try {
 
-            this.sql(query, [to_be_inserted]);
+            await this.sql.query(query, [to_be_inserted]);
 
         } catch (err){
 
@@ -27,7 +27,7 @@ let request = function() {
 
         }
 
-        res.end();
+        res.json({message: "Upload successful!"});
         
     }
 };

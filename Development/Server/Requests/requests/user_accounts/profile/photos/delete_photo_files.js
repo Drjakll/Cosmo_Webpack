@@ -18,9 +18,8 @@ let request = function(){
         
         let { photos } = req.body;
         
-        if(Object.keys(photos).length === 0){
+        if(Object.keys(photos || {}).length === 0){
             res.json({message: "No files deleted"});
-            res.end();
             return;
         }
         

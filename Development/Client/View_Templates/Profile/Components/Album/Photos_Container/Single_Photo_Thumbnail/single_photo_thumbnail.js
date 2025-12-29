@@ -56,7 +56,7 @@ class Single_Photo extends Component {
         aws_s3_url = photo_link ? aws_s3_url : "";
 
         let {Enlarged_Single_Photo: Enlarged_Photo} = this;
-
+        
         return  <Enlarged_Photo 
             photo_info={this.state.photo_info}
             aws_s3_url={`${aws_s3_url}`}

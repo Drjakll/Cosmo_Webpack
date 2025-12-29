@@ -13,10 +13,10 @@ class Photos_Container extends Component {
         
         super(props);
 
-        let {owner_user_account, visitor_user_account, album_info, photos} = this.props
+        let {owner_user_account, visitor_user_account, album_info, photo_links} = this.props
         
         this.state = {
-            photos,
+            photo_links,
             album_info,
             owner_user_account,
             visitor_user_account,
@@ -25,7 +25,7 @@ class Photos_Container extends Component {
     }
 
     componentDidMount(){
-
+        
     }
 
     componentDidUpdate(prevProps, prevState) {
@@ -39,7 +39,11 @@ class Photos_Container extends Component {
     
     render(){
 
-        let {Single_Photo_Thumbnail: Photo_Thumbnail} = this;
+        let {Single_Photo_Thumbnail: Photo_Thumbnail, Insert_Photo_To_Delete} = this;
+
+        let {owner_user_account, visitor_user_account, photos_to_be_deleted, album_info, photo_links} = this.state;
+
+        let {Get_Albums, change_main_display} = this.props;
         
         return (
             <div id="photos-container">
@@ -47,24 +51,34 @@ class Photos_Container extends Component {
                 <div id="photo-container-wrapper">
                     
                     <div id="photo-container-title">
-                        {this.state.album_info.title}
+                        {album_info.title}
+                    </div>
+
+                    <div id="photo-container-description">
+
+                        <label>Description</label>
+
+                        <div id="description-content">
+                            {album_info.brief_description}
+                        </div>
+
                     </div>
                     
                     <div id="photos">
                         
-                        {this.state.photos.map((photo_info, index)=>{
+                        {photo_links.map((photo_info, index)=>{
 
                             return <div className="photo-thumbnail-wrapper" key={index}>
 
                                 <Photo_Thumbnail
                                     photo_info={photo_info}
-                                    owner_user_account={this.state.owner_user_account}
-                                    visitor_user_account={this.state.visitor_user_account}
-                                    photos_to_be_deleted={this.state.photos_to_be_deleted}
-                                    album_info={this.state.album_info}
-                                    Get_Albums={this.props.Get_Albums}
-                                    change_main_display={this.props.change_main_display}
-                                    insert_photo_to_delete={this.Insert_Photo_To_Delete}
+                                    owner_user_account={owner_user_account}
+                                    visitor_user_account={visitor_user_account}
+                                    photos_to_be_deleted={photos_to_be_deleted}
+                                    album_info={album_info}
+                                    Get_Albums={Get_Albums}
+                                    change_main_display={change_main_display}
+                                    insert_photo_to_delete={Insert_Photo_To_Delete}
                                 />
 
                             </div>;

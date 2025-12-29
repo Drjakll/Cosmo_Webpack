@@ -12,10 +12,7 @@ class Enlarged_Photo_Editor extends Enlarged_Single_Photo {
         super(props);
 
         Enlarged_Photo_Editor.contextType = Context;
-        
-        for(let i in this.props){
-            this.state[i] = this.props[i];
-        }
+
 
     }
 
@@ -34,19 +31,24 @@ class Enlarged_Photo_Editor extends Enlarged_Single_Photo {
  
         let set_album_thumbnail = async (e) => {
 
-            let { Request_URLs } = this.context;
-
-            let { update_album } = Request_URLs;
+            let { set_photo_as_cover } = this.context.Request_URLs;
 
             let { album_info, photo_info } = this.state;
 
-            album_info.cover_image_link = photo_info.link;
+            let last_cover_id = album_info.album_cover_id;
+
+            let photo_cover_id = photo_info?.id;
+
+            let body = {
+                last_cover_id,
+                photo_cover_id
+            }
 
             let res = await (await fetch(
-                update_album,
+                set_photo_as_cover,
                 {
                     method: "POST",
-                    body: JSON.stringify(album_info),
+                    body: JSON.stringify(body),
                     headers: {
                         'Content-Type': "application/json"
                     }

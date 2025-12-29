@@ -60,7 +60,7 @@ class Profile_Info_Data extends Component {
                 <div id="profile-data-label-wrapper">
 
                     <label>
-                        <u>Details</u>
+                        Details
                     </label>
 
                 </div>

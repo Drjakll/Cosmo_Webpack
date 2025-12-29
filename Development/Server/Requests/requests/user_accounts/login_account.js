@@ -14,6 +14,7 @@ let request = function(){
                             ac.email,
                             ac.privacy,
                             pl.link as profile_picture_link,
+                            pl.id as profile_picture_id,
                             
                             coalesce(hobbies.User_Hobbies, json_array()) as User_Hobbies,
                             coalesce(locations.User_Locations, json_array()) as User_Locations,
@@ -114,7 +115,7 @@ let request = function(){
                         left join
                             Photo_Links as pl
                         on
-                            pl.target_id = ac.id and is_a_cover = true
+                            pl.target_id = ac.id and is_a_cover = true and pl.target_type = 'profile'
 
                         where 
                             ac.email = ? and ac.password = ?

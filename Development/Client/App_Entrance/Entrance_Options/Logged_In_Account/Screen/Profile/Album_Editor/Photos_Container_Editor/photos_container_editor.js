@@ -17,7 +17,8 @@ class Photos_Container_Editor extends Photos_Container {
         this.Single_Photo_Thumbnail = Photo_Thumbnail_Editor;
         
         let state = {
-
+            selected_files: [],
+            photos_to_be_deleted: {}
         };  
         
         this.Photos_To_Be_Deleted = {}
@@ -55,52 +56,34 @@ class Photos_Container_Editor extends Photos_Container {
 
         let delete_album = async (e) => {
 
-            let { Request_URLs } = this.context;
+            let { delete_album } = this.context.Request_URLs;
 
-            let { delete_photo_files, delete_photo_links, delete_album } = Request_URLs;
-
-            let { photos } = this.state;
-
-            let { album_info } = this.props;
+            let { owner_user_account, album_info } = this.state;
 
             let response = prompt("Enter the album's name to delete");
 
             if (response !== album_info.title) {
-                alert("You entered it wrong!");
+                alert("You entered the wrong album name!");
                 return;
             }
 
             let param = {
-                photos
+                id: album_info.id,
+                user_id: owner_user_account.id
             };
 
-            let res = await (await fetch(delete_photo_files, {
+            await fetch(delete_album, {
                 method: "POST",
                 body: JSON.stringify(param),
                 headers: {
                     'Content-Type': 'application/json'
                 }
-            })).json();
+            });
 
-            res = await (await fetch(delete_photo_links, {
-                method: "POST",
-                body: JSON.stringify(param),
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            })).json();
-
-            res = await (await fetch(delete_album, {
-                method: "POST",
-                body: JSON.stringify(album_info),
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            })).json();
+            await this.props.Get_Albums();
 
             this.props.return_previous_display();
 
-            this.props.Get_Albums();
         }
 
         return <div id="delete-album-button" onClick={delete_album}>
@@ -110,49 +93,45 @@ class Photos_Container_Editor extends Photos_Container {
 
     Add_Photos_Button = () => {
 
-        let uploadRef = createRef();
-
         let Upload = async (e) => {
 
-            let { Request_URLs, Upload_Files_To_S3, Photo_Album_Data_Templates } = this.context;
+            let { Request_URLs, Upload_Files_To_S3 } = this.context;
 
-            let { Photo_Data } = Photo_Album_Data_Templates;
+            let { upload_photos } = Request_URLs;
 
-            let { add_photo_links, upload_photos } = Request_URLs;
+            let { album_info, owner_user_account, selected_files } = this.state;
 
-            let { album_info, owner_user_account } = this.state;
+            let {title} = album_info;
 
-            let jsonBody = { email: owner_user_account.email, album: album_info.title };
+            let {id} = owner_user_account;
+
+            let jsonBody = { target_id: parseInt(album_info.id), target_type: "album", user_id: id, album_name: title };
 
 
-            let res = await Upload_Files_To_S3(upload_photos, uploadRef.current.files, jsonBody);
-
-            let photo_objs = [];
-
-            for (let url of res.photo_urls) {
-
-                let obj = Photo_Data({ owner_email: owner_user_account.email, link: url, belongs_to_album: album_info.id });
-
-                photo_objs.push(obj);
-            }
-
-            res = await (await fetch(add_photo_links, {
-                method: "POST",
-                body: JSON.stringify(photo_objs),
-                headers: {
-                    'Content-Type': "application/json"
-                }
-            })).json();
+            await Upload_Files_To_S3(upload_photos, selected_files, jsonBody);
 
             await this.props.Get_Photo_Links(album_info);
 
+            this.setState({selected_files: []});
+
         }
+
+        let Update_Selected_Files = (e)=>{
+
+            let selected_files = e.target.files;
+
+            this.setState({selected_files});
+        }
+
+        let {selected_files} = this.state;
 
         return <div id="add-photos-section">
 
             <div id="upload-photo-selections-wrapper">
 
-                <input type="file" ref={uploadRef} multiple={true} accept="image/*" />
+                <input type="file" id="file-upload" multiple={true} accept="image/*" hidden={true} onChange={Update_Selected_Files}/>
+
+                <label htmlFor="file-upload" id="upload-file-button">{selected_files.length || "Select" } file(s) {selected_files.length ? "selected" : ""}</label>
 
             </div>
 
@@ -171,35 +150,118 @@ class Photos_Container_Editor extends Photos_Container {
 
             let { Request_URLs } = this.context;
 
-            let { delete_photo_files, delete_photo_links } = Request_URLs;
+            let { delete_photos } = Request_URLs;
 
-            let param = {
+            let body = {
                 photos: this.Photos_To_Be_Deleted
             };
 
-            let res = await (await fetch(delete_photo_files, {
+            await fetch(delete_photos, {
                 method: "POST",
-                body: JSON.stringify(param),
+                body: JSON.stringify(body),
                 headers: {
                     'Content-Type': "application/json"
                 }
-            })).json()
+            });
 
-            res = await (await fetch(delete_photo_links, {
-                method: "POST",
-                body: JSON.stringify(param),
-                headers: {
-                    'Content-Type': "application/json"
-                }
-            })).json();
+            this.Photos_To_Be_Deleted = {};
+            this.setState({Photos_To_Be_Deleted: {}});
 
             this.props.Get_Photo_Links(this.state.album_info);
         };
 
         return <div id="delete-photo-button">
 
-            <button onClick={delete_photos}>Delete Selections</button>
+            <button onClick={delete_photos}>Delete {Object.keys(this.state.photos_to_be_deleted).length} photo(s)</button>
 
+        </div>;
+    }
+
+    Title_Editor = ()=>{
+
+        let Change_Title = async (e)=>{
+
+            let new_title = prompt("Insert a new title.");
+
+            if(!new_title){
+                return;
+            }
+
+            let {album_info, owner_user_account} = this.state;
+
+            let {id} = owner_user_account;
+
+            album_info.title = new_title;
+
+            this.setState({album_info});
+
+            let {update_album} = this.context.Request_URLs;
+
+            let body = {
+                user_id: id,
+                id: album_info.id,
+                album_info: {
+                    title: new_title
+                }
+            };
+
+            await fetch(update_album,
+                {
+                    method: "POST",
+                    body: JSON.stringify(body),
+                    headers: {
+                        'Content-Type': "application/json"
+                    }
+                }
+            );
+        }
+
+        return <div id="title-editor" onClick={Change_Title}>
+            Change Title
+        </div>;
+    }
+
+    Description_Editor = ()=>{
+
+        let Change_Description = async (e)=>{
+
+            let new_description = prompt("Insert a new description.");
+
+            if(!new_description){
+                return;
+            }
+
+            let {album_info, owner_user_account} = this.state;
+
+            let {id} = owner_user_account;
+
+            album_info.brief_description = new_description;
+
+            this.setState({album_info});
+
+            let {update_album} = this.context.Request_URLs;
+
+            let body = {
+                user_id: id,
+                id: album_info.id,
+                album_info: {
+                    brief_description: new_description
+                }
+            };
+
+            await fetch(update_album,
+                {
+                    method: "POST",
+                    body: JSON.stringify(body),
+                    headers: {
+                        'Content-Type': "application/json"
+                    }
+                }
+            );
+        }
+
+        return <div id="description-editor" onClick={Change_Description}>
+            Change Description
         </div>;
     }
     
@@ -210,6 +272,10 @@ class Photos_Container_Editor extends Photos_Container {
             <div id="editor-buttons-wrapper">
 
                 {this.Delete_Album_Button()}
+
+                {this.Title_Editor()}
+
+                {this.Description_Editor()}
 
                 {this.Add_Photos_Button()}
 

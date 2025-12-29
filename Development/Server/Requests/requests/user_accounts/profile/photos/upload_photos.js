@@ -22,7 +22,8 @@ let request = function(){
         const {user_id, target_type, target_id, album_name} = JSON.parse(req.body.metadata);
 
         
-        if (!uploadedFiles || uploadedFiles.length === 0) {
+        if (!uploadedFiles || uploadedFiles.length === 0 || !target_type || !target_id || !user_id) {
+            console.log(target_type, target_id, user_id);
             return res.status(400).json({message: 'No files uploaded.'});
         }
         
@@ -31,7 +32,7 @@ let request = function(){
         
         //Go through each file
         await uploadedFiles.forEach(async (file) => {
-
+            
             const tempPath = file.path;
             
             var file_data = fs.createReadStream(tempPath);

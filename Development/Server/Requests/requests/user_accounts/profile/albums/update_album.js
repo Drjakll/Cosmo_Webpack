@@ -1,30 +1,31 @@
 let request = function() {
     
     
-    this.req = (req, res) => { 
+    this.req = async (req, res) => { 
         
-        let {id, user_id} = req.body;
+        let {id, user_id, album_info} = req.body;
         
         if(!id || !user_id){
-            res.json({message: "Error updating album"});
+            res.json({message: "Invalid id or user id", failed: true});
             return;
         }
         
-        let query = this.generate_update_query("Photo_Albums", album, {id: id, user_id: user_id});
+        let query = `update Photo_Albums set ? where user_id = ? and id = ?`
         
-        this.sql.query(query, (err, result)=>{
-           
-            if(err){
-                console.log(query, err.sqlMessage);
-                res.json({message: "Error updating album"});
-            } else {
-                res.json({message: `Successfully updated ${result.affectedRows} row(s)`});
-            }
+        try {
+
+            await this.sql.query(query, [album_info, user_id, id]);
+
+            res.json({message: "Successfully updated Photo Album", failed: false});
+
+        }catch(err){
+
+            console.log(err);
             
-            res.end();
-            
-        });
-                
+            res.json({message: "Error updating Photo Album", failed: true});
+        }
+
+        
     };
 };
 

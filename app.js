@@ -95,7 +95,8 @@ let {
 let {
     update_profile, 
     add_item_to_profile_table,
-    remove_item_from_profile_table
+    remove_item_from_profile_table,
+    update_profile_table_data
 } = profile_data;
 
 //Messaging
@@ -123,7 +124,7 @@ let {entry_page} = get_web_pages;
 let {entry} = entry_page;
 
 //Dummy_Middle_Ware
-let {dummy_middleware: dummy} = dummy_middleware;
+let {dummy_middleware: result_sender} = dummy_middleware;
 
 //Connections
 let {
@@ -175,6 +176,7 @@ app.post("/login_account", login_account.req);
 
 //Profile Data
 app.post("/update_profile", update_profile.req);
+app.post("/update_profile_table_data", update_profile_table_data.req);
 app.post("/add_item_to_profile_table", add_item_to_profile_table.req);
 app.post("/remove_item_from_profile_table", remove_item_from_profile_table.req);
 
@@ -183,11 +185,11 @@ app.post("/remove_item_from_profile_table", remove_item_from_profile_table.req);
 app.post("/update_album", update_album.req);
 app.post("/add_album", add_album.req);
 app.post("/get_albums", get_albums.req);
-app.post("/delete_album", delete_album.req);
+app.post("/delete_album", delete_album.req, get_photo_links.req, delete_photo_links.req, delete_photo_files.req);
 
 //Photos
 app.post("/upload_photos", uploads.array('files', 100), upload_photos.req, add_photo_links.req);
-app.post("/get_photo_links", get_photo_links.req);
+app.post("/get_photo_links", get_photo_links.req, result_sender.req);
 app.post("/delete_photos", delete_photo_links.req, delete_photo_files.req);
 app.post("/set_photo_as_cover", set_photo_as_cover.req);
 
@@ -205,18 +207,18 @@ app.post("/delete_post", delete_post.req);
 app.post("/get_last_time_posted", get_last_time_posted.req);
 
 //Connections
-app.post("/get_connection_list", get_connection_requests.req, get_connection_list.req, dummy.req);
+app.post("/get_connection_list", get_connection_requests.req, get_connection_list.req, result_sender.req);
 app.post("/find_connections", find_connections.req);
-app.post("/send_connection_request", send_connection_request.req, dummy.req);
-app.post("/get_connection_requests_from", get_connection_requests_from.req, dummy.req);
-app.post("/get_connection_request_to", get_connection_requests_to.req, dummy.req);
+app.post("/send_connection_request", send_connection_request.req, result_sender.req);
+app.post("/get_connection_requests_from", get_connection_requests_from.req, result_sender.req);
+app.post("/get_connection_request_to", get_connection_requests_to.req, result_sender.req);
 app.post("/remove_connection_request", remove_connection_request.req);
 app.post("/update_connection_request", update_connection_request.req);
 app.post("/send_follow_request", find_public_user_info.req, send_follow_request.req);
 app.post("/unfollow_user_account", unfollow_user_account.req);
 app.post("/get_all_followers", get_all_followers.req);
 app.post("/get_all_followings", get_all_followings.req);
-app.post("/get_follow_requests", get_follow_requests.req, dummy.req);
+app.post("/get_follow_requests", get_follow_requests.req, result_sender.req);
 app.post("/remove_follow_request", remove_follow_request.req);
 app.post("/update_follow_request", update_follow_request.req);
 app.post("/find_public_user_info", find_public_user_info.req);

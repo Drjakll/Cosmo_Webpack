@@ -47,16 +47,16 @@ class Album_Editor extends Albums_Component {
         let {owner_user_account} = this.state;
         let {Photo_Album_Data_Templates, Request_URLs} = this.context;
         let {Photo_Album_Data} = Photo_Album_Data_Templates;
-        let {add_photo_album} = Request_URLs;
+        let {add_album} = Request_URLs;
 
 
-        let param = Photo_Album_Data({title: album_name, brief_description: "My adventure", owner_email: owner_user_account.email});
+        let param = Photo_Album_Data({title: album_name, brief_description: "My adventure", user_id: owner_user_account.id});
 
         if(!owner_user_account){
             return;
         }
 
-        let resJson = await (await fetch(add_photo_album, {
+        let result = await (await fetch(add_album, {
             method: "POST",
             body: JSON.stringify(param),
             headers: {
@@ -64,6 +64,10 @@ class Album_Editor extends Albums_Component {
             }
         })).json();
 
+        if(result.failed){
+            alert(result.message);
+            return;
+        }
 
         this.Get_Albums();
     }

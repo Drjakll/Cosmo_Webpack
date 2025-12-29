@@ -36,91 +36,68 @@ class Editor extends Component {
         
         let {Request_URLs} = this.context;
         
-        let {get_all_profile_pictures} = Request_URLs;
+        let {get_photo_links} = Request_URLs;
         
-        let {email} = this.state.owner_user_account;
+        let {id: target_id} = this.state.owner_user_account;
+
+        let target_type = "profile";
         
-        
-        let res = await fetch(get_all_profile_pictures, {
+        let data = await (await fetch(get_photo_links, {
             method: "POST",
-            body: JSON.stringify({email: email} ),
+            body: JSON.stringify({target_id, target_type}),
             headers: {
                 'Content-Type': 'application/json'
             }
-        });
+        })).json();
         
-        let resJson = await res.json();
-        
-        if(resJson){
+        if(data){
             
-            this.setState({profile_pictures: resJson.profile_photos});
+            this.setState({profile_pictures: data.results});
             
-        } else {
-            
-            alert(`${resJson?.message}`);
         }
     }
 
-    Update_Profile_Photo = async (photo_url) => {
+    Update_Profile_Photo = async (photo_info) => {
 
-        let { Request_URLs, Cookie_Tools, Configurations } = this.context;
+        let { set_photo_as_cover } = this.context.Request_URLs;
 
-        let { cookie_converter } = Cookie_Tools;
+        let {profile_picture_id} = this.state.owner_user_account;
 
-        let { set_as_profile_picture } = Request_URLs;
+        let body = {
+            last_cover_id: profile_picture_id ?? -1,
+            photo_cover_id: photo_info?.id ?? -1
+        };
 
-        let { owner_user_account } = this.state;
-
-        let res = await fetch(set_as_profile_picture, {
-            method: "POST",
-            body: JSON.stringify({
-                src_path: photo_url,
-                account_details: owner_user_account
-            }),
-            headers: {
-                'Content-Type': 'application/json'
+        await fetch(set_photo_as_cover,
+            {
+                method: "POST",
+                body: JSON.stringify(body),
+                headers: {
+                    'Content-Type': "application/json"
+                }
             }
-        });
+        );
 
-        let resJson = await res.json();
+        window.Refresh_Login();
 
-        if (resJson) {
-
-            const { refresh_account_data } = this.props;
-
-            refresh_account_data();
-        }
     }
 
     Upload_Profile_Pictures = async (files) => {
 
-        const { Request_URLs, Upload_Files_To_S3 } = this.context;
+        let {Upload_Files_To_S3} = this.context;
+        let { upload_photos } = this.context.Request_URLs;
+        let {id} = this.state.owner_user_account;
 
-        let jsonBody = { email: this.state.owner_user_account.email, album: "Profile Pictures" };
-
-        let resData = await Upload_Files_To_S3(Request_URLs.upload_photos, files, jsonBody);
-
-        if (resData) {
-
-            let body = { url: resData.photo_urls[0], belongs_to_user_email: this.state.owner_user_account.email };
-
-            let res = await fetch(Request_URLs.insert_profile_photo_data, {
-                method: "POST",
-                body: JSON.stringify(body),
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            });
-
-            let resJson = await res.json();
-
-            if (resJson) {
-                alert(resJson.message);
-
-                this.Get_All_Profile_Pictures();
-            }
-
+        let body = {
+            user_id: id,
+            target_id: id,
+            album_name: "Profile_Picture",
+            target_type: "profile"
         }
+
+        await Upload_Files_To_S3(upload_photos, files, body);
+
+        await this.Get_All_Profile_Pictures();
     }
 
     Select_To_Delete = (photo_data) => {
@@ -141,7 +118,7 @@ class Editor extends Component {
             selected_to_delete[id] = photo_data;
         }
 
-        this.setState({ selected_to_delete: selected_to_delete });
+        this.setState({ selected_to_delete });
     }
 
     Delete_Selections = async () => {
@@ -149,11 +126,11 @@ class Editor extends Component {
         let { selected_to_delete } = this.state;
 
         const { Request_URLs } = this.context;
-        const { delete_profile_photo_files, delete_database_profile_photos } = Request_URLs;
+        const { delete_photos } = Request_URLs;
 
         let body = { photos: selected_to_delete };
 
-        let res = await fetch(delete_profile_photo_files,
+        await fetch(delete_photos,
             {
                 method: "POST",
                 body: JSON.stringify(body),
@@ -163,31 +140,8 @@ class Editor extends Component {
             }
         );
 
-        let resJson = await res.json();
+        await this.Get_All_Profile_Pictures();
 
-        if (resJson) {
-
-            let res2 = await fetch(delete_database_profile_photos, {
-                method: "POST",
-                body: JSON.stringify(body),
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            });
-
-            let res2Json = await res2.json();
-
-            alert(res2Json?.message);
-
-            this.Get_All_Profile_Pictures();
-
-        } else {
-            alert("Error sending request to delete files");
-        }
-
-        this.setState({
-            selected_to_delete: {}
-        });
     }
     
     render(){
@@ -200,12 +154,6 @@ class Editor extends Component {
         let fileRef = createRef();
         
         return <div id="the-editor-profile-photo">
-        
-            <div id="the-exit-button-profile-photo-editor" onClick={(e)=>{this.props.exit_editor(); }}>
-                
-                
-                
-            </div>
             
             <div id="the-profile-pictures-editor">
 
@@ -219,7 +167,7 @@ class Editor extends Component {
 
                     <div id="upload-profile-pictures-wrapper">
 
-                        <input type="file" ref={fileRef} accept="image/*" />
+                        <input type="file" ref={fileRef} accept="image/*" multiple={true}/>
 
                         <button onClick={(e) => {
 
@@ -239,11 +187,11 @@ class Editor extends Component {
             
                 <div id="profile-picture-collection">
 
-                    {profile_pictures.map((picture, index)=>{
+                    {profile_pictures.map((photo_info, index)=>{
 
-                        let {url,id} = picture;
+                        let {link, id} = photo_info;
 
-                        let full_url = `${aws_s3_url}${url}`;
+                        let full_url = `${aws_s3_url}${link}`;
 
                         return <div className="individual-picture-wrapper" key={index}>
 
@@ -251,26 +199,21 @@ class Editor extends Component {
 
                                     <div id="the-picture" style={{
                                         backgroundImage: `url('${full_url}')`
-                                    }}>
-
-                                </div>
-                                
-                                <div id="the-buttons">
-
-                                    <div id="delete-selection" className={`${this.state.selected_to_delete[id] ? "delete-selected" : ""}`}
-                                        onClick={(e) => { this.Select_To_Delete(picture); } }
+                                        }}
+                                        onClick={(e) => { this.Select_To_Delete(photo_info); } }
+                                        className={`${this.state.selected_to_delete[id] ? "delete-selected" : ""}`}
                                     >
 
-                                        Select to Delete
-                                        
                                     </div>
 
-                                    <div id="set-as-profile-button" onClick={(e) => { this.Update_Profile_Photo(url); }}>
-                                        Set as Profile Picture
-                                    </div>
-                                        
+                            </div>
+
+                            <div id="the-buttons">
+
+                                <div id="set-as-profile-button" onClick={(e) => { this.Update_Profile_Photo(photo_info); }}>
+                                    Set as Profile Picture
                                 </div>
-
+                                        
                             </div>
 
                         </div>;

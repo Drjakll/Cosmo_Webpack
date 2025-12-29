@@ -36,6 +36,8 @@ class Json_Type extends Component {
 
     Editor = null
 
+    Update_Items = null
+
     Input_Data_Types = {}
 
     Contents = ({owner_user_account}) => { 
@@ -56,6 +58,7 @@ class Json_Type extends Component {
                     Editor={this.Editor}
                     Input_Data_Types={this.Input_Data_Types}
                     Delete_Item={this.Delete_Item}
+                    Update_Items={this.Update_Items}
                     table_name={table_name}
                 />
     }

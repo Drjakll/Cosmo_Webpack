@@ -5,6 +5,9 @@ import Profile_Info_Data from './Profile_Info_Data/profile_info_data.js';
 import './profile_info.less';
 
 class Profile_Info extends Component {
+
+    Profile_Picture =  Profile_Picture //The reason why I put this here is because whatever inherits this class can replace this, else it will use the original component
+    Profile_Info_Data = Profile_Info_Data //The reason why I put this here is because whatever inherits this class can replace this, else it will use the original component
     
     constructor(props){
         
@@ -17,8 +20,6 @@ class Profile_Info extends Component {
         this.state = {
             owner_user_account,
             visitor_user_account,
-            Profile_Picture, //The reason why I put this here is because whatever inherits this class can replace this, else it will use the original component
-            Profile_Info_Data, //The reason why I put this here is because whatever inherits this class can replace this, else it will use the original component
             change_display
         };
         
@@ -40,7 +41,9 @@ class Profile_Info extends Component {
     
     render(){
         
-        let { visitor_user_account, owner_user_account, Profile_Picture, Profile_Info_Data } = this.state;
+        let { visitor_user_account, owner_user_account} = this.state;
+
+        let {Profile_Picture, Profile_Info_Data } = this;
 
         let { change_display } = this.props;
         
@@ -52,6 +55,7 @@ class Profile_Info extends Component {
                         <Profile_Picture 
                             owner_user_account={owner_user_account} 
                             visitor_user_account={visitor_user_account} 
+                            change_main_display={change_display}
                         />
                         
                     </div>

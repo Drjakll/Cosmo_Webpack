@@ -9,9 +9,11 @@ class Album_Cover extends Component {
         super(props);
         
         Album_Cover.contextType = Context;
+
+        let {album_info} = props;
         
         this.state = {
-            album_info: props.album_info,
+            album_info,
             photos: []
         };
     }
@@ -40,13 +42,15 @@ class Album_Cover extends Component {
     
     render(){
         
-        const {Request_URLs} = this.context;
-        const cover_image_link = this.state.album_info?.cover_image_link;
-        
-        let {aws_s3_url} = Request_URLs;
+        let { aws_s3_url } = this.context.Request_URLs;
+
+        let {album_info} = this.state;
+
+        let { album_cover_link } = album_info ?? {};
+
         
         //Make sure that it doesn't unneccessary make request to aws s3 if cover_image_link isn't available
-        aws_s3_url = cover_image_link ? aws_s3_url : "";
+        aws_s3_url = album_cover_link ? aws_s3_url : "";
         
         return (
                 <div id="album-cover">
@@ -55,22 +59,28 @@ class Album_Cover extends Component {
                     
                         <div id="album-cover-image" 
                             style={{
-                                backgroundImage: `url('${aws_s3_url}${cover_image_link}')`
-                            }}
-                            onClick = {(e)=>{
-                                this.props.Get_Photo_Links(this.state.album_info);
+                                backgroundImage: `url('${aws_s3_url}${album_cover_link}')`
                             }}
                         >
-                        
-                            
-                        
+                            {
+                                album_info?.brief_description ?
+
+                                <div id="album-description">
+                                    {album_info?.brief_description}
+                                </div>
+
+                                : ""
+                            }
                         </div>
                         
                     </div>
                     
-                    <div id="album-title-wrapper">   
+                    <div id="album-title-wrapper" 
+                            onClick = {(e)=>{
+                                this.props.Get_Photo_Links(album_info);
+                            }}>   
                     
-                        {this.state.album_info?.title}
+                        {album_info?.title}
                     
                     </div>
                     

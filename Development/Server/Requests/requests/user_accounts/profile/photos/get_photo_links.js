@@ -1,25 +1,31 @@
 let request = function() {
     
-    this.req = (req, res) => { 
+    this.req = async (req, res, next) => { 
         
         let {target_id, target_type} = req.body;
+
+        let requirements = [target_id, target_type];
         
-        let query = `select * from Photo_Links where target_id = ${target_id} and target_type = '${target_type}'`;
+        let query = `select * from Photo_Links where target_id = ? and target_type = ?`;
         
-        this.sql.query(query, (err, results)=>{
+        try {
+
+            let [results] = await this.sql.query(query, requirements);
+
+            req.body.results = results;
+            req.body.message = "Successfully retrieved photo links";
             
-            if(err){
-                console.log(query, err.sqlMessage);
-                res.json({message: "Error retreiving photos", photos: []});
-            } else if (results.length === 0){
-                res.json({message: "No data retrieved", photos: []});
-            } else {
-                res.json({message: "Successfully retrieved photos!", photos: results});
-            }
+            req.body.photos = results; //In case delete_photo_links is the next middleware
             
-            res.end();
-            
-        });
+            next();
+
+        } catch(err){
+
+            console.log(query, err);
+
+            res.json({result: [], message: "Error retrieving photo links"});
+
+        }
 
     };
 };

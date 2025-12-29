@@ -1,6 +1,6 @@
 let request = function() {
     
-    this.req = (req, res) => { 
+    this.req = async (req, res) => { 
         
         let {title, user_id} = req.body;
         
@@ -14,25 +14,20 @@ let request = function() {
             }
         ];
 
-        let query = `insert into Photo_Albums(title, user_id, created_on) values ?`
+        let query = `insert into Photo_Albums set ?`
         
-        this.sql.query(query, [data], (err, result)=>{
-            
-            if(err){
-                
-                console.log(query, err.sqlMessage);
-                res.json({message: "Error adding album"});
-                
-            } else if(result.affectedRows === 0){
-                
-                res.json({message: "Error adding album"});
-                
-            } else {
-                
-                res.json({message: "Successfully added an empty album"});
-                
-            }
-        });
+        try {
+
+            await this.sql.query(query, data);
+
+            res.json({message: "Successfully created an album!", failed: false});
+
+        }catch(err){
+
+            console.log(query, err);
+
+            res.json({message: "Failed to created the album!", failed: true});
+        }
     };
 };
 
