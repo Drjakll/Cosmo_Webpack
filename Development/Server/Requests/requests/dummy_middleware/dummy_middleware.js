@@ -6,7 +6,7 @@ function request() {
         
         let {results, message} = req.body;
 
-        res.json({message: message || "", results});
+        res.json({message: message || "", results: results || []});
         res.end();
     };
 };

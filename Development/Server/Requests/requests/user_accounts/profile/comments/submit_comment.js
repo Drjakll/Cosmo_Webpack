@@ -3,13 +3,22 @@ let request = function() {
     
     this.req = async (req, res) => { 
         
-        let {target_id, target_type, comment} = req.body;
+        let {target_id, target_type, comment, user_id, reply_to_id} = req.body;
+
+        let now = Date.now();
  
         let data = [
-            {target_id, target_type, comment}
+            {
+                target_id, 
+                target_type, 
+                comment, user_id, 
+                time_stamp: now, 
+                last_updated: now, 
+                reply_to_id: reply_to_id ?? null
+            }
         ]
         
-        let query = `insert into Comments (target_id, target_type, comment) values ?`;
+        let query = `insert into Comments (target_id, target_type, comment, user_id, time_stamp, last_updated, reply_to_id) values ?`;
         
         try {
 

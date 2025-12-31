@@ -31,6 +31,19 @@ let request = function() {
 
             await this.sql.query(query, [ids, target_ids, target_types]);
 
+            //Setup for deleting comments next
+
+            let comment_target_ids = [];
+            let comment_target_types = [];
+
+            for(let id of ids){
+                comment_target_ids.push(id);
+                comment_target_types.push("photo");
+            }
+
+            req.body.requirements = [comment_target_ids, comment_target_types];
+            
+            //Should call delete multiple comments
             next();
 
         } catch(err){
