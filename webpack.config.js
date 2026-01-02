@@ -151,7 +151,8 @@ var clientConfig = {
             "@profile_template": path.resolve(__dirname, 'Development/Client/View_Templates/Profile/profile_template.js'),
             "@data_templates": path.resolve(__dirname, 'Development/Client/Data_Templates'),
             "@logged_in_account": path.resolve(__dirname, 'Development/Client/App_Entrance/Entrance_Options/Logged_In_Account'),
-            "@profile_data_editors": path.resolve(__dirname, 'Development/Client/App_Entrance/Entrance_Options/Logged_In_Account/Screen/Profile/Profile_Info_Editor/Profile_Data_Editor')
+            "@profile_data_editors": path.resolve(__dirname, 'Development/Client/App_Entrance/Entrance_Options/Logged_In_Account/Screen/Profile/Profile_Info_Editor/Profile_Data_Editor'),
+            "@comments_container": path.resolve(__dirname, 'Development/Client/Universal_Components/Comments_Container/comments_container.js')
         }
     }
 };

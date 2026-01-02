@@ -1,7 +1,10 @@
 import React, {Component} from 'react';
+import Context from '@context/context.js';
 import './comment_input.less';
 
 class Comment_Input extends Component {
+
+    static contextType = Context;
 
     text = ""
 
@@ -9,10 +12,62 @@ class Comment_Input extends Component {
 
         super(props);
 
-        
+        let { 
+            target_id,
+            target_type,
+            reply_to_id,
+            owner_user_account,
+            visitor_user_account
+        } = props;
+
+        this.state = {
+            target_id,
+            target_type,
+            reply_to_id : reply_to_id || null,
+            owner_user_account,
+            visitor_user_account
+        };
     }
 
-    Submit_Message = ()=>{
+    componentDidUpdate(prevProps, prevState){
+
+        if(this.props !== prevProps){
+            
+            this.setState(this.props);
+        }
+    }
+
+    Submit_Message = async ()=>{
+
+        let { submit_comment } = this.context.Request_URLs;
+
+        let {Signal_To_Refresh_Comments} = this.props;
+
+        let {visitor_user_account, target_id, target_type, reply_to_id} = this.state;
+
+        let body = {
+            user_id: visitor_user_account.id,
+            target_id,
+            target_type,
+            reply_to_id,
+            comment: this.text
+        };
+
+        
+
+        await fetch(submit_comment,
+            {
+                method: "POST",
+                body: JSON.stringify(body),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }
+        );
+
+        this.text = "";
+
+        Signal_To_Refresh_Comments();
 
     }
 
@@ -25,7 +80,7 @@ class Comment_Input extends Component {
                 <div id="textarea-wrapper">
 
                     <textarea onChange={(e)=>{ this.text = e.target.value; }} 
-                        onKeyDown={(e)=>{
+                        onKeyDown={ async (e)=>{
 
                             if(e.key !== "Enter"){
                                 return;
@@ -33,9 +88,11 @@ class Comment_Input extends Component {
 
                             e.target.value = "";
 
-                            this.Submit_Message();
+                            await this.Submit_Message();
 
-                        }}></textarea>
+                        }}>
+
+                    </textarea>
 
                 </div>
 

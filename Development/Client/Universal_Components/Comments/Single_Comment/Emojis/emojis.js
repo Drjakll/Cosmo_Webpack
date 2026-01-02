@@ -8,8 +8,8 @@ class Emojis extends Component {
         "laugh",
         "sad",
         "surprised",
-        "sympathy",
-        "love"
+        "sympathetic",
+        "passionate"
     ]
 
     constructor(props){
