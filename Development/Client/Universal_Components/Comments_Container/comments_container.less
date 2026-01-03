@@ -10,14 +10,16 @@
 
         #comment-header {
             width: 100%;
-            height: 25px;
+            height: 50px;
             display: flex;
             justify-content: center;
             align-items: center;
 
             label {
                 font-size: 16px;
-                text-decoration: underline;
+                font-weight: bold;
+                color: rgb(50,50,50);
+                //text-decoration: underline;
             }
         }
 
@@ -26,11 +28,16 @@
             height: calc(100% - 100px);
             display: block;
             overflow-y: auto;
-            scrollbar-width: none;
+            //scrollbar-width: none;
 
             .single-comment-entry {
-                width: 100%;
+                width: 85%;
                 position: relative;
+                border: rgba(0,0,0,0.75) solid 0.5px;
+                left: 7.5%;
+                margin-bottom: 25px;
+                border-radius: 5px;
+                background-color: rgba(235,235,235,0.75);
             }
         }
 

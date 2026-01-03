@@ -26,30 +26,44 @@ class Comment_Container extends Component {
             comment_info,
             owner_user_account,
             visitor_user_account,
-            show_replies: false,
             previous_reply
         };
     }
 
+    componentDidMount(){
+
+    }
+
+    componentDidUpdate(prevProps, prevState){
+
+        if(this.props !== prevProps){
+            this.setState(this.props);
+        }
+    }
+
     Show_Replies = ()=>{
 
-        let {back_previous, show_replies, target_id, target_type} = this.props;
+        let {back_previous, show_replies, target_id, target_type, reply_to_id} = this.props;
 
         let callback = () =>{
 
             let {comment_info, owner_user_account, visitor_user_account} = this.state;
 
+            let parent_room_name = `${target_type}_${target_id}_${reply_to_id ?? 0}`
+
             let {id} = comment_info;
 
             return <div id="reply-to-comment-wrapper">
 
-                <div onClick={back_previous}>
+                <div id="the-back-button" onClick={back_previous}>
 
                     <label>Back</label>
 
                 </div>
 
                 <div id="original-comment-wrapper">
+
+                    <div id="the-original-comment-label">The original comment</div>
 
                     {this.Show_This_Comment(true)}
 
@@ -58,6 +72,7 @@ class Comment_Container extends Component {
                 <div id="replies-to-comment-container">
 
                     <Comments_Container 
+                        key={comment_info.id}
                         back_previous={back_previous} 
                         show_replies={show_replies} 
                         reply_to_id={id}
@@ -65,6 +80,7 @@ class Comment_Container extends Component {
                         target_type={target_type}
                         owner_user_account={owner_user_account}
                         visitor_user_account={visitor_user_account}
+                        parent_room_name={parent_room_name}
                     />
 
                 </div>
@@ -107,7 +123,9 @@ class Comment_Container extends Component {
                 <div id="comment-display-wrapper">
 
                     <pre id="the-comment-content">
+
                         {comment}
+
                     </pre>
 
                 </div>
@@ -128,7 +146,7 @@ class Comment_Container extends Component {
                         : 
                         <div id="show-reply-button">
 
-                            <u onClick={this.Show_Replies}>{(replies.length > 1 ? `Replies` : `Reply`) + `(${replies.length})`}</u>
+                            <div onClick={this.Show_Replies}>{replies.length} {replies.length > 1 ? `Replies` : `Reply`}</div>
 
                         </div>
                     }
@@ -148,7 +166,7 @@ class Comment_Container extends Component {
 
     render(){
 
-        return (this.Show_This_Comment());
+        return (this.Show_This_Comment(false));
     }
 }
 

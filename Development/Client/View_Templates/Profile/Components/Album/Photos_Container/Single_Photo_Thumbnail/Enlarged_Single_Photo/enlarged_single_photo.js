@@ -73,6 +73,7 @@ class Enlarged_Single_Photo extends Component {
                         target_type={"photo"}
                         visitor_user_account={this.state.visitor_user_account}
                         owner_user_account={this.state.owner_user_account}
+                        parent_room_name={null}
                     />
 
                 </div>

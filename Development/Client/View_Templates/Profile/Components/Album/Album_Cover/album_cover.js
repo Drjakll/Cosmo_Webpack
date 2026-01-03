@@ -61,6 +61,10 @@ class Album_Cover extends Component {
                             style={{
                                 backgroundImage: `url('${aws_s3_url}${album_cover_link}')`
                             }}
+
+                            onClick = {(e)=>{
+                                this.props.Get_Photo_Links(album_info);
+                            }}
                         >
                             {
                                 album_info?.brief_description ?
@@ -75,10 +79,7 @@ class Album_Cover extends Component {
                         
                     </div>
                     
-                    <div id="album-title-wrapper" 
-                            onClick = {(e)=>{
-                                this.props.Get_Photo_Links(album_info);
-                            }}>   
+                    <div id="album-title-wrapper" >   
                     
                         {album_info?.title}
                     

@@ -3,14 +3,13 @@ let request = function() {
     
     this.req = async (req, res) => { 
         
-        let {target_id, target_type, offset_timestamp, reply_to_id} = req.body;
+        let {target_id, target_type, offset_timestamp, reply_to_id, limit, greater_or_less, asc_desc} = req.body;
 
         let data = [
             target_id,
             target_type,
             reply_to_id,
-            offset_timestamp,
-            
+            offset_timestamp
         ];
 
         let query = `select 
@@ -77,10 +76,10 @@ let request = function() {
                     where 
                         c.target_id = ? and
                         c.target_type = ? and
-                        c.reply_to_id is ? and
-                        c.time_stamp <= ?
-                    order by time_stamp desc
-                    limit 10
+                        c.reply_to_id ${reply_to_id ? "=" : "is"} ? and
+                        c.time_stamp ${greater_or_less} ?
+                    order by time_stamp ${asc_desc}
+                    limit ${limit ?? 10}
                     `;
         try {
 

@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component, createRef} from 'react';
 import Context from '@context/context.js';
 import './comment_input.less';
 
@@ -6,7 +6,7 @@ class Comment_Input extends Component {
 
     static contextType = Context;
 
-    text = ""
+    textRef = createRef()
 
     constructor(props){
 
@@ -50,7 +50,7 @@ class Comment_Input extends Component {
             target_id,
             target_type,
             reply_to_id,
-            comment: this.text
+            comment: this.textRef.current.value 
         };
 
         
@@ -65,7 +65,7 @@ class Comment_Input extends Component {
             }
         );
 
-        this.text = "";
+        this.textRef.current.value = "";
 
         Signal_To_Refresh_Comments();
 
@@ -79,14 +79,13 @@ class Comment_Input extends Component {
 
                 <div id="textarea-wrapper">
 
-                    <textarea onChange={(e)=>{ this.text = e.target.value; }} 
+                    <textarea 
+                        ref={this.textRef}
                         onKeyDown={ async (e)=>{
 
                             if(e.key !== "Enter"){
                                 return;
                             }
-
-                            e.target.value = "";
 
                             await this.Submit_Message();
 
@@ -98,7 +97,7 @@ class Comment_Input extends Component {
 
                 <div id="send-button-wrapper">
 
-                    <div id="send-button" onClick={this.Submit_Message}>
+                    <div id="send-button" onClick={async (e)=>{ await this.Submit_Message(); }}>
 
                         Send
                         
