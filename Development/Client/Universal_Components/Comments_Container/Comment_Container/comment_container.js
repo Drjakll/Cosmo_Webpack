@@ -5,15 +5,6 @@ import './comment_container.less';
 
 class Comment_Container extends Component {
 
-    Reaction_Icon_Names = [
-        "angry",
-        "laugh",
-        "sad",
-        "surprised",
-        "sympathetic",
-        "passionate"
-    ]
-
     static contextType = Context;
 
     constructor(props){

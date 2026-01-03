@@ -3,12 +3,24 @@ import './reaction_container.less';
 
 class Reaction_Container extends Component {
 
+    Reaction_Icon_Names = [
+        "angry",
+        "laugh",
+        "sad",
+        "surprised",
+        "sympathetic",
+        "passionate"
+    ]
+
     constructor(props){
         
         super(props);
 
-        this.state = {
+        let {owner_user_account, visitor_user_account} = props;
 
+        this.state = {
+            owner_user_account,
+            visitor_user_account
         };
 
     }
@@ -16,6 +28,8 @@ class Reaction_Container extends Component {
     render(){
 
         return <div id="reaction-container-wrapper">
+
+            
 
         </div>;
     }
