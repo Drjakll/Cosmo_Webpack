@@ -20,13 +20,12 @@ class Comment_Container extends Component {
 
         super(props);
 
-        let {comment_info, owner_user_account, visitor_user_account, previous_reply} = props;
+        let {comment_info, owner_user_account, visitor_user_account} = props;
 
         this.state = {
             comment_info,
             owner_user_account,
-            visitor_user_account,
-            previous_reply
+            visitor_user_account
         };
     }
 
@@ -155,6 +154,7 @@ class Comment_Container extends Component {
 
                 <div id="reaction-wrapper">
 
+                    
 
 
                 </div>

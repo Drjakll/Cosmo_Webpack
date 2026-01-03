@@ -11,10 +11,11 @@ class Comments_Container extends Component {
 
     lastScrollPosition = 0;
 
-    //maxComments must be greater than comments_per_request else bug occurs
-    maxComments = 20;
+    //maxComments must be greater than limits_per_request else bug occurs
+    maxComments = 100;
 
-    comments_per_request = 10;
+    //The limited number of comments per request
+    limits_per_request = 25;
 
     constructor(props){
 
@@ -39,7 +40,7 @@ class Comments_Container extends Component {
 
         this.Connect_IO();
 
-        let comments = await this.Get_Comments(Date.now(), this.comments_per_request)
+        let comments = await this.Get_Comments(Date.now(), this.limits_per_request)
 
         this.setState({
             comments
@@ -100,8 +101,8 @@ class Comments_Container extends Component {
         let {time_stamp} = comments.length ? (scrolldown ? comments[comments.length - 1] : comments[0]) : {time_stamp: Date.now()};
 
         let more_comments = scrolldown ? 
-                                comments.concat(await this.Get_Comments(time_stamp, this.comments_per_request, "<")) : 
-                                (await this.Get_Comments(time_stamp, this.comments_per_request, ">")).concat(comments);
+                                comments.concat(await this.Get_Comments(time_stamp, this.limits_per_request, "<")) : 
+                                (await this.Get_Comments(time_stamp, this.limits_per_request, ">")).concat(comments);
 
         
 
@@ -191,11 +192,12 @@ class Comments_Container extends Component {
         }
     }
 
-    //Get more comments when user scroll at 75% of the total content height
+    //Get more comments when user scroll down at 75% towards the bottom or scroll up at 25% towards the top
     Scroll_For_More = async (e)=>{
 
         let {scrollHeight, scrollTop, clientHeight} = e.currentTarget;
 
+        //This will tell whether it's going up or down
         let upOrdown = this.lastScrollPosition - scrollTop;
 
         this.lastScrollPosition = scrollTop;
