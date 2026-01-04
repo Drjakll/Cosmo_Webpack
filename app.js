@@ -69,7 +69,9 @@ let {
         update_comment,
         delete_multiple_comments,
         get_replies,
-        delete_general_reactions
+        delete_general_reactions,
+        update_comment_reaction,
+        submit_comment_reaction
     } = comments;
 
 //User_Accounts -> Profile -> Photos
@@ -201,6 +203,8 @@ app.post("/get_comments", get_comments.req);
 app.post("/update_comment", update_comment.req);
 app.post("/delete_comment", delete_comment.req);
 app.post("/get_replies", get_replies.req)
+app.post("/update_comment_reaction", update_comment_reaction.req);
+app.post("/submit_comment_reaction", submit_comment_reaction.req);
 
 //Post Data                         
 app.post("/create_post", create_post.req);

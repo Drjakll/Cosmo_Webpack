@@ -79,7 +79,7 @@ class Comments_Container extends Component {
 
         let {comments} = this.state;
 
-        comments = (await this.Get_Comments(Date.now(), 1)).concat(comments);
+        comments = comments.concat(await this.Get_Comments(Date.now(), 1, "<", "desc"));
 
         this.setState({comments});
     }
@@ -90,7 +90,7 @@ class Comments_Container extends Component {
 
         let {time_stamp} = comments.length ? comments[0] : {time_stamp: Date.now()};
 
-        this.setState({comments: await this.Get_Comments(time_stamp, this.maxComments, "<=", "desc")});
+        this.setState({comments: await this.Get_Comments(time_stamp, this.maxComments, ">=")});
 
     }
 
@@ -101,15 +101,15 @@ class Comments_Container extends Component {
         let {time_stamp} = comments.length ? (scrolldown ? comments[comments.length - 1] : comments[0]) : {time_stamp: Date.now()};
 
         let more_comments = scrolldown ? 
-                                comments.concat(await this.Get_Comments(time_stamp, this.limits_per_request, "<")) : 
-                                (await this.Get_Comments(time_stamp, this.limits_per_request, ">")).concat(comments);
+                                comments.concat(await this.Get_Comments(time_stamp, this.limits_per_request, ">")) : 
+                                (await this.Get_Comments(time_stamp, this.limits_per_request, "<")).concat(comments);
 
         
 
         this.setState({comments: more_comments});
     }
 
-    Get_Comments = async (offset_timestamp, limit = 10, greater_or_less = "<", asc_desc = "desc")=>{
+    Get_Comments = async (offset_timestamp, limit = 10, greater_or_less = "<", asc_desc = "asc")=>{
         
         let {target_id, target_type, reply_to_id} = this.props;
 
@@ -237,6 +237,7 @@ class Comments_Container extends Component {
 
         let {back_previous, show_replies, target_id, target_type, reply_to_id} = this.props;
 
+        //Make sure the children uses the first comment_container.js back_revious and show_replies
         back_previous = back_previous || this.Back_Previous;
         show_replies = show_replies || this.Show_Replies;
 

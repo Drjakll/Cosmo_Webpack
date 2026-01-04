@@ -26,6 +26,8 @@ const submit_comment = "/submit_comment";
 const get_comments = "/get_comments";
 const update_comment = "/update_comment";
 const delete_comment = "/delete_comment";
+const update_comment_reaction = "/update_comment_reaction";
+const submit_comment_reaction = "/submit_comment_reaction";
 
 //Posts
 const create_post = '/create_post';
@@ -108,6 +110,8 @@ export default {
     get_comments,
     update_comment,
     delete_comment,
+    submit_comment_reaction,
+    update_comment_reaction,
         
     //Posts
     get_posts,

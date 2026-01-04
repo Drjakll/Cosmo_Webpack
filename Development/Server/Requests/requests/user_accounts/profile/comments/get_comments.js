@@ -17,7 +17,7 @@ let request = function() {
                         pl.link as profile_picture_link,
                         ua.first_name as first_name,
                         ua.last_name as last_name,
-                        coalesce(r.user_reactions, json_array()) as user_reactions,
+                        coalesce(r.user_reactions, json_array()) as reactions,
                         coalesce(re.replies, json_array()) as replies
                     from 
                         Comments as c
@@ -30,7 +30,7 @@ let request = function() {
                     left join
                         Photo_Links as pl
                     on
-                        pl.target_id = ua.id and pl.target_type = 'profile' and is_a_cover = 1
+                        pl.target_id = ua.id and pl.target_type = 'profile' and pl.is_a_cover = 1
 
                     left join 
                         (select
@@ -57,18 +57,37 @@ let request = function() {
                         
                     left join 
                         (select 
-                            target_id,
+                            cr.target_id as target_id,
                             json_arrayagg(
                                 json_object(
-                                    'id', id,
-                                    'emojis', emojis,
-                                    'reaction', reaction
+                                    'id', cr.id,
+                                    'user_id', user.id,
+                                    'first_name', user.first_name,
+                                    'last_name', user.last_name,
+                                    'profile_picture_link', pic.link,
+                                    'emojis', cr.emojis,
+                                    'reaction', cr.reaction
                                 )
                             ) as user_reactions
                         from 
-                            Comment_Reactions 
-                        group by 
-                            target_id
+                            Comment_Reactions as cr
+
+                        join
+                            User_Accounts as user
+                        on 
+                            cr.user_id = user.id
+
+                        left join
+                            Photo_Links as pic
+                        on
+                            pic.target_id = user.id and pic.target_type = 'profile' and pic.is_a_cover = 1
+
+                        where 
+                            cr.reaction is not null
+
+                        group by
+                            cr.target_id
+
                         ) as r
                     on
                         r.target_id = c.id
@@ -79,7 +98,7 @@ let request = function() {
                         c.reply_to_id ${reply_to_id ? "=" : "is"} ? and
                         c.time_stamp ${greater_or_less} ?
                     order by time_stamp ${asc_desc}
-                    limit ${limit ?? 10}
+                    limit ${limit ?? 25}
                     `;
         try {
 
