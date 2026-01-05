@@ -26,6 +26,7 @@ const submit_comment = "/submit_comment";
 const get_comments = "/get_comments";
 const update_comment = "/update_comment";
 const delete_comment = "/delete_comment";
+const delete_multiple_comments = "/delete_multiple_comments";
 const update_comment_reaction = "/update_comment_reaction";
 const submit_comment_reaction = "/submit_comment_reaction";
 
@@ -110,6 +111,7 @@ export default {
     get_comments,
     update_comment,
     delete_comment,
+    delete_multiple_comments,
     submit_comment_reaction,
     update_comment_reaction,
         

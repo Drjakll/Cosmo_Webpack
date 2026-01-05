@@ -46,6 +46,7 @@ let Wrapper = function (){
         socket.on('join_comment_room', events.join_comment_room.event);
         socket.on('signal_reload_get_new_comment', events.signal_reload_get_new_comment.event);
         socket.on('signal_reload_parent_comments', events.signal_reload_parent_comments.event);
+        socket.on('signal_reload_self_comments', events.signal_reload_self_comments.event);
 
     };
 };

@@ -9,6 +9,11 @@ class Comments_Container extends Component {
 
     static contextType = Context
 
+    Select_Comment = null //Should be replaced by the child, which should be an editor and this should be a lambda
+    Unselect_Comment = null //Should be replaced by the child, which should be an editor and this should be a lambda
+
+    Single_Comment_Container = Comment_Container //So that it can be replaced by the child
+
     lastScrollPosition = 0;
 
     //maxComments must be greater than limits_per_request else bug occurs
@@ -28,7 +33,8 @@ class Comments_Container extends Component {
             visitor_user_account,
             comments: [],
             show_current: this.Show_Original,
-            previous_callbacks: []
+            previous_callbacks: [],
+            selected_comments: null //Should be replaced by the child, which should be an editor and this should be an key/value obj
         };
     }
 
@@ -73,13 +79,16 @@ class Comments_Container extends Component {
 
         this.socket.on('reload_a_new_comment', this.Refresh_For_A_New_Comment);
         this.socket.on('reload_all_comments_from_child', this.Refresh_Current_Comments);
+        this.socket.on('reload_all_comments_from_self', this.Refresh_Current_Comments);
     }
 
     Refresh_For_A_New_Comment = async () => {
 
         let {comments} = this.state;
 
-        comments = comments.concat(await this.Get_Comments(Date.now(), 1, "<", "desc"));
+        comments = comments.concat(await this.Get_Comments(Date.now(), 1, "<=", "desc"));
+
+        this.setState({comments});
 
     }
 
@@ -138,17 +147,38 @@ class Comments_Container extends Component {
         return data?.results ?? [];
     }
 
-    Signal_To_Refresh_Comments = ()=>{
+    Signal_To_Refresh_For_New_Comments = ()=>{
 
-        let {target_id, target_type, reply_to_id, parent_room_name} = this.props;
+        let {target_id, target_type, reply_to_id} = this.props;
 
         let room_name = `${target_type}_${target_id}_${reply_to_id ?? 0}`;
 
         this.socket.emit('signal_reload_get_new_comment', {room_name});
 
-        if(parent_room_name){
-            this.socket.emit('signal_reload_parent_comments', {parent_room_name})
+        this.Signal_Refresh_Parent_Comments();
+
+    }
+
+    Signal_Refresh_This_Section_Comments = () => {
+
+        let {target_id, target_type, reply_to_id} = this.props;
+
+        let room_name = `${target_type}_${target_id}_${reply_to_id ?? 0}`;
+
+        this.socket.emit('signal_reload_self_comments', {room_name});
+
+    }
+
+    Signal_Refresh_Parent_Comments = ()=>{
+
+        let {parent_room_name} = this.props;
+
+        if(!parent_room_name){
+            return;
         }
+
+        this.socket.emit('signal_reload_parent_comments', {parent_room_name});
+
     }
 
     Show_Replies = (show_callback)=>{
@@ -232,7 +262,9 @@ class Comments_Container extends Component {
 
     Show_Original = ()=>{
 
-        let {comments, visitor_user_account, owner_user_account} = this.state;
+        let {Single_Comment_Container} = this;
+
+        let {comments, visitor_user_account, owner_user_account, selected_comments} = this.state;
 
         let {back_previous, show_replies, target_id, target_type, reply_to_id} = this.props;
 
@@ -254,7 +286,7 @@ class Comments_Container extends Component {
 
                     return <div className="single-comment-entry" key={value.id}>
 
-                            <Comment_Container 
+                            <Single_Comment_Container 
                                 comment_info={value}
                                 owner_user_account={owner_user_account} 
                                 visitor_user_account={visitor_user_account}
@@ -263,7 +295,11 @@ class Comments_Container extends Component {
                                 target_id={target_id}
                                 target_type={target_type}
                                 reply_to_id={reply_to_id}
-                                refresh_current_comments={this.Refresh_Current_Comments}   
+                                signal_refresh_this_section_comments={this.Signal_Refresh_This_Section_Comments}
+                                signal_refresh_parent_comments={this.Signal_Refresh_Parent_Comments}
+                                select_comment={this.Select_Comment}   
+                                unselect_comment={this.Unselect_Comment}
+                                selected={selected_comments && selected_comments[value.id] ? true : false}
                             />
 
                         </div>;
@@ -278,7 +314,7 @@ class Comments_Container extends Component {
                     key={reply_to_id ?? 0}
                     owner_user_account={owner_user_account}
                     visitor_user_account={visitor_user_account}
-                    Signal_To_Refresh_Comments={this.Signal_To_Refresh_Comments}
+                    Signal_To_Refresh_For_New_Comments={this.Signal_To_Refresh_For_New_Comments}
                     target_id={target_id}
                     target_type={target_type}
                     reply_to_id={reply_to_id}

@@ -75,7 +75,7 @@ class Reaction_Container extends Component {
 
     Capture_Reaction = async (reaction = null, emoji = "")=>{
 
-        let {refresh_current_comments} = this.props;
+        let {signal_refresh_this_section_comments} = this.props;
 
         let {submit_comment_reaction} = this.context.Request_URLs;
 
@@ -102,7 +102,7 @@ class Reaction_Container extends Component {
         );
 
         //Signal all the way to the upper heirchy to refresh the comments so that to see the updated reaction
-        refresh_current_comments();
+        signal_refresh_this_section_comments();
     }
 
     render(){
@@ -120,10 +120,11 @@ class Reaction_Container extends Component {
                 {Object.keys(this.Like_Dislike).map((key, ind)=>{
 
                     return <div key={ind} id={key}>
-
+                        
                         <div id="icon-wrapper" onClick={(e)=>{ this.Capture_Reaction(key); }}>
 
-                            <img src={`./static/${this.Like_Dislike[key]}.png`} className={`${existing_users[id]?.reaction === key ? 'selected-reaction' : ''}`}/>({like_dislike[key].length})
+                            <img src={`./static/${this.Like_Dislike[key]}.png`} className={`${existing_users[id]?.reaction === key ? 'selected-reaction' : ''}`}/>
+                            <label>({like_dislike[key].length})</label>
 
                         </div>
 

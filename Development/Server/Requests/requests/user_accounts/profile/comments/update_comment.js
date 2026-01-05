@@ -5,7 +5,7 @@ let request = function() {
         
         let {comment, id, target_type, target_id, user_id} = req.body;
 
-        let data = { comment: comment, last_updated: Date.now()};
+        let data = { comment, last_updated: Date.now()};
  
         let query = `update Comments set ? where id = ? and target_type = ? and target_id = ? and user_id = ?`;
 

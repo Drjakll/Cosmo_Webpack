@@ -6,14 +6,14 @@
     align-items: center;
 
     #thumbs {
-        width: 50%;
+        width: 75%;
         height: 100%;
         display: flex;
         justify-content: center;
         align-items: center;
 
         #like,#dislike {
-            width: 75px;
+            width: 50%;
             height: 100%;
             display: flex;
             justify-content: center;
@@ -31,14 +31,14 @@
 
             #icon-wrapper {
                 height: 35px;
-                width: 35px;
+                width: 70px;
                 display: flex;
                 justify-content: center;
                 align-items: center;
 
                 img {
-                    height: 100%;
-                    width: 100%;
+                    height: 20px;
+                    width: 20px;
                     border-radius: 25px;
                     object-fit: contain;
                     object-position: center;
@@ -53,6 +53,15 @@
 
                 .selected-reaction {
                     box-shadow: rgba(0,0,0,0.25) 5px 5px 10px !important;
+                }
+
+                label {
+                    width: 35px;
+                    height: 100%;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    font-size: 12px;
                 }
             }
 
@@ -145,10 +154,12 @@
     }
 
     #emojis-wrapper {
-        width: 50%;
+        width: 25%;
         height: 100%;
-        display: block;
+        display: flex;
         position: relative;
+        justify-content: center;
+        align-items: center;
 
         #emoji-contents {
             height: 100%;
@@ -170,10 +181,10 @@
                 display: flex;
                 justify-content: center;
                 align-items: center;
-                font-size: 14px;
+                font-size: 12px;
                 color: rgba(50,50,50,1);
                 transition: 0.5s;
-                font-weight: bold;
+                font-weight: 500;
 
                 &:hover {
                     cursor: pointer;

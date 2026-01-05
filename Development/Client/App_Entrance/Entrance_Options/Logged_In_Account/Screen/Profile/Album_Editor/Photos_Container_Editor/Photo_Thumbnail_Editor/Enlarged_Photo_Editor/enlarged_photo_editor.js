@@ -1,11 +1,14 @@
 import React, { Component } from 'react';
 import Context from '@context/context.js';
-import {Albums} from '@profile_template'
+import {Albums} from '@profile_template';
+import Comments_Container_Editor from '@logged_in_account/Universal_Components/Comments_Container_Editor/comments_container_editor.js';
 import './enlarged_photo_editor.less';
 
 let {Enlarged_Single_Photo} = Albums.Photos_Container.Single_Photo_Thumbnail;
 
 class Enlarged_Photo_Editor extends Enlarged_Single_Photo {
+
+    Comments = Comments_Container_Editor;
 
     constructor(props){
         

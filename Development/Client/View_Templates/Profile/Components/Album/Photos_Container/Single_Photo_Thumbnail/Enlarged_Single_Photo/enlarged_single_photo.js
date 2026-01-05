@@ -1,11 +1,10 @@
 import React, {Component} from 'react';
-import Photo_Comments from './Photo_Comments/photo_comments.js';
 import Comments_Container from '@comments_container/comments_container.js';
 import './enlarged_single_photo.less';
 
 class Enlarged_Single_Photo extends Component {
 
-    Photo_Comments = Photo_Comments
+    Comments = Comments_Container
 
     Render_Option_Buttons = null;
     
@@ -39,13 +38,9 @@ class Enlarged_Single_Photo extends Component {
     
     render() {
 
-        let {Photo_Comments: Comments} = this;
-
-        let { Enlarged_Photo_Editor } = this.props;
-
-        let Comment_Editor = Enlarged_Photo_Editor?.Comment_Editor;
-
         let {photo_info} = this.state;
+
+        let {Comments} = this;
         
         return <div id="enlarged-single-photo-wrapper">
 
@@ -67,7 +62,7 @@ class Enlarged_Single_Photo extends Component {
 
                 <div id="comments-area-wrapper">
 
-                    <Comments_Container
+                    <Comments
                         reply_to_id={null}
                         target_id={photo_info.id}
                         target_type={"photo"}

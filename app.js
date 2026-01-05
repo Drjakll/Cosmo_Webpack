@@ -67,6 +67,7 @@ let {
         get_comments,
         submit_comment,
         update_comment,
+        delete_comments_from_targets,
         delete_multiple_comments,
         get_replies,
         delete_general_reactions,
@@ -189,12 +190,12 @@ app.post("/remove_item_from_profile_table", remove_item_from_profile_table.req);
 app.post("/update_album", update_album.req);
 app.post("/add_album", add_album.req);
 app.post("/get_albums", get_albums.req);
-app.post("/delete_album", delete_album.req, get_photo_links.req, delete_photo_links.req, delete_general_reactions.req, delete_multiple_comments.req, delete_photo_files.req);
+app.post("/delete_album", delete_album.req, get_photo_links.req, delete_photo_links.req, delete_general_reactions.req, delete_comments_from_targets.req, delete_photo_files.req);
 
 //Photos
 app.post("/upload_photos", uploads.array('files', 100), upload_photos.req, add_photo_links.req);
 app.post("/get_photo_links", get_photo_links.req, result_sender.req);
-app.post("/delete_photos", delete_photo_links.req, delete_general_reactions.req, delete_multiple_comments.req, delete_photo_files.req);
+app.post("/delete_photos", delete_photo_links.req, delete_general_reactions.req, delete_comments_from_targets.req, delete_photo_files.req);
 app.post("/set_photo_as_cover", set_photo_as_cover.req);
 
 //Comments
@@ -202,6 +203,7 @@ app.post("/submit_comment", submit_comment.req);
 app.post("/get_comments", get_comments.req);
 app.post("/update_comment", update_comment.req);
 app.post("/delete_comment", delete_comment.req);
+app.post("/delete_multiple_comments", delete_multiple_comments.req);
 app.post("/get_replies", get_replies.req)
 app.post("/update_comment_reaction", update_comment_reaction.req);
 app.post("/submit_comment_reaction", submit_comment_reaction.req);

@@ -46,7 +46,7 @@ class Comment_Input extends Component {
 
         let { submit_comment } = this.context.Request_URLs;
 
-        let {Signal_To_Refresh_Comments} = this.props;
+        let {Signal_To_Refresh_For_New_Comments} = this.props;
 
         let {visitor_user_account, target_id, target_type, reply_to_id} = this.state;
 
@@ -72,7 +72,7 @@ class Comment_Input extends Component {
 
         this.textRef.current.value = "";
 
-        Signal_To_Refresh_Comments();
+        Signal_To_Refresh_For_New_Comments();
 
     }
 

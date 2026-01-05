@@ -43,7 +43,7 @@ let request = function() {
 
             req.body.requirements = [comment_target_ids, comment_target_types];
             
-            //Should call delete multiple comments
+            //Should call delete_comments_from_target
             next();
 
         } catch(err){

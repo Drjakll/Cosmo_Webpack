@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component, createRef} from 'react';
 import Context from '@context/context.js';
 import Comments_Container from '@comments_container/comments_container.js';
 import Reaction_Container from '@comments_container/Reaction_Container/reaction_container.js';
@@ -6,7 +6,11 @@ import './comment_container.less';
 
 class Comment_Container extends Component {
 
+    Comments = Comments_Container
+
     static contextType = Context;
+
+    commentRef = createRef()
 
     constructor(props){
 
@@ -17,7 +21,9 @@ class Comment_Container extends Component {
         this.state = {
             comment_info,
             owner_user_account,
-            visitor_user_account
+            visitor_user_account,
+            selected: false, //Only use by the child, which is an editor use for selecting the comment for potential purposes. Ex: deletion
+            editable: false //Can only turn true if the visiting user is the owner of this comment
         };
     }
 
@@ -35,6 +41,8 @@ class Comment_Container extends Component {
     Show_Replies = ()=>{
 
         let {back_previous, show_replies, target_id, target_type, reply_to_id, refresh_current_comments} = this.props;
+
+        let {Comments} = this;
 
         let callback = () =>{
 
@@ -62,7 +70,7 @@ class Comment_Container extends Component {
 
                 <div id="replies-to-comment-container">
 
-                    <Comments_Container 
+                    <Comments 
                         key={comment_info.id}
                         back_previous={back_previous} 
                         show_replies={show_replies} 
@@ -84,15 +92,110 @@ class Comment_Container extends Component {
         
     }
 
+    Show_Comment_Editor = ()=>{
+
+        let Delete_This_Comment = async (e)=>{
+
+            let {delete_comment} = this.context.Request_URLs;
+
+            let {id, target_id, target_type} = this.state.comment_info;
+
+            let {signal_refresh_this_section_comments, signal_refresh_parent_comments} = this.props;
+
+            let body = {
+                id,
+                target_id,
+                target_type
+            };
+
+            await fetch(delete_comment,
+                {
+                    method: "POST",
+                    body: JSON.stringify(body),
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                }
+            );
+
+            signal_refresh_this_section_comments();
+            signal_refresh_parent_comments();
+        };
+
+        let Turn_Editable = (e)=>{
+
+            this.setState({editable: true});
+
+        };
+
+        let Save_Comment = async (e)=>{
+
+            let {update_comment} = this.context.Request_URLs;
+
+            let {visitor_user_account, comment_info} = this.state;
+
+            let {id: user_id} = visitor_user_account;
+
+            let {id, target_type, target_id} = comment_info;
+
+            let {signal_refresh_this_section_comments} = this.props;
+
+            let comment = this.commentRef.current.textContent;
+
+            let body = {
+                comment,
+                user_id,
+                id, 
+                target_type,
+                target_id
+            };
+
+            await fetch(update_comment,
+                {
+                    method: "POST",
+                    body: JSON.stringify(body),
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                }
+            );
+
+            this.setState({editable: false});
+
+            signal_refresh_this_section_comments();
+
+        };
+
+        let {editable} = this.state;
+
+        return <div id="comment-editors">
+
+            <div id="edit-button" onClick={editable ? Save_Comment : Turn_Editable}>
+
+                {editable ? "Save" : "Edit"}
+                
+            </div>
+
+            <div id="delete-button" onClick={Delete_This_Comment}>
+
+                Delete
+
+            </div>
+
+        </div>;
+    }
+
     Show_This_Comment = (is_reply = false)=>{
 
-        let {refresh_current_comments} = this.props;
+        let {signal_refresh_this_section_comments} = this.props;
 
-        let {comment_info, owner_user_account, visitor_user_account} = this.state
+        let {comment_info, owner_user_account, visitor_user_account, editable} = this.state
 
-        let {first_name, last_name, profile_picture_link, id, comment, time_stamp, replies, target_id, reactions} = comment_info;
+        let {first_name, last_name, profile_picture_link, id, comment, time_stamp, replies, reactions} = comment_info;
 
         let {aws_s3_url} = this.context.Request_URLs;
+
+        
 
         return (<div id="comment-container-wrapper">
 
@@ -116,7 +219,7 @@ class Comment_Container extends Component {
 
                 <div id="comment-display-wrapper">
 
-                    <pre id="the-comment-content">
+                    <pre id="the-comment-content" contentEditable={editable} ref={this.commentRef}>
 
                         {comment}
 
@@ -128,11 +231,11 @@ class Comment_Container extends Component {
 
             <div id="comment-bottom-section">
 
-                <div id="timestamp-wrapper">
+                <pre id="timestamp-wrapper">
 
                     {new Date(time_stamp).toLocaleString()}
 
-                </div>
+                </pre>
 
                 <div id="reply-wrapper">
 
@@ -156,9 +259,15 @@ class Comment_Container extends Component {
                             target_id={id}
                             target_type={null}
                             reactions={reactions}
-                            refresh_current_comments={refresh_current_comments}
+                            signal_refresh_this_section_comments={signal_refresh_this_section_comments}
                         />
                     }
+
+                </div>
+
+                <div id="comment-editor-wrapper">
+
+                    {visitor_user_account.id === comment_info.user_id ? this.Show_Comment_Editor() : ""}
 
                 </div>
 

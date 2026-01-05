@@ -1,22 +1,18 @@
 let request = function() {
     
     
-    this.req = async (req, res) => { 
+    this.req = async (req, res, next) => { 
         
         let {requirements} = req.body;
 
-        if((requirements && requirements[0]).length === 0){
-            res.json({message:"No comments to delete", failed: true});
-            return;
-        }
-
-        let query = `delete from Comments where id in (?)`;
+        let query = `delete from Comments where target_id in (?) and target_type in (?)`;
         
         try {
 
             await this.sql.query(query, requirements);
 
-            res.json({message: "Successfully deleted comments", failed: false});
+            //Should call to delete reactions
+            next();
 
         } catch(err){
 
