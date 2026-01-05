@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import Context from '@context/context.js';
-import Comments_Container from '../../Comments_Container/comments_container.js';
+import Comments_Container from '@comments_container/comments_container.js';
+import Reaction_Container from '@comments_container/Reaction_Container/reaction_container.js';
 import './comment_container.less';
 
 class Comment_Container extends Component {
@@ -33,7 +34,7 @@ class Comment_Container extends Component {
 
     Show_Replies = ()=>{
 
-        let {back_previous, show_replies, target_id, target_type, reply_to_id} = this.props;
+        let {back_previous, show_replies, target_id, target_type, reply_to_id, refresh_current_comments} = this.props;
 
         let callback = () =>{
 
@@ -71,6 +72,7 @@ class Comment_Container extends Component {
                         owner_user_account={owner_user_account}
                         visitor_user_account={visitor_user_account}
                         parent_room_name={parent_room_name}
+                        refresh_current_comments={refresh_current_comments}
                     />
 
                 </div>
@@ -84,9 +86,11 @@ class Comment_Container extends Component {
 
     Show_This_Comment = (is_reply = false)=>{
 
+        let {refresh_current_comments} = this.props;
+
         let {comment_info, owner_user_account, visitor_user_account} = this.state
 
-        let {first_name, last_name, profile_picture_link, id, comment, time_stamp, replies, target_id, target_type} = comment_info;
+        let {first_name, last_name, profile_picture_link, id, comment, time_stamp, replies, target_id, reactions} = comment_info;
 
         let {aws_s3_url} = this.context.Request_URLs;
 
@@ -145,8 +149,16 @@ class Comment_Container extends Component {
 
                 <div id="reaction-wrapper">
 
-                    
-
+                    {is_reply ? "" :
+                        <Reaction_Container 
+                            owner_user_account={owner_user_account}
+                            visitor_user_account={visitor_user_account}
+                            target_id={id}
+                            target_type={null}
+                            reactions={reactions}
+                            refresh_current_comments={refresh_current_comments}
+                        />
+                    }
 
                 </div>
 

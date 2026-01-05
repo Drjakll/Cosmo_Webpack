@@ -39,6 +39,11 @@ class Comment_Input extends Component {
 
     Submit_Message = async ()=>{
 
+        if(this.textRef.current.value.replace(/ /g, "") === ""){
+            alert("Message cannot be empty!");
+            return;
+        }
+
         let { submit_comment } = this.context.Request_URLs;
 
         let {Signal_To_Refresh_Comments} = this.props;

@@ -72,7 +72,7 @@ class Comments_Container extends Component {
         });
 
         this.socket.on('reload_a_new_comment', this.Refresh_For_A_New_Comment);
-        this.socket.on('reload_all_comments', this.Refresh_Current_Comments);
+        this.socket.on('reload_all_comments_from_child', this.Refresh_Current_Comments);
     }
 
     Refresh_For_A_New_Comment = async () => {
@@ -81,7 +81,6 @@ class Comments_Container extends Component {
 
         comments = comments.concat(await this.Get_Comments(Date.now(), 1, "<", "desc"));
 
-        this.setState({comments});
     }
 
     Refresh_Current_Comments = async () => {
@@ -145,7 +144,7 @@ class Comments_Container extends Component {
 
         let room_name = `${target_type}_${target_id}_${reply_to_id ?? 0}`;
 
-        this.socket.emit('signal_all_reload_comment', {room_name});
+        this.socket.emit('signal_reload_get_new_comment', {room_name});
 
         if(parent_room_name){
             this.socket.emit('signal_reload_parent_comments', {parent_room_name})
@@ -263,7 +262,8 @@ class Comments_Container extends Component {
                                 show_replies={show_replies}
                                 target_id={target_id}
                                 target_type={target_type}
-                                reply_to_id={reply_to_id}   
+                                reply_to_id={reply_to_id}
+                                refresh_current_comments={this.Refresh_Current_Comments}   
                             />
 
                         </div>;

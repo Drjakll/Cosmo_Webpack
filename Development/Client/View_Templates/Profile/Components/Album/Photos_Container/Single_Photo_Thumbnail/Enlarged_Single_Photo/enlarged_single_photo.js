@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import Photo_Comments from './Photo_Comments/photo_comments.js';
-import Comments_Container from '@comments_container';
+import Comments_Container from '@comments_container/comments_container.js';
 import './enlarged_single_photo.less';
 
 class Enlarged_Single_Photo extends Component {

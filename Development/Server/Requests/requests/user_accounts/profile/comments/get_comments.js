@@ -72,7 +72,7 @@ let request = function() {
                         from 
                             Comment_Reactions as cr
 
-                        join
+                        left join
                             User_Accounts as user
                         on 
                             cr.user_id = user.id

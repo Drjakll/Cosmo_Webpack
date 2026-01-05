@@ -28,7 +28,7 @@
             height: calc(100% - 100px);
             display: block;
             overflow-y: auto;
-            //scrollbar-width: none;
+            scrollbar-width: none;
 
             .single-comment-entry {
                 width: 85%;
@@ -38,6 +38,12 @@
                 margin-bottom: 25px;
                 border-radius: 5px;
                 background-color: rgba(235,235,235,0.75);
+                position: relative;
+                z-index: 9;
+
+                &:hover {
+                    z-index: 999 !important;
+                }
             }
         }
 
