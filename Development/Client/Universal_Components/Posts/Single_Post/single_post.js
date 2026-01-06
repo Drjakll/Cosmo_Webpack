@@ -4,6 +4,8 @@ import Context from '@context/context.js';
 import './single_post.less';
 
 class Single_Post extends Component {
+
+    Comments = Comments_Container
     
     Months = [
         'January',
@@ -27,7 +29,7 @@ class Single_Post extends Component {
 
         super(props);
         
-        let { post, owner_user_account, visitor_user_account } = this.props;
+        let { post, owner_user_account, visitor_user_account, for_commenting } = this.props;
 
         Single_Post.contextType = Context;
 
@@ -35,15 +37,13 @@ class Single_Post extends Component {
             owner_user_account,
             visitor_user_account,
             post: post,
-            post_comments: []
+            for_commenting
         };
     }
 
     componentDidMount() {
 
         this.bodyRef.current.innerHTML = this.state.post?.body;
-
-        //this.Get_Post_Comments();
 
     }
     
@@ -57,34 +57,6 @@ class Single_Post extends Component {
 
         this.bodyRef.current?.innerHTML = this.state.post?.body;
 
-        //this.Get_Post_Comments();
-
-    }
-
-    Get_Post_Comments = async ()=>{
-
-        if(!this.state.post?.id){
-            return;
-        }
-     
-        const {Request_URLs} = this.context;
-        
-        const {get_post_comments} = Request_URLs;
-        
-        let res = await fetch(get_post_comments, {
-           method: "POST",
-           body: JSON.stringify(this.state.post),
-           headers: {
-               'Content-Type': "application/json"
-           }
-        });
-        
-        let resJson = await res.json();
-        
-        let {post_comments} = resJson;
-        
-        this.setState({post_comments: post_comments});
-
     }
     
     Generate_Beautiful_Date = (date_ms)=>{
@@ -94,6 +66,10 @@ class Single_Post extends Component {
     }
 
     Open_Comments_Container = (e)=>{
+
+        if(this.state.for_commenting){
+            return;
+        }
         
         this.props.change_main_display(this.Render_Comments_Container);
 
@@ -101,23 +77,35 @@ class Single_Post extends Component {
 
     Render_Comments_Container = () => {
 
-        let {post, visitor_user_account, owner_user_account, post_comments} = this.state;
+        let {post, visitor_user_account, owner_user_account} = this.state;
 
+        let {Comments} = this;
 
         return <div id="comments-container-wrapper">
 
-            <div id="comments-container-exit-button" onClick={this.Close_Comments_Container}>
-            
+            <div id="post-comments-post-section">
+
+                <Single_Post
+                    post={post}
+                    visitor_user_account={visitor_user_account}
+                    owner_user_account={owner_user_account}
+                    for_commenting={true}
+                />
+
             </div>
 
-            <Comments_Container 
-                post={post} 
-                generate_beautiful_date={this.Generate_Beautiful_Date} 
-                visitor_user_account={visitor_user_account}
-                owner_user_account={owner_user_account}
-                get_post_comments={this.Get_Post_Comments}
-                post_comments={post_comments}
-            /> 
+            <div id="post-comments-section">
+
+                <Comments
+                    reply_to_id={null}
+                    target_id={post.id}
+                    target_type={"photo"}
+                    visitor_user_account={visitor_user_account}
+                    owner_user_account={owner_user_account}
+                    parent_room_name={null}
+                />
+
+            </div>
 
         </div>;
     }
@@ -149,7 +137,7 @@ class Single_Post extends Component {
 
                     <div id="open-to-comment-button" onClick={this.Open_Comments_Container}>
 
-                        Comments({this.state.post_comments.length})
+                        Comments
                         
                     </div>
 

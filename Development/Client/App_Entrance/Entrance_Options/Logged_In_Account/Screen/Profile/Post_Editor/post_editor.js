@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
 import The_Editor from './The_Editor/the_editor.js';
+import Comments_Container_Editor from '@logged_in_account/Universal_Components/Comments_Container_Editor/comments_container_editor.js';
 import Context from '@context/context.js';
 import {Posts} from '@profile_template';
 import './post_editor.less';
 
 class Post_Editor extends Posts {
+
+    Comments = Comments_Container_Editor;
 
     constructor(props) {
 
