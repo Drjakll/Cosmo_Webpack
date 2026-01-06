@@ -34,7 +34,7 @@ class Comments_Container extends Component {
             comments: [],
             show_current: this.Show_Original,
             previous_callbacks: [],
-            selected_comments: null //Should be replaced by the child, which should be an editor and this should be an key/value obj
+            selected_comments: {} //Should be replaced by the child, which should be an editor
         };
     }
 
@@ -262,7 +262,7 @@ class Comments_Container extends Component {
 
     Show_Original = ()=>{
 
-        let {Single_Comment_Container} = this;
+        let {Single_Comment_Container, Show_Editor_Options} = this;
 
         let {comments, visitor_user_account, owner_user_account, selected_comments} = this.state;
 
@@ -273,6 +273,8 @@ class Comments_Container extends Component {
         show_replies = show_replies || this.Show_Replies;
 
         return (<div id="comments-container">
+
+            {Show_Editor_Options && Show_Editor_Options()}
 
             <div id="comment-header">
 

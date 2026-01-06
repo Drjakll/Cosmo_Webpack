@@ -17,6 +17,17 @@ class Comments_Container_Editor extends Comments_Container {
         this.state.selected_comments = {}
     }
 
+    componentDidUpdate(prevProps, prevState){
+
+        if(this.props === prevProps){
+            return;
+        }
+
+        this.setState({selected_comments: {}});
+        
+        super.componentDidUpdate(prevProps, prevState);
+    }
+
     Select_Comment = (id)=>{
 
         let {selected_comments} = this.state;
@@ -38,6 +49,10 @@ class Comments_Container_Editor extends Comments_Container {
     Show_Editor_Options = ()=>{
 
         let Delete_Comments = async ()=>{
+
+            if(!confirm("Are you sure?")){
+                return;
+            }
 
             let { delete_multiple_comments } = this.context.Request_URLs;
 
@@ -84,8 +99,6 @@ class Comments_Container_Editor extends Comments_Container {
     render(){
 
         return <div id="comments-container-editor">
-
-            {this.Show_Editor_Options()}
 
             {super.render()}
 

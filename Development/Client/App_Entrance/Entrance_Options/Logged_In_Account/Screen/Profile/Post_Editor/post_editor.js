@@ -16,7 +16,6 @@ class Post_Editor extends Posts {
 
         let state = {
             editor_opened: false,
-            selected_post: null,
             owner_user_account: props.owner_user_account,
             disable_create_new_post: false,
             connection_list: props.connection_list

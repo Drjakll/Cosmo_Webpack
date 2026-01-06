@@ -91,7 +91,6 @@ class Profile_Template extends Component {
     //This may be override by child class
     Generate_Posts = (general_props, unique_props)=>{
 
-        return ""
         return <Posts {...general_props} {...unique_props}/>;
     }
     

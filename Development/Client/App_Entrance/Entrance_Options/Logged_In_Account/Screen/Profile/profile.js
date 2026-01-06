@@ -60,8 +60,6 @@ class Profile extends Profile_Template {
 
     Generate_Posts = (general_props, unique_props)=>{
 
-        return <div></div>
-
         return <Post_Editor {...general_props} {...unique_props}/>;
     }
     

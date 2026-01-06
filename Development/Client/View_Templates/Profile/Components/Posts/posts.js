@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Context from '@context/context.js';
 import './posts.less';
 
 class Posts extends Component {
@@ -22,13 +23,13 @@ class Posts extends Component {
         
         super(props);
 
-        Posts.contextType = window.Context;
+        Posts.contextType = Context;
         
         this.Posts_JSON = {};
         
         let today = new Date();
 
-        let {owner_user_account, visitor_user_account, connection_list, post_editor, change_display} = props;
+        let {owner_user_account, visitor_user_account, connection_list, change_display} = props;
 
         this.state = {
             selected_year: today.getFullYear(),
@@ -39,12 +40,13 @@ class Posts extends Component {
             connection_list: connection_list || {}, //For sending out websocket events to particular connected user
             owner_user_account,
             visitor_user_account,
-            post_editor,
-            change_display
+            change_display,
+            last_time_posted: Date.now() //This is the last time user made a post. Data is in milliseconds
         };
+
     }
 
-    componentDidMount(){
+    async componentDidMount(){
 
         this.Setup_Calendar();
 
@@ -56,43 +58,60 @@ class Posts extends Component {
             return;
         }
         
-        await this.setState(this.props);
-
-        this.Setup_Calendar();
+        //this.setState(this.props);
         
     }
 
-    Setup_Calendar = () => {
+    Get_User_Last_Posted = async ()=>{
 
-        let {owner_user_account} = this.props;
-        
-        if (owner_user_account) {
-            
-            let { last_posted } = owner_user_account;
+        let { get_last_time_posted } = this.context.Request_URLs;
 
-            let last_posted_local = new Date(last_posted || Date.now() );
-            
-            if(last_posted_local){
-                
-                let year = last_posted_local.getFullYear();
-                let month = last_posted_local.getMonth() + 1;
-                
-                this.Change_Month({year: year, month: month});
-                
+        let {id: user_id} = this.state.owner_user_account;
+
+        let body = {
+            user_id
+        };
+
+        let data = await(await fetch(
+            get_last_time_posted,
+            {
+                method: "POST",
+                body: JSON.stringify(body),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
             }
+        )).json();
+
+        return data?.last_time_posted;
+    }
+
+    Setup_Calendar = async () => {
+
+        let last_time_posted = await this.Get_User_Last_Posted();
+            
+        let last_posted_local = new Date(last_time_posted || Date.now() );
+        
+        if(last_posted_local){
+            
+            let year = last_posted_local.getFullYear();
+            let month = last_posted_local.getMonth() + 1;
+            
+            this.Change_Month({year, month});
+            
         }
     }
     
     Change_Month = ({year, month}) => {
         
-        let { email } = this.state.owner_user_account || {};
+        let { id } = this.state.owner_user_account || {};
 
         let last_day_of_month = new Date(year, month, 0).getDate();
 
-        this.Get_Posts_On_This_Month(month, last_day_of_month, year, email);
+        this.Get_Posts_On_This_Month(month, last_day_of_month, year, id);
     }
     
-    Get_Posts_On_This_Month = async (month, last_day_of_month, year, email)=>{
+    Get_Posts_On_This_Month = async (month, last_day_of_month, year, id)=>{
         
         let {Request_URLs} = this.context;
         
@@ -102,7 +121,7 @@ class Posts extends Component {
         let end = new Date(`${year}-${month}-${last_day_of_month}`).getTime();
         
         let search_requirements = {
-            owner_email: email,
+            user_id: id,
             date_interval: {
                 start,
                 end
@@ -121,6 +140,7 @@ class Posts extends Component {
         let resJson = await res.json();
         
         if (resJson) {
+
 
             let calendar_posts = this.Organize_Posts_For_Calendar(resJson.posts);
             
@@ -153,11 +173,10 @@ class Posts extends Component {
         
         for(let post of posts){
 
-            let date_created = new Date(post.date_created);
-            
+            let date_created = new Date(post.created_on);
             
             let date = date_created.getDate();
-            
+
             let style = {
                 backgroundColor: "darkorange",
                 boxShadow: "rgba(0,0,0,0.35) 0px 0px 5px"
@@ -205,9 +224,6 @@ class Posts extends Component {
         const { Calendar, Single_Post } = this.context;
         
         let { selected_year, selected_month, selected_date, selected_post, visitor_user_account, owner_user_account, change_display } = this.state;
-
-        const Post_Editor = this.state.post_editor;
-
         
         return (
             <div id="posts" tabIndex="0">

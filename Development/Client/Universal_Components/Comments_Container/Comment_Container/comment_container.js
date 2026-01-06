@@ -16,13 +16,13 @@ class Comment_Container extends Component {
 
         super(props);
 
-        let {comment_info, owner_user_account, visitor_user_account} = props;
+        let {comment_info, owner_user_account, visitor_user_account, selected} = props;
 
         this.state = {
             comment_info,
             owner_user_account,
             visitor_user_account,
-            selected: false, //Only use by the child, which is an editor use for selecting the comment for potential purposes. Ex: deletion
+            selected, //Only use by the child, which is an editor use for selecting the comment for potential purposes. Ex: deletion
             editable: false //Can only turn true if the visiting user is the owner of this comment
         };
     }
@@ -95,6 +95,10 @@ class Comment_Container extends Component {
     Show_Comment_Editor = ()=>{
 
         let Delete_This_Comment = async (e)=>{
+
+            if(!confirm("Are you sure?")){
+                return;
+            }
 
             let {delete_comment} = this.context.Request_URLs;
 
@@ -267,7 +271,7 @@ class Comment_Container extends Component {
 
                 <div id="comment-editor-wrapper">
 
-                    {visitor_user_account.id === comment_info.user_id ? this.Show_Comment_Editor() : ""}
+                    {visitor_user_account.id === comment_info.user_id && !is_reply ? this.Show_Comment_Editor() : ""}
 
                 </div>
 

@@ -1,7 +1,6 @@
 import React, { Component, createRef } from 'react';
-import Comments_Container from './Comments_Container/comments_container.js';
+import Comments_Container from '@comments_container/comments_container.js';
 import Context from '@context/context.js';
-import { io } from 'socket.io-client';
 import './single_post.less';
 
 class Single_Post extends Component {
@@ -36,31 +35,15 @@ class Single_Post extends Component {
             owner_user_account,
             visitor_user_account,
             post: post,
-            post_comments: [],
-            socket: null
+            post_comments: []
         };
     }
 
     componentDidMount() {
 
+        this.bodyRef.current.innerHTML = this.state.post?.body;
 
-        this.socket = io('/post_comments');
-        
-        this.socket.on('connect', ()=>{
-            
-            this.socket.on('reload_comments', (data)=>{
-                
-                this.Get_Post_Comments();
-                
-            });
-            
-        });
-
-        this.setState({socket: this.socket});
-
-        this.bodyRef.current.innerHTML = this.state.post.body;
-
-        this.Get_Post_Comments();
+        //this.Get_Post_Comments();
 
     }
     
@@ -72,11 +55,9 @@ class Single_Post extends Component {
         
         await this.setState(this.props);
 
-        this.socket?.emit('join_comment_group', {post_id: this.state.post.id});
-
         this.bodyRef.current?.innerHTML = this.state.post?.body;
 
-        this.Get_Post_Comments();
+        //this.Get_Post_Comments();
 
     }
 
@@ -120,7 +101,7 @@ class Single_Post extends Component {
 
     Render_Comments_Container = () => {
 
-        let {post, visitor_user_account, owner_user_account, post_comments, socket} = this.state;
+        let {post, visitor_user_account, owner_user_account, post_comments} = this.state;
 
 
         return <div id="comments-container-wrapper">
@@ -136,7 +117,6 @@ class Single_Post extends Component {
                 owner_user_account={owner_user_account}
                 get_post_comments={this.Get_Post_Comments}
                 post_comments={post_comments}
-                socket={socket}
             /> 
 
         </div>;
@@ -144,8 +124,8 @@ class Single_Post extends Component {
 
     render() {
         
-        let {post, visitor_user_account, owner_user_account, post_comments, socket} = this.state;
-        let {title, date_created} = post;
+        let {post, visitor_user_account, owner_user_account, post_comments} = this.state;
+        let {title, created_on} = post;
 
         return <div id="single-post">
         
@@ -177,7 +157,7 @@ class Single_Post extends Component {
 
                 <div id="time-created" className="bottom-body-section">
                     
-                    {this.Generate_Beautiful_Date(date_created)}
+                    {this.Generate_Beautiful_Date(created_on)}
                     
                 </div>
 

@@ -1,27 +1,26 @@
 let request = function() {
     
-    this.req = (req, res) => { 
+    this.req = async (req, res) => { 
         
         let {user_id} = req.body;
         
-        let query = `select * from Post_Data where user_id = '${user_id}'
+        let query = `select * from Post_Data where user_id = ?
                                                order by created_on desc 
                                                limit 1`;
         
-        this.sql.query(query, (err, results)=>{
-            
-            if(err){
-                console.log(query, err.sqlMessage);
-                res.json({last_time_posted: null})
-                return;
-            } else {
+        try {
 
-                let last_posted = results.length === 0 ? Date.now() : results[0].created_on;
+            let [results] = await this.sql.query(query, [user_id]);
+            let last_posted = results.length === 0 ? Date.now() : results[0].created_on;
 
-                res.json({last_time_posted: last_posted});
-            }
-            
-        });
+            res.json({last_time_posted: last_posted});
+
+        } catch(err){
+
+            console.log(err);
+
+            res.json({last_time_posted: null});
+        }
 
     };
 };

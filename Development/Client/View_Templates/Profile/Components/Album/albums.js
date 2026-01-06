@@ -46,9 +46,9 @@ class Albums extends Component {
     
     Get_Albums = async () => {
 
-        let {owner_user_account, albums} = this.state;
+        let {owner_user_account} = this.state;
 
-        if(!owner_user_account){
+        if(!owner_user_account?.id){
             return;
         }
         
