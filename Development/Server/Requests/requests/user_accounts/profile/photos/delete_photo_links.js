@@ -5,7 +5,7 @@ let request = function() {
         let { photos } = req.body;
 
         if(Object.keys(photos || {}).length === 0){
-            res.end();
+            res.json({message: "No photos to delete"});
             return;
         }
 

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Context from '@context/context.js';
-import {Albums} from '@profile_template';
+import {Albums} from '@profile_template/profile_template.js';
 import Comments_Container_Editor from '@logged_in_account/Universal_Components/Comments_Container_Editor/comments_container_editor.js';
 import './enlarged_photo_editor.less';
 

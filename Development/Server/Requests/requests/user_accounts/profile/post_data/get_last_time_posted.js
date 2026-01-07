@@ -11,7 +11,7 @@ let request = function() {
         try {
 
             let [results] = await this.sql.query(query, [user_id]);
-            let last_posted = results.length === 0 ? Date.now() : results[0].created_on;
+            let last_posted = results.length === 0 ? 0 : results[0].created_on;
 
             res.json({last_time_posted: last_posted});
 

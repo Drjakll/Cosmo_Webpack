@@ -1,7 +1,7 @@
 import React, { Component, createRef } from 'react';
 import Photo_Thumbnail_Editor from './Photo_Thumbnail_Editor/photo_thumbnail_editor.js';
 import Context from '@context/context.js';
-import {Albums} from '@profile_template';
+import {Albums} from '@profile_template/profile_template.js';
 import './photos_container_editor.less';
 
 let {Photos_Container} = Albums.Photos_Container;

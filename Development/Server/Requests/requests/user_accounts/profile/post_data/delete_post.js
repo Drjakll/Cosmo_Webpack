@@ -4,18 +4,22 @@ let request = function() {
         
         let {id, user_id} = req.body;
         
-        let query = `delete from Post_Data where id = ${id} and user_id = ${user_id}`;
+        let query = `delete from Post_Data where id = ? and user_id = ?`;
         
         try {
 
-            await this.sql.query(query);
+            await this.sql.query(query, [id, user_id]);
 
             //Query to select all the photo links belong to the post
-            query = `select * from Photo_Links where target_id = ${id} and target_type = 'post'`;
+            query = `select * from Photo_Links where target_id = ? and target_type = ?`;
 
-            const [rows] = await this.sql(query);
+            const [rows] = await this.sql.query(query, [id, "post"]);
 
-            res.body.photos = rows;
+            req.body.photos = rows;
+            
+
+            //For deleting comments within the post
+            req.body.requirements = [[id], ["post"]];
 
             //On to erasing the post photo links in the data base
             next();
@@ -23,6 +27,7 @@ let request = function() {
         } catch(err){
 
             console.log(err, query);
+            res.json({message: "Error deleting post..."});
         }
 
     };

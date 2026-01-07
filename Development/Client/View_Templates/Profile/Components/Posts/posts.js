@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
 import Context from '@context/context.js';
+import Single_Post from '@universal_components/Posts/Single_Post/single_post.js';
 import './posts.less';
 
 class Posts extends Component {
+
+    Single_Post = Single_Post;
     
     Months = [
         'January',
@@ -221,7 +224,9 @@ class Posts extends Component {
 
     render() {
 
-        const { Calendar, Single_Post } = this.context;
+        const { Calendar } = this.context;
+
+        const { Single_Post: Post} = this;
         
         let { selected_year, selected_month, selected_date, selected_post, visitor_user_account, owner_user_account, change_display } = this.state;
         
@@ -229,7 +234,7 @@ class Posts extends Component {
             <div id="posts" tabIndex="0">
                 
                 <div id="post-label">
-                    <u>Posts</u>
+                    Posts
                 </div>
 
                 <div id="top">
@@ -259,10 +264,10 @@ class Posts extends Component {
 
                 <div id="bottom">
 
-                    <Single_Post post={selected_post || {}} 
-                                visitor_user_account={visitor_user_account} 
-                                owner_user_account={owner_user_account} 
-                                change_main_display={change_display}
+                    <Post post={selected_post || {}} 
+                            visitor_user_account={visitor_user_account} 
+                            owner_user_account={owner_user_account} 
+                            change_main_display={change_display}
                     />
 
                 </div>

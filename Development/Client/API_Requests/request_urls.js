@@ -17,7 +17,6 @@ const delete_album = '/delete_album';
 //photos
 const upload_photos = '/upload_photos';
 const get_photo_links = '/get_photo_links';
-const add_photo_links = '/add_photo_links';
 const delete_photos = '/delete_photos';
 const set_photo_as_cover = '/set_photo_as_cover';
 
@@ -94,7 +93,6 @@ export default {
         
     //Photos
     upload_photos,
-    add_photo_links,
     get_photo_links,
     delete_photos,
     set_photo_as_cover,

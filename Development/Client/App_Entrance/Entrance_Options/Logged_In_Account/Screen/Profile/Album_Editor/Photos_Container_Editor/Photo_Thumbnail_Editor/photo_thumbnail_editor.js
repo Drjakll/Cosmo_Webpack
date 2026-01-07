@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Enlarged_Photo_Editor from './Enlarged_Photo_Editor/enlarged_photo_editor.js';
-import {Albums} from '@profile_template';
+import {Albums} from '@profile_template/profile_template.js';
 import './photo_thumbnail_editor.less';
 
 let {Single_Photo} = Albums.Photos_Container.Single_Photo_Thumbnail;

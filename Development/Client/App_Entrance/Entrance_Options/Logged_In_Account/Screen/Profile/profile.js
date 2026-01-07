@@ -3,7 +3,7 @@ import Profile_Info_Editor from './Profile_Info_Editor/profile_info_editor.js';
 import Album_Editor from './Album_Editor/album_editor.js';
 import Post_Editor from './Post_Editor/post_editor.js';
 import Connections_Editor from './Connections_Editor/connections_editor.js';
-import {Profile_Template} from '@profile_template';
+import {Profile_Template} from '@profile_template/profile_template.js';
 import Context from '@context/context.js';
 import './profile.less';
 

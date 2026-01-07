@@ -11,14 +11,13 @@ class The_Editor extends Component {
 
         The_Editor.contextType = window.Context;
 
-        let { selected_post, owner_user_account, connection_list } = props;
+        let { selected_post, owner_user_account } = props;
 
         this.state = {
-            selected_post: selected_post,
+            selected_post,
             post_photos: [],
             selected_photos: {},
-            owner_user_account,
-            connection_list
+            owner_user_account
         };
     }
 
@@ -43,13 +42,19 @@ class The_Editor extends Component {
             body: JSON.stringify(post)
         })).json();
 
-        await this.props.Get_Posts();
+        alert(res?.message);
 
-        global_connection_socket?.emit("refresh_group_alerts", {request_to_emails: this.state.connection_list});
+        let {refresh_posts} = this.props;
 
+        refresh_posts();
     }
 
     Create_Post = async (post) => {
+
+        if(this.state.selected_post){
+            alert("A post already created for today!");
+            return;
+        }
 
         let { create_post } = this.context.Request_URLs;
 
@@ -61,9 +66,14 @@ class The_Editor extends Component {
             body: JSON.stringify(post)
         })).json();
 
-        await this.props.Get_Posts();
+        alert(res?.message);
 
-        global_connection_socket?.emit("refresh_group_alerts", {request_to_emails: this.state.connection_list});
+        this.setState({selected_post: res?.result});
+
+        let {refresh_posts} = this.props;
+
+        refresh_posts();
+
     }
 
     Set_Post_Photos = (photos) => {
@@ -79,17 +89,20 @@ class The_Editor extends Component {
 
     render() {
 
+        let {return_previous_display, refresh_posts} = this.props;
+        let {owner_user_account, selected_post, post_photos, selected_photos} = this.state;
+
         return <div id="the-opened-post-editor-wrapper">
             
             <div id="the-texts-outer-wrapper" className="the-outer-wrapper">
 
-                <The_Texts post={this.state.selected_post}
-                    owner_user_account={this.state.owner_user_account}
-                    update={this.state.selected_post ? this.Save_Post : this.Create_Post}
-                    Get_Posts={this.props.Get_Posts}
-                    post_photos={this.state.post_photos}
-                    selected_photos={this.state.selected_photos}
-                    connection_list={this.state.connection_list}
+                <The_Texts post={selected_post}
+                    owner_user_account={owner_user_account}
+                    update={selected_post ? this.Save_Post : this.Create_Post}
+                    refresh_posts={refresh_posts}
+                    post_photos={post_photos}
+                    selected_photos={selected_photos}
+                    return_previous_display={return_previous_display}
                 />
 
             </div>
@@ -97,8 +110,8 @@ class The_Editor extends Component {
             <div id="the-photos-outer-wrapper" className="the-outer-wrapper">
 
                 <The_Photos
-                    post_info={this.state.selected_post}
-                    owner_user_account={this.state.owner_user_account}
+                    post_info={selected_post}
+                    owner_user_account={owner_user_account}
                     Set_Post_Photos={this.Set_Post_Photos}
                     Set_Selected_Photos={this.Set_Selected_Photos}
                 />

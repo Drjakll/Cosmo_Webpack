@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import The_Editor from './The_Editor/the_editor.js';
-import Comments_Container_Editor from '@logged_in_account/Universal_Components/Comments_Container_Editor/comments_container_editor.js';
+import Single_Post_Editor from '@logged_in_account/Universal_Components/Single_Post_Editor/single_post_editor.js';
 import Context from '@context/context.js';
-import {Posts} from '@profile_template';
+import {Posts} from '@profile_template/profile_template.js';
 import './post_editor.less';
 
 class Post_Editor extends Posts {
 
-    Comments = Comments_Container_Editor;
+    Single_Post = Single_Post_Editor;
 
     constructor(props) {
 
@@ -18,7 +18,6 @@ class Post_Editor extends Posts {
         Post_Editor.contextType = Context;
 
         let state = {
-            editor_opened: false,
             owner_user_account: props.owner_user_account,
             disable_create_new_post: false,
             connection_list: props.connection_list
@@ -36,8 +35,6 @@ class Post_Editor extends Posts {
         }
 
         super.componentDidUpdate(prevProps, prevState);
-
-        this.existing_post = this.props.selected_post;
 
         this.Disable_Create_New_Post();
     }
@@ -57,19 +54,13 @@ class Post_Editor extends Posts {
             return;
         }
 
-        let { Configurations } = this.context;
+        let now = Date.now();
 
-        let { UTC_Time_Now } = Configurations;
+        let last_posted = await this.Get_User_Last_Posted();
 
-        let utc_now = new Date().getTime();
+        if (last_posted) {
 
-        let { last_posted } = owner_user_account;
-
-        if (last_posted !== 'null' && last_posted !== undefined) {
-
-            let last_posted_in_ms = last_posted;
-
-            let time_difference = utc_now - last_posted_in_ms;
+            let time_difference = now - last_posted;
 
             let one_day_in_ms = 24 * 60 * 60 * 1000;
 
@@ -82,93 +73,71 @@ class Post_Editor extends Posts {
         }
     }
 
-
-    Set_Last_Date_Posted = async () => {
-
-        let { set_last_post } = this.context.Request_URLs
-
-        let res = await (await fetch(set_last_post, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({ email: this.state.owner_user_account.email })
-        })).json();
-
-        let last_posted_ms = res?.last_posted;
-
-        let date_data = new Date(last_posted_ms);
-
-        return { year: date_data.getFullYear(), month: date_data.getMonth(), str: last_posted_ms };
-
-    }
-
     Create_Editor = () => {
 
-        let Get_Posts_On_This_Month = async () => {
+        let {owner_user_account, selected_post} = this.state;
+        let {return_previous_display} = this.props;
 
-            let last_posted = await this.Set_Last_Date_Posted();
+        return <div id="the-editor-wrapper">
 
-            await this.props.Get_Posts_On_This_Month(last_posted);
-
-            await window.LoginAttempt();
-
-            let { owner_user_account } = this.state;
-
-            owner_user_account.last_posted = last_posted.str;
-
-            await this.setState({ owner_user_account });
-
-            await this.Disable_Create_New_Post();
-        }
-
-        let Exit =  async (e) => {
-
-            this.setState({
-                editor_opened: false
-            });
-        }
-
-        return <div id="the-editor-wrapper" className={`${this.state.editor_opened ? "editor-opened" : ""}`}>
-
-            <div id="the-editor-exit-button" onClick={Exit}></div>
-
-            <The_Editor Get_Posts={Get_Posts_On_This_Month} owner_user_account={this.state.owner_user_account} selected_post={this.state.selected_post} connection_list={this.state.connection_list} />
+            <The_Editor owner_user_account={owner_user_account} 
+                refresh_posts={this.Setup_Calendar}
+                selected_post={selected_post} 
+                return_previous_display={return_previous_display}
+            />
 
         </div>;
+    }
+
+    Go_To_Editor = async ()=>{
+
+        let {change_display} = this.props;
+
+        change_display(this.Create_Editor);
+    }
+
+    Go_To_Create_Post = async () =>{
+
+        if (this.state.disable_create_new_post) {
+
+            let last_posted = await this.Get_User_Last_Posted();
+
+            let last_posted_ms = new Date(last_posted).getTime();
+            let now_ms = Date.now();
+
+            let time_diff = now_ms - last_posted_ms;
+
+            let hours_left = Math.floor((24 * 60 * 60 * 1000 - time_diff) / (60 * 60 * 1000));
+            
+            let minutes_left = Math.floor((24 * 60 * 60 * 1000 - time_diff) % (60 * 60 * 1000) / (60 * 1000));
+
+            let seconds_left = Math.floor((24 * 60 * 60 * 1000 - time_diff) % (60 * 1000) / 1000);
+
+            alert(`You can create your next post in ${hours_left} hours, ${minutes_left} minutes, and ${seconds_left} seconds.`);
+            
+            return;
+        }
+
+        this.existing_post = this.state.selected_post;
+
+        await this.setState({selected_post: null});
+
+        let {change_display} = this.props;
+
+        change_display(this.Create_Editor);
+
     }
 
     render() {
 
         return <div id="post-editor">
-            
-            {this.state.editor_opened ? this.Create_Editor() : null }
+        
 
             <div id="buttons-wrapper">
 
-                <div className={`post-button ${this.state.disable_create_new_post ? "disabled" : ""}`} id="create-new-post-button" onClick={(e) => {
-                    if (this.state.disable_create_new_post) {
-
-                        let {last_posted} = this.state.owner_user_account;
-
-                        let last_posted_ms = new Date(last_posted).getTime();
-                        let now_ms = new Date().getTime();
-
-                        let time_diff = now_ms - last_posted_ms;
-
-                        let hours_left = Math.floor((24 * 60 * 60 * 1000 - time_diff) / (60 * 60 * 1000));
-                        
-                        let minutes_left = Math.floor((24 * 60 * 60 * 1000 - time_diff) % (60 * 60 * 1000) / (60 * 1000));
-
-                        let seconds_left = Math.floor((24 * 60 * 60 * 1000 - time_diff) % (60 * 1000) / 1000);
-
-                        alert(`You can create your next post in ${hours_left} hours, ${minutes_left} minutes, and ${seconds_left} seconds.`);
-                        
-                        return;
-                    }
-
-                    this.setState({ editor_opened: true, selected_post: null });
-                }}>
+                <div className={`post-button ${this.state.disable_create_new_post ? "disabled" : ""}`} 
+                    id="create-new-post-button" 
+                    onClick={this.Go_To_Create_Post}>
 
                     <div id="new-post-icon" className="post-icon" style={{backgroundImage: `url(./static/add_post_icon.png)`}}></div>
 
@@ -176,7 +145,7 @@ class Post_Editor extends Posts {
 
                 </div>
 
-                <div className="post-button" id="edit-post-button" onClick={(e) => { this.setState({ editor_opened: true, selected_post: this.existing_post }); }}>
+                <div className="post-button" id="edit-post-button" onClick={this.Go_To_Editor}>
 
                     <div id="edit-post-icon" className="post-icon" style={{backgroundImage: `url(./static/edit_post_icon.png)`}}></div>
 
@@ -185,8 +154,12 @@ class Post_Editor extends Posts {
                 </div>
 
             </div>
+            
+            <div id="post-display-wrapper">
 
-            {super.render()}
+                {super.render()}
+
+            </div>
 
         </div>;
     }

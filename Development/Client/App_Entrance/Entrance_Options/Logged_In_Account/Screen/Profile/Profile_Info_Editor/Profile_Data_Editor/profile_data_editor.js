@@ -1,7 +1,7 @@
 import React from 'react';
 import './profile_data_editor.less';
 import Context from '@context/context.js';
-import {Profile_Info_Data} from '@profile_template';
+import {Profile_Info_Data} from '@profile_template/profile_template.js';
 import Text_Type_Editor from './Text_Editor/text_editor.js';
 import Date_Type_Editor from './Date_Editor/date_editor.js';
 import Json_Type_Editor from './Json_Editor/json_editor.js';

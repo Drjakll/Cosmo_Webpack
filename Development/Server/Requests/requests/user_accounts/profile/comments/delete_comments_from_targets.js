@@ -11,7 +11,6 @@ let request = function() {
 
             await this.sql.query(query, requirements);
 
-            //Should call to delete reactions
             next();
 
         } catch(err){

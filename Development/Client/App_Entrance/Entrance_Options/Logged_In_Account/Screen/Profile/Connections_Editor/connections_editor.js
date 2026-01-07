@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import Popup_Editor from './Popup_Editor/popup_editor.js';
-import {Connections} from '@profile_template';
+import {Connections} from '@profile_template/profile_template.js';
 import './connections_editor.less';
 
 class Connections_Editor extends Connections {

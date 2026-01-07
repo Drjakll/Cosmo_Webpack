@@ -148,11 +148,12 @@ var clientConfig = {
         alias: {
             "@root": path.resolve(__dirname, "Development/Client"),
             "@context": path.resolve(__dirname, 'Development/Client/Context'),
-            "@profile_template": path.resolve(__dirname, 'Development/Client/View_Templates/Profile/profile_template.js'),
+            "@profile_template": path.resolve(__dirname, 'Development/Client/View_Templates/Profile'),
             "@data_templates": path.resolve(__dirname, 'Development/Client/Data_Templates'),
             "@logged_in_account": path.resolve(__dirname, 'Development/Client/App_Entrance/Entrance_Options/Logged_In_Account'),
             "@profile_data_editors": path.resolve(__dirname, 'Development/Client/App_Entrance/Entrance_Options/Logged_In_Account/Screen/Profile/Profile_Info_Editor/Profile_Data_Editor'),
-            "@comments_container": path.resolve(__dirname, 'Development/Client/Universal_Components/Comments_Container')
+            "@comments_container": path.resolve(__dirname, 'Development/Client/Universal_Components/Comments_Container'),
+            "@universal_components": path.resolve(__dirname, 'Development/Client/Universal_Components')
         }
     }
 };

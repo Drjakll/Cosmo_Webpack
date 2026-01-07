@@ -5,7 +5,7 @@ import './single_post.less';
 
 class Single_Post extends Component {
 
-    Comments = Comments_Container
+    Comments_Holder = Comments_Container
     
     Months = [
         'January',
@@ -79,7 +79,7 @@ class Single_Post extends Component {
 
         let {post, visitor_user_account, owner_user_account} = this.state;
 
-        let {Comments} = this;
+        let {Comments_Holder} = this;
 
         return <div id="comments-container-wrapper">
 
@@ -96,10 +96,10 @@ class Single_Post extends Component {
 
             <div id="post-comments-section">
 
-                <Comments
+                <Comments_Holder
                     reply_to_id={null}
                     target_id={post.id}
-                    target_type={"photo"}
+                    target_type={"post"}
                     visitor_user_account={visitor_user_account}
                     owner_user_account={owner_user_account}
                     parent_room_name={null}
@@ -112,8 +112,10 @@ class Single_Post extends Component {
 
     render() {
         
-        let {post, visitor_user_account, owner_user_account, post_comments} = this.state;
-        let {title, created_on} = post;
+        let {post, visitor_user_account, owner_user_account} = this.state;
+        let {title, created_on, comments_count} = post;
+
+        let {editable} = this.props;
 
         return <div id="single-post">
         
@@ -137,7 +139,7 @@ class Single_Post extends Component {
 
                     <div id="open-to-comment-button" onClick={this.Open_Comments_Container}>
 
-                        Comments
+                        Comments({comments_count})
                         
                     </div>
 

@@ -25,7 +25,7 @@ class The_Texts extends Component {
         The_Texts.contextType = window.Context;
 
         this.state = {
-            post: post,
+            post,
             post_photos: post_photos,
             owner_user_account,
             selected_photos: selected_photos,
@@ -60,7 +60,7 @@ class The_Texts extends Component {
         let title = this.titleRef.current.innerText;
         let body = this.bodyRef.current.innerHTML;
 
-        post = post ? post : Post_Data_Template({ owner_email: owner_user_account.email });
+        post = post ? post : Post_Data_Template({ user_id: owner_user_account.id });
 
         post.title = title;
         post.body = body;
@@ -78,43 +78,18 @@ class The_Texts extends Component {
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify({ id: this.state.post.id, owner_email: this.state.owner_user_account?.email })
+            body: JSON.stringify({ id: this.state.post.id, user_id: this.state.owner_user_account?.id })
         })).json();
 
-        await this.Delete_Post_Photos(this.state.post_photos);
-        await this.Delete_Photo_Links(this.state.post_photos);
+        let {refresh_posts, return_previous_display} = this.props;
 
-        await this.props.Get_Posts();
+        alert(res?.message);
 
-        global_connection_socket?.emit("refresh_group_alerts", {request_to_emails: this.state.connection_list});
+        await refresh_posts();
 
-    }
+        //Exit the editor
+        return_previous_display();
 
-    Delete_Post_Photos = async (photos) => {
-
-        let { delete_photo_files } = this.context.Request_URLs;
-
-        let res = await (await fetch(delete_photo_files, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({ photos: photos })
-        })).json();
-
-    }
-
-    Delete_Photo_Links = async (photos) => {
-
-        let { delete_post_photo_links } = this.context.Request_URLs;
-
-        let res = await (await fetch(delete_post_photo_links, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(photos)
-        })).json();
     }
 
     Inject_XML_To_Text = (is_inject = true) => {
@@ -191,7 +166,7 @@ class The_Texts extends Component {
 
                 <div id="the-title-input-wrapper">
 
-                    <pre id="the-title-input" contentEditable ref={this.titleRef} />
+                    <pre id="the-title-input" contentEditable={true} ref={this.titleRef} />
 
                 </div>
 
@@ -205,7 +180,7 @@ class The_Texts extends Component {
 
                 <div id="the-body-input-wrapper">
 
-                    <pre id="the-body-input" contentEditable ref={this.bodyRef} /> 
+                    <pre id="the-body-input" contentEditable={true} ref={this.bodyRef} /> 
 
                 </div>
 

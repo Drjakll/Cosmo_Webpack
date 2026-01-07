@@ -45,48 +45,24 @@ class The_Photos extends Component {
             return;
         }
 
-
-        let { Request_URLs, Upload_Files_To_S3, Post_Data_Templates } = this.context;
-        let { Post_Photo_Template } = Post_Data_Templates;
-        let { add_post_photo_links, upload_photos } = Request_URLs;
+        let { Request_URLs, Upload_Files_To_S3 } = this.context;
+        let { upload_photos, get_photo_links } = Request_URLs;
 
         let { owner_user_account, post_info } = this.state;
-        let { email } = owner_user_account;
+        let { id } = owner_user_account;
 
         if (!post_info || !post_info.id) {
             alert("Please save the post before adding photos.");
             return;
         }
 
-        let album_name = `Post Photos/${post_info.date_created}`;
+        let {id: target_id} = post_info;
 
-        let res1 = await Upload_Files_To_S3(upload_photos, files, { email: email, album: album_name });
+        let album_name = post_info.created_on;
 
-        let { photo_urls } = res1;
+        await Upload_Files_To_S3(upload_photos, files, { user_id: id, target_type: "post", target_id, album_name });
 
-        let photo_data = [];
-
-        for (let url of photo_urls) {
-
-            let photo_info = Post_Photo_Template({ link: url, owner_email: email, belongs_to_post: post_info.id });
-
-            photo_data.push(photo_info);
-
-        }
-
-        let res2 = await (await fetch(add_post_photo_links,
-            {
-                method: "POST",
-                body: JSON.stringify(photo_data),
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            }
-        )).json();
-
-        this.setState({
-            photos: photo_data
-        });
+        this.Get_Post_Photos();
     }
 
     Get_Post_Photos = async () => {
@@ -97,23 +73,28 @@ class The_Photos extends Component {
             return;
         }
 
-        let { get_post_photo_links } = this.context.Request_URLs;
+        let body ={
+            target_id: post_info.id,
+            target_type: "post"
+        }
 
-        let res = await (await fetch(get_post_photo_links, {
+        let { get_photo_links } = this.context.Request_URLs;
+
+        let res = await (await fetch(get_photo_links, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify(post_info)
+            body: JSON.stringify(body)
         })).json();
-
-        if (res && res.photos.length > 0) {
+        
+        if (res && res.results.length > 0) {
 
             this.setState({
-                photos: res.photos
+                photos: res.results
             });
 
-            this.props.Set_Post_Photos(res.photos);
+            this.props.Set_Post_Photos(res.results);
         }
     }
 

@@ -2,11 +2,16 @@
     width: 100%;
     height: 100%;
     position: relative;
+    display: block;
     z-index: 9;
 
     #comments-container {
         width: 100%;
         height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
         position: relative;
 
         #comment-header {
@@ -26,7 +31,7 @@
 
         #comment-values-wrapper {
             width: 100%;
-            height: calc(100% - 130px);
+            height: calc(100% - 150px);
             display: block;
             overflow-y: auto;
             scrollbar-width: none;

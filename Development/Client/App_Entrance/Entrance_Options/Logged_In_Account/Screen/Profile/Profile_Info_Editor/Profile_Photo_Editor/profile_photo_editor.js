@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import Editor from './Editor/editor.js';
-import {Profile_Picture} from '@profile_template';
+import {Profile_Picture} from '@profile_template/profile_template.js';
 import './profile_photo_editor.less';
 
 class Profile_Photo_Editor extends Profile_Picture {

@@ -1,32 +1,29 @@
 let request = function() {
     
-    this.req = (req, res) => { 
+    this.req = async (req, res) => { 
         
         let {user_id, body, title} = req.body;
 
         let created_on = Date.now();
 
-        let data = [
-            {created_on, user_id, body, title, last_edited: time_stamp}
-        ]
+        let data = [title, body, user_id, created_on, created_on];
         
-        let query = `insert into Post_Data(title, body, user_id, created_on, last_edited) values ?`;
+        let query = `insert into Post_Data(title, body, user_id, created_on, last_edited) values (?,?,?,?,?)`;
         
-        this.sql.query(query, [data], (err, result)=>{
-            
-            if (err) {
+        try {
 
-                console.log(query, err.sqlMessage);
-                res.json({ message: "Error adding new post" });            
+            let [result] = await this.sql.query(query, data);
 
-            } else {
+            let post_obj = {id: result.insertId, title, body, user_id, created_on, last_edited: created_on};
 
-                res.json({message: "Successfully added new post"});
-                
-            }
+            res.json({message: "Successfully added new post", result: post_obj});
 
-            
-        });
+        } catch(err){
+
+            console.log(err);
+
+            res.json({ message: "Error adding new post", result: null }); 
+        }
 
     };
 };

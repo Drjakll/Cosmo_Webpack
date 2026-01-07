@@ -50,6 +50,11 @@ class Comment_Input extends Component {
 
         let {visitor_user_account, target_id, target_type, reply_to_id} = this.state;
 
+        if(!target_type || !target_id){
+            alert("Target ID and Target Type not found");
+            return;
+        }
+
         let body = {
             user_id: visitor_user_account.id,
             target_id,

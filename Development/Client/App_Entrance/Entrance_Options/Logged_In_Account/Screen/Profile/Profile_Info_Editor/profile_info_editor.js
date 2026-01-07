@@ -1,4 +1,4 @@
-import {Profile_Info} from '@profile_template';
+import {Profile_Info} from '@profile_template/profile_template.js';
 import React, {Component} from 'react';
 import Context from '@context/context.js';
 import Profile_Picture from './Profile_Photo_Editor/profile_photo_editor.js';
