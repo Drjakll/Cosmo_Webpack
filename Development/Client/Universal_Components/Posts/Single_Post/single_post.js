@@ -121,7 +121,7 @@ class Single_Post extends Component {
         
             <div id="title">
         
-                {title}
+                <label>{title}</label>
         
             </div>
             

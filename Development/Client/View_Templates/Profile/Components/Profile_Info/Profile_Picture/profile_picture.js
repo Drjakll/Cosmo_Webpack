@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Enlarged_Profile_Photo from './Enlarged_Profile_Photo/enlarged_profile_photo.js';
 import './profile_picture.less';
+import {createRoot} from 'react-dom/client';
 
 class Profile_Picture extends Component {
     
@@ -13,9 +14,21 @@ class Profile_Picture extends Component {
         let { owner_user_account } = this.props
         
         this.state = {
-            owner_user_account,
-            enlarge_photo: false
+            owner_user_account
         };
+    }
+
+    componentDidMount(){
+        
+        let {aws_s3_url} = this.context.Request_URLs;
+        let {profile_picture_link} = this.state.owner_user_account;
+
+        this.enlarged_container = document.createElement("div");
+
+        let enlarged_picture = <Enlarged_Profile_Photo turn_off_enlarge={this.Turn_Off_Enlarge} full_url={`${aws_s3_url}${profile_picture_link}`} />;
+
+        this.react_root = createRoot(this.enlarged_container);
+        this.react_root.render(enlarged_picture);
     }
     
     componentDidUpdate(prevProps, prevState){
@@ -30,8 +43,14 @@ class Profile_Picture extends Component {
 
     Turn_Off_Enlarge = () => {
         
-        this.setState({ enlarge_photo: false });
-        
+        document.body.removeChild(this.enlarged_container);
+
+    }
+
+    Inject_Large_Photo_To_Body = ()=>{
+
+        document.body.appendChild(this.enlarged_container);
+
     }
     
     render(){
@@ -45,15 +64,13 @@ class Profile_Picture extends Component {
         return (
             <div id="profile-picture" className={this.state.enlarge_photo ? "enlarged-photo" : ""}>
                 
-                {this.state.enlarge_photo ? <Enlarged_Profile_Photo turn_off_enlarge={this.Turn_Off_Enlarge} full_url={`${aws_s3_url}${profile_picture_link}`} /> : <></>}
-                
                 <div id="profile-picture-image-wrapper">
                         
                     <div id="profile-photo"
                         style={{
                             backgroundImage: `url('${aws_s3_url}${profile_picture_link}')`
                         }}
-                        onClick ={(e) => { this.setState({ enlarge_photo: true }); }}
+                        onClick ={(e) => { this.Inject_Large_Photo_To_Body(); }}
                     >
                                 
                     </div>

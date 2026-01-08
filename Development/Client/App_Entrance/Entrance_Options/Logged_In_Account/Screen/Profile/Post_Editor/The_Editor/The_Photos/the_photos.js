@@ -135,31 +135,28 @@ class The_Photos extends Component {
 
     Delete_Selected_Photos = async (e) => {
 
-        let { delete_post_photo_links, delete_photo_files } = this.context.Request_URLs;
-        let { selected_photos } = this.state; 
+        let { delete_photos } = this.context.Request_URLs;
+        let { selected_photos, photos } = this.state; 
 
-        //Delete the entries from database
-        let res = await (await fetch(delete_post_photo_links, {
+        let res = await (await fetch(delete_photos, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify(selected_photos)
+            body: JSON.stringify({photos: selected_photos})
         })).json();
 
+        alert(res?.message);
 
-        //Delete the actual files from s3
-        let res2 = await (await fetch(delete_photo_files, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({ photos: selected_photos })
-        })).json();
+        photos = photos.filter((p)=>{
+            for(let i in selected_photos){
+                if(selected_photos[i].id === p.id){
+                    return false;
+                }
+            }
+        });
 
-        await this.Get_Post_Photos();
-
-        this.setState({ selected_photos: {} });
+        this.setState({ selected_photos: {}, photos });
  
     }
 

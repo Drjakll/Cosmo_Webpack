@@ -15,16 +15,17 @@ let request = function() {
                         Post_Data as pd
                     left join 
                         (select
-                            target_type,
                             target_id,
                             count(*) as cc
                         from
                             Comments
+                        where 
+                            target_type = 'post'
                         group by
                             target_id
                         ) as c
                     on
-                        c.target_id = pd.id and c.target_type = "post"
+                        c.target_id = pd.id
                     where pd.user_id = ?
                     and pd.created_on >= ?
                     and pd.created_on < ?
@@ -33,7 +34,7 @@ let request = function() {
         
         try{
             let [results] = await this.sql.query(query, data);
-
+            
             res.json({message: `Successfully retrieved ${results.length} posts`, posts: results})
 
         } catch(err){

@@ -266,11 +266,13 @@ class Comments_Container extends Component {
 
         let {comments, visitor_user_account, owner_user_account, selected_comments} = this.state;
 
-        let {back_previous, show_replies, target_id, target_type, reply_to_id} = this.props;
+        let {back_previous, show_replies, target_id, target_type, reply_to_id, comments_count} = this.props;
 
         //Make sure the children uses the first comment_container.js back_revious and show_replies
         back_previous = back_previous || this.Back_Previous;
         show_replies = show_replies || this.Show_Replies;
+
+        let amount = comments.length;
 
         return (<div id="comments-container">
 
@@ -278,7 +280,7 @@ class Comments_Container extends Component {
 
             <div id="comment-header">
 
-                <label>{reply_to_id ? "Replies" : "Comments"}</label>
+                <label>{ amount } {reply_to_id ? (amount > 1 ? "Replies" : "Reply") : (amount > 1 ? "Comments" : "Comment")}</label>
 
             </div>
 

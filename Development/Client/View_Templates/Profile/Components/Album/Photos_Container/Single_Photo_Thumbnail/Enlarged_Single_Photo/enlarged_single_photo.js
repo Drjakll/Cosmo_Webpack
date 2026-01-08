@@ -69,6 +69,7 @@ class Enlarged_Single_Photo extends Component {
                         visitor_user_account={this.state.visitor_user_account}
                         owner_user_account={this.state.owner_user_account}
                         parent_room_name={null}
+                        comments_count={photo_info.comments_count}
                     />
 
                 </div>

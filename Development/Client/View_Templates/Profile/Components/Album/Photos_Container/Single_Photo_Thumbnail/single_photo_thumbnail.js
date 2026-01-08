@@ -56,14 +56,16 @@ class Single_Photo extends Component {
         aws_s3_url = photo_link ? aws_s3_url : "";
 
         let {Enlarged_Single_Photo: Enlarged_Photo} = this;
+
+        let {photo_info, owner_user_account, visitor_user_account, album_info} = this.state;
         
         return  <Enlarged_Photo 
-            photo_info={this.state.photo_info}
+            photo_info={photo_info}
             aws_s3_url={`${aws_s3_url}`}
-            owner_user_account={this.state.owner_user_account}
-            visitor_user_account={this.state.visitor_user_account}
+            owner_user_account={owner_user_account}
+            visitor_user_account={visitor_user_account}
             Enlarged_Photo_Editor={Editor?.Enlarged_Photo_Editor}
-            album_info={this.state.album_info}
+            album_info={album_info}
             Get_Albums={this.props.Get_Albums} 
         />;
     }

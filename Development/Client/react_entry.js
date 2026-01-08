@@ -76,7 +76,6 @@ class Entry extends Component {
                 Profile_Thumbnail,
                 Login
             }}
-        
         >
             
             <App_Entrance />
