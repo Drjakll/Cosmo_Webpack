@@ -77,7 +77,7 @@ class Reaction_Container extends Component {
 
         let {signal_refresh_this_section_comments} = this.props;
 
-        let {submit_comment_reaction} = this.context.Request_URLs;
+        let {submit_reaction} = this.context.Request_URLs;
 
         let {target_id, target_type, visitor_user_account} = this.state;
 
@@ -91,7 +91,7 @@ class Reaction_Container extends Component {
             target_type
         };
 
-        await fetch(submit_comment_reaction,
+        await fetch(submit_reaction,
             {
                 method: "POST",
                 body: JSON.stringify(body),
@@ -124,11 +124,11 @@ class Reaction_Container extends Component {
                         <div id="icon-wrapper" onClick={(e)=>{ this.Capture_Reaction(key); }}>
 
                             <img src={`./static/${this.Like_Dislike[key]}.png`} className={`${existing_users[id]?.reaction === key ? 'selected-reaction' : ''}`}/>
-                            <label>({like_dislike[key].length})</label>
+                            <label>{like_dislike[key].length}</label>
 
                         </div>
 
-                        <div id="reaction-dropdown">
+                        <div id="reaction-dropdown" className={like_dislike[key].length ? "" : "no-reaction"}>
 
                             {like_dislike[key].map((value, index)=>{
 
@@ -186,7 +186,7 @@ class Reaction_Container extends Component {
 
                                 let name = this.Emoji_Icon_Names[key];
 
-                                return <div className={`emoji-icon ${existing_users[id].emojis.includes(name) && 'selected-emoji'}`}>
+                                return <div className={`emoji-icon ${existing_users[id].emojis.includes(name) && 'selected-emoji'}`} key={index}>
 
                                     <img src={`./static/${name}.png`} onClick={(e)=>{
 

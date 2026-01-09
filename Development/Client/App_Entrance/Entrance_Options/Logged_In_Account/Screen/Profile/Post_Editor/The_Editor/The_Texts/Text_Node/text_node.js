@@ -9,8 +9,6 @@ class Photo_Display extends HTMLElement {
 
     }
 
-    Show_Photos = false;
-
     constructor() {
 
         super();
@@ -61,7 +59,9 @@ class Photo_Display extends HTMLElement {
 
         this.querySelector("#photo-exit-button").addEventListener("click", (e) => {
 
-            this.setAttribute("show_photos", '0');
+            let div_to_remove = document.getElementById("text-node-slideshow");
+
+            document.body.removeChild(div_to_remove);
 
         });
 
@@ -87,7 +87,7 @@ class Photo_Display extends HTMLElement {
             this.photo_ids.push(`photo-${key}`);
         }
 
-        this.innerHTML = `<div id="highlighted-photos" class="${this.Show_Photos ? "photo-display-show" : ""}">` +
+        this.innerHTML = `<div id="highlighted-photos" class="${"photo-display-show"}">` +
 
             `<div id="photo-exit-button"></div>` +
 
@@ -95,7 +95,7 @@ class Photo_Display extends HTMLElement {
 
             `<div id="slide-left-button"> ${"<"} </div>` +
 
-            (this.Show_Photos ? htmlStr : ``) +
+            (htmlStr) +
 
             `<div id="slide-right-button"> ${">"}</div>` +
 
@@ -116,8 +116,6 @@ class Text_Node extends HTMLElement {
         return ['text', 'photo_links', 'aws_s3_url'];
     }
 
-    Show_Photos = 0;
-
     constructor() {
 
         super();
@@ -134,9 +132,13 @@ class Text_Node extends HTMLElement {
 
         element.addEventListener("click", (e) => {
 
-            let el = this.querySelector("photo-display");
+            let div = document.createElement("div");
 
-            el.setAttribute("show_photos", "1");
+            div.id="text-node-slideshow";
+
+            div.innerHTML = this.photo_display_el;
+
+            document.body.appendChild(div);
 
         });
 
@@ -158,9 +160,9 @@ class Text_Node extends HTMLElement {
 
         let first_photo_link = keys.length > 0 ? photo_links_obj[keys[0]].link : "";
 
-        this.innerHTML = `<div id="text-node-wrapper">` +
+        this.photo_display_el = `<photo-display id="photo-display" photo_links='${photo_links_str}' aws_s3_url="${aws_s3_url}"></photo-display>`;
 
-                `<photo-display id="photo-display" photo_links='${photo_links_str}' show_photos=${this.Show_Photos} aws_s3_url="${aws_s3_url}"></photo-display>` +
+        this.innerHTML = `<div id="text-node-wrapper">` +
 
                 `<div id="photo-sample" style="background-image: url('${aws_s3_url}${first_photo_link}')"></div>` +
 

@@ -62,8 +62,9 @@ class Album_Cover extends Component {
                                 backgroundImage: `url('${aws_s3_url}${album_cover_link}')`
                             }}
 
-                            onClick = {(e)=>{
-                                this.props.Get_Photo_Links(album_info);
+                            onClick = {async (e)=>{
+                                await this.props.Get_Photo_Links(album_info);
+                                this.props.change_display();
                             }}
                         >
                             {

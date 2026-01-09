@@ -97,7 +97,8 @@ class Albums extends Component {
 
         await this.setState({ photo_links: results, selected_album: album_info});
 
-        this.props.change_display(this.Open_Photo_Container);
+        return results;
+
     }
 
     Open_Photo_Container = () =>{
@@ -116,9 +117,15 @@ class Albums extends Component {
             Get_Albums={Get_Albums}
             change_main_display={change_display}
             return_previous_display={return_previous_display}
-            Get_Photo_Links={Get_Photo_Links}
+            refresh_photo_links={Get_Photo_Links}
         />);
         
+    }
+
+    Change_Display = ()=>{
+
+        this.props.change_display(this.Open_Photo_Container);
+
     }
     
     render(){
@@ -155,6 +162,7 @@ class Albums extends Component {
                         return <div className="album-cover-wrapper" key={index}>
                                 
                             <Album_Cover album_info={data} 
+                                        change_display={this.Change_Display}
                                         Get_Photo_Links={this.Get_Photo_Links}
                                         owner_user_account={this.state.owner_user_account}
                                         visitor_user_account={this.state.visitor_user_account}

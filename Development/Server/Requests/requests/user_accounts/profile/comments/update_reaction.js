@@ -3,17 +3,29 @@ let request = function() {
     
     this.req = async (req, res) => { 
         
-        let {target_id, emojis, reaction, user_id} = req.body;
+        let {target_id, emojis, reaction, user_id, target_type} = req.body;
  
-        let data = [
+
+        let data = target_type ? 
+        [  
+            emojis,
+            reaction,
+            target_id,
+            user_id,
+            target_type,
+        ]
+        :
+        [
             emojis,
             reaction,
             target_id, 
             user_id
         ];
 
+        let table_name = target_type ? "General_Reactions" : "Comment_Reactions";
+
         
-        let query = `update Comment_Reactions set emojis = emojis ^ ?, reaction = ? where target_id = ? and user_id = ?`;
+        let query = `update ${table_name} set emojis = emojis ^ ?, reaction = ? where target_id = ? and user_id = ? ${target_type ? "and target_type = ?" : ""}`;
         
         try {
 

@@ -26,6 +26,8 @@ class Single_Photo extends Component {
 
     componentDidMount(){
 
+
+
     }
     
     componentDidUpdate(prevProps, prevState){
@@ -36,11 +38,6 @@ class Single_Photo extends Component {
         
         this.setState(this.props);
     }
-    
-    Exit_Enlarge_Mode = () => {
-        
-        this.setState({enlarge_photo: false});
-    }
 
     Show_Enlarged_Photo = () => {
 
@@ -50,12 +47,10 @@ class Single_Photo extends Component {
 
         const photo_link = this.state.photo_info?.link;
 
-        const Editor = this.props.Thumbnail_Editor;
-
         //To avoid unecessary request to the aws s3 if there is no photo link available
         aws_s3_url = photo_link ? aws_s3_url : "";
 
-        let {Enlarged_Single_Photo: Enlarged_Photo} = this;
+        let {Enlarged_Single_Photo: Enlarged_Photo, Signal_All_Refresh_Reactions} = this;
 
         let {photo_info, owner_user_account, visitor_user_account, album_info} = this.state;
         
@@ -64,7 +59,6 @@ class Single_Photo extends Component {
             aws_s3_url={`${aws_s3_url}`}
             owner_user_account={owner_user_account}
             visitor_user_account={visitor_user_account}
-            Enlarged_Photo_Editor={Editor?.Enlarged_Photo_Editor}
             album_info={album_info}
             Get_Albums={this.props.Get_Albums} 
         />;
@@ -75,18 +69,20 @@ class Single_Photo extends Component {
         const {Request_URLs} = this.context;
         
         let {aws_s3_url} = Request_URLs;
+
+        let {photo_info} = this.state;
         
-        const photo_link = this.state.photo_info?.link;
+        const {link: thumbnail_pic_link, comments_count} = photo_info;
         
         //To avoid unecessary request to the aws s3 if there is no photo link available
-        aws_s3_url = photo_link ? aws_s3_url : "";
+        aws_s3_url = thumbnail_pic_link ? aws_s3_url : "";
         
         return (
             <div id="single-photo-thumbnail">
 
                 <div id="photo-thumbnail"
                     style={{
-                        backgroundImage: `url('${aws_s3_url}${photo_link}')`
+                        backgroundImage: `url('${aws_s3_url}${thumbnail_pic_link}')`
                     }}
                     onClick = {(e)=>{
                             
@@ -94,6 +90,12 @@ class Single_Photo extends Component {
                     }}
                 >
                     
+                </div>
+
+                <div id="comment-count-wrapper">
+
+                    {comments_count} {comments_count > 1 ? "Comments" : "Comment"}
+
                 </div>
                     
             </div>

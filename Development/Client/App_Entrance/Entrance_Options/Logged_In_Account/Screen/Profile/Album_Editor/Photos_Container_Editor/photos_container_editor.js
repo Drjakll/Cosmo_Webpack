@@ -110,9 +110,9 @@ class Photos_Container_Editor extends Photos_Container {
 
             await Upload_Files_To_S3(upload_photos, selected_files, jsonBody);
 
-            await this.props.Get_Photo_Links(album_info);
+            let photo_links = await this.props.refresh_photo_links(album_info);
 
-            this.setState({selected_files: []});
+            this.setState({selected_files: [], photo_links});
 
         }
 
@@ -146,7 +146,12 @@ class Photos_Container_Editor extends Photos_Container {
 
     Delete_Selected_Photos_Button = () => {
 
+
         let delete_photos = async (e) => {
+
+            if(!confirm("Are you sure?")){
+                return;
+            }   
 
             let { Request_URLs } = this.context;
 
@@ -165,9 +170,10 @@ class Photos_Container_Editor extends Photos_Container {
             });
 
             this.Photos_To_Be_Deleted = {};
-            this.setState({Photos_To_Be_Deleted: {}});
 
-            this.props.Get_Photo_Links(this.state.album_info);
+            let photo_links = await this.props.refresh_photo_links(this.state.album_info);
+
+            this.setState({Photos_To_Be_Deleted: {}, photo_links})
         };
 
         return <div id="delete-photo-button">

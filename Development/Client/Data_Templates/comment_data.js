@@ -3,18 +3,17 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/ClientSide/javascript.js to edit this template
  */
 
-let Photo_Comment_Data_Template = function(initial){
+let Comment_Template = function(initial){
   
     let template = {
         id: null,
-        email: "",
+        user_id: null,
         comment: "",
         time_stamp: Date.now(),
-        belongs_to_photo_id: null,
-        reply_to_comment: null,
-        likes: {},
-        dislikes: {},
-        emojis: {}
+        reply_to_id: null,
+        target_type: null,
+        target_id: null,
+        last_updated: Date.now()
     };
     
     for(let i in initial){
@@ -28,39 +27,10 @@ let Photo_Comment_Data_Template = function(initial){
     }
     
     return template;
-};
-
-let Post_Comment_Data_Template = function(initial){
-
-    let template = {
-        id: null,
-        email: "",
-        comment: "",
-        time_stamp: Date.now(),
-        belongs_to_post_id: null,
-        reply_to_comment: null,
-        likes: {},
-        dislikes: {},
-        emojis: {}
-    };
-    
-    for(let i in initial){
-        
-        if(i === "id" || template[i] === undefined){
-            continue;
-        }
-        
-        template[i] = initial[i];
-        
-    }
-    
-    return template;
-
 };
 
 export default {
-        Photo_Comment_Data_Template: Photo_Comment_Data_Template,
-        Post_Comment_Data_Template: Post_Comment_Data_Template
+        Comment_Template
 };
 
 

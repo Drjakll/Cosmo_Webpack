@@ -61,7 +61,7 @@ class Posts extends Component {
             return;
         }
         
-        //this.setState(this.props);
+        this.setState(this.props);
         
     }
 

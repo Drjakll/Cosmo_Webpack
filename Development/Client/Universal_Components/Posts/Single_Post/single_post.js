@@ -1,6 +1,8 @@
 import React, { Component, createRef } from 'react';
 import Comments_Container from '@comments_container/comments_container.js';
+import General_Reactions_Container from '@universal_components/General_Reactions_Container/general_reactions_container.js';
 import Context from '@context/context.js';
+import { io } from 'socket.io-client';
 import './single_post.less';
 
 class Single_Post extends Component {
@@ -36,7 +38,7 @@ class Single_Post extends Component {
         this.state = {
             owner_user_account,
             visitor_user_account,
-            post: post,
+            post,
             for_commenting
         };
     }
@@ -44,6 +46,60 @@ class Single_Post extends Component {
     componentDidMount() {
 
         this.bodyRef.current.innerHTML = this.state.post?.body;
+
+        this.Init_Socket();
+
+    }
+
+    Init_Socket = ()=>{
+
+        this.socket = io('/reaction_room');
+
+        this.socket.on('connect', ()=>{
+
+            let {id} = this.state.post;
+
+            let room_name = `post_${id}`;
+
+            this.socket.emit('join_reaction_room', {room_name});
+
+        });
+
+        this.socket.on('refresh_reactions', this.Refresh_Reactions);        
+
+    }
+
+    Signal_All_Refresh_Reactions = ()=>{
+
+        let {id} = this.state.post;
+
+        this.socket.emit('signal_all_refresh_reactions', {room_name: `post_${id}`});
+    }
+
+    Refresh_Reactions = async ()=>{
+
+        let {get_posts} = this.context.Request_URLs;
+
+        let {id: user_id} = this.state.owner_user_account;
+
+        let {id} = this.state.post;
+
+        let data = await( await fetch(
+            get_posts,
+            {
+                method: "POST",
+                body: JSON.stringify({id, user_id}),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }
+        )).json();
+
+        if(data && data.posts?.length){
+
+            await this.setState({post: data.posts[0]});
+
+        }
 
     }
     
@@ -56,6 +112,8 @@ class Single_Post extends Component {
         await this.setState(this.props);
 
         this.bodyRef.current?.innerHTML = this.state.post?.body;
+
+        this.Init_Socket();
 
     }
     
@@ -80,6 +138,7 @@ class Single_Post extends Component {
         let {post, visitor_user_account, owner_user_account} = this.state;
 
         let {Comments_Holder} = this;
+
 
         return <div id="comments-container-wrapper">
 
@@ -113,9 +172,7 @@ class Single_Post extends Component {
     render() {
         
         let {post, visitor_user_account, owner_user_account} = this.state;
-        let {title, created_on, comments_count} = post;
-
-        let {editable} = this.props;
+        let {title, created_on, comments_count, id} = post;
 
         return <div id="single-post">
         
@@ -134,6 +191,19 @@ class Single_Post extends Component {
             </div>
             
             <div id="bottom-body">
+
+                <div id="reactions-wrapper" className="bottom-body-section">
+
+                    <General_Reactions_Container 
+                        visitor_user_account={visitor_user_account}
+                        owner_user_account={owner_user_account}
+                        target_id={id}
+                        target_type={"post"}
+                        refresh_parent={this.Signal_All_Refresh_Reactions}
+                        reactions={post.reactions}
+                    />
+
+                </div>
 
                 <div id="comments-count-wrapper" className="bottom-body-section">
 

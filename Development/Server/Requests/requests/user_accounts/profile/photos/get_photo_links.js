@@ -2,9 +2,10 @@ let request = function() {
     
     this.req = async (req, res, next) => { 
         
-        let {target_id, target_type} = req.body;
+        let {target_id, target_type, id} = req.body;
 
-        let requirements = [target_id, target_type];
+        //If id exists, we just wanted to search one photo link, else search based off on target_id and target_type
+        let requirements = id ? [id] : [target_id, target_type];
         
         let query = `select 
                         pl.*,
@@ -27,28 +28,44 @@ let request = function() {
                         c.target_id = pl.id
                     left join
                         (select
-                            target_id,
+                            gr.target_id,
                             json_arrayagg(
                                 json_object(
-                                    'id', id,
-                                    'user_id', user_id,
-                                    'target_id', target_id,
-                                    'target_type', target_type,
-                                    'emojis', emojis,
-                                    'reaction', reaction
+                                    'id', gr.id,
+                                    'user_id', gr.user_id,
+                                    'target_id', gr.target_id,
+                                    'target_type', gr.target_type,
+                                    'emojis', gr.emojis,
+                                    'reaction', gr.reaction,
+                                    'profile_picture_link', pl.link,
+                                    'first_name', ua.first_name,
+                                    'last_name', ua.last_name
                                 )
                             ) as reactions
+
                         from
-                            General_Reactions
+                            General_Reactions as gr
+
+                        left join
+                            User_Accounts as ua
+                        on
+                            ua.id = gr.user_id
+
+                        left join
+                            Photo_Links as pl
+                        on
+                            pl.target_type = 'profile' and pl.target_id = ua.id and pl.is_a_cover = 1
+
                         where
-                            target_type = 'photo'
+                            gr.target_type = 'photo' and gr.reaction is not null
                         group by
-                            target_id
+                            gr.target_id
                         ) as gr
                     on
                         gr.target_id = pl.id
+
                     where 
-                        pl.target_id = ? and pl.target_type = ?`;
+                        ${id ? "pl.id = ?" : "pl.target_id = ? and pl.target_type = ?"}`;
         
         try {
 

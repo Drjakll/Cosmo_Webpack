@@ -1,7 +1,8 @@
 let Photo_Album_Data = function(initial){
   
     let template = {
-        user_id: -1,
+        id: null,
+        user_id: null,
         created_on: null,
         title: "",
         brief_description: ""
@@ -23,11 +24,12 @@ let Photo_Album_Data = function(initial){
 let Photo_Data = function (initial) {
 
     let template = {
-        user_id: "",
+        id: null,
+        user_id: null,
         link: "",
         image_descriptions: "",
         title: "",
-        target_id: -1,
+        target_id: null,
         target_type: "",
         meta_data: "{}",
         time_uploaded: null

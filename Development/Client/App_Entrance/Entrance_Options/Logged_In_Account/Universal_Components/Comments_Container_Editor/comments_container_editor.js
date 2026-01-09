@@ -85,11 +85,15 @@ class Comments_Container_Editor extends Comments_Container {
             this.Signal_Refresh_Parent_Comments();
         }
 
+        let {selected_comments} = this.state;
+
+        let selected_comments_length = Object.keys(selected_comments).length
+
         return <div id="comments-editor-options">
 
             <div id="delete-selected-comments-button" onClick={Delete_Comments}>
 
-                Delete Selections
+                Delete {selected_comments_length} {selected_comments_length > 1? "Comments" : "Comment"}
 
             </div>
 
