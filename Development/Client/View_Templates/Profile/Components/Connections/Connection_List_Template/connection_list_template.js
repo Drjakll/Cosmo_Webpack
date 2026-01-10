@@ -7,11 +7,20 @@ class Connection_List_Template extends Component {
 
         super(props);
 
+        //The list is either followings, or followers
+        //The label will tell whether it's followings or followers
+        let {list, label, owner_user_account, visitor_user_account} = props;
 
-        this.state = {};
+        this.state = {
+            label,
+            list,
+            owner_user_account,
+            visitor_user_account
+        };
     }
 
     componentDidMount(){
+
 
     }
 
@@ -27,9 +36,20 @@ class Connection_List_Template extends Component {
 
     render(){
 
+        let {label, list} = this.state;
+
         return <div id="connection-list-template">
 
-            
+            <div id="label-wrapper">
+
+                <label>{label}</label>
+
+            </div>
+
+            <div id="the-list-wrapper">
+
+
+            </div>
 
         </div>;
     }

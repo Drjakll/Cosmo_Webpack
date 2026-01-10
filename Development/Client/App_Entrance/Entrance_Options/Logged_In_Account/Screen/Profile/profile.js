@@ -47,8 +47,6 @@ class Profile extends Profile_Template {
     }
 
     Generate_Connections = (general_props, unique_props)=>{
-
-        return <div></div>
         
         return <Connections_Editor {...general_props} {...unique_props} />;
     }   

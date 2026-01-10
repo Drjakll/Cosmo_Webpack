@@ -11,7 +11,7 @@ import Text_Type from './Info_Types/Text_Type/text_type.js';
 let Account_Data_Template = function(initial){
   
     let template = {
-        id: null,
+        id: -1,
         email: "",
         password: "",
         first_name: "",

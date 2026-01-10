@@ -30,7 +30,7 @@ let request = function () {
         try {
 
             let [results] = await this.sql.query(query, data);
-
+            
             res.json({message: `Found ${results.length} followers`, results});
 
         } catch(err){

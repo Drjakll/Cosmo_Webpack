@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import Popup_Editor from './Popup_Editor/popup_editor.js';
+import Context from '@context/context.js';
 import {Connections} from '@profile_template/profile_template.js';
 import './connections_editor.less';
 
@@ -11,7 +12,7 @@ class Connections_Editor extends Connections {
 
         let {owner_user_account, connection_list} = this.props;
 
-        Connections_Editor.contextType = window.Context;
+        Connections_Editor.contextType = Context;
 
         let state = {
             owner_user_account,

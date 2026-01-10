@@ -77,8 +77,7 @@ class Profile_Template extends Component {
 
     //This may be override by child class    
     Generate_Connections = (general_props, unique_props)=>{
-        
-        return "";
+
         return <Connections {...general_props} {...unique_props} />;
     }   
 
