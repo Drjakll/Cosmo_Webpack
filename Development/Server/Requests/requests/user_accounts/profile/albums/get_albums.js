@@ -9,13 +9,30 @@ let request = function() {
         let query = `select 
                         pa.*,
                         pl.link as album_cover_link,
-                        pl.id as album_cover_id
+                        pl.id as album_cover_id,
+                        pc.photo_count as photo_count
                     from 
                         Photo_Albums as pa 
+
                     left join
                         Photo_Links as pl
                     on
                         pl.target_id = pa.id and target_type = 'album' and is_a_cover = true
+                    
+                    left join
+                        (select 
+                            target_id,
+                            count(*) as photo_count
+                        from
+                            Photo_Links
+                        where 
+                            target_type = 'album'
+                        group by
+                            target_id
+                        ) as pc
+                    on
+                        pc.target_id = pa.id
+                    
                     where 
                         pa.user_id = ? order by created_on desc`;
 

@@ -18,7 +18,7 @@ let Comment_Template = function(initial){
     
     for(let i in initial){
         
-        if(i === "id" || template[i] === undefined){
+        if(template[i] === undefined){
             continue;
         }
         

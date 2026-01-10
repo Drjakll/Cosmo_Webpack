@@ -10,7 +10,7 @@ let Photo_Album_Data = function(initial){
     
     for(let i in initial){
         
-        if(i === "id" || template[i] === undefined){
+        if(template[i] === undefined){
             continue;
         }
         
@@ -37,7 +37,7 @@ let Photo_Data = function (initial) {
 
     for (let i in initial) {
 
-        if (i === "id" || template[i] === undefined) {
+        if (template[i] === undefined) {
             continue;
         }
 

@@ -1,32 +1,34 @@
 let request = function () {
 
-    this.req = (req, res)=>{
+    this.req = async (req, res)=>{
 
-        let { connection_id, from_id, to_id, status } = req.body;
+        let { from_id, to_id, status } = req.body;
+
+        let data = [status, from_id, to_id];
 
         let query = `
             update
                 Connections
             set
-                status = '${status}'
+                status = ?
             where
-                id = ${connection_id || 0} or (follower_id = ${from_id} and followed_id = ${to_id});
+                follower_id = ? 
+                and followed_id = to_id;
         `;
 
-        this.sql.query(query, (err, result) => {
+        try {
 
-            if(err){
+            await this.sql.query(query, data);
 
-                console.log(query, err.sqlMessage);
-                res.json({message: "Error updating follow request"});
+            res.json({message: "Successfully updated connection request!"});
 
-            } else {
+        } catch(err){
 
-                res.json({message: "Successfully updating follow request!"});
-            }
+            console.log(err);
 
-            res.end();
-        });
+            res.json({message: "Error updating connection request!"});
+
+        }
     };
 };
 

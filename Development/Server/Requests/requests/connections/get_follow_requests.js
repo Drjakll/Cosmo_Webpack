@@ -4,40 +4,44 @@ let request = function () {
 
         let { id } = req.body;
 
+        let data = [id];
+
         let query = `
             select 
                 c.*,
-                ua.profile_picture_link,
+                pl.link as profile_picture_link,
                 ua.first_name,
                 ua.last_name
             from 
                 Connections as c
+
             join
                 User_Accounts as ua
             on 
-                c.followed_id = ${id}
-            where
                 c.follower_id = ua.id
+
+            left join
+                Photo_Links as pl
+            on
+                pl.target_type = 'profile' and pl.target_id = ua.id and pl.is_a_cover = 1
+
+            where
+                c.followed_id = ?
             and
                 c.status = 'pending';   
         `;
+        
+        try {
+            let [results] = this.sql.query(query, data);
 
-        this.sql.query(query, (err, result) => {
+            res.json({message: `Succesfully retrieved ${results.length} requests`, results});
 
-            if(err){
+        } catch(err){
 
-                console.log(query, err.sqlMessage);
-                res.json({message: "Error retreiving follow requests", result: []});
-                
-            } else {
-                
-                req.body.results = result;
+            console.log(err);
 
-                next();
-            }
-
-            res.end();
-        });
+            res.json({message: "Error retrieving follow requests"});
+        }
 
     };
 };

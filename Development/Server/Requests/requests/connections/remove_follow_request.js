@@ -4,23 +4,24 @@ let request = function () {
 
         let { from_id, to_id } = req.body;
 
+        let data = [from_id, to_id];
+
         let query = `
-            delete from Connections where follower_id=${from_id} and followed_id=${to_id};
+            delete from Connections where follower_id = ? and followed_id = ?;
         `;
 
-        this.sql.query(query, (err, result) => {
+        try {
 
-            if(err){
+            this.sql.query(query, data);
 
-                console.log(query, err.sqlMessage);
-                res.json({message: "Error unfollowing user account"});
-                
-            } else {
-                res.json({message: "Successfully unfollowed user account!"});
-            }
+            res.json({message:"Successfully removed follow request"});
 
-            res.end();
-        });
+        } catch(err){
+
+            console.log(err);
+
+            res.json({message: "Error removing follow request"});
+        }
 
     };
 };

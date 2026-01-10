@@ -1,38 +1,45 @@
 let request = function () {
 
-    this.req = (req, res)=>{
+    this.req = async (req, res)=>{
 
         let { id: user_id } = req.body;
 
+        let data = [user_id];
+
         let query = `
             select 
-                ua.* 
+                ua.*,
+                pl.link as profile_picture_link
             from 
                 Connections as c
+
             join
                 User_Accounts as ua
-            where 
-                c.followed_id = ${user_id} 
-            and 
+            on
                 c.follower_id = ua.id
+
+            left join
+                Photo_Links as pl
+            on
+                pl.target_type = 'profile' and pl.target_id = ua.id and pl.is_a_cover = 1
+
+            where 
+                c.followed_id = ? 
         `;
 
-        this.sql.query(query, (err, results) => {
+        try {
 
-            if(err){
+            let [results] = await this.sql.query(query, data);
 
-                console.log(query, err.sqlMessage);
-                res.json({message: "Error retrieving followers list", results: []});
+            res.json({message: `Found ${results.length} followers`, results});
 
-            } else {
+        } catch(err){
 
-                res.json({message: "Successfully retrieved followers list", results: results});
+            console.log(err);
 
-            }
+            res.json({message: `Found error retrieving followers`, results: []});
 
-            res.end();
-
-        });
+        }
     };
 };
 

@@ -82,7 +82,7 @@ class Album_Cover extends Component {
                     
                     <div id="album-title-wrapper" >   
                     
-                        {album_info?.title}
+                        ({album_info?.photo_count}) {album_info?.title} 
                     
                     </div>
                     

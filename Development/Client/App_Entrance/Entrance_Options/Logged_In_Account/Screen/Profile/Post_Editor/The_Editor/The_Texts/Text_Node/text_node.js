@@ -52,7 +52,7 @@ class Photo_Display extends HTMLElement {
 
             this.current_index += 1;
             this.current_index %= length;
-            this.current_index += (this.current_index < 0 ? length : 0);
+            //this.current_index += (this.current_index < 0 ? length : 0);
 
             location.assign(`#${this.photo_ids[this.current_index]}`);
         });
