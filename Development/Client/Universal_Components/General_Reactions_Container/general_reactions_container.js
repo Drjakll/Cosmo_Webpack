@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import Context from '@context/context.js';
+import Profile_Thumbnail from '@universal_components/Profile_Thumbnail/profile_thumbnail.js';
 import './general_reactions_container.less';
 
 class General_Reactions_Container extends Component {
@@ -115,9 +116,8 @@ class General_Reactions_Container extends Component {
 
     render(){
 
-        let {aws_s3_url} = this.context.Request_URLs;
 
-        let {users_that_given_reaction, visitor_user_account, target_id} = this.state;
+        let {users_that_given_reaction, visitor_user_account, owner_user_account } = this.state;
         
 
         return <div id="general-reactions-container-wrapper">
@@ -145,7 +145,7 @@ class General_Reactions_Container extends Component {
 
                                 {items.map((value, index)=>{
 
-                                    let {first_name, last_name, profile_picture_link, emojis} = value;
+                                    let {first_name, last_name, profile_picture_link, emojis, user_id} = value;
 
                                     let split_emojis = emojis === "" ? [] : emojis.split(',');
 
@@ -153,7 +153,11 @@ class General_Reactions_Container extends Component {
 
                                             <div id="profile-picture-wrapper">
 
-                                                <img src={`${aws_s3_url}${profile_picture_link}`}/>
+                                                <Profile_Thumbnail
+                                                    visitor_user_account={visitor_user_account}
+                                                    owner_user_account={owner_user_account}
+                                                    profile={{profile_picture_link, id: user_id}}
+                                                />
 
                                                 <label id="hidden-name">{first_name} {last_name}</label>
 

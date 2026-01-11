@@ -84,7 +84,9 @@ class Profile_Template extends Component {
     //This may be override by child class    
     Generate_Albums = (general_props, unique_props)=>{    
 
-        return <Albums {...general_props} {...unique_props} />;
+        let {Albums: Albums_Component} = Albums;
+
+        return <Albums_Component {...general_props} {...unique_props} />;
     }
 
     //This may be override by child class

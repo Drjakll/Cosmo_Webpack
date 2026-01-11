@@ -2,6 +2,7 @@ import React, {Component, createRef} from 'react';
 import Context from '@context/context.js';
 import Comments_Container from '@comments_container/comments_container.js';
 import Reaction_Container from '@comments_container/Reaction_Container/reaction_container.js';
+import Profile_Thumbnail from '@universal_components/Profile_Thumbnail/profile_thumbnail.js';
 import './comment_container.less';
 
 class Comment_Container extends Component {
@@ -195,11 +196,7 @@ class Comment_Container extends Component {
 
         let {comment_info, owner_user_account, visitor_user_account, editable} = this.state
 
-        let {first_name, last_name, profile_picture_link, id, comment, time_stamp, replies, reactions} = comment_info;
-
-        let {aws_s3_url} = this.context.Request_URLs;
-
-        
+        let {first_name, last_name, profile_picture_link, id, comment, time_stamp, replies, reactions, user_id} = comment_info;
 
         return (<div id="comment-container-wrapper">
 
@@ -217,7 +214,11 @@ class Comment_Container extends Component {
 
                 <div id="commenter-profile-picture-wrapper">
 
-                    <img src={`${aws_s3_url}${profile_picture_link}`} />
+                    <Profile_Thumbnail
+                        visitor_user_account={visitor_user_account}
+                        owner_user_account={owner_user_account}
+                        profile={{profile_picture_link, id: user_id}}
+                    />
 
                 </div>
 

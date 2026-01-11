@@ -4,6 +4,13 @@ let request = function () {
 
         let { id: user_id } = req.body;
 
+        if (!user_id) {
+            return res.status(400).json({
+                message: 'Missing user_id',
+                results: [],
+            });
+        }
+
         let data = [user_id];
 
         let query = `

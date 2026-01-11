@@ -6,7 +6,7 @@ import './albums.less';
 
 class Albums extends Component {
 
-    Photos_Container = Photos_Container
+    Container = Photos_Container.Photos_Container
     
     constructor(props){
         
@@ -14,12 +14,11 @@ class Albums extends Component {
         
         Albums.contextType = Context;
 
-        let {visitor_user_account, owner_user_account, album_editor} = this.props;
+        let {visitor_user_account, owner_user_account} = props;
 
         this.state = {
             owner_user_account,
             visitor_user_account,
-            album_editor,
             albums: [],
             photo_links: [],
             selected_album: {}
@@ -107,7 +106,7 @@ class Albums extends Component {
 
         let {change_display, return_previous_display} = this.props;
 
-        let {Photos_Container : Container, Get_Albums, Get_Photo_Links} = this;
+        let { Container, Get_Albums, Get_Photo_Links} = this;
 
         return (<Container 
             photo_links={photo_links}
@@ -135,11 +134,12 @@ class Albums extends Component {
         let drag_scroll = new Drag_Scroll();
         
         let albumsWrapperRef = createRef();
+
         
         return (
              <div id="albums">
                 
-                <div id="albums-top">
+                <div id="albums-top"> 
 
                     <div id="albums-label">
 

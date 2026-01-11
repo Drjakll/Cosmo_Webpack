@@ -4,7 +4,7 @@ import './photos_container.less';
 
 class Photos_Container extends Component {
 
-    Single_Photo_Thumbnail = Single_Photo_Thumbnail 
+    Thumbnail = Single_Photo_Thumbnail.Single_Photo 
 
     Photos_To_Be_Deleted = null
     Insert_Photo_To_Delete = null
@@ -39,7 +39,7 @@ class Photos_Container extends Component {
     
     render(){
 
-        let {Single_Photo_Thumbnail: Photo_Thumbnail, Insert_Photo_To_Delete} = this;
+        let {Thumbnail, Insert_Photo_To_Delete} = this;
 
         let {owner_user_account, visitor_user_account, photos_to_be_deleted, album_info, photo_links} = this.state;
 
@@ -70,7 +70,7 @@ class Photos_Container extends Component {
 
                             return <div className="photo-thumbnail-wrapper" key={index}>
 
-                                <Photo_Thumbnail
+                                <Thumbnail
                                     photo_info={photo_info}
                                     owner_user_account={owner_user_account}
                                     visitor_user_account={visitor_user_account}

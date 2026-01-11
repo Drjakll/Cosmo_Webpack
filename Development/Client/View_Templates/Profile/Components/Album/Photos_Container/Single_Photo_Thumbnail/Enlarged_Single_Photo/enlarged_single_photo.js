@@ -1,10 +1,13 @@
 import React, {Component} from 'react';
 import Comments_Container from '@comments_container/comments_container.js';
+import Context from '@context/context.js';
 import General_Reaction_Container from '@universal_components/General_Reactions_Container/general_reactions_container.js';
 import './enlarged_single_photo.less';
 import { io } from 'socket.io-client';
 
 class Enlarged_Single_Photo extends Component {
+
+    static contextType = Context;
 
     Comments = Comments_Container
 

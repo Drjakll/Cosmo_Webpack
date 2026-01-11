@@ -48,7 +48,8 @@ let {
         comments,
         photos,
         post_data,
-        profile_data
+        profile_data,
+        get_user_account_data
 
     } = profile;
 
@@ -184,6 +185,7 @@ app.post("/update_profile", update_profile.req);
 app.post("/update_profile_table_data", update_profile_table_data.req);
 app.post("/add_item_to_profile_table", add_item_to_profile_table.req);
 app.post("/remove_item_from_profile_table", remove_item_from_profile_table.req);
+app.post("/get_user_account_data", get_user_account_data.req);
 
 
 //Albums

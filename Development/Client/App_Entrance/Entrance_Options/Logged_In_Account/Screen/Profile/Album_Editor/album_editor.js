@@ -18,7 +18,7 @@ class Album_Editor extends Albums_Component {
             this.state[i] = props[i];
         }
 
-        this.Photos_Container = Photos_Container_Editor
+        this.Container = Photos_Container_Editor
     }
 
     componentDidMount(){

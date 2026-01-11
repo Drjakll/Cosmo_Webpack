@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import Context from '@context/context.js';
+import Profile_Thumbnail from '@universal_components/Profile_Thumbnail/profile_thumbnail.js'
 import './reaction_container.less';
 
 class Reaction_Container extends Component {
@@ -19,7 +20,6 @@ class Reaction_Container extends Component {
         like: "thumbs_up",
         dislike: "thumbs_down"
     }
-
 
 
     constructor(props){
@@ -107,7 +107,7 @@ class Reaction_Container extends Component {
 
     render(){
 
-        let {like_dislike, existing_users, visitor_user_account} = this.state;
+        let {like_dislike, existing_users, visitor_user_account, owner_user_account} = this.state;
 
         let {id} = visitor_user_account;
 
@@ -132,7 +132,7 @@ class Reaction_Container extends Component {
 
                             {like_dislike[key].map((value, index)=>{
 
-                                let {profile_picture_link, first_name, last_name, emojis} = value;
+                                let {profile_picture_link, first_name, last_name, emojis, user_id} = value;
 
 
                                 let split_emojis = emojis === "" ? [] : emojis.split(",");
@@ -142,8 +142,13 @@ class Reaction_Container extends Component {
                                     <div id="profile-picture">
 
                                         <label id="hidden-name">{first_name} {last_name}</label>
+                                        
+                                        <Profile_Thumbnail 
+                                            visitor_user_account={visitor_user_account}
+                                            owner_user_account={owner_user_account}
+                                            profile={{id: user_id, profile_picture_link}}
+                                        />
 
-                                        <img src={`${aws_s3_url}${profile_picture_link}`} />
 
                                     </div>
 

@@ -13,13 +13,23 @@ let Connect = () => {
         database: databaseName,
         timezone: 'Z', // UTC
         waitForConnections: true,
-        connectionLimit: 10,
-        queueLimit: 0
+        connectionLimit: 15,
+        queueLimit: 0,
+        connectTimeout: 10000, // ⬅️ important
+        keepAliveInitialDelay: 0,
     });
     
     return SQL;
 };
 
 let sql = Connect();
+
+sql.on('connection', conn => {
+  console.log('MySQL connected:', conn.threadId);
+});
+
+sql.on('error', err => {
+  console.error('MySQL pool error:', err);
+});
 
 export { sql };
