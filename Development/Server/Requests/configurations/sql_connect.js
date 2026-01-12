@@ -13,10 +13,11 @@ let Connect = () => {
         database: databaseName,
         timezone: 'Z', // UTC
         waitForConnections: true,
-        connectionLimit: 15,
+        connectionLimit: 60,
         queueLimit: 0,
         connectTimeout: 10000, // ⬅️ important
         keepAliveInitialDelay: 0,
+        enableKeepAlive: true,
     });
     
     return SQL;

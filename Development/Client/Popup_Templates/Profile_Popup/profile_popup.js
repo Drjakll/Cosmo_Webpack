@@ -66,7 +66,7 @@ class Profile_Popup extends Component {
             return;
         }
 
-        this.setState(this.props);
+        //this.setState(this.props);
 
     }
 

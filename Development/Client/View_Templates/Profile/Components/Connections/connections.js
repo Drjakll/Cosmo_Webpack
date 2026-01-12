@@ -90,6 +90,7 @@ class Connections extends Component {
         if(data){
 
             return data.results;
+            
         }
 
         return [];

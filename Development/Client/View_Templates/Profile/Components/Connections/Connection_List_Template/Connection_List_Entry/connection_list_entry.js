@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import Context from '@context/context.js';
+import Profile_Thumbnail from '@universal_components/Profile_Thumbnail/profile_thumbnail.js';
 import './connection_list_entry.less';
 
 class Connection_Entry_Template extends Component {
@@ -13,7 +14,9 @@ class Connection_Entry_Template extends Component {
         let {entry} = props;
 
         this.state = {
-            entry
+            entry,
+            visitor_user_account,
+            owner_user_account
         };
     }
 
@@ -34,17 +37,25 @@ class Connection_Entry_Template extends Component {
 
     render(){
 
-        let {entry} = this.state;
+        let {entry, owner_user_account, visitor_user_account} = this.state;
 
-        let {first_name, last_name, profile_picture_link} = entry;
-
-        let {aws_s3_url} = this.context.Request_URLs;
+        let {first_name, last_name} = entry;
 
         return <div id="connection-list-entry-wrapper">
 
             <div id="profile-picture-wrapper">
 
-                <img src={`${aws_s3_url}${profile_picture_link}`} />
+                <Profile_Thumbnail 
+                    visitor_user_account={visitor_user_account}
+                    owner_user_account={owner_user_account}
+                    profile={entry}
+                />
+
+            </div>
+
+            <div id="name-label-wrapper">
+
+                <label>{first_name} {last_name}</label>
 
             </div>
 
