@@ -8,32 +8,19 @@ class Following_List extends Connection_List_Template {
 
         super(props);
 
-        this.state = {
-
-        };
-    }
-
-    componentDidMount(){
-
-
-    }
-
-    componentDidUpdate(prevProps, prevState){
-
-        if(this.props === prevProps){
-            return;
-        }
-
-        this.setState(this.props);
-
     }
 
     render(){
 
+        let {list} = this.state;
 
-        return <div id="">
+        return <div id="following-connection-list-wrapper">
 
+            <div id="following-label">
+                {list.length} Following
+            </div>
 
+            {super.render()}
 
         </div>;
     }

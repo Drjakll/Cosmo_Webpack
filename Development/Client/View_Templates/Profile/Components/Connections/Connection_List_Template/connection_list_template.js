@@ -31,7 +31,7 @@ class Connection_List_Template extends Component {
         }
 
         this.setState(this.props);
-
+        
     }
 
     render(){

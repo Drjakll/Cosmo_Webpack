@@ -12,6 +12,7 @@ class Logged_In_Account extends Component {
         "Profile",
         "News",
         "Messaging",
+        "Search"
     ];
 
     //Fixed index of screens
@@ -20,6 +21,7 @@ class Logged_In_Account extends Component {
         { screen: "Profile", is_main: false, id: "Profile" },
         { screen: "News", is_main: false, id: "News" },
         { screen: "Messaging", is_main: false, id: "Messaging"},
+        { screen: "Search", is_main: false, id: "Search"}
     ]
     
     constructor(props){
@@ -38,6 +40,7 @@ class Logged_In_Account extends Component {
                 { screen: "Profile", is_main: true, id: "Profile" },
                 { screen: "News", is_main: false, id: "News" },
                 { screen: "Messaging", is_main: false, id: "Messaging" },
+                { screen: "Search", is_main: false, id: "Search"}
             ],
             owner_user_account,
             visitor_user_account,
