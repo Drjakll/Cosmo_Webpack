@@ -1,4 +1,8 @@
 import React, {Component} from 'react';
+import Context from '@context/context.js';
+import Text from '../Text/text.js';
+import Date from '../Date/date.js';
+import Choice from '../Choice/choice.js';
 import './json.less';
 
 class Json extends Component {
@@ -10,68 +14,47 @@ class Json extends Component {
         this.value = {};
 
         this.state = {
-            date_value: ""
+
         };
 
-        Json.contextType = window.Context;
+        Json.contextType = Context;
     }
 
     Input_Data_Types = {
         "string" : (key_label)=>{
             
-            let onChange = (e) => {
-                
-                this.value[key_label] = e.target.value;
-                
-                this.Save_To_Search(this.value);
-                
-            };
-            
             return <div className="input-data-type string">
             
-                <input type="text" onChange={onChange} />
+                <text Save_To_Search={this.Save_To_Search} key_index={key_label} />
             
             </div>;
 
         },
         "date" : (key_label)=>{
             
-            const {Calendar} = this.context;
-            
-            let onChange = ({selected_year, selected_month, date}) => {
-
-                this.value[key_label] = `${selected_year}-${selected_month}-${date}`;
-                
-                this.Save_To_Search(this.value);
-
-                this.setState({date_value: this.value[key_label]});
-                
-            };
-           
-            
             return <div className="input-data-type date">
             
-                <div id="selected-date">
-                    
-                    {this.state.date_value || "Select a date"}
-                    
-                </div>
+                <Date Save_To_Search={this.Save_To_Search} key_index={key_label} />
                 
-                <div id="dropdown">
-                
-                    <Calendar capture_date={onChange} />
-                    
-                </div>
-                
+            </div>;
+        },
+        "enum" : (key_label)=>{
+
+            return <div className="input-data-type enum">
+
+                <Choice Save_To_Search={this.Save_To_Search} key_index={key_label} />
+
             </div>;
         }
     }
 
-    Save_To_Search = (value)=>{
+    Save_To_Search = (value, label)=>{
 
         let {Save_To_Search, key_index} = this.props;
 
-        Save_To_Search(value, key_index, "json", "=");
+        this.value[label] = value;
+
+        Save_To_Search(this.value, key_index);
 
     }
 

@@ -5,6 +5,7 @@ class Json_Popup extends Component {
 
     Name_Map = {};
     
+    //These will be replaced by the editor, which will inherit this
     Delete_Item = null
 
     Editor = null
@@ -23,7 +24,7 @@ class Json_Popup extends Component {
         this.Delete_Item = this.Delete_Item || Delete_Item;
         this.Editor = this.Editor || Editor;
         this.Input_Data_Types = this.Input_Data_Types || Input_Data_Types;
-        this.Update_Items = this.Update_Items || Update_Items
+        this.Update_Items = this.Update_Items || Update_Items;
 
 
         this.Name_Mapping(options);

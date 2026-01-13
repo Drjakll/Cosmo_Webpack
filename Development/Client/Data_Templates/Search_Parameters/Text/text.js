@@ -15,7 +15,7 @@ class Text extends Component {
 
         let value = e.target.value;
 
-        Save_To_Search(value, key_index, "string", "like");
+        Save_To_Search(value, key_index);
 
     }
 

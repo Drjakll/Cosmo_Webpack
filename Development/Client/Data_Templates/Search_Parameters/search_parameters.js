@@ -9,8 +9,8 @@ export default {
     date_of_birth: Date,
     gender: Choice,
     marital_status: Choice,
-    locations: Json,
-    hobbies: Json, 
-    professions: Json,
-    schools: Json
+    User_Locations: Json,
+    User_Hobbies: Json, 
+    User_Professions: Json,
+    User_Schools: Json
 };

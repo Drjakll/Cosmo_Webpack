@@ -63,7 +63,7 @@ class DateSearch extends Component {
 
         this.setState({value});
 
-        Save_To_Search(value, key_index, "string", "=");
+        Save_To_Search(value, key_index);
 
     }
 
