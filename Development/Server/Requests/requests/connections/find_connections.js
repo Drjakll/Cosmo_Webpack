@@ -1,33 +1,91 @@
 let request = function () {
 
-    let Build_Account = (req, data)=>{
+    let Build_Conditions = (req, data) => {
 
-        let fields = [
+        let accountFields = [
             "first_name",
             "last_name",
             "gender",
-            "marital_status",
-            "date_of_birth"
+            "marital_status"
         ];
 
-        for(let field of fields){
+        let related = {
+            user_hobbies: {
+                table: "User_Hobbies",
+                alias: "uh",
+                fields: ["hobby_name", "story", "proficiency", "start_date"]
+            },
+            user_locations: {
+                table: "User_Locations",
+                alias: "ul",
+                fields: ["city", "state", "country", "start_date", "end_date", "location_type"]
+            },
+            user_professions: {
+                table: "User_Professions",
+                alias: "up",
+                fields: ["profession_name", "start_date", "proficiency"]
+            },
+            user_schools: {
+                table: "User_Schools",
+                alias: "us",
+                fields: ["school_name", "school_type", "city", "country", "start_date", "end_date"]
+            }
+        };
 
-            
+        let where = [];
+
+        // Account-level filters
+        for (let field of accountFields) {
+            if (req[field]) {
+                where.push(`ac.${field} like ?`);
+                data.push(`%${req[field]}%`);
+            }
         }
 
+        // Date (exact match)
+        if (req.date_of_birth) {
+            where.push(`ac.date_of_birth = ?`);
+            data.push(req.date_of_birth);
+        }
+
+        // EXISTS filters
+        for (let key in related) {
+
+            if (!req[key]) 
+                continue;
+
+            let { table, alias, fields } = related[key];
+            let sub = [`${alias}.user_id = ac.id`];
+
+            for (let f of fields) {
+                if (req[key][f]) {
+                    sub.push(`${alias}.${f} like ?`);
+                    data.push(`%${req[key][f]}%`);
+                }
+            }
+
+            if (sub.length > 1) {
+                where.push(`
+                    exists (
+                        select 1
+                        from ${table} ${alias}
+                        where ${sub.join(" and ")}
+                    )
+                `);
+            }
+        }
+
+        return where.length ? `where ${where.join(" and ")}` : "";
+        
     };
-
-    let Build_Object = (req, data, alias)=>{
-
-
-
-    }
 
     this.req = async (req, res) => {
 
         let { requirements } = req.body;
 
         let data = [];
+
+        let sub_query = Build_Conditions(requirements, data);
 
         let query = `select ac.id,
                             ac.first_name,
@@ -49,10 +107,6 @@ let request = function () {
                         left join
                             (select 
                                 user_id,
-                                hobby_name,
-                                story,
-                                proficiency,
-                                start_date,
                                 json_arrayagg(
                                     json_object(
                                         'id', id,
@@ -74,11 +128,6 @@ let request = function () {
                         left join
                             (select 
                                 user_id, 
-                                city,
-                                state,
-                                country,
-                                start_date,
-                                end_date,
                                 location_type,
                                 json_arrayagg(
                                     json_object(
@@ -103,9 +152,6 @@ let request = function () {
                         left join
                             (select 
                                 user_id, 
-                                profession_name,
-                                start_date,
-                                proficiency,
                                 json_arrayagg(
                                     json_object(
                                         'id', id,
@@ -126,13 +172,6 @@ let request = function () {
                         left join
                             (select
                                 user_id,
-                                school_name,
-                                school_type,
-                                city,
-                                state,
-                                country,
-                                start_date,
-                                end_date,
                                 json_arrayagg(
                                     json_object(
                                         'id', id,
@@ -159,8 +198,7 @@ let request = function () {
                         on
                             pl.target_id = ac.id and is_a_cover = true and pl.target_type = 'profile'
 
-                        ${Object.keys(requirements).length ? "where" : ""} 
-                            ${sub_query}
+                        ${sub_query}
                     `;
 
         try {
