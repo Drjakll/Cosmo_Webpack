@@ -49,8 +49,12 @@ class Search extends Connection_List_Template {
         
         return (
             <div id="search-wrapper">
+
+                <div id="search-criteria-box-wrapper">
                 
-                <Criteria_Box Execute_Search={this.Apply_Search}/>
+                    <Criteria_Box Execute_Search={this.Apply_Search}/>
+
+                </div>
 
                 <div id="search-results-wrapper">
 

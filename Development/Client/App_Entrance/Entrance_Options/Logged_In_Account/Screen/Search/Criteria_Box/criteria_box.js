@@ -90,13 +90,13 @@ class Criteria_Box extends Component {
 
                     let parameter_data = available_search_parameters[key_label];
 
-                    let {component: Search_Comp, options} = parameter_data;
+                    let {component: Search_Comp, options, label} = parameter_data;
 
-                    return <div className="search-parameter-item" key={index}>  
+                    return <div className="search-parameter-item-wrapper" key={index}>  
 
-                        <div id="search-parameter-item-wrapper">
+                        <div id="search-parameter-item">
 
-                            <Search_Comp Save_To_Search={this.Save_To_Search} options={options}/>
+                            <Search_Comp Save_To_Search={this.Save_To_Search} options={options} label={label} />
 
                         </div>
 

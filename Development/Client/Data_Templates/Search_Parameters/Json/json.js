@@ -43,6 +43,7 @@ class Json extends Component {
             return <div className="input-data-type enum">
 
                 <Choice Save_To_Search={this.Save_To_Search} key_index={key_label} label={name_label} options={choices}/>
+
             </div>;
         }
     }
@@ -63,7 +64,7 @@ class Json extends Component {
 
         return <div id="search-json-input-wrapper">
 
-            <div id="label-wrapper">
+            <div id="json-label-wrapper">
 
                 <label id="search-label">{this.props.label}</label>
 
@@ -76,16 +77,10 @@ class Json extends Component {
                     let {label, data_type, data_name, choices} = item;
                     
                     return <div className="input-item" key={index}>
-
-                        <div id="label">
-                            {label}
-                        </div>
                         
-                        <div id="value">
 
-                            {this.Input_Data_Types[data_type](data_name, label, choices)}
+                        {this.Input_Data_Types[data_type](data_name, label, choices)}
 
-                        </div>
 
                     </div>;
                     

@@ -71,7 +71,7 @@ class DateSearch extends Component {
 
         return <div id="search-date-input-wrapper">
 
-            <div id="label-wrapper">
+            <div id="calendar-label-wrapper">
 
                 <label id="search-label">{this.props.label}</label>
 
