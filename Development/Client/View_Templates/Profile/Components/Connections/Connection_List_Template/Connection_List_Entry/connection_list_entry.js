@@ -11,7 +11,7 @@ class Connection_Entry_Template extends Component {
 
         super(props);
 
-        let {entry} = props;
+        let {entry, visitor_user_account, owner_user_account} = props;
 
         this.state = {
             entry,
@@ -22,6 +22,7 @@ class Connection_Entry_Template extends Component {
 
     componentDidMount(){
 
+        
 
     }
 

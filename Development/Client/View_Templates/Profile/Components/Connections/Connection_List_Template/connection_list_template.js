@@ -11,6 +11,8 @@ class Connection_List_Template extends Component {
         //The list is either followings, or followers
         let {list, owner_user_account, visitor_user_account} = props;
 
+        list = list || [];
+
         this.state = {
             list,
             owner_user_account,

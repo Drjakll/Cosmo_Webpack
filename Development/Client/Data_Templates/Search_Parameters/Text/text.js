@@ -19,14 +19,6 @@ class Text extends Component {
 
     }
 
-    Remove_Search_Parameter = (e)=>{
-
-        let {Remove_Search_Parameter, key_index} = this.props;
-
-        Remove_Search_Parameter(key_index);
-
-    }
-
     render(){
 
         return <div id="search-text-input-wrapper">
@@ -40,12 +32,6 @@ class Text extends Component {
             <div id="value-input-wrapper">
 
                 <input type="text" onBlur={this.Save_To_Search} placeholder={this.props.label}/>
-
-            </div>
-
-            <div id="search-button-wrapper">
-
-                <button onClick={this.Remove_Search_Parameter}>Remove</button>
 
             </div>
 

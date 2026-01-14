@@ -77,12 +77,6 @@ class Choice extends Component {
 
             </div>
 
-            <div id="search-option-button-wrapper">
-
-                <button onClick={this.Remove_Search_Parameter}>Remove</button>
-
-            </div>
-
         </div>;
     }
 }

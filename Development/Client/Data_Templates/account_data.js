@@ -36,7 +36,7 @@ let Account_Data_Template = function(initial){
     return template;
 };
 
-let Account_Info_Data_Template = function(){
+let Account_Info_Data_Template = function(initial = {}){
 
     let template = {
         first_name: {
@@ -90,7 +90,7 @@ let Account_Info_Data_Template = function(){
             options: [
                 { label: "Hobby Name", data_name: "hobby_name", data_type: "string" },
                 { label: "Date Started", data_name: "start_date", data_type: "date" },
-                { label: "Proficiency", data_name: "proficiency", data_type: "enum", choices: ["beginner", "intermediate", "advanced", "expert"]  },
+                { label: "Proficiency", data_name: "proficiency", data_type: "enum", choices: ["beginner", "intermediate", "advanced", "expert"] },
                 { label: "Story", data_name: "story", data_type: "string" },
                 { label: "Privacy", data_name: "privacy", data_type: "enum", choices: ["private", "public", "mutual"]  }
             ]
@@ -122,6 +122,10 @@ let Account_Info_Data_Template = function(){
             ]
         }
     };
+
+    for(let i in initial){
+        template[i].component = initial[i].component || template[i].component;
+    }
 
     return template;
 }

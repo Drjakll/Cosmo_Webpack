@@ -44,7 +44,6 @@ class Logged_In_Account extends Component {
             ],
             owner_user_account,
             visitor_user_account,
-            connection_list: {},
             focused_column: "Profile" //The column that is being focused on so that user won't lose clickability to other columns
         };
     }
@@ -77,7 +76,6 @@ class Logged_In_Account extends Component {
             this.Get_Connection_List(this.state.owner_user_account);
 
         });
-
 
         await this.Get_Connection_List(this.state.owner_user_account);
 

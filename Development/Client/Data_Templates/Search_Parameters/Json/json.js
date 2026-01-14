@@ -14,36 +14,35 @@ class Json extends Component {
         this.value = {};
 
         this.state = {
-
+            
         };
 
         Json.contextType = Context;
     }
 
     Input_Data_Types = {
-        "string" : (key_label)=>{
+        "string" : (key_label, name_label, choices)=>{
             
             return <div className="input-data-type string">
             
-                <text Save_To_Search={this.Save_To_Search} key_index={key_label} />
+                <Text Save_To_Search={this.Save_To_Search} key_index={key_label} label={name_label} options={choices}/>
             
             </div>;
 
         },
-        "date" : (key_label)=>{
+        "date" : (key_label, name_label, choices)=>{
             
             return <div className="input-data-type date">
             
-                <Date Save_To_Search={this.Save_To_Search} key_index={key_label} />
+                <Date Save_To_Search={this.Save_To_Search} key_index={key_label} label={name_label} options={choices}/>
                 
             </div>;
         },
-        "enum" : (key_label)=>{
+        "enum" : (key_label, name_label, choices)=>{
 
             return <div className="input-data-type enum">
 
-                <Choice Save_To_Search={this.Save_To_Search} key_index={key_label} />
-
+                <Choice Save_To_Search={this.Save_To_Search} key_index={key_label} label={name_label} options={choices}/>
             </div>;
         }
     }
@@ -57,14 +56,6 @@ class Json extends Component {
         Save_To_Search(this.value, key_index);
 
     }
-
-    Remove_Search_Parameter = (e)=>{
-
-        let {Remove_Search_Parameter, key_index} = this.props;
-
-        Remove_Search_Parameter(key_index);
-
-    }    
 
     render(){
 
@@ -82,7 +73,7 @@ class Json extends Component {
             
                 {options.map((item, index)=>{
                     
-                    let {label, data_type} = item;
+                    let {label, data_type, data_name, choices} = item;
                     
                     return <div className="input-item" key={index}>
 
@@ -92,7 +83,7 @@ class Json extends Component {
                         
                         <div id="value">
 
-                            {this.Input_Data_Types[data_type](label)}
+                            {this.Input_Data_Types[data_type](data_name, label, choices)}
 
                         </div>
 
@@ -100,12 +91,6 @@ class Json extends Component {
                     
                 })}
                 
-            </div>
-
-            <div id="search-button-wrapper">
-
-                <button onClick={this.Remove_Search_Parameter}>Remove</button>
-
             </div>
 
 

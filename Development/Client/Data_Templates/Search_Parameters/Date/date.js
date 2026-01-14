@@ -67,14 +67,6 @@ class DateSearch extends Component {
 
     }
 
-    Remove_Search_Parameter = (e)=>{
-
-        let {Remove_Search_Parameter, key_index} = this.props;
-
-        Remove_Search_Parameter(key_index);
-
-    }
-
     render(){
 
         return <div id="search-date-input-wrapper">
@@ -94,12 +86,6 @@ class DateSearch extends Component {
                 </div>
 
                 {this.Generate_Calendar()}
-
-            </div>
-
-            <div id="search-option-button-wrapper">
-
-                <button onClick={this.Remove_Search_Parameter}>Remove</button>
 
             </div>
 

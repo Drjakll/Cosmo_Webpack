@@ -23,13 +23,12 @@ class Screen extends Component {
         
         super(props);
         
-        let {owner_user_account, screen_type, connection_list} = props;
+        let {owner_user_account, screen_type} = props;
 
         this.state = {
             focus_screen: screen_type,
             owner_user_account: owner_user_account || {},
-            visitor_user_account: owner_user_account || {},
-            connection_list: connection_list
+            visitor_user_account: owner_user_account || {}
         };
 
     }
@@ -56,7 +55,7 @@ class Screen extends Component {
                     <Screen_Type 
                         owner_user_account={owner_user_account} 
                         visitor_user_account={visitor_user_account} 
-                        connection_list={this.state.connection_list}/>
+                    />
                     
                 </div>
             );
