@@ -11,15 +11,17 @@ class Search extends Connection_List_Template {
     constructor(props){
         
         super(props);
-
+        
     }
 
     Apply_Search = async (search_criteria)=>{
 
         let {find_connections} = this.context.Request_URLs;
+        let {owner_user_account} = this.state;
 
         let body = {
-            requirements: search_criteria
+            requirements: search_criteria,
+            self_account: owner_user_account
         };
 
         let data = await( await fetch(

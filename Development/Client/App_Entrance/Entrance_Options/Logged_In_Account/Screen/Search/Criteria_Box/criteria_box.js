@@ -46,7 +46,7 @@ class Criteria_Box extends Component {
 
             <div id="available-parameters-header">
 
-                <h2>Available Parameters</h2>
+                <div>Available Parameters</div>
 
             </div>
 
@@ -80,7 +80,7 @@ class Criteria_Box extends Component {
 
             <div id="search-parameters-box-header">
 
-                <h2>Search Parameters</h2>
+                <div>Search Parameters</div>
 
             </div>
 
@@ -96,7 +96,7 @@ class Criteria_Box extends Component {
 
                         <div id="search-parameter-item">
 
-                            <Search_Comp Save_To_Search={this.Save_To_Search} options={options} label={label} />
+                            <Search_Comp Save_To_Search={this.Save_To_Search} options={options} key_index={key_label} label={label} />
 
                         </div>
 

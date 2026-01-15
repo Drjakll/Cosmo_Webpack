@@ -52,7 +52,19 @@ let request = function () {
         let data = [from_id, id, now, status];
 
         let query = `
-            insert into Connections (follower_id, followed_id, time_stamp, status) values(?,?,?,?);
+            insert into 
+                Connections (follower_id, followed_id, time_stamp, status) 
+                values(?,?,?,?)
+            as new
+            on duplicate key
+            update
+                time_stamp = new.time_stamp,
+                status = case 
+                    when 
+                        new.status = 'pending' then 'rejected'
+                    else
+                        new.status
+                end
         `;
 
         try {

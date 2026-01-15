@@ -1,34 +1,42 @@
 let request = function () {
 
-    let Build_Conditions = (req, data) => {
+    let Build_Conditions = (req, data, self_account) => {
 
         let accountFields = [
             "first_name",
             "last_name",
-            "gender",
-            "marital_status"
         ];
 
+        let absoluteFields = [
+            "gender",
+            "marital_status",
+            "date_of_birth"
+        ]
+
         let related = {
-            user_hobbies: {
+            User_Hobbies: {
                 table: "User_Hobbies",
                 alias: "uh",
-                fields: ["hobby_name", "story", "proficiency", "start_date"]
+                filter_fields: ["hobby_name", "story"],
+                exact_fields: ["start_date", "proficiency"]
             },
-            user_locations: {
+            User_Locations: {
                 table: "User_Locations",
                 alias: "ul",
-                fields: ["city", "state", "country", "start_date", "end_date", "location_type"]
+                filter_fields: ["city", "state", "country"],
+                exact_fields: ["start_date", "end_date", "location_type"]
             },
-            user_professions: {
+            User_Professions: {
                 table: "User_Professions",
                 alias: "up",
-                fields: ["profession_name", "start_date", "proficiency"]
+                filter_fields: ["profession_name"],
+                exact_fields: ["start_date", "proficiency"]
             },
-            user_schools: {
+            User_Schools: {
                 table: "User_Schools",
                 alias: "us",
-                fields: ["school_name", "school_type", "city", "country", "start_date", "end_date"]
+                filter_fields: ["school_name", "school_type", "city", "country"],
+                exact_fields: ["start_date", "end_date"]
             }
         };
 
@@ -42,10 +50,12 @@ let request = function () {
             }
         }
 
-        // Date (exact match)
-        if (req.date_of_birth) {
-            where.push(`ac.date_of_birth = ?`);
-            data.push(req.date_of_birth);
+        // Exact match
+        for(let field of absoluteFields){
+            if (req[field]) {
+                where.push(`ac.${field} = ?`);
+                data.push(req[field]);
+            }
         }
 
         // EXISTS filters
@@ -54,13 +64,20 @@ let request = function () {
             if (!req[key]) 
                 continue;
 
-            let { table, alias, fields } = related[key];
+            let { table, alias, filter_fields, exact_fields } = related[key];
             let sub = [`${alias}.user_id = ac.id`];
 
-            for (let f of fields) {
+            for (let f of filter_fields) {
                 if (req[key][f]) {
                     sub.push(`${alias}.${f} like ?`);
                     data.push(`%${req[key][f]}%`);
+                }
+            }
+
+            for (let f of exact_fields) {
+                if (req[key][f]) {
+                    sub.push(`${alias}.${f} = ?`);
+                    data.push(req[key][f]);
                 }
             }
 
@@ -75,17 +92,22 @@ let request = function () {
             }
         }
 
-        return where.length ? `where ${where.join(" and ")}` : "";
+        return `where ac.id != ? ${data.length > 1 ? "and" : ""} ${where.join(" and ")}`
         
     };
 
     this.req = async (req, res) => {
 
-        let { requirements } = req.body;
+        let { requirements, self_account } = req.body;
 
-        let data = [];
+        if(!self_account){
+            res.json({message: "Missing self account information", results: []});
+            return;
+        }
 
-        let sub_query = Build_Conditions(requirements, data);
+        let data = [self_account.id];
+
+        let sub_query = Build_Conditions(requirements, data, self_account);
 
         let query = `select ac.id,
                             ac.first_name,

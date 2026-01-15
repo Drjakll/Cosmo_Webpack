@@ -5,7 +5,7 @@
     position: relative;
 
     #criteria-box-columns-wrapper {
-        height: calc(100% - 50px);
+        height: calc(100% - 40px);
         width: 100%;
         display: flex;
         justify-content: center;
@@ -29,24 +29,33 @@
                 height: 100%;
                 display: block;
 
+                #available-parameters-header {
+                    background-color:rgba(100, 100, 100, 0.85);
+                    color: rgb(233, 230, 230);
+                }
+
+                #search-parameters-box-header {
+                    background-color: rgba(75, 75, 75, 0.75);
+                    color: rgb(233, 230, 230);
+                }
+
                 #search-parameters-box-header, #available-parameters-header {
                     width: 100%;
-                    height: 30px;
+                    height: 40px;
                     display: flex;
                     justify-content: center;
                     align-items: center;
                     font-size: 16px;
-                    font-weight: bold;
-                    color: rgb(50, 50, 50);
+                    font-weight: 500;
                 }
 
                 #search-parameters-box-list {
-                    background-color: rgba(0,0,0,0.03);
+                    background-color: rgba(0,0,0,0.1);
                 }
 
                 #search-parameters-box-list, #available-parameters-list {
                     width: 100%;
-                    height: calc(100% - 30px);
+                    height: calc(100% - 40px);
                     display: block;
                     overflow-y: auto;
                     scroll-behavior: smooth;
@@ -59,14 +68,15 @@
 
                     .available-parameter-item {
                         width: 100%;
-                        height: 40px;
+                        height: 30px;
                         display: flex;
                         justify-content: center;
                         align-items: center;
-                        border-bottom: rgba(0,0,0,0.1) solid 0.5px;
+                        border-bottom: rgba(0,0,0,0.75) solid 0.5px;
                         transition: 0.5s;
-                        background-color: rgb(198, 83, 83); 
+                        background-color: rgba(13, 42, 5, 0.777); 
                         color: rgb(236, 227, 227);
+                        font-size: 12px;
 
                         &:hover {
                             cursor: pointer;
@@ -80,10 +90,15 @@
                         display: block;
                         border-bottom: rgba(0,0,0,0.1) solid 0.5px;
 
+                        &:last-child {
+                            margin-bottom: 100px;
+                        }
+
                         #search-parameter-item {
                             width: 100%;
                             display: block;
                             padding: 10px 0 10px 0;
+                            background-color: whitesmoke;
                         }
 
                         #remove-parameter-button-wrapper {
@@ -92,6 +107,7 @@
                             display: flex;
                             justify-content: center;
                             align-items: center;
+                            background-color: rgba(235,235,235,0.85);
 
                             button {
                                 border: rgba(0,0,0,0.5) solid 0.5px;
@@ -117,18 +133,21 @@
         
     #apply-search-button-wrapper {
         width: 100%;
-        height: 50px;
+        height: 40px;
         position: relative;
-        bottom: 0;
-        left: 0;
-        display: flex;
+        display: flex !important;
         justify-content: center;
         align-items: center;
+        background-color: whitesmoke;
+        border-top: rgb(50,50,50) solid 0.5px;
+        border-bottom: rgb(50,50,50) solid 0.5px;
+
 
         button {
             border: rgba(0,0,0,0.5) solid 0.5px;
             border-radius: 25px;
-            padding: 10px 20px 10px 20px;
+            padding: 5px 15px 5px 15px;
+            margin: 0;
             font-size: 14px;        
             transition: 0.5s;
             background-color: rgb(221, 221, 221);

@@ -64,6 +64,10 @@ class Profile_Thumbnail extends Component {
 
         let {profile_picture_link } = profile;
 
+        let full_pp_link = `${aws_s3_url}${profile_picture_link}`;
+
+        let placeholder = `./static/pp_placeholder.png`;
+
         return <div className="profile-thumbnail-wrapper">
 
             {this.View_Popup_Profile()}
@@ -71,7 +75,7 @@ class Profile_Thumbnail extends Component {
             <div id="profile-thumbnail-image-wrapper">
 
                 <img id="profile-thumbnail-image" 
-                    src={`${aws_s3_url}${profile_picture_link}`} 
+                    src={profile_picture_link ? full_pp_link : placeholder} 
                     alt="Profile Thumbnail"
                     onClick={(e)=>{
                         this.setState({show_popup: true});

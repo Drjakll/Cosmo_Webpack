@@ -50,8 +50,12 @@ class DateSearch extends Component {
 
     Capture_Date = ({ selected_year, selected_month, date }) => {
 
+        selected_month = selected_month < 10 ? `0${selected_month}` : selected_month;
+        
+        date = date < 10 ? `0${date}` : date;
+
         let dateStr = `${selected_year}-${selected_month}-${date}`;
-;
+
 
         this.Save_To_Search(dateStr);
 
