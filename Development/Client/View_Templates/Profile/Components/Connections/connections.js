@@ -1,15 +1,13 @@
 import React, {Component} from 'react';
 import Context  from '@context/context.js';
-import Following_List from './Following_List/following_list.js';
-import Followers_List from './Followers_List/followers_list.js';
+import Follow_List from './Follow_List/follow_list.js';
 import './connections.less';
 
 class Connections extends Component {
 
     static contextType = Context;
 
-    Following = Following_List
-    Followers = Followers_List
+    List = Follow_List
 
     constructor(props){
 
@@ -91,13 +89,38 @@ class Connections extends Component {
 
     }
 
+    Send_Follow_Request = async ()=>{
+
+        let {send_follow_request} = this.context.Request_URLs;
+
+        let {owner_user_account, visitor_user_account} = this.state;
+
+        let body = {
+            from_id: visitor_user_account.id,
+            to_account_info: {
+                id: owner_user_account.id,
+                privacy: owner_user_account.privacy
+            }
+        };
+
+        await fetch(send_follow_request,
+            {
+                method: "POST",
+                body: JSON.stringify(body),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }
+        );  
+    }
+
     Show_Follow_Request_Button = ()=>{
 
         let {owner_user_account} = this.state;
 
         let {privacy} = owner_user_account;
 
-        return  <div id="request-to-follow-button">
+        return  <div id="request-to-follow-button" onClick={this.Send_Follow_Request}>
 
             {privacy === "private" ? "Request to Follow" : "Follow"}
 
@@ -108,14 +131,15 @@ class Connections extends Component {
 
         let {owner_user_account, visitor_user_account, followers} = this.state;
 
-        let {Followers} = this;
+        let {List} = this;
 
         return <div id="follower-list-display-wrapper">
 
-            <Followers 
+            <List 
                 owner_user_account={owner_user_account}
                 visitor_user_account={visitor_user_account}
                 list={followers}
+                label={"Followers"}
             />
 
         </div>;
@@ -125,14 +149,15 @@ class Connections extends Component {
 
         let {owner_user_account, visitor_user_account, following} = this.state;
 
-        let {Following} = this;
+        let {List} = this;
 
-        return <div id="follower-list-display-wrapper">
+        return <div id="following-list-display-wrapper">
 
-            <Following 
+            <List 
                 owner_user_account={owner_user_account}
                 visitor_user_account={visitor_user_account}
                 list={following}
+                label={"Following"}
             />
 
         </div>;

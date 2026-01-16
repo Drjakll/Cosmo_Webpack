@@ -53,12 +53,12 @@ let request = function () {
 
         let query = `
             insert into 
-                Connections (follower_id, followed_id, time_stamp, status) 
+                Connections (follower_id, followed_id, timestamp, status) 
                 values(?,?,?,?)
             as new
             on duplicate key
             update
-                time_stamp = new.time_stamp,
+                timestamp = new.timestamp,
                 status = case 
                     when 
                         new.status = 'pending' then 'rejected'

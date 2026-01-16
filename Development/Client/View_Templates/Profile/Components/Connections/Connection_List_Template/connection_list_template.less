@@ -6,10 +6,13 @@
     #the-list-wrapper {
         width: 100%;
         height: 100%;
-        display: flex;
-        justify-content: space-evenly;
-        align-items: flex-start;
-        flex-wrap: wrap;
+        display: grid;
+
+        grid-template-columns: repeat(auto-fill, 200px);
+        gap: 20px;
+
+        justify-content: space-evenly; 
+        align-content: start;
         position: relative;
         overflow-y: auto;
         flex: 0 0 auto;
@@ -17,8 +20,9 @@
         .connection-entry-wrapper {
             width: 200px;
             height: 250px;
-            display: block;
+            display: inline-block;
             margin: 10px;
+            margin-left: calc();
         }
     }
 }

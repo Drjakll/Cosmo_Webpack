@@ -50,7 +50,6 @@ let {
         post_data,
         profile_data,
         get_user_account_data
-
     } = profile;
 
 //User_Accounts -> Profile -> Albums
@@ -237,7 +236,7 @@ app.post("/get_connection_requests_from", get_connection_requests_from.req, resu
 app.post("/get_connection_request_to", get_connection_requests_to.req, result_sender.req);
 app.post("/remove_connection_request", remove_connection_request.req);
 app.post("/update_connection_request", update_connection_request.req);
-app.post("/send_follow_request", find_public_user_info.req, send_follow_request.req);
+app.post("/send_follow_request", send_follow_request.req);
 app.post("/unfollow_user_account", unfollow_user_account.req);
 app.post("/get_all_followers", get_all_followers.req);
 app.post("/get_all_followings", get_all_followings.req);

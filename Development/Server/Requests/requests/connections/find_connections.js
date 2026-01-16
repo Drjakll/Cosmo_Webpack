@@ -90,9 +90,23 @@ let request = function () {
                     )
                 `);
             }
+
         }
 
-        return `where ac.id != ? ${data.length > 1 ? "and" : ""} ${where.join(" and ")}`
+        where.push(`
+            not exists (
+                select 1
+                from 
+                    Connections as con
+                where 
+                    con.follower_id = ${self_account.id}
+                and 
+                    con.followed_id = ac.id
+                and 
+                    con.status = 'accepted'
+            )`);
+
+        return `where ac.id != ? and ${where.join(" and ")}`
         
     };
 

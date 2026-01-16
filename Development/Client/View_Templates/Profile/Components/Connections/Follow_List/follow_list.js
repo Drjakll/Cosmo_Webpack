@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import Connection_List_Template from '../Connection_List_Template/connection_list_template.js';
-import './following_list.less';
+import './follow_list.less';
 
-class Following_List extends Connection_List_Template {
+class Follow_List extends Connection_List_Template {
 
     constructor(props){
 
@@ -12,18 +12,25 @@ class Following_List extends Connection_List_Template {
 
     render(){
 
+        let {label} = this.props;
         let {list} = this.state;
 
         return <div id="following-connection-list-wrapper">
 
             <div id="following-label">
-                {list.length} Following
+
+                {list.length} {label}
+                
             </div>
 
-            {super.render()}
+            <div id="connection-list-container">
+
+                {super.render()}
+
+            </div>
 
         </div>;
     }
 }
 
-export default Following_List;
+export default Follow_List;

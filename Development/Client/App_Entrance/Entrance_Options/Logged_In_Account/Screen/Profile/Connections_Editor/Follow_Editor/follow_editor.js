@@ -1,9 +1,9 @@
 import React from 'react';
 import Context from '@context/context.js';
-import Followers_List from '@profile_template/Components/Connections/Followers_List/followers_list.js';
-import './followers_editor.less';
+import Follow_List from '@profile_template/Components/Connections/Follow_List/follow_list.js';
+import './follow_editor.less';
 
-class Followers_Editor extends Followers_List {
+class Follow_Editor extends Follow_List {
 
     static contextType = Context
     
@@ -17,7 +17,7 @@ class Followers_Editor extends Followers_List {
     render(){
         
         return (
-            <div id="followers-editor">
+            <div id="follow-editor">
 
                 {super.render()}
 
@@ -26,4 +26,4 @@ class Followers_Editor extends Followers_List {
     }
 }
 
-export default Followers_Editor;
+export default Follow_Editor;
