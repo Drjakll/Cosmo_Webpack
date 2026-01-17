@@ -44,6 +44,7 @@ let Login = async (document) =>{
             for(let cookieStr of cookieStrs){
                 document.cookie = cookieStr;
             }
+            
         }   
 
         return account;

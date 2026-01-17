@@ -4,18 +4,18 @@ let request = function () {
         
         let { to_update, credentials } = req.body;
 
-        let {email, id} = credentials;
+        let {password, id} = credentials;
 
-        if(Object.keys(to_update).length === 0 || !email || !id){
+        if(Object.keys(to_update).length === 0 || !password || !id){
             res.end();
             return;
         }
         
-        let query = `update User_Accounts set ? where email = ? and id = ?`;
+        let query = `update User_Accounts set ? where password = ? and id = ?`;
                                                 
         try {
 
-            await this.sql.query(query, [to_update, email, id]);
+            await this.sql.query(query, [to_update, password, id]);
             
         }catch(err){
 

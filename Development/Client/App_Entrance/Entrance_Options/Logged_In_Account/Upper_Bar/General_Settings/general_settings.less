@@ -1,0 +1,61 @@
+#general-settings {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    color: whitesmoke;
+
+    #available-privacy-options {
+        width: 50%;
+        height: 100%;
+        display: block;
+        position: relative;
+        transition: 0.5s;
+
+        &:hover {
+            cursor: pointer;
+            //background-color: rgba(150,150,150,1);
+            //color: black;
+
+            #privacy-options-list {
+                display: block;
+            }
+        }
+
+        #selected-privacy-label {
+            height: 100%;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 14px;
+        }
+
+        #privacy-options-list {
+            width: 100%;
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background-color: rgba(50,50,50,1);
+
+            .privacy-option-item {
+                width: 100%;
+                height: 40px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                font-size: 13px;
+                color: whitesmoke;
+                transition: 0.5s;
+
+                &:hover {
+                    cursor: pointer;
+                    background-color: rgba(150,150,150,1);
+                    color: black;
+                }   
+            }
+        }
+    }
+}

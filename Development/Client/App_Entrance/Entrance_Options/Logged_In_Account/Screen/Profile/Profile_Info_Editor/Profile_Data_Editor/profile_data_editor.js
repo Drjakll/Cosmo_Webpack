@@ -17,7 +17,6 @@ class Profile_Data_Editor extends Profile_Info_Data {
         
         super(props);
 
-        
     }
 
     componentDidMount(){
@@ -70,8 +69,8 @@ class Profile_Data_Editor extends Profile_Info_Data {
 
         let body = {
             credentials: {
-                email: email,
-                id: id,
+                email,
+                id,
                 password
             },
             to_update: this.Account_Changes

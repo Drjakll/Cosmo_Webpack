@@ -40,9 +40,27 @@ class Connection_Entry_Template extends Component {
 
         let {entry, owner_user_account, visitor_user_account} = this.state;
 
+        let {refresh, Remove_User} = this.props;
+
         let {first_name, last_name} = entry;
 
         return <div id="connection-list-entry-wrapper">
+            
+            {Remove_User ? <div id="remove-user-button-wrapper">
+
+                <div 
+                    id="remove-user-button"
+                    onClick={async ()=>{
+
+                        await Remove_User(entry.id);
+
+                        refresh();
+                    }}
+                >
+                    x
+                </div>
+
+            </div> : null}
 
             <div id="profile-picture-wrapper">
 

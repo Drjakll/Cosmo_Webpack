@@ -2,7 +2,7 @@ let request = function () {
 
     this.req = async (req, res)=>{
 
-        let { followed_id, follower_id } = req.body;
+        let { follower_id, followed_id} = req.body;
 
         let now = Date.now();
 
@@ -14,16 +14,15 @@ let request = function () {
 
         try {
 
-            await this.sql.query(query, data);
+            this.sql.query(query, data);
 
-            res.json({message: "Successfully unfollowed user"});
+            res.json({message:"Successfully removed follower"});
 
         } catch(err){
 
             console.log(err);
 
-            res.json({message: "Error following user"});
-
+            res.json({message: "Error removing follower"});
         }
 
     };

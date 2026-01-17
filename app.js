@@ -150,7 +150,8 @@ let {
         send_follow_request,
         unfollow_user_account,
         update_connection_request,
-        update_follow_request
+        update_follow_request,
+        remove_follower
 
     } = connections;
 
@@ -246,6 +247,7 @@ app.post("/update_follow_request", update_follow_request.req);
 app.post("/find_public_user_info", find_public_user_info.req);
 app.post("/search_within_followers", search_within_followers.req);
 app.post("/search_within_followings", search_within_followings.req);
+app.post("/remove_follower", remove_follower.req);
 
 //Alerts
 app.post("/get_alerts", get_alerts.req);

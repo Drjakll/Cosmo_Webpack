@@ -17,15 +17,11 @@ class Connections extends Component {
 
         this.state = {
             owner_user_account,
-            visitor_user_account,
-            followers: [],
-            following: []
+            visitor_user_account
         };
     }
 
     componentDidMount(){
-
-        this.Get_Connections();
 
     }
 
@@ -39,55 +35,6 @@ class Connections extends Component {
 
     }
 
-    Get_Connections = async ()=>{
-
-        this.setState({
-                        followers: await this.Get_All_Followers(),
-                        following: await this.Get_All_Following()
-                    });
-    }
-
-    Get_All_Followers = async ()=>{
-
-        let {id} = this.state.owner_user_account;
-
-        let {get_all_followers} = this.context.Request_URLs;
-
-        let data = await(await fetch(
-            get_all_followers,
-            {
-                method: "POST",
-                body: JSON.stringify({id}),
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            }
-        )).json();
-
-        return data?.results ?? [];
-
-    }
-
-    Get_All_Following = async ()=>{
-
-        let {id} = this.state.owner_user_account;
-
-        let {get_all_followings} = this.context.Request_URLs;
-
-        let data = await(await fetch(
-            get_all_followings,
-            {
-                method: "POST",
-                body: JSON.stringify({id}),
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            }
-        )).json();
-
-        return data?.results ?? [];
-
-    }
 
     Send_Follow_Request = async ()=>{
 
@@ -112,6 +59,8 @@ class Connections extends Component {
                 }
             }
         );  
+
+        window.Refresh_Login();
     }
 
     Show_Follow_Request_Button = ()=>{
@@ -129,7 +78,7 @@ class Connections extends Component {
 
     Display_Followers_List = ()=>{
 
-        let {owner_user_account, visitor_user_account, followers} = this.state;
+        let {owner_user_account, visitor_user_account} = this.state;
 
         let {List} = this;
 
@@ -138,7 +87,6 @@ class Connections extends Component {
             <List 
                 owner_user_account={owner_user_account}
                 visitor_user_account={visitor_user_account}
-                list={followers}
                 label={"Followers"}
             />
 
@@ -147,7 +95,7 @@ class Connections extends Component {
 
     Display_Following_List = ()=>{
 
-        let {owner_user_account, visitor_user_account, following} = this.state;
+        let {owner_user_account, visitor_user_account} = this.state;
 
         let {List} = this;
 
@@ -156,7 +104,6 @@ class Connections extends Component {
             <List 
                 owner_user_account={owner_user_account}
                 visitor_user_account={visitor_user_account}
-                list={following}
                 label={"Following"}
             />
 
@@ -165,7 +112,12 @@ class Connections extends Component {
 
     render(){
 
-        let {followers, following, visitor_user_account, owner_user_account} = this.state;
+        let {visitor_user_account, owner_user_account} = this.state;
+
+        let {following_count, followers_count} = owner_user_account;
+
+        let {follower_ids} = owner_user_account;
+        let {id: follower_id} = visitor_user_account;
 
         return <div id="connections-bar">
 
@@ -180,7 +132,7 @@ class Connections extends Component {
                     }}
                 > 
 
-                    {followers.length} Followers
+                    {followers_count} Followers
 
                 </div>
 
@@ -193,7 +145,7 @@ class Connections extends Component {
                     }}
                 >
                         
-                    {following.length} Following
+                    {following_count} Following
                         
                 </div>
 
@@ -201,7 +153,7 @@ class Connections extends Component {
 
             <div id="request-buttons">
 
-                {visitor_user_account.id !== owner_user_account.id ? this.Show_Follow_Request_Button() : ""}
+                {visitor_user_account.id !== owner_user_account.id && !follower_ids?.includes(follower_id) ? this.Show_Follow_Request_Button() : ""}
 
             </div>
 

@@ -4,6 +4,10 @@ import './connection_list_template.less';
 
 class Connection_List_Template extends Component {
 
+    Remove_User = null;
+    Remove_Follower = null;
+    Unfollow_User = null;
+
     constructor(props){
 
         super(props);
@@ -38,7 +42,11 @@ class Connection_List_Template extends Component {
 
     render(){
 
-        let {owner_user_account, visitor_user_account, list} = this.state;
+        let {owner_user_account, visitor_user_account, list, Refresh} = this.state;
+
+        let {label} = this.props;
+
+        this.Remove_User = label === "Followers" ? this.Remove_Follower : this.Unfollow_User;
 
         return <div id="connection-list-template">
 
@@ -52,6 +60,8 @@ class Connection_List_Template extends Component {
                                 visitor_user_account={visitor_user_account}
                                 owner_user_account={owner_user_account}
                                 entry={entry}
+                                Remove_User={this.Remove_User}
+                                refresh={Refresh}
                             />
 
                         </div>

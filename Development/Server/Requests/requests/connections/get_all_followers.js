@@ -31,7 +31,7 @@ let request = function () {
                 pl.target_type = 'profile' and pl.target_id = ua.id and pl.is_a_cover = 1
 
             where 
-                c.followed_id = ? 
+                c.followed_id = ? and c.status = 'accepted'
         `;
 
         try {
