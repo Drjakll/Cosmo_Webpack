@@ -3,6 +3,30 @@
     height: 100%;
     display: block;
 
+    #search-criteria-box-wrapper {
+        width: 100%;
+        display: block;
+        border-bottom: 1px solid #e1e4e8;
+        transition: 1s;
+    }   
+
+    .crit-focusing {
+        height: 500px !important;
+    }   
+
+    #search-criteria-box-wrapper.crit-not-focusing {
+        height: 200px !important;
+    }
+
+    .res-focusing {
+        height: calc(100% - 240px) !important;
+    }
+
+    #connection-list-container.res-not-focusing {
+        height: calc(100% - 500px) !important;
+    }
+
+
     #following-label {
         width: 100%;
         height: 40px;
@@ -16,8 +40,7 @@
 
     #connection-list-container {
         width: 100%;
-        height: calc(100% - 40px);
         display: block;
-    }   
-
+        transition: 1s;
+    }
 }

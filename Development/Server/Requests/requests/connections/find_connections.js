@@ -131,6 +131,12 @@ let request = function () {
                             ac.date_of_birth,
                             ac.privacy,
                             pl.link as profile_picture_link,
+
+                            coalesce(fc.following_count, 0) as following_count,
+                            coalesce(frc.followers_count, 0) as followers_count,
+
+                            coalesce(fc.following_ids, json_array()) as following_ids,
+                            coalesce(frc.follower_ids, json_array()) as follower_ids,
                             
                             coalesce(user_hobbies.User_Hobbies, json_array()) as User_Hobbies,
                             coalesce(user_locations.User_Locations, json_array()) as User_Locations,
@@ -228,6 +234,36 @@ let request = function () {
                             ) as user_schools   
                         on
                             user_schools.user_id = ac.id 
+
+                        left join
+                            (select
+                                follower_id,
+                                json_arrayagg(followed_id) as following_ids,
+                                count(*) as following_count
+                            from
+                                Connections
+                            where
+                                status = 'accepted'
+                            group by
+                                follower_id
+                            ) as fc
+                        on
+                            fc.follower_id = ac.id
+
+                        left join
+                            (select
+                                followed_id,
+                                json_arrayagg(follower_id) as follower_ids,
+                                count(*) as followers_count
+                            from
+                                Connections
+                            where
+                                status = 'accepted'
+                            group by
+                                followed_id
+                            ) as frc
+                        on
+                            frc.followed_id = ac.id
 
                         left join
                             Photo_Links as pl

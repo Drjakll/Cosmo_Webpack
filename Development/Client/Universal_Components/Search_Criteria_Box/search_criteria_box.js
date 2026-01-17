@@ -2,7 +2,7 @@ import React , {Component} from 'react';
 import Context from '@context/context.js';
 import Search_Parameters from '@data_templates/Search_Parameters/search_parameters.js';
 import Account_Data from '@data_templates/account_data.js';
-import './criteria_box.less';
+import './search_criteria_box.less';
 
 let {Account_Info_Data_Template} = Account_Data;
 
@@ -76,7 +76,7 @@ class Criteria_Box extends Component {
 
         let {available_search_parameters, added_parameters} = this.state;
 
-        return <div id="search-parameters-box-wrapper">
+        return <div id="search-parameters-box-wrapper" >
 
             <div id="search-parameters-box-header">
 
