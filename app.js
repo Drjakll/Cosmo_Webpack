@@ -40,7 +40,7 @@ import requests from './Development/Server/Requests/requests.js';
 
 let {user_accounts, messaging, get_web_pages, dummy_middleware, connections, alerts, user_news_updates} = requests;
 
-let {profile, create_account, login_account} = user_accounts;
+let {profile, create_account, login_account, login} = user_accounts;
 
 //User_Accounts -> Profile
 let { 
@@ -178,6 +178,7 @@ app.get("/", entry.req);
 //User account APIs
 app.post("/create_account", create_account.req);
 app.post("/login_account", login_account.req);
+app.post("/login", login.req);
 
 
 //Profile Data

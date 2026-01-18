@@ -16,7 +16,7 @@ class Profile_Template extends Component {
         
         Profile_Template.contextType = Context;
 
-        let {owner_user_account, visitor_user_account} = this.props;
+        let {owner_user_account, visitor_user_account, Refresh_Profile_Data} = this.props;
 
         
         this.state = {
@@ -26,6 +26,7 @@ class Profile_Template extends Component {
             general_props: { //This props will be passed to all components
                 owner_user_account, 
                 visitor_user_account, 
+                Refresh_Profile_Data,
                 change_display: this.Change_Display,
                 return_previous_display: this.Return_Previous_Display
             },

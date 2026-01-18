@@ -17,7 +17,7 @@ let Connect = () => {
         queueLimit: 0,
         connectTimeout: 10000, // ⬅️ important
         keepAliveInitialDelay: 0,
-        enableKeepAlive: true,
+        enableKeepAlive: true
     });
     
     return SQL;

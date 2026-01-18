@@ -97,7 +97,11 @@ class Profile_Popup extends Component {
 
             <div id="profile-template-inner-wrapper">
 
-                <Profile_Template visitor_user_account={visitor_user_account} owner_user_account={this_profile_data} />
+                <Profile_Template 
+                    visitor_user_account={visitor_user_account} 
+                    owner_user_account={this_profile_data} 
+                    Refresh_Profile_Data={this.Get_Profile_Account_Info}
+                />
 
             </div>
 

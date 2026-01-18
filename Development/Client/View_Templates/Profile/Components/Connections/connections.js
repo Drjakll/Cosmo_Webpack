@@ -60,18 +60,24 @@ class Connections extends Component {
             }
         );  
 
-        window.Refresh_Login();
+        await window.Refresh_Login();
+
+        let {Refresh_Profile_Data} = this.props;
+
+        Refresh_Profile_Data && Refresh_Profile_Data();
     }
 
     Show_Follow_Request_Button = ()=>{
 
-        let {owner_user_account} = this.state;
+        let {owner_user_account, visitor_user_account} = this.state;
 
-        let {privacy} = owner_user_account;
+        let {privacy, pending_follow_requests} = owner_user_account;
+
+        let pending = pending_follow_requests?.includes(visitor_user_account.id);
 
         return  <div id="request-to-follow-button" onClick={this.Send_Follow_Request}>
 
-            {privacy === "private" ? "Request to Follow" : "Follow"}
+            {privacy === "private" ? (pending ? "Remove follow request" : "Request to Follow") : "Follow"}
 
         </div>;
     }

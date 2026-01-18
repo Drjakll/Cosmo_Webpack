@@ -17,7 +17,9 @@ let request = function(){
 
                             coalesce(fc.following_count, 0) as following_count,
                             coalesce(frc.followers_count, 0) as followers_count,
+                            coalesce(fcp.pending_count, 0) as pending_follow_requests_count,
 
+                            coalesce(fcp.pending, json_array()) as pending_follow_requests,
                             coalesce(fc.following_ids, json_array()) as following_ids,
                             coalesce(frc.follower_ids, json_array()) as follower_ids,
                             coalesce(hobbies.User_Hobbies, json_array()) as User_Hobbies,
@@ -145,6 +147,21 @@ let request = function(){
                             ) as frc
                         on
                             frc.followed_id = ac.id
+
+                        left join
+                            (select
+                                followed_id,
+                                json_arrayagg(follower_id) as pending,
+                                count(*) as pending_count
+                            from
+                                Connections
+                            where
+                                status = 'pending'
+                            group by
+                                followed_id
+                            ) as fcp
+                        on
+                            fcp.followed_id = ac.id
 
                         left join
                             Photo_Links as pl

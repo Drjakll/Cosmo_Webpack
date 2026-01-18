@@ -1,0 +1,25 @@
+"use strict";
+/*
+ * ATTENTION: The "eval" devtool has been used (maybe by default in mode: "development").
+ * This devtool is neither made for production nor for readable output files.
+ * It uses "eval()" calls to create a separate source file in the browser devtools.
+ * If you are trying to read the output file, select a different devtool (https://webpack.js.org/configuration/devtool/)
+ * or disable the default devtool with "devtool: false".
+ * If you are looking for production-ready output files, see mode: "production" (https://webpack.js.org/configuration/mode/).
+ */
+exports.id = "Development_Server_Requests_requests_user_accounts_login_js";
+exports.ids = ["Development_Server_Requests_requests_user_accounts_login_js"];
+exports.modules = {
+
+/***/ "./Development/Server/Requests/requests/user_accounts/login.js":
+/*!*********************************************************************!*\
+  !*** ./Development/Server/Requests/requests/user_accounts/login.js ***!
+  \*********************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+eval("{__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\nfunction request() {\n  this.req = async (req, res) => {\n    let {\n      email,\n      password\n    } = req.body;\n    let data = [email, password];\n    let query = `select \n                        id,\n                        first_name,\n                        last_name,\n                        marital_status,\n                        gender,\n                        date_of_birth,\n                        email,\n                        created_on,\n                        pl.link as profile_picture_link\n                    \n                    from User_Accounts as ua\n\n                    left join Photo_Links as pl\n                    on \n                        pl.target_id = ua.id and pl.target_type = 'profile' and pl.is_a_cover = 1\n                    where \n                        ua.email = ? and password = ?\n        `;\n    try {\n      let [result] = await this.sql.query(query, data);\n      if (!result.length) {\n        return res.json({\n          message: \"No account matches with the email and password\",\n          result: []\n        });\n      }\n      res.json({\n        message: \"Successfully retrieved account data!\",\n        result: result[0]\n      });\n    } catch (err) {\n      console.log(err);\n      res.json({\n        message: \"Error retreiving user account\",\n        result: []\n      });\n    }\n  };\n}\n;\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (request);\n\n//# sourceURL=webpack://cosmo_webpack/./Development/Server/Requests/requests/user_accounts/login.js?\n}");
+
+/***/ })
+
+};
+;

@@ -6,7 +6,7 @@ let request = function () {
             case "public":
                 return "accepted";
 
-            case "mutual_only":
+            case "mutual":
 
                 let data = [from_id, to_id];
 
@@ -25,6 +25,10 @@ let request = function () {
                         A.follower_id = ?
                     and 
                         B.followed_id = ?
+                    and
+                        A.status = 'accepted'
+                    and
+                        B.status = 'accepted'
                 `, data);
 
                 if(mutual[0].count > 0){
@@ -55,15 +59,14 @@ let request = function () {
             insert into 
                 Connections (follower_id, followed_id, timestamp, status) 
                 values(?,?,?,?)
-            as new
             on duplicate key
             update
-                timestamp = new.timestamp,
+                timestamp = values(timestamp),
                 status = case 
                     when 
-                        new.status = 'pending' then 'rejected'
+                        status = 'pending' then 'rejected'
                     else
-                        new.status
+                        values(status)
                 end
         `;
 

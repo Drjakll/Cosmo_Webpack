@@ -1,59 +1,59 @@
 let request = function () {
 
-    let gather_group = (query, connection_list)=>{
 
-        query += "("
+    this.req = async (req, res) => {
 
-        for(let connection of connection_list){
+        let { user_account } = req.body;
 
-            query += `owner_email = '${connection.email}' or `;
+        let {id} = user_account;
+
+        let data = [id];
+
+        query = `select
+                      coalesce(follower_accounts.info_array, json_array()) as followers_pending
+                        
+                from Connections as c
+
+                left join Connections as c2
+                on
+                    c2.status = 'pending' and c2.followed_id = c.followed_id
+
+                left join 
+                    (select 
+                        ua.id,
+                        json_arrayagg(
+                            json_object(
+                                'id', ua.id,
+                                'first_name', ua.first_name,
+                                'last_name', ua.last_name,
+                                'profile_picture_link', pl.link
+                            )
+                        ) as info_array
+                    from User_Accounts as ua
+                    left join Photo_Links as pl
+                    on
+                        ua.id = pl.target_id and pl.is_a_cover = 1 and pl.target_type = 'profile'
+                    group by
+                        ua.id
+                    ) as follower_accounts
+                on
+                    follower_accounts.id = c2.follower_id
+                
+                where 
+                    c.followed_id = ?
+            `;
+        
+        try {
+
+            await  this.sql.query(query, data);
+
+        } catch(err){
+
+            console.log(err);
+
+            res.json({message: "Error retrieving alerts", results: []});
 
         }
-
-        query = query.slice(0, -4) + ") ";
-
-        return query;
-    }
-
-    this.req = (req, res) => {
-
-        let { connection_list, request, status } = req.body;
-
-        let query = `select * from User_Alerts where `;
-
-        if(connection_list.length < 1){
-
-            res.json({message: "No results found", results:[]});
-            res.end();
-            return;
-
-        } 
-        else {
-
-            query = gather_group(query, connection_list);
-
-            query += " and ";
-
-            query += (status === "pending" ?  
-            `(target_only = '${request.email}' )` :  //If pending, then it only targets the user who is requesting only
-            `(target_only = '${request.email}' or target_only = 'everyone' or target_only = 'connection_list')`);
-        
-        }
-
-        query += " order by time_created desc";
-        
-        this.sql.query(query, (err, results) => {
-
-            if(err){
-                console.log(query, err.sqlMessage);
-                res.json({message: "Error retrieving alerts", results: []});
-            } else {
-                res.json({message: `Successfully retrieved ${results.length} alerts!`, results: results});
-            }
-
-            res.end();
-
-        });
     };
 
 };
