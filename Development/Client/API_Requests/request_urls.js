@@ -1,6 +1,7 @@
 //Account
 const login_account = `/login_account`;
 const create_account = `/create_account`;
+const login = '/login';
 
 //Profile_Data
 const update_profile = '/update_profile';
@@ -86,6 +87,7 @@ export default {
     //Account
     login_account,
     create_account,
+    login,
 
     //Profile data
     update_profile,

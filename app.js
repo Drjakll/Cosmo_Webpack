@@ -215,7 +215,7 @@ app.post("/get_comments", get_comments.req);
 app.post("/update_comment", update_comment.req);
 app.post("/delete_comment", delete_comment.req);
 app.post("/delete_multiple_comments", delete_multiple_comments.req);
-app.post("/get_replies", get_replies.req)
+app.post("/get_replies", get_replies.req);
 app.post("/update_reaction", update_reaction.req);
 app.post("/submit_reaction", submit_reaction.req);
 
@@ -225,8 +225,8 @@ app.post("/update_post", update_post.req);
 app.post("/get_posts", get_posts.req);
 app.post("/delete_post", delete_post.req, 
                             delete_general_reactions.req,
-                            delete_comments_from_targets.req, //delete_comments_from_targets must go before
-                            delete_photo_links.req, //delete_photo_links
+                            delete_comments_from_targets.req, //delete_comments_from_targets must go before delete_photo_links
+                            delete_photo_links.req, 
                             delete_photo_files.req); 
 app.post("/get_last_time_posted", get_last_time_posted.req);
 

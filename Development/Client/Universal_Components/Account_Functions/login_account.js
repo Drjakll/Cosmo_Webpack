@@ -17,7 +17,7 @@ let Login = async (document) =>{
         let acc_credentials = {email: email, password: password};
         
         let {acc_info: account} = await (await fetch(
-                                        Request_URLs.login_account, 
+                                        Request_URLs.login, 
                                         {
                                             method: "POST",
                                             body: JSON.stringify(acc_credentials),
