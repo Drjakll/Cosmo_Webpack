@@ -9,6 +9,7 @@ const add_item_to_profile_table = '/add_item_to_profile_table';
 const remove_item_from_profile_table = '/remove_item_from_profile_table';
 const update_profile_table_data = '/update_profile_table_data';
 const get_user_account_data = '/get_user_account_data';
+const get_user_table_data = '/get_user_table_data';
 
 //Albums
 const update_album = '/update_album';
@@ -61,6 +62,7 @@ const remove_follower = "/remove_follower";
 
 //Alerts
 const get_alerts = "/get_alerts";
+const get_follow_request_alert = "/get_follow_request_alert";
 
 //User News Updates
 const get_user_news_updates = '/get_user_news_updates';
@@ -85,7 +87,6 @@ const aws_s3_url = 'https://cosmo-social-app.s3.us-west-1.amazonaws.com/';
 
 export default {
     //Account
-    login_account,
     create_account,
     login,
 
@@ -95,6 +96,7 @@ export default {
     remove_item_from_profile_table,
     update_profile_table_data,
     get_user_account_data,
+    get_user_table_data,
         
     //Photos
     upload_photos,
@@ -148,6 +150,7 @@ export default {
 
     //Alerts
     get_alerts,
+    get_follow_request_alert,
 
     //User News Updates
     get_user_news_updates,

@@ -50,15 +50,13 @@ class Albums extends Component {
         if(!owner_user_account?.id){
             return;
         }
+
+        let {id} = owner_user_account;
         
         const {get_albums} = this.context.Request_URLs;
         
-        let res = await fetch(get_albums, {
-            method: "POST",
-            body: JSON.stringify({id: owner_user_account.id}),
-            headers: {
-                'Content-Type': "application/json"
-            }
+        let res = await fetch(`${get_albums}/${id}`, {
+            method: "GET"
         });
         
         let resJson = await res.json();

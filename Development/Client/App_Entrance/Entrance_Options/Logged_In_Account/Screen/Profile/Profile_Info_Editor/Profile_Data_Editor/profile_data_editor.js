@@ -77,7 +77,7 @@ class Profile_Data_Editor extends Profile_Info_Data {
         }
 
         await fetch(update_profile, {
-            method: "POST",
+            method: "PATCH",
             body: JSON.stringify(body),
             headers: {
                 'Content-Type': 'application/json'

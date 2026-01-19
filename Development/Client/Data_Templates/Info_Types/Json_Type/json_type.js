@@ -5,16 +5,18 @@ import './json_type.less';
 class Json_Type extends Component {
 
     Name_Map = {};
+
+    Json_Popup = Json_Screen
     
     constructor(props){
         
         super(props);
 
-        let {label, value, owner_user_account, visitor_user_account, options, column_name: table_name} = props;
+        let {label, owner_user_account, visitor_user_account, options, column_name: table_name} = props;
 
         this.state = {
             label,
-            value,
+            value: [],
             visitor_user_account,
             owner_user_account,
             options,
@@ -44,21 +46,14 @@ class Json_Type extends Component {
 
         let {label, value, visitor_user_account, options, table_name} = this.state;
 
-        //Because this function won't be call by this class, 
-        //it will be called by mostly likely profile_template.js, 
-        //value has to be pulled from owner_user_account else it won't display correctly
-        value = owner_user_account[table_name];
+        let {Json_Popup} = this;
 
-        return <Json_Screen 
+        return <Json_Popup 
                     label={label} 
                     value={value}
                     owner_user_account={owner_user_account} 
                     visitor_user_account={visitor_user_account} 
                     options={options} 
-                    Editor={this.Editor}
-                    Input_Data_Types={this.Input_Data_Types}
-                    Delete_Item={this.Delete_Item}
-                    Update_Items={this.Update_Items}
                     table_name={table_name}
                 />
     }

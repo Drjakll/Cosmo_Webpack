@@ -1,27 +1,25 @@
 import React, {Component} from 'react';
-import Connection_Request from './Connection_Request/connection_request.js';
-import Post_Alert from './Post_Alert/post_alert.js';
+import Context from '@context/context.js';
+import Follow_Request from './Follow_Request/follow_request.js';
 import './alert_buttons.less';
 
 class Alert_Buttons extends Component {
 
     Alert_Types = {
-        connection_request: Connection_Request,
-        post: Post_Alert
-    }
+        "Follow_Request": Follow_Request
+    };
 
     constructor(props){
 
         super(props);
 
-        Alert_Buttons.contextType = window.Context;
+        Alert_Buttons.contextType = Context;
 
-        let {account_data, connection_list} = this.props;
+        let {owner_user_account} = this.props;
 
         this.state = {
-            account_data,
-            connection_list,
-            alerts: [],
+            owner_user_account,
+            alerts: {},
             view_profile_data: ""
         };
     }
@@ -72,30 +70,18 @@ class Alert_Buttons extends Component {
 
     Refresh_Alerts = async ()=>{
 
-        let from_pending_alerts = await this.Get_Alerts("pending");
-        let from_connection_alerts = await this.Get_Alerts("accepted");
-
-        let alerts = from_pending_alerts.concat(from_connection_alerts);
-
-        await this.setState({alerts: alerts});
     }
 
-    Get_Alerts = async (status)=>{
+    Get_Follow_Requests = async (status)=>{
         
-        let {get_connection_alerts} = this.context.Request_URLs;
+        let {get_follow_request_alert} = this.context.Request_URLs;
 
-        let body = {
-            request: this.state.account_data,
-            status: status
-        };
+        let {id} = this.state.Request_URLs;
 
-        let data = await (await fetch(get_connection_alerts,
+
+        let data = await (await fetch(`${get_follow_request_alert}/${id}`,
             {
-                method: "POST",
-                body: JSON.stringify(body),
-                headers: {
-                    'Content-Type': 'application/json'
-                }
+                method: "GET"
             }
         )).json();
 
@@ -104,11 +90,10 @@ class Alert_Buttons extends Component {
 
     render(){
 
-        let {alerts} = this.state;
+        let {alerts, owner_user_account} = this.state;
 
         return <div id="alert-buttons-wrapper">
 
-            {this.state.view_profile_data}
 
             <div id="alert-buttons">
 
@@ -120,21 +105,28 @@ class Alert_Buttons extends Component {
 
                 <div id="new-alerts-wrapper">
 
-                    {alerts.map((value, index)=>{
+                    {Object.keys(alerts).map((type)=>{
                         
-                        let Com = this.Alert_Types[value.alert_type];
-                        
-                        return <div className="alert" key={value.id}>
+                        let Com = this.Alert_Types[type];
 
-                                <Com data={value.alert_data} 
-                                    account_data={this.state.account_data} 
-                                    from_account_email={value.owner_email} 
-                                    refresh_alerts={this.Refresh_Alerts}
-                                    connection_list={this.state.connection_list}
-                                    view_popup_profile={this.View_Popup_Profile}
+                        let Alerts = alerts[type];
+                        
+                        return <div className="alert-type-wrapper" key={type}>
+
+                            {Alerts.map((value, index)=>{
+
+                                return <div className="alert" key={index}>
+
+                                    <Com value={value} 
+                                        owner_user_account={owner_user_account}
                                     />
 
-                            </div>;
+                                </div>;
+
+                            })}
+
+                        </div>
+                        
 
                     })}
 

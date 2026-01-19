@@ -37,13 +37,9 @@ class Profile_Popup extends Component {
         let {get_user_account_data} = this.context.Request_URLs;
 
         let data = await(await fetch(
-            get_user_account_data,
+            `${get_user_account_data}/${id}`,
             {
-                method: "POST",
-                body: JSON.stringify({id}),
-                headers: {
-                    'Content-Type': 'application/json'
-                }
+                method: "GET"
             }
         )).json();
 

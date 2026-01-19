@@ -120,9 +120,8 @@ class Connections extends Component {
 
         let {visitor_user_account, owner_user_account} = this.state;
 
-        let {following_count, followers_count} = owner_user_account;
+        let {following_ids, follower_ids} = owner_user_account;
 
-        let {follower_ids} = owner_user_account;
         let {id: follower_id} = visitor_user_account;
 
         return <div id="connections-bar">
@@ -138,7 +137,7 @@ class Connections extends Component {
                     }}
                 > 
 
-                    {followers_count} Followers
+                    {follower_ids?.length} Followers
 
                 </div>
 
@@ -151,7 +150,7 @@ class Connections extends Component {
                     }}
                 >
                         
-                    {following_count} Following
+                    {following_ids?.length} Following
                         
                 </div>
 

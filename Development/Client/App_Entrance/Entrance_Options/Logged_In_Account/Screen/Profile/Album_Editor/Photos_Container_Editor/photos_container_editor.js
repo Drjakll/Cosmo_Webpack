@@ -213,7 +213,7 @@ class Photos_Container_Editor extends Photos_Container {
 
             await fetch(update_album,
                 {
-                    method: "POST",
+                    method: "PATCH",
                     body: JSON.stringify(body),
                     headers: {
                         'Content-Type': "application/json"
@@ -257,7 +257,7 @@ class Photos_Container_Editor extends Photos_Container {
 
             await fetch(update_album,
                 {
-                    method: "POST",
+                    method: "PATCH",
                     body: JSON.stringify(body),
                     headers: {
                         'Content-Type': "application/json"

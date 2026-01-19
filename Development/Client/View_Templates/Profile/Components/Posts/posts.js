@@ -114,6 +114,7 @@ class Posts extends Component {
         this.Get_Posts_On_This_Month(month, last_day_of_month, year, id);
     }
     
+    //id is owner_user_account's id
     Get_Posts_On_This_Month = async (month, last_day_of_month, year, id)=>{
         
         let {Request_URLs} = this.context;
@@ -123,21 +124,9 @@ class Posts extends Component {
         let start = new Date(`${year}-${month}-1`).getTime();
         let end = new Date(`${year}-${month}-${last_day_of_month}`).getTime();
         
-        let search_requirements = {
-            user_id: id,
-            date_interval: {
-                start,
-                end
-            },
-            order: 'asc'
-        };
         
-        let res = await fetch(get_posts, {
-                method: "POST",
-                body: JSON.stringify(search_requirements),
-                headers: {
-                    'Content-Type': 'application/json'
-                }
+        let res = await fetch(`${get_posts}?user_id=${id}&start=${start}&end=${end}&order=asc`, {
+                method: "GET"
             });
             
         let resJson = await res.json();

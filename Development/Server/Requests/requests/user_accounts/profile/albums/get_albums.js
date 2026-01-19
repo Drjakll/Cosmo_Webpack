@@ -2,7 +2,7 @@ let request = function() {
     
     this.req = async (req, res) => { 
         
-        let {id} = req.body;
+        let {id} = req.params;
 
         let requirements = [id];
         

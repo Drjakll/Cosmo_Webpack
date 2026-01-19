@@ -1,7 +1,10 @@
 import React, {Component} from 'react';
+import Context from '@context/context.js';
 import './json_screen.less';
 
 class Json_Popup extends Component {
+
+    static contextType = Context;
 
     Name_Map = {};
     
@@ -19,24 +22,26 @@ class Json_Popup extends Component {
 
         super(props);
 
-        let {label, table_name, value, owner_user_account, visitor_user_account, options, Editor, Delete_Item, Input_Data_Types, Update_Items} = props;
-
-        this.Delete_Item = this.Delete_Item || Delete_Item;
-        this.Editor = this.Editor || Editor;
-        this.Input_Data_Types = this.Input_Data_Types || Input_Data_Types;
-        this.Update_Items = this.Update_Items || Update_Items;
-
+        let {label, table_name, owner_user_account, visitor_user_account, options} = props;
 
         this.Name_Mapping(options);
 
         this.state = {
             label,
-            value,
+            value: [],
             table_name,
             visitor_user_account,
             owner_user_account,
-            popup: false
+            options,
+            popup: false,
+            json_obj: {} //This will be used for adding item using the editor
         };
+    }
+
+    async componentDidMount(){
+
+        this.Retrieve_Data();
+
     }
 
     componentDidUpdate(prevProps, prevState){
@@ -72,6 +77,36 @@ class Json_Popup extends Component {
             </div>
 
         </div>
+    }
+
+
+    Retrieve_Data = async ()=>{
+
+        let {table_name} = this.state;
+
+        let {id} = this.state.owner_user_account;
+
+        let {get_user_table_data} = this.context.Request_URLs;
+
+        let body ={
+            user_id: id,
+            table_name
+        };
+
+        let data = await(await fetch(
+            get_user_table_data,
+            {
+                method: "POST",
+                body: JSON.stringify(body),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }
+        )).json();
+
+
+        this.setState({ value: data?.results ?? [] })
+
     }
 
     render(){

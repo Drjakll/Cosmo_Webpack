@@ -2,7 +2,7 @@ let request = function(){
     
     this.req = async (req, res)=>{
         
-        let {id} = req.body;
+        let {id} = req.params;
         
         let query = `select ac.id,
                             ac.first_name,
@@ -15,114 +15,21 @@ let request = function(){
                             pl.link as profile_picture_link,
                             pl.id as profile_picture_id,
 
-                            coalesce(fc.following_count, 0) as following_count,
-                            coalesce(frc.followers_count, 0) as followers_count,
-                            coalesce(fcp.pending_count, 0) as pending_follow_requests_count,
-
                             coalesce(fcp.pending, json_array()) as pending_follow_requests,
                             coalesce(fc.following_ids, json_array()) as following_ids,
                             coalesce(frc.follower_ids, json_array()) as follower_ids,
-                            coalesce(hobbies.User_Hobbies, json_array()) as User_Hobbies,
-                            coalesce(locations.User_Locations, json_array()) as User_Locations,
-                            coalesce(professions.User_Professions, json_array()) as User_Professions,
-                            coalesce(schools.User_Schools, json_array()) as User_Schools
+                            json_array()  as User_Hobbies,
+                            json_array()  as User_Locations,
+                            json_array()  as User_Professions,
+                            json_array() as User_Schools
 
                         from 
                             User_Accounts as ac
 
                         left join
-                            (select 
-                                user_id,
-                                json_arrayagg(
-                                    json_object(
-                                        'id', id,
-                                        'hobby_name', hobby_name,
-                                        'story', story,
-                                        'proficiency', proficiency,
-                                        'start_date', start_date,
-                                        'privacy', privacy
-                                    )
-                                ) as User_Hobbies
-                            from 
-                                User_Hobbies
-                            group by 
-                                user_id
-                            ) as hobbies 
-                        on
-                            hobbies.user_id = ac.id
-
-                        left join
-                            (select 
-                                user_id, 
-                                json_arrayagg(
-                                    json_object(
-                                        'id', id,
-                                        'city', city,
-                                        'state', state,
-                                        'country', country,
-                                        'start_date', start_date,
-                                        'end_date', end_date,
-                                        'location_type', location_type,
-                                        'privacy', privacy
-                                    )
-                                ) as User_Locations
-                            from
-                                User_Locations
-                            group by 
-                                user_id
-                            ) as locations
-                        on 
-                            locations.user_id = ac.id
-
-                        left join
-                            (select 
-                                user_id, 
-                                json_arrayagg(
-                                    json_object(
-                                        'id', id,
-                                        'profession_name', profession_name,
-                                        'start_date', start_date,
-                                        'proficiency', proficiency,
-                                        'privacy', privacy
-                                    )
-                                ) as User_Professions
-                            from
-                                User_Professions
-                            group by
-                                user_id
-                            ) professions
-                        on
-                            professions.user_id = ac.id
-
-                        left join
-                            (select
-                                user_id,
-                                json_arrayagg(
-                                    json_object(
-                                        'id', id,
-                                        'school_name', school_name,
-                                        'school_type', school_type,
-                                        'city', city,
-                                        'state', state,
-                                        'country', country,
-                                        'start_date', start_date,
-                                        'end_date', end_date,
-                                        'privacy', privacy
-                                    )
-                                ) as User_Schools
-                            from
-                                User_Schools
-                            group by
-                                user_id
-                            ) as schools   
-                        on
-                            schools.user_id = ac.id 
-
-                        left join
                             (select
                                 follower_id,
-                                json_arrayagg(followed_id) as following_ids,
-                                count(*) as following_count
+                                json_arrayagg(followed_id) as following_ids
                             from
                                 Connections
                             where
@@ -136,8 +43,7 @@ let request = function(){
                         left join
                             (select
                                 followed_id,
-                                json_arrayagg(follower_id) as follower_ids,
-                                count(*) as followers_count
+                                json_arrayagg(follower_id) as follower_ids
                             from
                                 Connections
                             where
@@ -151,8 +57,7 @@ let request = function(){
                         left join
                             (select
                                 followed_id,
-                                json_arrayagg(follower_id) as pending,
-                                count(*) as pending_count
+                                json_arrayagg(follower_id) as pending
                             from
                                 Connections
                             where

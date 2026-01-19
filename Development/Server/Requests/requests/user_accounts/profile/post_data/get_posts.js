@@ -2,10 +2,7 @@ let request = function() {
     
     this.req = async (req, res) => { 
         
-        let {user_id, date_interval, id} = req.body;
-
-        //date_interval might not exists if it only retrieve single post with id
-        let {start, end} = date_interval || {start: 0, end: 0};
+        let {user_id, start, end, id} = req.query;
 
         //If id exists, that means just find one post, else search the posts within the date range
         let data = id ? [user_id, id] : [user_id, start, end];

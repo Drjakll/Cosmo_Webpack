@@ -42,7 +42,7 @@ class General_Settings extends Component {
         };
 
         await fetch(update_profile, {
-            method: "POST",
+            method: "PATCH",
             body: JSON.stringify(body),
             headers: {
                 'Content-Type': 'application/json'
@@ -70,7 +70,7 @@ class General_Settings extends Component {
             <div id="available-privacy-options">
 
                 <div id="selected-privacy-label">
-                    {this.Privacy_Options[selected_privacy].label}
+                    {this.Privacy_Options[selected_privacy]?.label}
                 </div>
 
                 <div id="privacy-options-list">

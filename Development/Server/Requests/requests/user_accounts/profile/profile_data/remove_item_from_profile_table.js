@@ -2,14 +2,14 @@ let request = function () {
     
     this.req = async (req, res) => { 
         
-        let { remove_req, table_name } = req.body;
+        let { table_name, id } = req.query;
 
-        let query = `delete from ${table_name} where ?`;
+        let query = `delete from ${table_name} where id = ?`;
 
         
         try {
 
-            await this.sql.query(query, remove_req);
+            await this.sql.query(query, [id]);
 
         } catch(err){
             console.log(query, err);

@@ -40,7 +40,7 @@ import requests from './Development/Server/Requests/requests.js';
 
 let {user_accounts, messaging, get_web_pages, dummy_middleware, connections, alerts, user_news_updates} = requests;
 
-let {profile, create_account, login_account, login} = user_accounts;
+let {profile, create_account, login} = user_accounts;
 
 //User_Accounts -> Profile
 let { 
@@ -101,7 +101,9 @@ let {
     update_profile, 
     add_item_to_profile_table,
     remove_item_from_profile_table,
-    update_profile_table_data
+    update_profile_table_data,
+    get_user_table_data
+
 } = profile_data;
 
 //Messaging
@@ -157,7 +159,8 @@ let {
 
 //Alerts
 let {
-    get_alerts
+    get_alerts,
+    get_follow_request_alert
 
 } = alerts;
 
@@ -177,22 +180,22 @@ app.get("/", entry.req);
 
 //User account APIs
 app.post("/create_account", create_account.req);
-app.post("/login_account", login_account.req);
 app.post("/login", login.req);
 
 
 //Profile Data
-app.post("/update_profile", update_profile.req);
-app.post("/update_profile_table_data", update_profile_table_data.req);
+app.patch("/update_profile", update_profile.req);
+app.patch("/update_profile_table_data", update_profile_table_data.req);
 app.post("/add_item_to_profile_table", add_item_to_profile_table.req);
-app.post("/remove_item_from_profile_table", remove_item_from_profile_table.req);
-app.post("/get_user_account_data", get_user_account_data.req);
+app.delete("/remove_item_from_profile_table", remove_item_from_profile_table.req);
+app.get("/get_user_account_data/:id", get_user_account_data.req);
+app.post("/get_user_table_data", get_user_table_data.req);
 
 
 //Albums
-app.post("/update_album", update_album.req);
+app.patch("/update_album", update_album.req);
 app.post("/add_album", add_album.req);
-app.post("/get_albums", get_albums.req);
+app.get("/get_albums/:id", get_albums.req);
 app.post("/delete_album", delete_album.req, 
                             get_photo_links.req, 
                             delete_photo_links.req, 
@@ -222,7 +225,7 @@ app.post("/submit_reaction", submit_reaction.req);
 //Post Data                         
 app.post("/create_post", create_post.req);
 app.post("/update_post", update_post.req);
-app.post("/get_posts", get_posts.req);
+app.get("/get_posts", get_posts.req);
 app.post("/delete_post", delete_post.req, 
                             delete_general_reactions.req,
                             delete_comments_from_targets.req, //delete_comments_from_targets must go before delete_photo_links
@@ -252,6 +255,7 @@ app.post("/remove_follower", remove_follower.req);
 
 //Alerts
 app.post("/get_alerts", get_alerts.req);
+app.get("/get_follow_request_alert/:user_id", get_follow_request_alert.req);
 
 //User News Updates
 app.post("/get_user_news_updates", get_user_news_updates.req);
