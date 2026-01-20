@@ -36,7 +36,6 @@ class Post_Editor extends Posts {
 
         super.componentDidUpdate(prevProps, prevState);
 
-        this.Disable_Create_New_Post();
     }
 
     componentDidMount() {

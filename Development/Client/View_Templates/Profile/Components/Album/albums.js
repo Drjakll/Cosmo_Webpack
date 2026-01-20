@@ -39,7 +39,7 @@ class Albums extends Component {
         this.setState(this.props);
         
 
-        this.Get_Albums();
+        //this.Get_Albums();
 
     }
     

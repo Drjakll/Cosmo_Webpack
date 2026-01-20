@@ -24,7 +24,7 @@ let request = function () {
 
         } catch(err){
 
-            console.log(err);
+            console.log(query, err);
 
             res.json({message: "Error updating connection request!"});
 
