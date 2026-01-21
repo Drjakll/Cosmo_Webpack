@@ -52,34 +52,24 @@ class Alert_Buttons extends Component {
         });
     }
 
-    View_Popup_Profile = (account_data)=>{
-
-        const {Profile_Popup} = this.context;
-
-        let comp = <Profile_Popup account_data={account_data} Exit={this.Exit_Popup}/>;
-
-        this.setState({view_profile_data: comp});
-    }
-
-    Exit_Popup = ()=>{
-
-        this.setState({
-            view_profile_data: ""
-        });
-    }
 
     Refresh_Alerts = async ()=>{
 
+        let {alerts} = this.state;
+
+        alerts.Follow_Request = await this.Get_Follow_Requests();
+
     }
 
-    Get_Follow_Requests = async (status)=>{
+    Get_Follow_Requests = async ()=>{
         
         let {get_follow_request_alert} = this.context.Request_URLs;
 
         let {id} = this.state.Request_URLs;
 
 
-        let data = await (await fetch(`${get_follow_request_alert}/${id}`,
+        let data = await (await fetch(
+            `${get_follow_request_alert}/${id}`,
             {
                 method: "GET"
             }
@@ -93,7 +83,6 @@ class Alert_Buttons extends Component {
         let {alerts, owner_user_account} = this.state;
 
         return <div id="alert-buttons-wrapper">
-
 
             <div id="alert-buttons">
 

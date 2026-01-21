@@ -1,5 +1,4 @@
 //Account
-const login_account = `/login_account`;
 const create_account = `/create_account`;
 const login = '/login';
 

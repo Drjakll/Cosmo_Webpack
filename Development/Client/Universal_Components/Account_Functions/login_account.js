@@ -10,8 +10,7 @@ let Login = async (document) =>{
         let password = cookie_data?.password;
         
         if(!email || !password){
-            this.setState({selected_screen: "Login Account"});
-            return;
+            return null;
         }
         
         let acc_credentials = {email: email, password: password};

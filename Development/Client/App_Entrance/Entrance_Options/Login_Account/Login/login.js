@@ -33,11 +33,11 @@ class Login extends Component {
         }
         
         //Create a json data template to hold account information
-        let account_data = Account_Data_Templates.Account_Data_Template({email: email, password: password});
+        let account_data = Account_Data_Templates.Account_Data_Template({email, password});
         
         let jsonData = JSON.stringify(account_data);
         
-        let res = await fetch(Request_URLs.login_account, {
+        let res = await fetch(Request_URLs.login, {
            method: "POST",
            body: jsonData,
            headers: {
