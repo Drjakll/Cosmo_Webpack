@@ -22,6 +22,14 @@ class Comments_Container extends Component {
     //The limited number of comments per request
     limits_per_request = 25;
 
+    //A flag that will temporary stop receiving anymore comments because we don't want to blow up the servver with 
+    //hundreds of unnecessary request when there are no more comments left to retrieve
+    stop_get_comments = false;
+
+    //If the last comment id is the same one as the last scroll, that means no more comments available. So we pause 
+    //getting anymore new comments for a short period of time
+    last_comment_id = null;
+
     constructor(props){
 
         super(props);
@@ -117,34 +125,115 @@ class Comments_Container extends Component {
         this.setState({comments: more_comments});
     }
 
+    //When comments first arrived from server, it will be messy because it is 
+    //comments, reactions and replies are all in a separate array. This will aggregate all of them together
+    //into a single array
+    Organize_Comments = (comments_obj)=>{
+
+        if(!Object.keys(comments_obj).length){
+            return [];
+        }
+
+        let {comments, emojis, replies} = comments_obj;
+
+        let comments_dictionary = {};
+
+        for(let i in comments){
+
+            let {id} = comments[i];
+
+            //Get the pointer of each comment and store it with a key
+            comments_dictionary[id] = comments[i];
+
+            comments_dictionary[id].reactions = [];
+            comments_dictionary[id].replies = [];
+        }
+
+        for(let emo of emojis){
+
+            let {target_id} = emo;
+
+            comments_dictionary[target_id].reactions.push(emo);
+
+        }
+
+        for(let rep of replies){
+
+            let {reply_to_id} = rep;
+
+            comments_dictionary[reply_to_id].replies.push(rep);
+        }
+
+        return comments;
+
+    }
+
     Get_Comments = async (offset_timestamp, limit = 10, greater_or_less = "<", asc_desc = "asc")=>{
+
+        if(this.stop_get_comments){
+            return [];
+        }
+
+        this.stop_get_comments = true;
+
+        //Give a delay between each getting comments because of user keep scrolling
+        setTimeout(()=>{
+
+            this.stop_get_comments = false;
+
+        }, 1000)
         
         let {target_id, target_type, reply_to_id} = this.props;
 
         let {get_comments} = this.context.Request_URLs;
 
-        let body ={
+        let body = {
             target_id,
             target_type,
-            reply_to_id,
             offset_timestamp,
-            limit,
             greater_or_less,
-            asc_desc
+            asc_desc,
+            reply_to_ids: reply_to_id ? `${reply_to_id}` :  ""
         };
 
         let data = await(await fetch(
-            get_comments,
+            `${get_comments}`,
             {
                 method: "POST",
+                body: JSON.stringify(body),
                 headers: {
                     'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(body)
+                }
             }
-        )).json();
+        ))?.json();
 
-        return data?.results ?? [];
+        if(!data){
+            return [];
+        }
+
+        let final_results = this.Organize_Comments(data?.results ?? {});
+
+        let {id} = final_results.length ? final_results[final_results.length - 1] : {id: -1};
+
+        //If we aren't getting anymore comments
+        if(this.last_comment_id === id){
+            
+            this.stop_get_comments = true;
+
+            //Pause retrieving comments for 15 seconds
+            setTimeout(()=>{
+
+                this.stop_get_comments = false;
+                this.last_comment_id = null;
+
+            }, 15 * 1000);
+
+            return [];
+        }
+
+        this.last_comment_id = id;
+
+        return final_results;
     }
 
     Signal_To_Refresh_For_New_Comments = ()=>{
@@ -241,7 +330,7 @@ class Comments_Container extends Component {
 
         if(upOrdown >= 0){
 
-            if(percent < 0.25){
+            if(percent < 0.25 && percent > 0.15){
 
                 await this.Get_More_Comments(false);
                 await this.Cut_Comments(false);
@@ -252,7 +341,7 @@ class Comments_Container extends Component {
 
 
 
-        if(percent > 0.75){
+        if(percent > 0.75 && percent < 0.85){
 
             await this.Get_More_Comments(true);
             await this.Cut_Comments(true);

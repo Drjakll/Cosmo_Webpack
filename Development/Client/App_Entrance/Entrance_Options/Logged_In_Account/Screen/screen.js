@@ -11,7 +11,7 @@ import './screen.less';
 class Screen extends Component {
     
     Screen_Types = {
-        "Livestream": Empty,
+        "Livestream": Explore,
         "News": Empty,
         "Profile": Profile,
         "Messaging": Empty,

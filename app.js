@@ -8,6 +8,7 @@ import websocket from './Development/Server/Websockets/websocket.js';
 import path from 'path';
 import fs from 'fs';
 import multer from 'multer';
+import 'dotenv/config';
 
 const uploads = multer({
     dest: './uploads'
@@ -64,6 +65,7 @@ let {
 //User_Accounts -> Profile -> Comments
 let {
         delete_comment,
+        get_comment_reactions,
         get_comments,
         submit_comment,
         update_comment,
@@ -214,7 +216,7 @@ app.post("/set_photo_as_cover", set_photo_as_cover.req);
 
 //Comments
 app.post("/submit_comment", submit_comment.req);
-app.post("/get_comments", get_comments.req);
+app.post("/get_comments", get_comments.req, get_comment_reactions.req, get_comments.req);
 app.post("/update_comment", update_comment.req);
 app.post("/delete_comment", delete_comment.req);
 app.post("/delete_multiple_comments", delete_multiple_comments.req);
@@ -245,9 +247,9 @@ app.post("/send_follow_request", send_follow_request.req);
 app.post("/unfollow_user_account", unfollow_user_account.req);
 app.post("/get_all_followers", get_all_followers.req);
 app.post("/get_all_followings", get_all_followings.req);
-app.post("/get_follow_requests", get_follow_requests.req, result_sender.req);
+app.get("/get_follow_requests/:id", get_follow_requests.req);
 app.post("/remove_follow_request", remove_follow_request.req);
-app.post("/update_follow_request", update_follow_request.req);
+app.patch("/update_follow_request", update_follow_request.req);
 app.post("/find_public_user_info", find_public_user_info.req);
 app.post("/search_within_followers", search_within_followers.req);
 app.post("/search_within_followings", search_within_followings.req);

@@ -68,9 +68,7 @@ class Follow_List extends Connection_List_Template {
 
         this.setState({
             list: data?.results ?? []
-        })
-
-        console.log(data);
+        });
 
     }
 

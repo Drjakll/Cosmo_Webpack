@@ -19,8 +19,7 @@ class Alert_Buttons extends Component {
 
         this.state = {
             owner_user_account,
-            alerts: {},
-            view_profile_data: ""
+            alerts: {}
         };
     }
 
@@ -48,7 +47,7 @@ class Alert_Buttons extends Component {
         global_connection_socket?.on("refresh_alerts", async ({})=>{
 
             await this.Refresh_Alerts();
-
+            
         });
     }
 
@@ -59,13 +58,19 @@ class Alert_Buttons extends Component {
 
         alerts.Follow_Request = await this.Get_Follow_Requests();
 
+        this.setState({alerts});
+
     }
 
     Get_Follow_Requests = async ()=>{
         
         let {get_follow_request_alert} = this.context.Request_URLs;
 
-        let {id} = this.state.Request_URLs;
+        let {id} = this.state.owner_user_account ?? {};
+
+        if(!id){
+            return [];
+        }
 
 
         let data = await (await fetch(
@@ -104,10 +109,11 @@ class Alert_Buttons extends Component {
 
                             {Alerts.map((value, index)=>{
 
-                                return <div className="alert" key={index}>
+                                return <div className="alert" key={`${value.follower_id || index}`}>
 
                                     <Com value={value} 
                                         owner_user_account={owner_user_account}
+                                        Refresh_Alerts={this.Refresh_Alerts}
                                     />
 
                                 </div>;

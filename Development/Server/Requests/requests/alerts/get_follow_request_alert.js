@@ -7,18 +7,18 @@ let request = function () {
 
         let data = [user_id];
 
-        query = `select
+        let query = `select
                     ua.first_name as first_name,
                     ua.last_name as last_name,
                     ua.id as follower_id,
                     pl.link as profile_picture_link,
                     c.timestamp,
-                    c.followed_id as self_id
+                    c.followed_id as followed_id
                           
                 from 
                     Connections as c
 
-                left join 
+                join 
                     User_Accounts as ua
                 on
                     ua.id = c.follower_id and c.status = 'pending'

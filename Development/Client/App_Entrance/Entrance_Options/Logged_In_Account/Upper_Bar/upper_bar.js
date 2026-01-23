@@ -10,11 +10,10 @@ class Upper_Bar extends Component {
 
         super(props);
 
-        let {account_data, connection_list} = this.props;
+        let {owner_user_account} = this.props;
 
         this.state = {
-            account_data,
-            connection_list
+            owner_user_account
         };
 
     }
@@ -30,25 +29,25 @@ class Upper_Bar extends Component {
 
     render() {
 
-        let {account_data} = this.state;
+        let {owner_user_account} = this.state;
 
         return <div id="upper-bar">
 
             <div id="general-settings-wrapper" className="upper-buttons">
 
-                <General_Settings owner_user_account={account_data} />
+                <General_Settings owner_user_account={owner_user_account} />
 
             </div>
 
             <div id="alert-buttons-wrapper" className="upper-buttons">
 
-                <Alert_Buttons account_data={this.state.account_data} connection_list={this.state.connection_list}/>
+                <Alert_Buttons owner_user_account={owner_user_account} />
 
             </div>
 
             <div id="account-buttons-wrapper" className="upper-buttons">
 
-                <Account_Buttons account_data={this.state.account_data} />
+                <Account_Buttons account_data={owner_user_account} />
 
             </div>
 

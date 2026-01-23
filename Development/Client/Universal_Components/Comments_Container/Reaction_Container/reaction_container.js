@@ -67,7 +67,7 @@ class Reaction_Container extends Component {
 
             obj.existing_users[user_id] = r;
 
-            obj[r.reaction].push(r);
+            obj[r.reaction]?.push(r);
         }
 
         return obj;

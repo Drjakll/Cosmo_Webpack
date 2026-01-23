@@ -40,7 +40,7 @@ class Connection_Entry_Template extends Component {
 
         let {entry, owner_user_account, visitor_user_account} = this.state;
 
-        let {refresh, Remove_User} = this.props;
+        let {Remove_User} = this.props;
 
         let {first_name, last_name} = entry;
 
@@ -53,8 +53,6 @@ class Connection_Entry_Template extends Component {
                     onClick={async ()=>{
 
                         await Remove_User(entry.id);
-
-                        refresh();
                     }}
                 >
                     x

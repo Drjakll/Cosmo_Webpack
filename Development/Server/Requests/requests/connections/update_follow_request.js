@@ -2,9 +2,9 @@ let request = function () {
 
     this.req = async (req, res)=>{
 
-        let { follwer_id, followed_id, status } = req.body;
+        let { follower_id, followed_id, status } = req.body;
 
-        let data = [status, follwer_id, followed_id];
+        let data = [status, follower_id, followed_id];
 
         let query = `
             update

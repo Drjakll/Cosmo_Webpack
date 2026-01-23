@@ -22,17 +22,17 @@ let request = function () {
                         A.followed_id = B.follower_id
 
                     where 
-                        A.follower_id = ?
+                       ( A.follower_id = ?
                     and 
                         B.followed_id = ?
                     and
                         A.status = 'accepted'
                     and
-                        B.status = 'accepted'
+                        B.status = 'accepted' )
                 `, data);
 
                 if(mutual[0].count > 0){
-                    return "accepted";
+                    return "pending";
                 } else {
                     return "rejected";
                 }
@@ -74,7 +74,21 @@ let request = function () {
 
             await this.sql.query(query, data); 
 
-            res.json({message: "Successfully sent follow request!"});
+            switch(status){
+
+                case 'rejected':
+
+                    return res.json({message: "User set privacy to only mutual followers will be allow to request to follow. "});
+
+            
+                case 'pending':
+                
+                    return res.json({message: "Follow request has been sent!"});
+
+                case 'accepted':
+
+                    return res.json({message: "User has accepted your follow request!"});
+            }
 
         } catch (err){
 

@@ -7,17 +7,18 @@ var {host, user, password, databaseName} = config_data.sql_data;
 let Connect = () => {
 
     let SQL = mysql.createPool({
-        host: host,
-        user: user,
-        password: password,
-        database: databaseName,
+        host: process.env.DB_HOST,
+        user: process.env.DB_USER,
+        password: process.env.DB_PASS,
+        database: process.env.DB_NAME,
         timezone: 'Z', // UTC
         waitForConnections: true,
-        connectionLimit: 60,
+        connectionLimit: 20,
         queueLimit: 0,
-        connectTimeout: 10000, // ⬅️ important
+        connectTimeout: 10000, 
         keepAliveInitialDelay: 0,
-        enableKeepAlive: true
+        enableKeepAlive: true,
+        namedPlaceholders: true
     });
     
     return SQL;
@@ -26,11 +27,24 @@ let Connect = () => {
 let sql = Connect();
 
 sql.on('connection', conn => {
+
   console.log('MySQL connected:', conn.threadId);
+
+  conn.on('error', err => {
+
+    if (err.code === 'PROTOCOL_CONNECTION_LOST' || err.code === 'ECONNRESET'){
+      
+      console.warn('MySQL connection dropped, pool will recover');
+
+    } else {
+
+      console.error('MySQL pool error:', err);
+
+    }
+
+  });
 });
 
-sql.on('error', err => {
-  console.error('MySQL pool error:', err);
-});
+
 
 export { sql };

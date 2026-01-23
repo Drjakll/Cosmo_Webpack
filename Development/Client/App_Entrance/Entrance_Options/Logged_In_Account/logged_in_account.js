@@ -196,7 +196,7 @@ class Logged_In_Account extends Component {
 
                 <div id="upper-bar-wrapper">
 
-                    <Upper_Bar account_data={this.state.owner_user_account} connection_list={this.state.connection_list}/>
+                    <Upper_Bar owner_user_account={owner_user_account} />
 
                 </div>
 
@@ -225,7 +225,7 @@ class Logged_In_Account extends Component {
                                     owner_user_account={owner_user_account} 
                                     visitor_user_account={visitor_user_account}
                                     screen_type={info.screen} 
-                                    connection_list={this.state.connection_list}/>
+                                />
 
                             </div>
 

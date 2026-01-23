@@ -35,6 +35,10 @@ class Follow_Editor extends Follow_List {
                 'Content-Type': 'application/json'
             }
         });
+
+        await this.Refresh();
+
+        window.Refresh_Login();
     }
 
     Unfollow_User = async (following_id)=>{
@@ -59,6 +63,10 @@ class Follow_Editor extends Follow_List {
                 'Content-Type': 'application/json'
             }
         });
+
+        await this.Refresh();
+
+        window.Refresh_Login();
     }
     
     render(){

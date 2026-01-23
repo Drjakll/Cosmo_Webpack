@@ -1,10 +1,10 @@
 let request = function () {
 
-    this.req = async (req, res, next)=>{
+    this.req = async (req, res)=>{
 
-        let { id } = req.body;
+        let { user_id } = req.params;
 
-        let data = [id];
+        let data = [user_id];
 
         let query = `
             select 

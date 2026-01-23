@@ -42,7 +42,7 @@ class Connection_List_Template extends Component {
 
     render(){
 
-        let {owner_user_account, visitor_user_account, list, Refresh} = this.state;
+        let {owner_user_account, visitor_user_account, list} = this.state;
 
         let {label} = this.props;
 
@@ -61,7 +61,6 @@ class Connection_List_Template extends Component {
                                 owner_user_account={owner_user_account}
                                 entry={entry}
                                 Remove_User={this.Remove_User}
-                                refresh={Refresh}
                             />
 
                         </div>

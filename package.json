@@ -31,6 +31,7 @@
     "cookie-parser": "^1.4.7",
     "cors": "^2.8.5",
     "css-loader": "^7.1.2",
+    "dotenv": "^17.2.3",
     "express": "^4.21.2",
     "formidable": "^3.5.2",
     "fs": "^0.0.1-security",

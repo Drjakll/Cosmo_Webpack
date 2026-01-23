@@ -50,7 +50,7 @@ class Connections extends Component {
             }
         };
 
-        await fetch(send_follow_request,
+        let data = await(await fetch(send_follow_request,
             {
                 method: "POST",
                 body: JSON.stringify(body),
@@ -58,13 +58,15 @@ class Connections extends Component {
                     'Content-Type': 'application/json'
                 }
             }
-        );  
+        )).json();  
 
         await window.Refresh_Login();
 
         let {Refresh_Profile_Data} = this.props;
 
         Refresh_Profile_Data && Refresh_Profile_Data();
+
+        alert(data?.message);
     }
 
     Show_Follow_Request_Button = ()=>{
@@ -77,7 +79,7 @@ class Connections extends Component {
 
         return  <div id="request-to-follow-button" onClick={this.Send_Follow_Request}>
 
-            {privacy === "private" ? (pending ? "Remove follow request" : "Request to Follow") : "Follow"}
+            {privacy === "private" || privacy === "mutual" ? (pending ? "Remove follow request" : "Request to Follow") : "Follow"}
 
         </div>;
     }
