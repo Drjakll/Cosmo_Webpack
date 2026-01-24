@@ -52,7 +52,7 @@ let {
         profile_data,
         get_user_account_data,
     } = profile;
-
+ 
 let {
     get_general_reactions
 } = universal
@@ -75,7 +75,6 @@ let {
         update_comment,
         delete_comments_from_targets,
         delete_multiple_comments,
-        get_replies,
         delete_general_reactions,
         update_reaction,
         submit_reaction
@@ -220,7 +219,6 @@ app.post("/get_comments", get_comments.req, get_comment_reactions.req, get_comme
 app.post("/update_comment", update_comment.req);
 app.post("/delete_comment", delete_comment.req);
 app.post("/delete_multiple_comments", delete_multiple_comments.req);
-app.post("/get_replies", get_replies.req);
 app.post("/update_reaction", update_reaction.req);
 app.post("/submit_reaction", submit_reaction.req);
 

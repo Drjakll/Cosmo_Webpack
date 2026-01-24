@@ -336,9 +336,10 @@ class Comments_Container extends Component {
 
                 await this.Get_More_Comments(false);
                 await this.Cut_Comments(false);
-                return;
 
             }
+            
+            return;
         }
 
 
