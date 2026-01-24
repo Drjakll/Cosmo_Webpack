@@ -1,6 +1,6 @@
 function request() {
     
-    this.req = async (req, res) => {
+    this.req = async (req, res, next) => {
         
         let {email, password}= req.body;
 
@@ -75,7 +75,13 @@ function request() {
                 return res.json({message: "No account matches with the email and password", acc_info: null, status: 0b10});
             }
 
-            res.json({message: "Successfully retrieved account data!", acc_info: result[0], status: 0b11});
+            req.body.acc_info = result[0];
+            req.body.table_names = ["User_Hobbies", "User_Locations", "User_Schools", "User_Professions"];
+            req.body.at_index = 0;
+            req.body.table_name = "User_Hobbies";
+            req.body.user_id = result[0].id;
+
+            next();
 
         } catch(err){
 

@@ -52,7 +52,7 @@ class Search_Streams extends Component {
             }
 
             //Attaching the editors to the data template
-            this.search_data_templates[i].editor = Search_Parameters[i];
+            this.search_data_templates[i].editor = Search_Parameters[i].component;
 
             search_parameter_options[i] = this.search_data_templates[i];
 

@@ -124,17 +124,28 @@ class Posts extends Component {
         let start = new Date(`${year}-${month}-1`).getTime();
         let end = new Date(`${year}-${month}-${last_day_of_month}`).getTime();
         
+        let body ={
+            user_id: id,
+            start,
+            end,
+            order: 'asc'
+        };
         
-        let res = await fetch(`${get_posts}?user_id=${id}&start=${start}&end=${end}&order=asc`, {
-                method: "GET"
+        let res = await fetch(`${get_posts}`, {
+                method: "POST",
+                body: JSON.stringify(body),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
             });
             
         let resJson = await res.json();
         
         if (resJson) {
 
+            let posts = this.Aggregate_Post_with_Reactions(resJson.results);
 
-            let calendar_posts = this.Organize_Posts_For_Calendar(resJson.posts);
+            let calendar_posts = this.Organize_Posts_For_Calendar(posts);
             
             this.setState({
                 properties_for_calendar_dates: calendar_posts,
@@ -150,6 +161,35 @@ class Posts extends Component {
             this.Set_Current_Post(calendar_posts[calendar_posts.length - 1].date);
         }
         
+    }
+
+    Aggregate_Post_with_Reactions = (data)=>{
+
+        let {reactions, targets} = data;
+
+        let dictionary = {};
+
+        for(let i in targets){
+
+            let {id} = targets[i];
+
+            //Map the pointer of each post to a key
+            dictionary[id] = targets[i];
+
+            dictionary[id].reactions = [];
+        }
+
+        for(let reaction of reactions){
+
+            let {target_id} = reaction;
+
+            //Push in each reaction to each object by mapping to the key
+            dictionary[target_id].reactions.push(reaction);
+
+        }
+
+        return targets;
+
     }
     
     Organize_Posts_For_Calendar = (posts) => {

@@ -37,9 +37,6 @@ class Albums extends Component {
         }
         
         this.setState(this.props);
-        
-
-        //this.Get_Albums();
 
     }
     
@@ -68,6 +65,7 @@ class Albums extends Component {
         this.setState({albums: resJson.results});
     }
     
+    //Get_Photo_Links will be called by Album_Cover
     Get_Photo_Links = async (album_info) => {
         
         const { get_photo_links } = this.context.Request_URLs;
@@ -87,14 +85,47 @@ class Albums extends Component {
             }
         });
         
-        let {results} = (await res.json()) ?? {results: []};
+        let {results} = (await res.json()) ?? {results: {targets: [], reactions: []}};
 
+        results = this.Aggregate_Photos_with_Reactions(results);
+
+        //These need to stay in order for photo_links data to show up in the container
         this.state.selected_album = album_info;
         this.state.photo_links = results;
 
         await this.setState({ photo_links: results, selected_album: album_info});
 
         return results;
+
+    }
+
+    Aggregate_Photos_with_Reactions = (data)=>{
+
+        let {targets, reactions} = data;
+
+        let dictionary = {};
+
+        for(let i in targets){
+
+            let {id} = targets[i];
+
+            //Map each pointer of the photo_links to a key
+            dictionary[id] = targets[i];
+
+            dictionary[id].reactions = [];
+    
+        }
+
+        for(let reaction of reactions){
+
+            let {target_id} = reaction;
+
+            //Add each reaction according mapped to the target_id
+            dictionary[target_id].reactions.push(reaction);
+
+        }
+
+        return targets;
 
     }
 

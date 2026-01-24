@@ -87,14 +87,16 @@ class The_Photos extends Component {
             },
             body: JSON.stringify(body)
         })).json();
+
+        let {targets: photos} = res?.results ?? {targets: []};
         
-        if (res && res.results.length > 0) {
+        if (photos.length > 0) {
 
             this.setState({
-                photos: res.results
+                photos: photos
             });
 
-            this.props.Set_Post_Photos(res.results);
+            this.props.Set_Post_Photos(photos);
         }
     }
 

@@ -16,7 +16,6 @@ let request = function() {
             last_updated: now, 
             reply_to_id: reply_to_id ?? null
         };
-
         
         let query = `insert into Comments set ?`;
         

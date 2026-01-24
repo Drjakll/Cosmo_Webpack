@@ -68,7 +68,16 @@ class Photos_Container extends Component {
                         
                         {photo_links.map((photo_info, index)=>{
 
+                            let {id} = photo_info;
+
                             return <div className="photo-thumbnail-wrapper" key={index}>
+
+                                <div id="photo-select-button" 
+                                    onClick={(e)=>{ this.Insert_Photo_To_Delete(photo_info)}}
+                                    className={photos_to_be_deleted[id] ? "selected-to" : ""}
+                                >
+
+                                </div>
 
                                 <Thumbnail
                                     photo_info={photo_info}

@@ -17,8 +17,7 @@ let Connect = () => {
         queueLimit: 0,
         connectTimeout: 10000, 
         keepAliveInitialDelay: 0,
-        enableKeepAlive: true,
-        namedPlaceholders: true
+        enableKeepAlive: true
     });
     
     return SQL;

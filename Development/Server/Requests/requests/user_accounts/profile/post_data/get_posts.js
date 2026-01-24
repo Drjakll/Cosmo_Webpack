@@ -1,16 +1,15 @@
 let request = function() {
     
-    this.req = async (req, res) => { 
+    this.req = async (req, res, next) => { 
         
-        let {user_id, start, end, id} = req.query;
+        let {user_id, start, end, id} = req.body;
 
         //If id exists, that means just find one post, else search the posts within the date range
         let data = id ? [user_id, id] : [user_id, start, end];
         
         let query = `select 
                         pd.*,
-                        coalesce(c.cc, 0) as comments_count,
-                        coalesce(gr.reactions, json_array()) as reactions
+                        coalesce(c.cc, 0) as comments_count
                     from
                         Post_Data as pd
                     left join 
@@ -27,44 +26,6 @@ let request = function() {
                     on
                         c.target_id = pd.id
 
-                    left join
-                        (select
-                            gr.target_id,
-                            json_arrayagg(
-                                json_object(
-                                    'id', gr.id,
-                                    'user_id', gr.user_id,
-                                    'target_id', gr.target_id,
-                                    'target_type', gr.target_type,
-                                    'emojis', gr.emojis,
-                                    'reaction', gr.reaction,
-                                    'profile_picture_link', pl.link,
-                                    'first_name', ua.first_name,
-                                    'last_name', ua.last_name
-                                )
-                            ) as reactions
-
-                        from
-                            General_Reactions as gr
-
-                        left join
-                            User_Accounts as ua
-                        on
-                            ua.id = gr.user_id
-
-                        left join
-                            Photo_Links as pl
-                        on
-                            pl.target_type = 'profile' and pl.target_id = ua.id and pl.is_a_cover = 1
-
-                        where
-                            gr.target_type = 'post' and gr.reaction is not null
-                        group by
-                            gr.target_id
-                        ) as gr
-                    on
-                        gr.target_id = pd.id
-
                     where pd.user_id = ?
                     ${
                         id ?
@@ -76,12 +37,15 @@ let request = function() {
                         `
                     }
                     order by pd.created_on asc`;
-
         
         try{
             let [results] = await this.sql.query(query, data);
             
-            res.json({message: `Successfully retrieved ${results.length} posts`, posts: results})
+            req.body.targets = results;
+            req.body.target_type = 'post'
+
+            //Next should be getting the general reactions
+            next();
 
         } catch(err){
 

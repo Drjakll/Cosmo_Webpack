@@ -22,7 +22,7 @@ class Single_Post extends Component {
         'October',
         'November',
         'December'
-    ]
+    ];
 
     //Needed for to set innerHTML for post body
     bodyRef = createRef();
@@ -95,11 +95,13 @@ class Single_Post extends Component {
             }
         )).json();
 
-        if(data && data.posts?.length){
+        let {targets: posts, reactions} = data?.results ?? {targets: [], reactions: []};
 
-            await this.setState({post: data.posts[0]});
+        let post = posts.length ? posts[0] : {};
 
-        }
+        post.reactions = reactions
+
+        this.setState({post});
 
     }
     

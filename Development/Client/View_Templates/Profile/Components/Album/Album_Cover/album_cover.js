@@ -63,7 +63,9 @@ class Album_Cover extends Component {
                             }}
 
                             onClick = {async (e)=>{
+                                
                                 await this.props.Get_Photo_Links(album_info);
+
                                 this.props.change_display();
                             }}
                         >

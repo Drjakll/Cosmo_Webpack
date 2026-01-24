@@ -79,11 +79,13 @@ class Enlarged_Single_Photo extends Component {
             }
         )).json();
 
-        if(data && data.results?.length){
+        let {targets, reactions} = data?.results ?? {targets: [], reactions: []};
 
-            await this.setState({photo_info: data.results[0]});
+        let photo_info = targets.length ? targets[0] : {};
 
-        }
+        photo_info.reactions = reactions;
+        
+        await this.setState({photo_info});
 
     }
     

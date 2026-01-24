@@ -12,7 +12,6 @@ let request = function() {
         ];
 
         if(reply_to_ids){
-            console.log(reply_to_ids);
             reply_to_ids = reply_to_ids.split(","); 
             data.push(reply_to_ids);
         }

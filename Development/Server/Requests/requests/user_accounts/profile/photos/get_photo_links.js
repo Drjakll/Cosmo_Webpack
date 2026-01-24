@@ -9,8 +9,7 @@ let request = function() {
         
         let query = `select 
                         pl.*,
-                        coalesce(c.cc, 0) as comments_count,
-                        coalesce(gr.reactions, json_array()) as reactions
+                        coalesce(c.cc, 0) as comments_count
                     from 
                         Photo_Links as pl
                     left join
@@ -26,43 +25,6 @@ let request = function() {
                         ) as c
                     on
                         c.target_id = pl.id
-                    left join
-                        (select
-                            gr.target_id,
-                            json_arrayagg(
-                                json_object(
-                                    'id', gr.id,
-                                    'user_id', gr.user_id,
-                                    'target_id', gr.target_id,
-                                    'target_type', gr.target_type,
-                                    'emojis', gr.emojis,
-                                    'reaction', gr.reaction,
-                                    'profile_picture_link', pl.link,
-                                    'first_name', ua.first_name,
-                                    'last_name', ua.last_name
-                                )
-                            ) as reactions
-
-                        from
-                            General_Reactions as gr
-
-                        left join
-                            User_Accounts as ua
-                        on
-                            ua.id = gr.user_id
-
-                        left join
-                            Photo_Links as pl
-                        on
-                            pl.target_type = 'profile' and pl.target_id = ua.id and pl.is_a_cover = 1
-
-                        where
-                            gr.target_type = 'photo' and gr.reaction is not null
-                        group by
-                            gr.target_id
-                        ) as gr
-                    on
-                        gr.target_id = pl.id
 
                     where 
                         ${id ? "pl.id = ?" : "pl.target_id = ? and pl.target_type = ?"}`;
@@ -71,11 +33,12 @@ let request = function() {
 
             let [results] = await this.sql.query(query, requirements);
 
-            req.body.results = results;
-            req.body.message = "Successfully retrieved photo links";
+            req.body.targets = results;
+            req.body.target_type = "photo";
             
             req.body.photos = results; //In case delete_photo_links is the next middleware
             
+            //Either go to delete_photo_links or get_general_reactions
             next();
 
         } catch(err){

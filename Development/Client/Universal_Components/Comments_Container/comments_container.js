@@ -106,7 +106,7 @@ class Comments_Container extends Component {
 
         let {time_stamp} = comments.length ? comments[0] : {time_stamp: Date.now()};
 
-        this.setState({comments: await this.Get_Comments(time_stamp, this.maxComments, ">=")});
+        this.setState({comments: await this.Get_Comments(time_stamp, this.maxComments, ">=", 'asc', true)});
 
     }
 
@@ -168,9 +168,10 @@ class Comments_Container extends Component {
 
     }
 
-    Get_Comments = async (offset_timestamp, limit = 10, greater_or_less = "<", asc_desc = "asc")=>{
+    //if is_refresh flag is true, then don't do the stop_get_comments mechanic
+    Get_Comments = async (offset_timestamp, limit = 10, greater_or_less = "<", asc_desc = "asc", is_refresh = false)=>{
 
-        if(this.stop_get_comments){
+        if(this.stop_get_comments && !is_refresh){
             return [];
         }
 
@@ -193,6 +194,7 @@ class Comments_Container extends Component {
             offset_timestamp,
             greater_or_less,
             asc_desc,
+            limit,
             reply_to_ids: reply_to_id ? `${reply_to_id}` :  ""
         };
 
@@ -216,7 +218,7 @@ class Comments_Container extends Component {
         let {id} = final_results.length ? final_results[final_results.length - 1] : {id: -1};
 
         //If we aren't getting anymore comments
-        if(this.last_comment_id === id){
+        if(this.last_comment_id === id && !is_refresh){
             
             this.stop_get_comments = true;
 
@@ -231,7 +233,7 @@ class Comments_Container extends Component {
             return [];
         }
 
-        this.last_comment_id = id;
+        this.last_comment_id = !is_refresh ? id : null;
 
         return final_results;
     }

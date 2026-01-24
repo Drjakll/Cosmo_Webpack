@@ -60,7 +60,7 @@ class General_Reactions_Container extends Component {
 
         for(let r of reactions){
 
-            obj[r.reaction].push(r);
+            obj[r.reaction]?.push(r);
 
             obj.users_that_given_reaction[r.user_id] = r;  
 

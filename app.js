@@ -41,7 +41,7 @@ import requests from './Development/Server/Requests/requests.js';
 
 let {user_accounts, messaging, get_web_pages, dummy_middleware, connections, alerts, user_news_updates} = requests;
 
-let {profile, create_account, login} = user_accounts;
+let {profile, create_account, login, universal} = user_accounts;
 
 //User_Accounts -> Profile
 let { 
@@ -50,8 +50,12 @@ let {
         photos,
         post_data,
         profile_data,
-        get_user_account_data
+        get_user_account_data,
     } = profile;
+
+let {
+    get_general_reactions
+} = universal
 
 //User_Accounts -> Profile -> Albums
 let {
@@ -138,22 +142,14 @@ let {dummy_middleware: result_sender} = dummy_middleware;
 //Connections
 let {
         find_connections,
-        find_public_user_info,
         get_all_followers,
         get_all_followings,
-        get_connection_list,
-        get_connection_requests_from,
-        get_connection_requests_to,
-        get_connection_requests,
         get_follow_requests,
-        remove_connection_request,
         remove_follow_request,
         search_within_followers,
         search_within_followings,
-        send_connection_request,
         send_follow_request,
         unfollow_user_account,
-        update_connection_request,
         update_follow_request,
         remove_follower
 
@@ -182,7 +178,11 @@ app.get("/", entry.req);
 
 //User account APIs
 app.post("/create_account", create_account.req);
-app.post("/login", login.req);
+app.post("/login", login.req, 
+                    get_user_table_data.req, 
+                    get_user_table_data.req, 
+                    get_user_table_data.req, 
+                    get_user_table_data.req);
 
 
 //Profile Data
@@ -207,7 +207,7 @@ app.post("/delete_album", delete_album.req,
 
 //Photos
 app.post("/upload_photos", uploads.array('files', 100), upload_photos.req, add_photo_links.req);
-app.post("/get_photo_links", get_photo_links.req, result_sender.req);
+app.post("/get_photo_links", get_photo_links.req, get_general_reactions.req);
 app.post("/delete_photos", delete_photo_links.req, 
                             delete_general_reactions.req, 
                             delete_comments_from_targets.req, 
@@ -227,7 +227,7 @@ app.post("/submit_reaction", submit_reaction.req);
 //Post Data                         
 app.post("/create_post", create_post.req);
 app.post("/update_post", update_post.req);
-app.get("/get_posts", get_posts.req);
+app.post("/get_posts", get_posts.req, get_general_reactions.req);
 app.post("/delete_post", delete_post.req, 
                             delete_general_reactions.req,
                             delete_comments_from_targets.req, //delete_comments_from_targets must go before delete_photo_links
@@ -236,13 +236,7 @@ app.post("/delete_post", delete_post.req,
 app.post("/get_last_time_posted", get_last_time_posted.req);
 
 //Connections
-app.post("/get_connection_list", get_connection_requests.req, get_connection_list.req, result_sender.req);
 app.post("/find_connections", find_connections.req);
-app.post("/send_connection_request", send_connection_request.req, result_sender.req);
-app.post("/get_connection_requests_from", get_connection_requests_from.req, result_sender.req);
-app.post("/get_connection_request_to", get_connection_requests_to.req, result_sender.req);
-app.post("/remove_connection_request", remove_connection_request.req);
-app.post("/update_connection_request", update_connection_request.req);
 app.post("/send_follow_request", send_follow_request.req);
 app.post("/unfollow_user_account", unfollow_user_account.req);
 app.post("/get_all_followers", get_all_followers.req);
@@ -250,7 +244,6 @@ app.post("/get_all_followings", get_all_followings.req);
 app.get("/get_follow_requests/:id", get_follow_requests.req);
 app.post("/remove_follow_request", remove_follow_request.req);
 app.patch("/update_follow_request", update_follow_request.req);
-app.post("/find_public_user_info", find_public_user_info.req);
 app.post("/search_within_followers", search_within_followers.req);
 app.post("/search_within_followings", search_within_followings.req);
 app.post("/remove_follower", remove_follower.req);

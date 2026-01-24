@@ -1,8 +1,9 @@
 let request = function () {
     
-    this.req = async (req, res) => { 
+    this.req = async (req, res, next) => { 
         
-        let { table_name, user_id } = req.body;
+        //at_index, table_names and acc_info only exist if it's retrieving data from login
+        let { table_name, user_id, acc_info, at_index, table_names } = req.body;
 
         if(!table_name || !user_id){
             res.json({message: "Invalid table name or user_id", results: []});
@@ -15,7 +16,32 @@ let request = function () {
 
             let [results] = await this.sql.query(query, [user_id]);
 
-            res.json({message: "Successfully retrieved results", results});
+
+            //If anyone of these doesn't exist, then the request must be coming from need only one table
+            if(at_index === undefined || !table_names || !acc_info){
+
+                res.json({message: "Successfully retrieved results", results});
+
+            } else {
+
+                acc_info[table_name] = results;
+
+                at_index++;
+
+                table_name = table_names[at_index];
+
+                if(at_index === table_names?.length){
+
+                    return res.json({message: "Successfully retrieved account information", acc_info, status: 0b11})
+
+                }
+
+                req.body.at_index = at_index;
+                req.body.table_name = table_name;
+
+                next();
+
+            }
             
         }catch(err){
 
