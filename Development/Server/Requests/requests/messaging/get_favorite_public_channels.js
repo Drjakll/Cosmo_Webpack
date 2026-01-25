@@ -1,31 +1,39 @@
 function request() {
     
-    this.req = (req, res) => {
+    this.req = async (req, res) => {
         
         let {user_id} = req.body;
 
+        let data = [user_id];
+
         let query = `
-            select channel_name, channel_description, user_channel.public_channel_id from 
+            select 
+                pc.channel_name, 
+                pc.channel_description, 
+                users.public_channel_id as public_channel_id
+            from 
                 Public_Channels as pc
             join
-                (select * from 
-                    Users_In_Public_Channels
-                where 
-                    user_id = ${user_id}) as user_channel
+                Users_In_Public_Channels as users
+            on
+                users.public_channel_id = pc.id
+            
             where 
-                user_channel.public_channel_id = pc.id
+                users.user_id = ?
             `;
 
-        this.sql.query(query, (err, results) => {
-            
-            if(err){
-                console.log(query, err.sqlMessage);
-                res.json({message: "Failed to retrieve favorite public channels", channels: null});
-            } else {
-                res.json({message: "Successfully retrieved favorite public channels", channels: results});
-            }
+        try {
 
-        });
+            let [results] = await this.sql.query(query, data);
+
+            res.json({message: "Successfully retrieved favorite public channels", channels: results});
+
+        }catch(err){
+
+            console.log(query, err);
+
+            res.json({message: "Failed to retrieve favorite public channels", channels: null});
+        }
        
     };
 };

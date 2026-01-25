@@ -76,6 +76,8 @@ class Criteria_Box extends Component {
 
         let {available_search_parameters, added_parameters} = this.state;
 
+        let keys = Object.keys(added_parameters);
+
         return <div id="search-parameters-box-wrapper" >
 
             <div id="search-parameters-box-header">
@@ -86,7 +88,7 @@ class Criteria_Box extends Component {
 
             <div id="search-parameters-box-list">
 
-                {Object.keys(added_parameters).map((key_label, index)=>{
+                {!keys.length ?  <div id="no-search-criteria">No search requirements</div>: keys.map((key_label, index)=>{
 
                     let parameter_data = available_search_parameters[key_label];
 

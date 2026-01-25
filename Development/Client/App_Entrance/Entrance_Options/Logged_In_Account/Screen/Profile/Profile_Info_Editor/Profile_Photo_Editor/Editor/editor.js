@@ -52,7 +52,9 @@ class Editor extends Component {
         
         if(data){
             
-            this.setState({profile_pictures: data.results});
+            let {targets: profile_pictures} = data.results;
+
+            this.setState({profile_pictures});
             
         }
     }

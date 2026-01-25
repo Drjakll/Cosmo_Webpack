@@ -14,7 +14,7 @@ class Screen extends Component {
         "Livestream": Explore,
         "News": Empty,
         "Profile": Profile,
-        "Messaging": Empty,
+        "Messaging": Messaging,
         "Search": Search,
         "Empty": Empty
     };
@@ -50,7 +50,7 @@ class Screen extends Component {
         let {owner_user_account, visitor_user_account} = this.state;
         
         return (
-                <div id="screen" tabIndex="0">
+                <div id="screen">
                     
                     <Screen_Type 
                         owner_user_account={owner_user_account} 

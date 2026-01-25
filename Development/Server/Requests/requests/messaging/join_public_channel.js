@@ -1,27 +1,31 @@
 function request() {
     
-    this.req = (req, res) => {
+    this.req = async (req, res) => {
         
         let {public_channel_id, user_id} = req.body;
 
         let now = Date.now();
 
+        let data = [user_id, public_channel_id, now];
+
         let query = `
                 insert into 
                     Users_In_Public_Channels(user_id, public_channel_id, joined_time)
-                values (${user_id}, ${public_channel_id}, ${now});
+                values (?, ?, ?)
                 `;
 
-        this.sql.query(query, (err, result)=>{
+        try {
 
-            if(err){
-                console.log(query, err.sqlMessage);
-                res.json({message: "Error joining the public channel"});
-            } else {
-                res.json({message: "Successfully joined the public channel"});
-            }
+            await this.sql.query(query, data);
 
-        });
+            res.json({message: "Successfully joined the channel"});
+
+        }catch(err){
+
+            console.log(query, err);
+
+            res.json({message: "Error joining channel"});
+        }
     }
 
 };

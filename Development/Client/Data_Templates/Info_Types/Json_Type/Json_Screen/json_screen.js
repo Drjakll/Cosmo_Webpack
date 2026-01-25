@@ -13,7 +13,7 @@ class Json_Popup extends Component {
 
     Editor = null
 
-    Input_Data_Types = null
+    Input_Data_Types = {}
 
     Update_Items = null
 
@@ -48,7 +48,7 @@ class Json_Popup extends Component {
 
         if(this.props !== prevProps){
 
-            this.setState(this.props);
+            //this.setState(this.props);
 
         }
     }
@@ -166,7 +166,7 @@ class Json_Popup extends Component {
 
                                     </div>;
 
-                                })}
+                                })} 
 
                             </div>
 

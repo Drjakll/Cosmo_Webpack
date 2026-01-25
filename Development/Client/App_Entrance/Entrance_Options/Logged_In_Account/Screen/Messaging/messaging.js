@@ -84,7 +84,7 @@ class Messaging extends Component {
         let {owner_user_account} = this.state;
 
         let requirements = {
-            user: {email: owner_user_account.email}
+            user: owner_user_account
         };
 
         let data = await( await fetch(get_conversations,
@@ -542,15 +542,18 @@ class Messaging extends Component {
 
     Initialize_Public_Channel = async (channel_name, channel_description)=>{
 
-        let {initialize_public_channel} = this.context.Request_URLs;
+        let {create_public_channel} = this.context.Request_URLs;
+
+        let {id: user_id} = this.state.owner_user_account;
 
         let body = {
             channel_name,
-            channel_description
+            channel_description,
+            user_id
         };
 
         let result = await(await fetch(
-            initialize_public_channel,
+            create_public_channel,
             {
                 method: "POST",
                 body: JSON.stringify(body),
@@ -565,17 +568,16 @@ class Messaging extends Component {
             return null;
         }
 
-        return result.public_channel_id;
     }
 
     Join_Favorite_Public_Channels = async ()=>{
 
         let {get_favorite_public_channels} = this.context.Request_URLs;
 
-        let {owner_user_account} = this.state;
+        let {id: user_id} = this.state.owner_user_account;
         
         let body = {
-            user_id: owner_user_account.id
+            user_id
         };
 
         let data = await( await fetch(get_favorite_public_channels,
@@ -619,12 +621,12 @@ class Messaging extends Component {
 
     Update_Public_Channels_Database = async (public_channel_id, leave = false)=>{
 
-        let {owner_user_account} = this.state;
+        let {id: user_id} = this.state.owner_user_account;
 
         let {join_public_channel, leave_public_channel} = this.context.Request_URLs;
 
         let body = {
-            user_id: owner_user_account.id,
+            user_id,
             public_channel_id
         };
 

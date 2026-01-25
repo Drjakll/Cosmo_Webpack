@@ -46,7 +46,7 @@ class Stream_Displays extends Component {
                     
                         {active_streams_keys.length === 0 ? 
                         
-                        <div id="no-streams-message">No Active Streams</div> 
+                        <div id="no-streams-message">No active streams</div> 
                         
                         : 
 

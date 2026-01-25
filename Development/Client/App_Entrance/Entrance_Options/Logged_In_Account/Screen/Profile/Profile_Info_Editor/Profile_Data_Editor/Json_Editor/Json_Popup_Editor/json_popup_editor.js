@@ -16,12 +16,6 @@ class Json_Popup_Editor extends Json_Screen {
         Json_Popup_Editor.contextType = Context;
 
     }
-    
-    componentDidUpdate(prevProps, prevState){
-        
-        super.componentDidUpdate(prevProps, prevState);
-        
-    }
 
     Input_Data_Types = {
         "string": ({data_name, label, value})=>{

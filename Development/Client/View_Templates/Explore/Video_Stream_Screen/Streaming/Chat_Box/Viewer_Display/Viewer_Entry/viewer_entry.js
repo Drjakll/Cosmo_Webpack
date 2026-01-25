@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Profile_Thumbnail from '@universal_components/Profile_Thumbnail/profile_thumbnail.js';
 import './viewer_entry.less';
 
 class Viewer_Entry extends Component {
@@ -7,7 +8,7 @@ class Viewer_Entry extends Component {
 
             super(props);
 
-            let {account_data, room_tag, request_live, socket} = this.props;
+            let {account_data, room_tag, request_live, socket, owner_user_account} = this.props;
 
             Viewer_Entry.contextType = window.Context;
 
@@ -15,7 +16,8 @@ class Viewer_Entry extends Component {
                 account_data: account_data,
                 room_tag: room_tag,
                 request_live: request_live,
-                socket: socket
+                socket: socket,
+                owner_user_account
             };
 	}
         
@@ -51,14 +53,10 @@ class Viewer_Entry extends Component {
         }
 
 	render() {
-            
-            let {Request_URLs} = this.context;
-            
-            let {aws_s3_url} = Request_URLs;
                 
-            let {account_data} = this.state;
+            let {account_data, owner_user_account} = this.state;
             
-            let {first_name, last_name, profile_picture_link} = account_data;
+            let {first_name, last_name} = account_data;
                 
             return <div id="viewer-entry">
 
@@ -70,17 +68,9 @@ class Viewer_Entry extends Component {
                     
                 </div>
                 
-                <div id="portrait-wrapper"
-
-                        onClick={(e) => {
-
-                            this.props.set_account_view(account_data);
-
-                        }}>
+                <div id="portrait-wrapper">
                     
-                    <div id="portrait" style={{backgroundImage: `url('${aws_s3_url}${profile_picture_link}')`}}>
-                        
-                    </div>
+                    <Profile_Thumbnail profile={account_data} owner_user_account={owner_user_account} visitor_user_account={owner_user_account} />
                     
                 </div>
 

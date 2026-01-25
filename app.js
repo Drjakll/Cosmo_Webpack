@@ -121,6 +121,7 @@ let {
         get_favorite_public_channels,
         get_messages,
         initialize_public_channel,
+        create_public_channel,
         insert_message,
         join_public_channel,
         leave_private_conversation,
@@ -264,7 +265,7 @@ app.post("/clear_seen_by", clear_seen_by.req);
 app.post("/user_seen_last_msg", user_seen_last_msg.req);
 app.post("/leave_private_conversation", leave_private_conversation.req);
 app.post("/add_conversation_participants", add_conversation_participants.req);
-app.post("/initialize_public_channel", initialize_public_channel.req);
+app.post("/create_public_channel", create_public_channel.req, join_public_channel.req);
 app.post("/join_public_channel", join_public_channel.req);
 app.post("/get_favorite_public_channels", get_favorite_public_channels.req);
 app.post("/leave_public_channel", leave_public_channel.req);

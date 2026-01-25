@@ -53,9 +53,7 @@ class Join_Channel_Options extends Component {
             return;
         }
 
-        let channel_id = await this.props.initialize_public_channel(new_channel_name, "");
-
-        await this.props.update_public_channels_database(channel_id);
+        await this.props.initialize_public_channel(new_channel_name, "");
 
         this.props.join_favorite_public_channels();
 

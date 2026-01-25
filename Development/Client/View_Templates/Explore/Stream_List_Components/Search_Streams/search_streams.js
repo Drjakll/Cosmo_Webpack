@@ -23,6 +23,7 @@ class Search_Streams extends Component {
     componentDidMount(){
 
         this.Init();
+
     }
     
     componentDidUpdate(prevProps, prevState){
@@ -52,7 +53,7 @@ class Search_Streams extends Component {
             }
 
             //Attaching the editors to the data template
-            this.search_data_templates[i].editor = Search_Parameters[i].component;
+            this.search_data_templates[i].editor = Search_Parameters[i];
 
             search_parameter_options[i] = this.search_data_templates[i];
 
@@ -127,7 +128,7 @@ class Search_Streams extends Component {
 
                         <div id="search-parameters">
 
-                            {Object.keys(search_parameter_options).sort().map((key, index)=>{
+                            {Object.keys(search_parameter_options).map((key, index)=>{
 
                                 let {label} = search_parameter_options[key];
 
@@ -145,21 +146,31 @@ class Search_Streams extends Component {
 
                     <div id="stream-search-selected-options-wrapper">
 
-                        {search_param_keys.length === 0 ? <label id="no-requirement-note">No Requirement Selected</label> : search_param_keys.map((key, index)=>{
+                        {search_param_keys.length === 0 ? <label id="no-requirement-note">No search requirements</label> : search_param_keys.map((key, index)=>{
 
                             let {editor, options, label} = search_parameters[key];
 
-                            const Com = editor;
+                            const Com = editor.component;
 
                             return <div className="parameter-wrapper" key={key}>
 
-                                    <Com label={label}
-                                        options={options}
-                                        key_index={key}
-                                        Save_To_Search={this.Add_To_Search_Parameter}
-                                        Remove_Search_Parameter={this.Remove_From_Search_Parameter}
+                                    <div id="the-component">
 
-                                    />
+                                        <Com label={label}
+                                            options={options}
+                                            key_index={key}
+                                            Save_To_Search={this.Add_To_Search_Parameter}
+                                            Remove_Search_Parameter={this.Remove_From_Search_Parameter}
+
+                                        />
+
+                                    </div>
+
+                                    <div id="the-buttons">
+
+                                        <button onClick={(e)=>{this.Remove_Search_Parameter_Option(key); }}>Remove</button>
+
+                                    </div>
 
                                 </div>;
 

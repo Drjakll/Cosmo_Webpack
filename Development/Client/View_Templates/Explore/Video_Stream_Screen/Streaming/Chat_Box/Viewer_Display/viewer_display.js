@@ -13,7 +13,7 @@ class Viewer_Display extends Component {
         Viewer_Display.contextType = window.Context;
 
         this.state = {
-            my_account_data: my_account_data,
+            my_account_data,
             my_room_tag: my_room_tag,
             socket: socket,
             participants: {}
@@ -119,7 +119,7 @@ class Viewer_Display extends Component {
 
     render(){
 
-        let {participants} = this.state;
+        let {participants, my_account_data} = this.state;
 
         return <div id="viewer-display">
 
@@ -137,6 +137,7 @@ class Viewer_Display extends Component {
                             socket={this.state.socket}
                             set_account_view={this.props.set_account_view}
                             request_to_go_live_answered={this.Request_To_Go_Live_Answered}
+                            owner_user_account={my_account_data}
                         />
 
                     </div>;
