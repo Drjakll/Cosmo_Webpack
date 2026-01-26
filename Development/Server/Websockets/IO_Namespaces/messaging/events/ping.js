@@ -1,13 +1,13 @@
 let Wrapper = function(){
     
-    this.event = ({user_account, room_tags}) => {
+    this.event = ({user_account}) => {
 
-        let {email} = user_account;
+        let {id} = user_account;
 
         //If it got disconnected, this will be reconnecting...
-        if(!this.email_socket[email]){
+        if(!this.user_socket[id]){
 
-            this.email_socket[email] = this.socket;
+            this.user_socket[id] = this.socket;
 
             this.socket.emit('reconnect_all_rooms', {});
 

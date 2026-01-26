@@ -9,12 +9,12 @@ class Msg_Entry extends Component {
 
         let { msg_obj, my_account } = props;
 
-        let {email, first_name, last_name, profile_picture_link, text, read_by, created_on} = msg_obj;
+        let {id, first_name, last_name, profile_picture_link, text, read_by, created_on} = msg_obj;
 
         Msg_Entry.contextType = window.Context;
 
         this.state = {
-            email,
+            id,
             first_name,
             last_name,
             profile_picture_link, 
@@ -33,12 +33,10 @@ class Msg_Entry extends Component {
 
         let { msg_obj, my_account, recipient_info } = this.props;
 
-        let {email, first_name, last_name, profile_picture_link, text, read_by, created_on} = msg_obj;
-
-        //let recipient_info = await this.Get_Recipient_Info(this.state.from.email);
+        let {id, first_name, last_name, profile_picture_link, text, read_by, created_on} = msg_obj;
 
         this.setState({
-            email,
+            id,
             first_name,
             last_name,
             profile_picture_link, 
@@ -52,51 +50,9 @@ class Msg_Entry extends Component {
 
     async componentDidMount(){
 
-       // let recipient_info = await this.Get_Recipient_Info(this.state.from.email);
-
-        //this.setState({recipient_info});
 
     }
 
-    Get_Recipient_Info = async (email)=>{
-
-        let recipient_info = this.props.check_participant(email);
-
-        if(recipient_info === undefined){
-
-            recipient_info =  await this.Gather_Participant_Info(email);
-            
-            this.props.store_participant(recipient_info);
-        }
-
-        return recipient_info;
-    }
-
-    Gather_Participant_Info = async (email)=>{
-
-        let {find_connections} = this.context.Request_URLs;
-
-        let requirements = [{
-            value: email,
-            type: "string",
-            key: "email",
-            conjunc: "=",
-            logical: "and"
-        }];
-
-        let data = await(await fetch(
-            find_connections,
-            {
-                method: "POST",
-                body: JSON.stringify({requirements}),
-                headers: {
-                    'Content-Type': "application/json"
-                }
-            }
-        )).json();
-
-        return data?.result[0];
-    }
 
     Local_Timestamp = (utc_time_ms)=>{
 
@@ -118,11 +74,11 @@ class Msg_Entry extends Component {
 
     render(){
 
-        let {email, first_name, last_name, profile_picture_link, text, read_by, created_on, my_account} = this.state;
+        let {id, first_name, last_name, profile_picture_link, text, read_by, created_on, my_account} = this.state;
 
         let {aws_s3_url} = this.context.Request_URLs;
 
-        return <div id="msg-entry"  className={`${email === my_account.email ? "myself" : "others"}`}>
+        return <div id="msg-entry"  className={`${id === my_account.id ? "myself" : "others"}`}>
 
             <div id="the-horizontal-bar"> 
 

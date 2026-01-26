@@ -51,7 +51,7 @@ class Conversation_Thumbnail extends Component {
                 <img src={`${aws_s3_url}${profile_picture_link}`} />
             </div>
 
-            <div id="is-online" className={is_online || this.state.owner_user_account.email === user_info.email ? "online" : "offline"}>
+            <div id="is-online" className={is_online || this.state.owner_user_account.id === user_info.id ? "online" : "offline"}>
 
             </div>
 
@@ -86,11 +86,11 @@ class Conversation_Thumbnail extends Component {
 
                 {users.map((value, key)=>{
                     
-                    let {email} = value;
+                    let {id} = value;
 
-                    let is_online = online_users[email] ? true : false;
+                    let is_online = online_users[id] ? true : false;
 
-                    return this.Create_Small_User_Icon(value, email, is_online);
+                    return this.Create_Small_User_Icon(value, id, is_online);
 
                 })}
 

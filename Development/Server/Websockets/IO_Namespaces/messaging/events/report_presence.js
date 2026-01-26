@@ -1,15 +1,15 @@
 let Wrapper = function(){
 
-    this.event = ({email}) => {
+    this.event = ({user_id}) => {
 
-        if(!email){
+        if(!user_id){
             return;
         }
         
         //Assign the socket to the key email for accessing the socket with the given email
-        this.email_socket[email] = this.socket;
+        this.user_socket[user_id] = this.socket;
 
-        this.email_socket[email].last_pinged = Date.now();
+        this.user_socket[user_id].last_pinged = Date.now();
 
     };
     

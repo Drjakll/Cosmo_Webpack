@@ -38,8 +38,8 @@ class User_Thumbnail extends Component {
         let {create_conversation} = this.context.Request_URLs;
         
         let users = {
-            initiator_email: this.state.owner_user_account.email,
-            oppose_email: this.state.user_profile_data.email
+            initiator_id: this.state.owner_user_account.id,
+            oppose_id: this.state.user_profile_data.id
         };
 
         let data = await( await fetch(
@@ -53,7 +53,7 @@ class User_Thumbnail extends Component {
             }
         )).json();
 
-        this.props.refresh_conversation_list([{email: users.oppose_email}]);
+        this.props.refresh_conversation_list([{id: users.oppose_id}]);
     }
 
     Show_Options = ()=>{
@@ -88,7 +88,7 @@ class User_Thumbnail extends Component {
 
         let {selected, user_profile_data} = this.state;
 
-        let {profile_picture_link, first_name, last_name, email} = user_profile_data;
+        let {profile_picture_link, first_name, last_name, id} = user_profile_data;
 
         let {aws_s3_url} = this.context.Request_URLs;
 
@@ -99,7 +99,7 @@ class User_Thumbnail extends Component {
 
                     <div id="profile-picture-wrapper" 
                         onClick={(e)=>{
-                            this.props.select_user(email);
+                            this.props.select_user(id);
                         }}
                     >
 

@@ -7,8 +7,8 @@ let Existing_Public_Channels = {
 
 let Wrapper = function (){
 
-    //An object that which has the email as key and socket as value
-    this.email_socket = {};
+    //An object that which has the user_id as key and socket as value
+    this.user_socket = {};
 
     this.channel_storage = new this.storage(Existing_Public_Channels);
 
@@ -58,7 +58,7 @@ let Wrapper = function (){
             events[i].root_io = this.root_io;
             events[i].channel_storage = this.channel_storage;
             events[i].existing_public_channels = Existing_Public_Channels;
-            events[i].email_socket = this.email_socket;
+            events[i].user_socket = this.user_socket;
             events[i].public_channel_list = this.public_channel_list;
         }
 
@@ -79,31 +79,31 @@ let Wrapper = function (){
         //Checking every 10 seconds if any socket has not been pinged for over 11 seconds
         setInterval(async ()=>{
 
-            let email_socket = this.email_socket;
+            let user_socket = this.user_socket;
             let public_channel_list = this.public_channel_list;
 
             let time_now = Date.now();
 
-            for(let email in email_socket){
+            for(let user_id in user_socket){
 
-                let soc = email_socket[email];
+                let soc = user_socket[user_id];
 
                 if(time_now - soc.last_pinged > 11000){
 
                     for(let name in soc.private.rooms_joined){
 
-                        this.io.to(name).emit('report_private_offline', {room_tag: name, email});
+                        this.io.to(name).emit('report_private_offline', {room_tag: name, user_id});
 
                     }        
 
-                    delete email_socket[email];
+                    delete user_socket[user_id];
 
                     for(let name in soc.public.rooms_joined){
 
-                        this.io.to(name).emit('report_public_offline', {room_tag: name, email});
+                        this.io.to(name).emit('report_public_offline', {room_tag: name, user_id});
 
                         //Delete the online user from the public record
-                        delete public_channel_list[name]?.online_users[email];
+                        delete public_channel_list[name]?.online_users[user_id];
 
                     }
                 }

@@ -1,23 +1,23 @@
 function request() {
     
-    this.req = (req, res) => {
+    this.req = async (req, res) => {
         
         let {conversation_id} = req.body;
 
-        let query = `update Conversation_Participants set seen_last = false where conversation_id = ${conversation_id}`;
+        let query = `update Users_In_Private_Conversations set seen_last = false where conversation_id = ?`;
         
-        
-        this.sql.query(query, (err, results) => {
-            
-            if(err){
-                console.log(query, err.sqlMessage);
-                res.json({message: "An error occured while updating seen last"});
-            } else {
-                res.json({message: "Successfully updated seen last to false"});
-            }
-            
-            res.end();
-        });
+        try {
+
+            await this.sql.query(query, [conversation_id]);
+
+            res.json({message: "Successfully updated seen last to false"});
+
+        } catch(err){
+
+            console.log(query, err);
+
+            res.json({message: "An error occured while updating seen last"});
+        }
        
     };
 };

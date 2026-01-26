@@ -1,5 +1,6 @@
 import React, {Component, createRef} from 'react';
 import User_Thumbnail from './User_Thumbnail/user_thumbnail.js';
+import Context from '@context/context.js';
 import './users.less';
 
 class Users extends Component {
@@ -10,7 +11,7 @@ class Users extends Component {
 
         let {visible_users} = this.props;
 
-        Users.contextType = window.Context;
+        Users.contextType = Context;
 
         this.state = {
             visible_users,
@@ -81,7 +82,7 @@ class Users extends Component {
 
                             let user = visible_users[key];
 
-                            return user.email === this.state.owner_user_account.email ? "" : 
+                            return user.id === this.state.owner_user_account.id ? "" : 
                             
                             <div key={index} className="user-wrapper">
 
@@ -91,7 +92,7 @@ class Users extends Component {
                                     show_user_profile={this.Show_User_Profile} 
                                     owner_user_account={this.state.owner_user_account}
                                     refresh_conversation_list={this.props.refresh_conversation_list}
-                                    selected={selected_users[user.email] ? true : false}
+                                    selected={selected_users[user.id] ? true : false}
                                     select_user={this.props.select_user}
                                 />
 

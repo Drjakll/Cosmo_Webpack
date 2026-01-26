@@ -1,12 +1,12 @@
 let Wrapper = function(){
 
-    this.event = ({channel_obj, user_email}) => {
+    this.event = ({channel_obj, user_id}) => {
 
         let {channel_name} = channel_obj;
         
         this.socket.leave(channel_name);
         
-        delete this.public_channel_list[channel_name]?.online_users?.[user_email];
+        delete this.public_channel_list[channel_name]?.online_users?.[user_id];
 
         let online_users = this.public_channel_list[channel_name]?.online_users || {};
 

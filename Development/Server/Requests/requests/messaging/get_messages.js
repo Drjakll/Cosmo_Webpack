@@ -1,47 +1,46 @@
 function request() {
     
-    this.req = (req, res) => {
+    this.req = async (req, res) => {
         
-        let {id, created_on} = req.body;
+        let {conversation_id, created_on} = req.body;
 
         let query = `
-            select 
-                ua.first_name,
-                ua.last_name,
-                ua.profile_picture_link,
-                ua.email,
-                t.text,
-                t.conversation_id,
-                t.created_on
+            select
+                pm.*,
+                ua.first_name as first_name,
+                ua.last_name as last_name,
+                pl.link as profile_picture_link
             from
+                Private_Messages as pm
+
+            left join
                 User_Accounts as ua
-            join
-                (
-                    select
-                        mi.*
-                    from
-                        Message_Index as mi
-                    where
-                        mi.conversation_id = ${id} and created_on < ${created_on}
-                        order by mi.created_on desc
-                        limit 10
-                ) as t
             on
-                t.sender_email = ua.email
-            order by t.created_on asc
-        `;
+                ua.id = pm.sender_id
+            
+            left join
+                Photo_Links as pl
+            on
+                pl.target_id = ua.id and pl.target_type = 'profile' and pl.is_a_cover = 1
+            
+            where
+                pm.conversation_id = ? and
+                created_on <= ?
+                limit 100
+        `
         
-        this.sql.query(query, (err, data) => {
-            
-            if(err){
-                console.log(query, err.sqlMessage);
-                res.json({message: "An error occured while retrieving messages", results: []});
-            } else {
-                res.json({message: "Successfully retrieved messages", results: data});
-            }
-            
-            res.end();
-        });
+        try {
+
+            let [results] = await this.sql.query(query, [conversation_id, created_on]);
+
+            res.json({message: `Successfully retrieved ${results.length} messages`, results})
+
+        } catch(err){
+
+            console.log(query, err);
+
+            res.json({message: "Error getting messages", results: []});
+        }
        
     };
 };

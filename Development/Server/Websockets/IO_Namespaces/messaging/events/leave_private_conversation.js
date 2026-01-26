@@ -8,7 +8,7 @@ let Wrapper = function(){
         this.socket.emit('refresh_conversation_list', {});
 
         for(let user of remaining_users){
-            this.email_socket[user.email]?.emit('refresh_conversation_list', {});
+            this.user_socket[user.id]?.emit('refresh_conversation_list', {});
         }
 
     };

@@ -93,7 +93,7 @@ class Conversation_Texts extends Component {
 
         let time_joined = user_status?.time_joined || 0;
 
-        let seen_by = users?.filter((v)=>{ return v.email !== my_account.email && v.seen_last; });
+        let seen_by = users?.filter((v)=>{ return v.id !== my_account.id && v.seen_last; });
 
         return <div id="conversation-texts">
 
@@ -105,7 +105,7 @@ class Conversation_Texts extends Component {
 
                         let time_added = value.created_on;
 
-                        return time_joined < time_added ? <div className="msg-entry-wrapper" key={`${value.email}${value.created_on}`}>
+                        return time_joined < time_added ? <div className="msg-entry-wrapper" key={`${value.id}${value.created_on}`}>
 
                             <Msg_Entry 
                                 msg_obj={value} 
@@ -133,9 +133,9 @@ class Conversation_Texts extends Component {
                 {!seen_by?.length || private_or_public === "public" ? "" : <pre>Noticed by </pre>} 
                 {seen_by?.map((user, ind)=>{
 
-                    let {first_name, last_name, email} = user;
+                    let {first_name, last_name, id} = user;
                     
-                    return <pre className="seen-by-name" key={email}>
+                    return <pre className="seen-by-name" key={id}>
                         
                         {` ${first_name || ""} ${last_name || ""} ${ind === seen_by.length - 1 ? "" : ", "}`}
 

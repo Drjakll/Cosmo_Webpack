@@ -1,27 +1,27 @@
 function request() {
     
-    this.req = (req, res) => {
+    this.req = async (req, res) => {
         
-        let {conversation_id, text, sender_email, timestamp} = req.body;
-
-        text = text.replace(/\\/g, "\\\\").replace(/\'/g, "\\'").replace(/\"/g, '\\"');
+        let {conversation_id, text, sender_id, created_on} = req.body;
 
         let query = `
-            insert into
-                Message_Index(conversation_id, text, sender_email, created_on)
-            values (${conversation_id}, '${text}', '${sender_email}', ${timestamp});`;
+                insert into
+                    Message_Index(conversation_id, text, sender_id, created_on)
+                values (?,?,?,?);
+            `;
 
-        this.sql.query(query, (err, result) => {
-            
-            if(err){
-                console.log(query, err.sqlMessage);
-                res.json({message: "An error occured while inserting the message"});
-            } else {
-                res.json({message: "Successfully inserted the message"});
-            }
+        try {
 
-        });
-       
+            await this.sql.query(query, [conversation_id, text, sender_id, created_on]);
+
+            res.json({message: "Successfully inserted the message"});
+
+        } catch(err){
+
+            console.log(query, err);
+
+            res.json({message: "An error occured while inserting the message"});
+        }
     };
 };
 

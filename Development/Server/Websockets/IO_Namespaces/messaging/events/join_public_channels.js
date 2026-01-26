@@ -24,7 +24,7 @@ let Wrapper = function(){
 
             }
 
-            this.public_channel_list[channel_name].online_users[user_data.email] = user_data;
+            this.public_channel_list[channel_name].online_users[user_data.id] = user_data;
 
             let {online_users} = this.public_channel_list[channel_name];
 

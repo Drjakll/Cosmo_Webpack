@@ -10,16 +10,19 @@ function request() {
                 insert into 
                     Public_Channels(channel_name, channel_description)
                 values (?, ?)
-                on duplicate update 
+                on duplicate key update 
                     id = last_insert_id(id)
                 `;
-
+        
         try {
 
             let [result] = await this.sql.query(query, data);
 
             req.body.public_channel_id = result.insertId;
 
+            console.log(result.insertId);
+
+            //Should call join_public_channel
             next();
 
         }catch(err){

@@ -68,7 +68,7 @@ class Message_Area extends Component {
 
         let {users} = selected_conversation;
 
-        selected_conversation.users = users.filter((value)=>{ return value.email !== owner_user_account.email; });
+        selected_conversation.users = users.filter((value)=>{ return value.id !== owner_user_account.id; });
 
         this.props.leave_private_channel(selected_room_tag, selected_conversation.users);
         
@@ -97,9 +97,9 @@ class Message_Area extends Component {
 
     Add_Users_To_Conversation = async (room_tag)=>{
 
-        let selected_users_email = Object.keys(this.state.selected_users);
+        let selected_users_id = Object.keys(this.state.selected_users);
 
-        if(selected_users_email.length === 0){
+        if(selected_users_id.length === 0){
             alert("Select at least 1 user to add to the conversation");
             return;
         }
@@ -117,15 +117,15 @@ class Message_Area extends Component {
 
         let new_users = [];
 
-        for(let email of selected_users_email){
+        for(let id of selected_users_id){
 
             //Check see if the user email is already added
-            if(users.some((user)=>{ return user.user_email === email})){
+            if(users.some((user)=>{ return user.user_id === id})){
                 alert("user already exists");
                 continue;
             }
 
-            new_users.push({user_email: email, conversation_id: room_tag, time_joined: now, seen_last: false});
+            new_users.push({user_id: id, conversation_id: room_tag, time_joined: now, seen_last: false});
             
         }
 
@@ -168,7 +168,7 @@ class Message_Area extends Component {
         let conversation = conversations[private_or_public][selected_room_tag];
 
         //User status contains the time when this user joined the private conversation, used to prevent from reading old conversation before he was invited
-        let user_status = conversation?.users?.find((u)=>{ return u.email === this.state.owner_user_account.email; });
+        let user_status = conversation?.users?.find((u)=>{ return u.id === this.state.owner_user_account.id; });
 
         return (
                 <div id="message-area">
