@@ -71,14 +71,6 @@ class Logged_In_Account extends Component {
 
         });
 
-        global_connection_socket.on("refresh_connection_list", ({})=>{
-
-            this.Get_Connection_List(this.state.owner_user_account);
-
-        });
-
-        await this.Get_Connection_List(this.state.owner_user_account);
-
         this.RotateScreen(1);
 
     }
@@ -90,8 +82,6 @@ class Logged_In_Account extends Component {
         }
 
         this.setState(this.props);
-
-        await this.Get_Connection_List(this.props.owner_user_account);
 
     }
     
@@ -124,47 +114,6 @@ class Logged_In_Account extends Component {
             block: "center",
             inline: "center"
         });
-
-    }
-    
-    Get_Connection_List = async (owner_user_account)=>{
-
-        if(!owner_user_account){
-            return;
-        }
-
-        let { get_connection_list } = this.context.Request_URLs;
-
-        let body = {
-            request: owner_user_account,
-            status: "accepted"
-        };
-
-        /*
-        let data = await (await fetch(
-            get_connection_list, {
-                method: "POST",
-                body: JSON.stringify(body),
-                headers: {
-                    'Content-Type': "application/json"
-                }
-            }
-        )).json();
-
-        if(data){
-
-            let {results} = data;
-
-            let jsonObj_results = {};
-
-            for(let entry of results){
-                jsonObj_results[entry.email] = entry;
-            }
-
-            await this.setState({owner_user_account, connection_list: jsonObj_results});
-
-        }
-        */
 
     }
 

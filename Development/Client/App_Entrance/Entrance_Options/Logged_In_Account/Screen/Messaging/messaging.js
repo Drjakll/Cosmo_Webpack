@@ -2,6 +2,7 @@ import React, {Component, createRef} from 'react';
 import Message_Area from './Message_Area/message_area.js';
 import Users from './Users/users.js';
 import Channel_Selections from './Channel_Selections/channel_selections.js';
+import Get_Follows from '@universal_components/Account_Functions/get_follows.js';
 import { io } from 'socket.io-client';
 import './messaging.less';
 
@@ -19,11 +20,11 @@ class Messaging extends Component {
 
         this.Msg_Area_Ref = createRef();
 
-        let {owner_user_account, connection_list} = props;
+        let {owner_user_account} = props;
         
         this.state = {
             owner_user_account,
-            connection_list,
+            following: [], 
             visible_users: {},
             conversations: {public: {}, private: {}},
             selected_room_tag: null,
@@ -36,6 +37,12 @@ class Messaging extends Component {
     }
 
     async componentDidMount(){
+
+        let {owner_user_account: account} = this.state;
+
+        await this.setState({
+            following: await Get_Follows(account, false)
+        });
 
         this.Init_IO();
 
@@ -669,7 +676,19 @@ class Messaging extends Component {
         this.setState({current_users_info});
     }
 
+
+
     render(){
+
+        let {following, 
+            owner_user_account, 
+            msg_socket, 
+            conversations, 
+            selected_room_tag, 
+            public_channels_search_results, 
+            selected_users, 
+            private_or_public, 
+            current_users_info} = this.state;
 
         return (
             <div id="messaging">
@@ -679,18 +698,18 @@ class Messaging extends Component {
                     <div id="channel-selections-wrapper">
 
                         <Channel_Selections 
-                            connection_list={this.state.connection_list} 
-                            owner_user_account={this.state.owner_user_account}
+                            following_list={following} 
+                            owner_user_account={owner_user_account}
                             switch_channel={this.Switch_Channel}
                             join_public_channels={this.Join_Public_Channels}
                             initialize_public_channel={this.Initialize_Public_Channel}
                             update_public_channels_database={this.Update_Public_Channels_Database}
                             join_favorite_public_channels={this.Join_Favorite_Public_Channels}
-                            public_channels={this.state.conversations.public}
-                            selected_channel={this.state.conversations.public[this.state.selected_room_tag]?.channel_name || "connections"}
+                            public_channels={conversations.public}
+                            selected_channel={conversations.public[selected_room_tag]?.channel_name || "connections"}
                             set_msg_area_user_info={this.Set_Current_Users_Info}
-                            msg_socket={this.state.msg_socket}
-                            public_channels_search_results={this.state.public_channels_search_results}
+                            msg_socket={msg_socket}
+                            public_channels_search_results={public_channels_search_results}
                         />
 
                     </div>
@@ -714,21 +733,21 @@ class Messaging extends Component {
                     <div id="message-area-wrapper">
 
                         <Message_Area 
-                            connection_list={this.state.connection_list}
-                            owner_user_account={this.state.owner_user_account}
-                            conversations={this.state.conversations}
-                            selected_room_tag={this.state.selected_room_tag}
+                            following_list={following} 
+                            owner_user_account={owner_user_account}
+                            conversations={conversations}
+                            selected_room_tag={selected_room_tag}
                             switch_conversation={this.Switch_Conversation}
                             send_message={this.Send_Message}
-                            selected_users={this.state.selected_users}
+                            selected_users={selected_users}
                             refresh_conversation_list={this.Refresh_Conversation_List}
                             clear_selected_users={this.Clear_Selected_Users}
                             leave_private_channel={this.Leave_Private_Channel}
                             clear_seen_by={this.Clear_Seen_By}
                             seen_by={this.Seen_By}
                             add_msg_to_conversation={this.Add_Msg_To_Conversation}
-                            private_or_public={this.state.private_or_public}
-                            current_users_info={this.state.current_users_info}
+                            private_or_public={private_or_public}
+                            current_users_info={current_users_info}
                             leave_public_channel={this.Leave_Public_Channel}
                             get_private_conversation_messages={this.Get_Private_Conversation_Messages}
                         />

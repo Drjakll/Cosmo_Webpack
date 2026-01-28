@@ -1,6 +1,7 @@
 import React, {createRef} from 'react';
 import Connection_List_Template from '../Connection_List_Template/connection_list_template.js';
 import Search_Criteria_Box from '@universal_components/Search_Criteria_Box/search_criteria_box.js';
+import Get_Follows from '@universal_components/Account_Functions/get_follows.js';
 import Context from '@context/context.js';
 import './follow_list.less';
 
@@ -51,46 +52,24 @@ class Follow_List extends Connection_List_Template {
 
     Get_All_Followers = async ()=>{
 
-        let {id} = this.state.owner_user_account;
+        let {owner_user_account} = this.state;
 
-        let {get_all_followers} = this.context.Request_URLs;
-
-        let data = await(await fetch(
-            get_all_followers,
-            {
-                method: "POST",
-                body: JSON.stringify({id}),
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            }
-        )).json();
+        let list = await Get_Follows(owner_user_account, true);
 
         this.setState({
-            list: data?.results ?? []
+            list
         });
 
     }
 
     Get_All_Following = async ()=>{
 
-        let {id} = this.state.owner_user_account;
+        let {owner_user_account} = this.state;
 
-        let {get_all_followings} = this.context.Request_URLs;
-
-        let data = await(await fetch(
-            get_all_followings,
-            {
-                method: "POST",
-                body: JSON.stringify({id}),
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            }
-        )).json();
+        let list = await Get_Follows(owner_user_account, false);
 
         this.setState({
-            list: data?.results ?? []
+            list
         });
 
     }

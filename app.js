@@ -50,7 +50,8 @@ let {
         photos,
         post_data,
         profile_data,
-        get_user_account_data,
+        get_user_account_data
+        
     } = profile;
  
 let {

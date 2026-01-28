@@ -92,6 +92,8 @@ class User_Thumbnail extends Component {
 
         let {aws_s3_url} = this.context.Request_URLs;
 
+        let url = profile_picture_link ? `${aws_s3_url}${profile_picture_link}` : './static/pp_placeholder.png';
+
         return (
                 <div id="user-thumbnail">
 
@@ -103,7 +105,7 @@ class User_Thumbnail extends Component {
                         }}
                     >
 
-                        <img src={`${aws_s3_url}${profile_picture_link}`} 
+                        <img src={url} 
                             alt="Profile-Picture" 
                             className={`${selected ? "selected-user" : ""}`}
                             draggable={false}

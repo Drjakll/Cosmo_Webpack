@@ -7,10 +7,10 @@ class Connection_Channel extends Component {
         
         super(props);
 
-        let {connection_list, owner_user_account, channel_selected} = this.props;
+        let {following_list, owner_user_account, channel_selected} = this.props;
 
         this.state = {
-            connection_list,
+            following_list,
             owner_user_account,
             channel_selected
         };  
@@ -28,10 +28,10 @@ class Connection_Channel extends Component {
 
         this.setState(this.props);
 
-        let {channel_selected, connection_list} = this.props;
+        let {following_list} = this.props;
 
-        if(JSON.stringify(connection_list) !== JSON.stringify(prevProps.connection_list)){
-            this.props.switch_channel(connection_list, "connections", "public");
+        if(following_list !== prevProps.following_list){
+            this.props.switch_channel(following_list, "connections", "public");
         }
     }
 
@@ -39,7 +39,7 @@ class Connection_Channel extends Component {
 
         let {switch_channel} = this.props;
 
-        switch_channel(this.state.connection_list, "connections", "public");
+        switch_channel(this.state.following_list, "connections", "public");
     }
 
     render(){

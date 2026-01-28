@@ -10,13 +10,13 @@ class Channel_Selections extends Component {
         
         super(props);
 
-        let {connection_list, owner_user_account, public_channels, selected_channel, msg_socket, public_channels_search_results} = this.props;
+        let {following_list, owner_user_account, public_channels, selected_channel, msg_socket, public_channels_search_results} = this.props;
 
         this.state = {
-            connection_list,
+            following_list,
             owner_user_account,
             public_channels, //example: {'Channel 1': {channel_name: 'Channel 1'}}
-            show_join_channel: false, // A trigger for opening options for creating/joining a channel
+            show_join_channel: false, // A trigger for opening a window options for creating/joining a channel
             selected_channel,
             msg_socket,
             public_channels_search_results 
@@ -86,7 +86,7 @@ class Channel_Selections extends Component {
                         <div className="channel-button-wrapper">
             
                             <Connection_Channel
-                                connection_list={this.state.connection_list}
+                                following_list={this.state.following_list}
                                 owner_user_account={this.state.owner_user_account}
                                 switch_channel={this.props.switch_channel}
                                 channel_selected={this.state.selected_channel}
