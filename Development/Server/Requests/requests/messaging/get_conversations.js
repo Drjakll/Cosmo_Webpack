@@ -27,7 +27,7 @@ function request() {
                         where 
                             user_id = ?
                         ) as target_user
-
+                    
                     join
                         User_Accounts as ua
                     on

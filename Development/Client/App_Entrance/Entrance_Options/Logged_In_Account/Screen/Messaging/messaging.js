@@ -126,7 +126,7 @@ class Messaging extends Component {
 
                 private_conversations[id].online_users = {};
 
-                private_conversations[id].messages = await this.Get_Private_Conversation_Messages(id, Date.now());
+                //private_conversations[id].messages = await this.Get_Private_Conversation_Messages(id, Date.now());
 
                 this.All_Room_Tags.private[id] = id;
                 
@@ -138,7 +138,7 @@ class Messaging extends Component {
 
             this.setState({conversations});
 
-            this.msg_socket?.emit('join_private_channels', {private_conversations: private_conversations, user_id: owner_user_account.id});
+            this.msg_socket?.emit('join_private_channels', {private_conversations, user_id: owner_user_account.id});
         }
     }
 

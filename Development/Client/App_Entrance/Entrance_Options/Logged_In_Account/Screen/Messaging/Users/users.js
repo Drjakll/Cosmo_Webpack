@@ -1,6 +1,7 @@
 import React, {Component, createRef} from 'react';
 import User_Thumbnail from './User_Thumbnail/user_thumbnail.js';
 import Context from '@context/context.js';
+import Portal from '@popup_template/portal.js';
 import './users.less';
 
 class Users extends Component {
@@ -30,17 +31,35 @@ class Users extends Component {
         this.setState(this.props);
     }
 
-    Show_User_Profile = (user_profile_data)=>{
+    Show_User_Profile = async (user_profile_data)=>{
+
+        if(!user_profile_data){
+            return;
+        }
+
+        let {id} = user_profile_data;
+
+        let { get_user_account_data} = this.context.Request_URLs;
+
+        let data = await(await fetch(`${get_user_account_data}/${id}`,
+            {
+                method: "GET"
+            }
+        )).json();
+
+        if(!data){
+            return;
+        }
 
         this.setState({
-            selected_user_profile: user_profile_data
+            selected_user_profile: data.result
         });
 
     }
 
     render(){
 
-        let {visible_users, selected_user_profile, selected_users} = this.state;
+        let {visible_users, selected_user_profile, selected_users, owner_user_account} = this.state;
 
         let {Profile_Popup, Drag_Scroll} = this.context;
         
@@ -52,9 +71,14 @@ class Users extends Component {
                 <div id="users">
 
                     {selected_user_profile ? 
-                    <Profile_Popup visitor_user_account={this.state.owner_user_account} 
-                        owner_user_account={selected_user_profile} 
-                        Exit={(e)=>{ this.Show_User_Profile(null); }}/> 
+                    <Portal>
+
+                        <Profile_Popup visitor_user_account={owner_user_account} 
+                            owner_user_account={owner_user_account} 
+                            this_profile_data={selected_user_profile}
+                            Exit={(e)=>{ this.setState({selected_user_profile: null}); }}/> 
+
+                    </Portal>
                     : ""}
 
                     <div id="users-list"

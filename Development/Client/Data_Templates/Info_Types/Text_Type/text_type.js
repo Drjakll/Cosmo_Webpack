@@ -33,7 +33,7 @@ class Text_Type extends Component {
             return;
         }
         
-        //this.setState(this.props);
+        this.setState(this.props);
     }
     
     render() {
@@ -46,9 +46,9 @@ class Text_Type extends Component {
                 <div id="value-wrapper">
 
                     <input id="value"
-                        defaultValue={value} 
+                        value={value} 
                         placeholder={label}
-                        onBlur={(e)=>{this.setState({ value: e.target.value }); this.Update_Value && this.Update_Value({column_name, value: e.target.value}); }}
+                        onChange={(e)=>{this.setState({ value: e.target.value }); this.Update_Value && this.Update_Value({column_name, value: e.target.value}); }}
                         disabled={ !this.Update_Value ? true : false} />
 
                 </div>

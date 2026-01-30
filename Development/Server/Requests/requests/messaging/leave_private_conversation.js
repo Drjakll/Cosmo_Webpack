@@ -1,23 +1,25 @@
 function request() {
 
     
-    this.req = (req, res) => {
+    this.req = async (req, res) => {
         
-        let {conversation_id, user_email} = req.body;
+        let {conversation_id, user_id} = req.body;
         
-        let query = `delete from Conversation_Participants where conversation_id = ${conversation_id} and user_email = '${user_email}'`;
+        let query = `delete from Uers_In_Private_Conversations where conversation_id = ? and user_id = ?'`;
         
-        this.sql.query(query, (err, results) => {
-        
-            if(err){
-                console.log(query, err.sqlMessage);
-                res.json({message: `Error leaving conversation`});
-            } else {
-                res.json({message: `Successfully left conversation`});
-            }
+        try {
 
-        });
-       
+            await this.sql.query(query, [conversation_id, user_id]);
+
+            res.json({message: "You have left the conversation!"});
+
+        } catch(err){
+
+            console.log(query, err);
+
+            res.json({message: "Error leaving the conversation"});
+            
+        }
     };
 };
 

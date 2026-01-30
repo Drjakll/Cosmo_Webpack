@@ -2,7 +2,7 @@ function request() {
     
     this.req = async (req, res) => {
         
-        let {conversation_id, created_on} = req.body;
+        let {conversation_id, off_time_set} = req.body;
 
         let query = `
             select
@@ -26,12 +26,13 @@ function request() {
             where
                 pm.conversation_id = ? and
                 created_on <= ?
-                limit 100
-        `
+                order by asc
+                limit 25
+            `;
         
         try {
 
-            let [results] = await this.sql.query(query, [conversation_id, created_on]);
+            let [results] = await this.sql.query(query, [conversation_id, off_time_set]);
 
             res.json({message: `Successfully retrieved ${results.length} messages`, results})
 

@@ -9,10 +9,9 @@ class Conversation_Thumbnail extends Component {
 
         Conversation_Thumbnail.contextType = window.Context;
 
-        let {connection_list, owner_user_account, conversation_info, selected_room_tag, user_status} = props;
+        let { owner_user_account, conversation_info, selected_room_tag, user_status} = props;
 
         this.state = {
-            connection_list,
             owner_user_account,
             conversation_info,
             selected_room_tag,
@@ -45,10 +44,12 @@ class Conversation_Thumbnail extends Component {
 
         let {profile_picture_link, first_name, last_name, seen_last} = user_info;
 
+        let profile_photo = profile_picture_link ? `${aws_s3_url}${profile_picture_link}` : './static/pp_placeholder.png';
+
         return <div className="user-info-small-icon" key={index}>
 
             <div id="user-small-profile-picture">
-                <img src={`${aws_s3_url}${profile_picture_link}`} />
+                <img src={profile_photo} />
             </div>
 
             <div id="is-online" className={is_online || this.state.owner_user_account.id === user_info.id ? "online" : "offline"}>
@@ -86,7 +87,7 @@ class Conversation_Thumbnail extends Component {
 
                 {users.map((value, key)=>{
                     
-                    let {id} = value;
+                    let {user_id: id} = value;
 
                     let is_online = online_users[id] ? true : false;
 

@@ -121,7 +121,6 @@ let {
         get_conversations,
         get_favorite_public_channels,
         get_messages,
-        initialize_public_channel,
         create_public_channel,
         insert_message,
         join_public_channel,
@@ -257,7 +256,7 @@ app.post("/get_user_news_updates", get_user_news_updates.req);
 
 
 //Messaging
-app.post("/create_conversation", create_conversation.req);
+app.post("/create_conversation", create_conversation.req, add_conversation_participants.req);
 app.post("/delete_conversation", delete_conversation.req);
 app.post("/get_conversations", get_conversations.req);
 app.post("/get_messages", get_messages.req);

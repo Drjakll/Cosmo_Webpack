@@ -1,41 +1,32 @@
 function request() {
 
-    this.req = async (req,res)=>{
+    this.req = async (req,res, next)=>{
 
-        let {initiator_email, oppose_email} = req.body;
+        let {from_id, oppose_id} = req.body;
 
-        let query = `insert into Conversations(chat_type) values('group')`
+        let now = Date.now(); 
 
-        let now = Date.now();
+        let query = `insert into Private_Conversations(chat_type, created_on) values(?,?)`;
 
-        await this.sql.query(query, async (err, result)=>{
+        try {
+            
+            let [result] = await this.sql.query(query, ['group', now]);
 
-            if(err){
-                console.log(query, err.sqlMessage);
-                res.json({message: "Error creating a conversation", room_tag: null});
-                res.end();
-                return;
-            }
+            let {insertId} = result;
 
-            let values = [
-                [initiator_email, result.insertId, now],
-                [oppose_email, result.insertId, now]
-            ];
+            req.body.conversation_id = insertId
 
-            let q = `insert into Conversation_Participants(user_email, conversation_id, time_joined) values ?`;
+            req.body.new_users = [from_id, oppose_id];
 
-            await this.sql.query(q, [values], (err_i, results)=>{
+            //Should call add_conversation_participants.js
+            next();
 
-                if(err_i){
-                    console.log(q, err_i.sqlMessage);
-                }
+        } catch(err){
 
-            });
+            console.log(query, err);
 
-            res.json({message: "Successfully created the conversation", room_tag: result.insertId});
-
-
-        });
+            res.json({message: "Error creating the conversation", success: false});
+        }
     }
 };
 

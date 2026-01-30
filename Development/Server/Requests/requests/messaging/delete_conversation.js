@@ -1,23 +1,23 @@
 function request() {
 
-    this.req = (req, res)=>{
+    this.req = async (req, res)=>{
 
         let {conversation_id} = req.body;
 
-        let query = `delete from Conversations where id = ${conversation_id}`
+        let query = `delete from Private_Conversations where id = ?`
 
-        this.sql.query(query, (err, result)=>{
+        try {
+            
+            await this.sql.query(query, [conversation_id]);
 
-            if(err){
-                console.log(query, err.sqlMessage);
-                res.json({message: "Error deleting conversation"});
-            } else {
-                res.json({message: "Successfully deleted the conversation"});
-            }
+            res.json({message: "Successfully deleted the conversation"});
 
-            res.end();
+        }catch(err){
 
-        });
+            console.log(query, err);
+
+            res.json({message: "Error deleting the conversation"});
+        }
     };
 };
 

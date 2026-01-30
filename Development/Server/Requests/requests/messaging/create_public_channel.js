@@ -12,15 +12,13 @@ function request() {
                 values (?, ?)
                 on duplicate key update 
                     id = last_insert_id(id)
-                `;
+                `;  
         
         try {
 
             let [result] = await this.sql.query(query, data);
 
             req.body.public_channel_id = result.insertId;
-
-            console.log(result.insertId);
 
             //Should call join_public_channel
             next();

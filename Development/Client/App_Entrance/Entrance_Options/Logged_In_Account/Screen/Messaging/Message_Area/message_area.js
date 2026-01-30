@@ -12,14 +12,16 @@ class Message_Area extends Component {
 
         Message_Area.contextType = window.Context;
 
+        let {conversations, private_or_public, owner_user_account, following_list, selected_room_tag, selected_users, current_users_info} = props;
+
         this.state = {
-            conversations: this.props.conversations,
-            private_or_public: this.props.private_or_public,
-            owner_user_account: this.props.owner_user_account,
-            connection_list: this.props.connection_list,
-            selected_room_tag: this.props.selected_room_tag,
-            selected_users: this.props.selected_users, //Selected users for any purpose, (example: add selected users to a conversation)
-            current_users_info: this.props.current_users_info //Current user information that are currently in the chat room
+            conversations,
+            private_or_public,
+            owner_user_account,
+            following_list,
+            selected_room_tag,
+            selected_users, //Selected users for any purpose, (example: add selected users to a conversation)
+            current_users_info //Current user information that are currently in the chat room
         };  
     }
 
@@ -129,14 +131,14 @@ class Message_Area extends Component {
             
         }
 
-        await this.Update_Conversation_Participants(new_users);
+        await this.Update_Conversation_Participants(selected_users_id, room_tag);
 
         this.props.clear_selected_users();
 
         this.props.refresh_conversation_list(new_users.concat(users));
     }
 
-    Update_Conversation_Participants = async (new_users)=>{
+    Update_Conversation_Participants = async (new_users, conversation_id)=>{
 
         if(new_users.length === 0){
             return;
@@ -148,7 +150,7 @@ class Message_Area extends Component {
             add_conversation_participants,
             {
                 method: "POST",
-                body: JSON.stringify({new_users}),
+                body: JSON.stringify({new_users, conversation_id}),
                 headers: {
                     'Content-Type': 'application/json'
                 }
@@ -241,11 +243,10 @@ class Message_Area extends Component {
                                     let value = this.state.conversations.private[key];
 
                                     return <div className={`conversation-thumbnail-wrapper`}
-                                                key={value.room_tag}>
+                                                key={key}>
 
                                         <Conversation_Thumbnail 
                                             conversation_info={value} 
-                                            connection_list={this.state.connection_list}
                                             owner_user_account={this.state.owner_user_account}
                                             switch_conversation={this.props.switch_conversation}
                                             selected_room_tag={this.state.selected_room_tag}

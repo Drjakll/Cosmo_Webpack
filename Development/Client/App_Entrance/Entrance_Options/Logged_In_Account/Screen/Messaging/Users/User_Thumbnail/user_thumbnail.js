@@ -38,7 +38,7 @@ class User_Thumbnail extends Component {
         let {create_conversation} = this.context.Request_URLs;
         
         let users = {
-            initiator_id: this.state.owner_user_account.id,
+            from_id: this.state.owner_user_account.id,
             oppose_id: this.state.user_profile_data.id
         };
 
@@ -53,7 +53,7 @@ class User_Thumbnail extends Component {
             }
         )).json();
 
-        this.props.refresh_conversation_list([{id: users.oppose_id}]);
+        this.props.refresh_conversation_list([{user_id: users.from_id}, {user_id: users.oppose_id}]);
     }
 
     Show_Options = ()=>{
@@ -83,6 +83,8 @@ class User_Thumbnail extends Component {
         </div>
 
     }
+
+    
 
     render(){
 
