@@ -34,8 +34,17 @@ class Conversation_Texts extends Component {
 
         await this.setState(this.props);
 
+        let {conversation: this_conversation} = this.props;
+        let {conversation: last_conversation} = prevProps;
+
+        if(this_conversation?.id !== last_conversation?.id && !this_conversation?.messages.length){
+
+            await this.Scroll_To_View_More_Messages(null, true);
+
+        }
+
         //If the number of current text messages is different from previous number of text messages, then scroll down
-        let current_length = this.props.conversation?.messages?.length;
+        let current_length = this.state.conversation?.messages?.length;
 
         if(this.prev_msg_length !== current_length){
 
@@ -60,19 +69,23 @@ class Conversation_Texts extends Component {
 
     }
 
-    Scroll_To_View_More_Messages = async (e)=>{
+    Scroll_To_View_More_Messages = async (e, ignore_scroll = false)=>{
         
-        if(e.target.scrollTop > 300 || this.no_more_text_msg === true){
+        if(!ignore_scroll && (e.target.scrollTop > 300 || this.no_more_text_msg === true)){
             return;
         }
 
         let {conversation} = this.state;
 
-        let {messages} = conversation;
+        if(!conversation){
+            return;
+        }
 
-        let {conversation_id, created_on} = messages[0];
+        let {messages, self_time_joined} = conversation;
 
-        let more_msges = await this.props.get_private_conversation_messages(conversation_id, created_on);
+        let {conversation_id, created_on} = messages[0] ?? {conversation_id: conversation.id, created_on: Date.now()};
+
+        let more_msges = await this.props.get_private_conversation_messages(conversation_id, created_on, self_time_joined);
 
         if(more_msges.length === 0){
             this.no_more_text_msg = true;
@@ -99,7 +112,7 @@ class Conversation_Texts extends Component {
 
             {this.props.has_selected_conversation() ? 
             
-                <div id="conversation-msges" ref={this.containerRef} onScroll={this.Scroll_To_View_More_Messages}>
+                <div id="conversation-msges" ref={this.containerRef} onScroll={(e)=>{ this.Scroll_To_View_More_Messages(e); }}>
 
                     {messages?.map((value, index)=>{
 

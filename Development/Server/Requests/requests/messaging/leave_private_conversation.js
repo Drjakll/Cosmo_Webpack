@@ -5,7 +5,7 @@ function request() {
         
         let {conversation_id, user_id} = req.body;
         
-        let query = `delete from Uers_In_Private_Conversations where conversation_id = ? and user_id = ?'`;
+        let query = `delete from Users_In_Private_Conversations where conversation_id = ? and user_id = ?`;
         
         try {
 

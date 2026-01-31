@@ -115,8 +115,6 @@ class Message_Area extends Component {
 
         let {users} = conversation;
 
-        let now = Date.now();
-
         let new_users = [];
 
         for(let id of selected_users_id){
@@ -127,7 +125,7 @@ class Message_Area extends Component {
                 continue;
             }
 
-            new_users.push({user_id: id, conversation_id: room_tag, time_joined: now, seen_last: false});
+            new_users.push({user_id: id, conversation_id: room_tag, seen_last: false});
             
         }
 

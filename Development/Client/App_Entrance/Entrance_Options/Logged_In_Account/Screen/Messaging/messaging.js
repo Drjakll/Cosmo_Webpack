@@ -118,6 +118,10 @@ class Messaging extends Component {
 
                 private_conversations[id] = private_conversations[id] || {};
 
+                if(user.user_id === owner_user_account.id){
+                    private_conversations[id].self_time_joined = user.time_joined;
+                }
+
                 private_conversations[id].id = id;
 
                 private_conversations[id].users = private_conversations[id].users || [];
@@ -126,7 +130,7 @@ class Messaging extends Component {
 
                 private_conversations[id].online_users = {};
 
-                //private_conversations[id].messages = await this.Get_Private_Conversation_Messages(id, Date.now());
+                private_conversations[id].messages = [];
 
                 this.All_Room_Tags.private[id] = id;
                 
@@ -142,7 +146,7 @@ class Messaging extends Component {
         }
     }
 
-    Get_Private_Conversation_Messages = async (conversation_id, created_on)=>{
+    Get_Private_Conversation_Messages = async (conversation_id, created_on, user_time_joined)=>{
 
         if(!conversation_id){
             return [];
@@ -152,7 +156,8 @@ class Messaging extends Component {
 
         let body = {
             conversation_id, 
-            created_on
+            off_time_set: created_on,
+            user_time_joined
         };
 
         let data = await( await fetch (
@@ -375,7 +380,7 @@ class Messaging extends Component {
 
         let {id, first_name, last_name, profile_picture_link} = owner_user_account;
 
-        let msg_obj = {id, first_name, last_name, profile_picture_link, text: msg, created_on};
+        let msg_obj = {sender_id: id, first_name, last_name, profile_picture_link, text: msg, created_on};
 
         this.msg_socket?.emit('send_msg_to_channel', {room_tag: selected_room_tag, msg_obj, private_or_public});
     }

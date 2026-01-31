@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import Screen from './Screen/screen.js';
 import Upper_Bar from './Upper_Bar/upper_bar.js';
+import Context from '@context/context.js';
 import { io } from 'socket.io-client';
 import './logged_in_account.less';
 
@@ -8,8 +9,8 @@ import './logged_in_account.less';
 class Logged_In_Account extends Component {
     
     Button_Data = [
-        "Livestream",
         "Profile",
+        "Livestream",
         "News",
         "Messaging",
         "Search"
@@ -17,8 +18,8 @@ class Logged_In_Account extends Component {
 
     //Fixed index of screens
     Columns = [
-        { screen: "Livestream", is_main: false, id: "Livestream" },
         { screen: "Profile", is_main: false, id: "Profile" },
+        { screen: "Livestream", is_main: false, id: "Livestream" },
         { screen: "News", is_main: false, id: "News" },
         { screen: "Messaging", is_main: false, id: "Messaging"},
         { screen: "Search", is_main: false, id: "Search"}
@@ -30,14 +31,14 @@ class Logged_In_Account extends Component {
 
         window.global_connection_socket = io("/connections");
 
-        Logged_In_Account.contextType = window.Context;
+        Logged_In_Account.contextType = Context;
 
         let {owner_user_account, visitor_user_account} = props;
 
         this.state = {
             Columns: [ //This Columns will dynamically rearrange by the user
-                { screen: "Livestream", is_main: false, id: "Livestream" },
                 { screen: "Profile", is_main: true, id: "Profile" },
+                { screen: "Livestream", is_main: false, id: "Livestream" },
                 { screen: "News", is_main: false, id: "News" },
                 { screen: "Messaging", is_main: false, id: "Messaging" },
                 { screen: "Search", is_main: false, id: "Search"}
@@ -71,7 +72,7 @@ class Logged_In_Account extends Component {
 
         });
 
-        this.RotateScreen(1);
+        this.RotateScreen(0);
 
     }
     

@@ -9,17 +9,16 @@ class Msg_Entry extends Component {
 
         let { msg_obj, my_account } = props;
 
-        let {id, first_name, last_name, profile_picture_link, text, read_by, created_on} = msg_obj;
+        let {sender_id, first_name, last_name, profile_picture_link, text, created_on} = msg_obj;
 
         Msg_Entry.contextType = window.Context;
 
         this.state = {
-            id,
+            sender_id,
             first_name,
             last_name,
             profile_picture_link, 
             text,
-            read_by,
             created_on,
             my_account
         };
@@ -33,10 +32,10 @@ class Msg_Entry extends Component {
 
         let { msg_obj, my_account, recipient_info } = this.props;
 
-        let {id, first_name, last_name, profile_picture_link, text, read_by, created_on} = msg_obj;
+        let {sender_id, first_name, last_name, profile_picture_link, text, read_by, created_on} = msg_obj;
 
         this.setState({
-            id,
+            sender_id,
             first_name,
             last_name,
             profile_picture_link, 
@@ -74,11 +73,12 @@ class Msg_Entry extends Component {
 
     render(){
 
-        let {id, first_name, last_name, profile_picture_link, text, read_by, created_on, my_account} = this.state;
+        let {sender_id, first_name, last_name, profile_picture_link, text, created_on, my_account} = this.state;
+        
 
         let {aws_s3_url} = this.context.Request_URLs;
 
-        return <div id="msg-entry"  className={`${id === my_account.id ? "myself" : "others"}`}>
+        return <div id="msg-entry"  className={`${sender_id === my_account.id ? "myself" : "others"}`}>
 
             <div id="the-horizontal-bar"> 
 

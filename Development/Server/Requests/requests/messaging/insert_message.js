@@ -6,7 +6,7 @@ function request() {
 
         let query = `
                 insert into
-                    Message_Index(conversation_id, text, sender_id, created_on)
+                    Private_Messages(conversation_id, text, sender_id, created_on)
                 values (?,?,?,?);
             `;
 

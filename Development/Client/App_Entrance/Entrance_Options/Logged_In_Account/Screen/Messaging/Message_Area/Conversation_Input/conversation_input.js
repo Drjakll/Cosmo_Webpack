@@ -44,7 +44,7 @@ class Conversation_Input extends Component {
 
         let msg = this.msg_ref.current.value;
 
-        if(!msg){
+        if(msg.replace(/ /g, '') === ''){
             return;
         }
 
@@ -55,7 +55,7 @@ class Conversation_Input extends Component {
 
     Press_Enter_To_Send_Msg = (e)=>{
 
-        if(e.key === 'Enter' && this.Shift_Down){
+        if(e.key === 'Enter' && !this.Shift_Down){
             this.Send_Message(e);
         }
     }
