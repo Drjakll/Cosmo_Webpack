@@ -12,7 +12,7 @@ function request() {
                 pl.link as profile_picture_link
             from
                 Private_Messages as pm
-
+            
             left join
                 User_Accounts as ua
             on
@@ -28,7 +28,7 @@ function request() {
                 pm.created_on < ? and
                 pm.created_on >= ? 
                 order by pm.created_on 
-                asc
+                desc
                 limit 25
             `;
         

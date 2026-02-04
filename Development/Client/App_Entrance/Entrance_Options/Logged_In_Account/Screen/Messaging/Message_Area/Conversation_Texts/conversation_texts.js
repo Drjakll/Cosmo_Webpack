@@ -1,4 +1,5 @@
 import React, {Component, createRef} from 'react';
+import Context from '@context/context.js';
 import Msg_Entry from './Msg_Entry/msg_entry.js';
 import './conversation_texts.less';
 
@@ -10,11 +11,13 @@ class Conversation_Texts extends Component {
 
     no_more_text_msg = false;
 
+    last_scroll_position = 0;
+
     constructor(props){
 
         super(props);
 
-        Conversation_Texts.contextType = window.Context;
+        Conversation_Texts.contextType = Context;
 
         let {my_account, conversation, user_status, private_or_public} = this.props;
 
@@ -39,7 +42,7 @@ class Conversation_Texts extends Component {
 
         if(this_conversation?.id !== last_conversation?.id && !this_conversation?.messages.length){
 
-            await this.Scroll_To_View_More_Messages(null, true);
+            await this.Scroll_To_View_More_Messages(null);
 
         }
 
@@ -48,7 +51,9 @@ class Conversation_Texts extends Component {
 
         if(this.prev_msg_length !== current_length){
 
-            this.Scroll_To_Bottom();
+            setTimeout(()=>{
+                this.Scroll_To_Bottom();
+            }, 250);
         }
 
         this.prev_msg_length = current_length;
@@ -61,7 +66,7 @@ class Conversation_Texts extends Component {
         if(!container){
             return;
         }
-
+ 
         container.scrollTo({
             top: container.scrollHeight,
             behavior: 'smooth'
@@ -69,10 +74,19 @@ class Conversation_Texts extends Component {
 
     }
 
-    Scroll_To_View_More_Messages = async (e, ignore_scroll = false)=>{
-        
-        if(!ignore_scroll && (e.target.scrollTop > 300 || this.no_more_text_msg === true)){
-            return;
+    Scroll_To_View_More_Messages = async (e)=>{
+
+        if(e){
+
+            let is_scrolling_down = this.last_scroll_position < e.target.scrollTop;
+
+            this.last_scroll_position = e.target.scrollTop;
+            
+            if(is_scrolling_down || e.target.scrollTop > 300 || this.no_more_text_msg === true){
+
+                return;
+            }
+
         }
 
         let {conversation} = this.state;
@@ -91,10 +105,12 @@ class Conversation_Texts extends Component {
             this.no_more_text_msg = true;
             return;
         }
+        
+        more_msges = more_msges.reverse();
 
         conversation.messages = more_msges.concat(messages);
 
-        this.setState({conversation});
+        await this.setState({conversation});
 
     }
 

@@ -11,8 +11,8 @@ class Logged_In_Account extends Component {
     Button_Data = [
         "Profile",
         "Livestream",
-        "News",
-        "Messaging",
+        "Feeds",
+        "Chat",
         "Search"
     ];
 
@@ -23,7 +23,7 @@ class Logged_In_Account extends Component {
         { screen: "News", is_main: false, id: "News" },
         { screen: "Messaging", is_main: false, id: "Messaging"},
         { screen: "Search", is_main: false, id: "Search"}
-    ]
+    ];
     
     constructor(props){
         
@@ -37,15 +37,13 @@ class Logged_In_Account extends Component {
 
         this.state = {
             Columns: [ //This Columns will dynamically rearrange by the user
+                { screen: "Empty", is_main: false, id: "Empty" },
                 { screen: "Profile", is_main: true, id: "Profile" },
-                { screen: "Livestream", is_main: false, id: "Livestream" },
-                { screen: "News", is_main: false, id: "News" },
-                { screen: "Messaging", is_main: false, id: "Messaging" },
-                { screen: "Search", is_main: false, id: "Search"}
+                { screen: "Empty", is_main: false, id: "Empty" },
             ],
             owner_user_account,
             visitor_user_account,
-            focused_column: "Profile" //The column that is being focused on so that user won't lose clickability to other columns
+            focused_column: "Profile" 
         };
     }
 
@@ -72,7 +70,7 @@ class Logged_In_Account extends Component {
 
         });
 
-        this.RotateScreen(0);
+        //this.RotateScreen(0);
 
     }
     
@@ -118,17 +116,31 @@ class Logged_In_Account extends Component {
 
     }
 
-    render(){
-        
-        //This only shows in the middle screen
-        let main_options = <div id="logged-in-option-buttons">
+    Change_View = (index)=>{
+
+        let {Columns} = this.state;
+
+        Columns[1].is_main = false;
+
+        Columns[1] = this.Columns[index];
+
+        Columns[1].is_main = true;
+
+        this.setState({Columns});
+
+    }
+
+    Generate_Options = ()=>{
+
+        return <div id="logged-in-option-buttons">
 
             {this.Button_Data.map((value, index) => {
 
                 return <div className="logged-in-option-button"
                         key={index}
                         onClick={(e) => {
-                            this.RotateScreen(index);
+                            //this.RotateScreen(index);
+                            this.Change_View(index);
                         }}>
 
                         {value}
@@ -138,6 +150,9 @@ class Logged_In_Account extends Component {
             })}
 
         </div>; 
+    }
+
+    render(){
         
         let {owner_user_account, visitor_user_account} = this.state;
         
@@ -179,7 +194,7 @@ class Logged_In_Account extends Component {
 
                             </div>
 
-                            {info.is_main ? main_options : ""}
+                            {info.is_main ? this.Generate_Options() : ""}
 
                         </div>;
 

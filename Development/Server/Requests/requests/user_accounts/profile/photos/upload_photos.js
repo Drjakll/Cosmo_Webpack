@@ -1,4 +1,3 @@
-import formidable from 'formidable';
 import fs from 'fs';
 
 
@@ -23,7 +22,7 @@ let request = function(){
 
         
         if (!uploadedFiles || uploadedFiles.length === 0 || !target_type || !target_id || !user_id) {
-            console.log(target_type, target_id, user_id);
+    
             return res.status(400).json({message: 'No files uploaded.'});
         }
         
@@ -76,6 +75,8 @@ let request = function(){
                     req.body.target_id = parseInt(target_id);
 
                     req.body.target_type = target_type;
+
+                    req.body.user_id = parseInt(user_id);
 
                     //Move onto adding filepaths to the database
                     next();

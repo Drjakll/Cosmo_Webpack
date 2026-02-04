@@ -1,7 +1,7 @@
 let request = function() {
     
     
-    this.req = async (req, res) => { 
+    this.req = async (req, res, next) => { 
         
         let {links, target_type, target_id} = req.body;
 
@@ -21,13 +21,37 @@ let request = function() {
 
             await this.sql.query(query, [to_be_inserted]);
 
+            //If adding it to the album, then log the change
+            if(target_type === "album"){
+
+                req.body.album_id = target_id;
+                req.body.change_type = "add";
+
+                let changes = "";
+
+                for(let link of links){
+                    changes += `${link},`;
+                }
+
+                changes = changes.slice(0, -1);
+
+                req.body.changes = changes;
+
+                //This should call add_album_update_log.js
+                next();
+                return;
+            }
+
+            res.json({message: "Successfully added photo links!"});
+
         } catch (err){
 
             console.log(err, query);
 
+            res.json({message: "Error adding photo links"});
         }
 
-        res.json({message: "Upload successful!"});
+
         
     }
 };

@@ -169,6 +169,9 @@ class News extends Component {
                 post={news_data}
                 change_display={this.Change_Display}
             />;
+        },
+        "album_updates": ()=>{
+            
         }
     }
     

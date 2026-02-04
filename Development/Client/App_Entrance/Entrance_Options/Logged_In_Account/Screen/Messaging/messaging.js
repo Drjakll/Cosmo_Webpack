@@ -3,6 +3,7 @@ import Message_Area from './Message_Area/message_area.js';
 import Users from './Users/users.js';
 import Channel_Selections from './Channel_Selections/channel_selections.js';
 import Get_Follows from '@universal_components/Account_Functions/get_follows.js';
+import Context from '@context/context.js';
 import { io } from 'socket.io-client';
 import './messaging.less';
 
@@ -16,7 +17,7 @@ class Messaging extends Component {
         
         super(props);
 
-        Messaging.contextType = window.Context;
+        Messaging.contextType = Context;
 
         this.Msg_Area_Ref = createRef();
 

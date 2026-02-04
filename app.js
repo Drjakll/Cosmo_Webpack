@@ -63,8 +63,8 @@ let {
         add_album,
         delete_album,
         get_albums,
-        update_album
-
+        update_album,
+        add_album_update_log
     } = albums;
 
 //User_Accounts -> Profile -> Comments
@@ -206,17 +206,26 @@ app.post("/delete_album", delete_album.req,
                             delete_photo_files.req);
 
 //Photos
-app.post("/upload_photos", uploads.array('files', 100), upload_photos.req, add_photo_links.req);
-app.post("/get_photo_links", get_photo_links.req, get_general_reactions.req);
+app.post("/upload_photos", uploads.array('files', 100), 
+                            upload_photos.req,
+                            add_photo_links.req, 
+                            add_album_update_log.req); //add_album_update_log only be called if photos are added to an album
+app.post("/get_photo_links", get_photo_links.req, 
+                            get_general_reactions.req);
 app.post("/delete_photos", delete_photo_links.req, 
                             delete_general_reactions.req, 
                             delete_comments_from_targets.req, 
-                            delete_photo_files.req);
+                            delete_photo_files.req,
+                            add_album_update_log.req //add_album_update_log only be called if photos are deleted from an album
+                        );
 app.post("/set_photo_as_cover", set_photo_as_cover.req);
 
 //Comments
 app.post("/submit_comment", submit_comment.req);
-app.post("/get_comments", get_comments.req, get_comment_reactions.req, get_comments.req);
+app.post("/get_comments", get_comments.req, 
+                            get_comment_reactions.req, 
+                            get_comments.req //This is to get replies of comments if any
+                        );
 app.post("/update_comment", update_comment.req);
 app.post("/delete_comment", delete_comment.req);
 app.post("/delete_multiple_comments", delete_multiple_comments.req);
@@ -231,7 +240,8 @@ app.post("/delete_post", delete_post.req,
                             delete_general_reactions.req,
                             delete_comments_from_targets.req, //delete_comments_from_targets must go before delete_photo_links
                             delete_photo_links.req, 
-                            delete_photo_files.req); 
+                            delete_photo_files.req
+                        ); 
 app.post("/get_last_time_posted", get_last_time_posted.req);
 
 //Connections
