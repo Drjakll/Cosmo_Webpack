@@ -170,18 +170,9 @@ class Logged_In_Account extends Component {
                     {this.state.Columns.map((info, index) => {
 
                         return <div 
-                                className={`logged-in-column ${info.is_main ? "main" : ""} ${this.state.focused_column === info.id ? "focused": ""}`} 
+                                className={`logged-in-column ${info.is_main ? "main" : ""}`} 
                                 id={info.id}
                                 key={info.id}  
-                                tabIndex={0} 
-                                onClick={(e)=>{
-                                    
-                                    if(this.state.focused_column !== info.id){
-
-                                        this.setState({focused_column: info.id});
-                                    }
-                                    
-                                }}
                             >
                             
                             <div className="screen-wrapper">
