@@ -25,17 +25,7 @@ let request = function() {
             if(target_type === "album"){
 
                 req.body.album_id = target_id;
-                req.body.change_type = "add";
-
-                let changes = "";
-
-                for(let link of links){
-                    changes += `${link},`;
-                }
-
-                changes = changes.slice(0, -1);
-
-                req.body.changes = changes;
+                req.body.time_occurred = time_uploaded;
 
                 //This should call add_album_update_log.js
                 next();
@@ -50,9 +40,6 @@ let request = function() {
 
             res.json({message: "Error adding photo links"});
         }
-
-
-        
     }
 };
 

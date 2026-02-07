@@ -39,7 +39,7 @@ app.set('trust proxy', true);
 
 import requests from './Development/Server/Requests/requests.js';
 
-let {user_accounts, messaging, get_web_pages, dummy_middleware, connections, alerts, user_news_updates} = requests;
+let {user_accounts, messaging, get_web_pages, dummy_middleware, connections, alerts, user_news_updates, feeds} = requests;
 
 let {profile, create_account, login, universal} = user_accounts;
 
@@ -168,7 +168,10 @@ let {
 
     } = user_news_updates;
 
-
+let {
+    add_to_feeds,
+    get_feeds
+} = feeds
 
 //Below are the API routes
 
@@ -209,14 +212,15 @@ app.post("/delete_album", delete_album.req,
 app.post("/upload_photos", uploads.array('files', 100), 
                             upload_photos.req,
                             add_photo_links.req, 
-                            add_album_update_log.req); //add_album_update_log only be called if photos are added to an album
+                            add_album_update_log.req, //add_album_update_log only be called if photos are added to an album
+                            add_to_feeds.req //If add_album_update_log is triggered, then this will trigger as well
+                        ); 
 app.post("/get_photo_links", get_photo_links.req, 
                             get_general_reactions.req);
 app.post("/delete_photos", delete_photo_links.req, 
                             delete_general_reactions.req, 
                             delete_comments_from_targets.req, 
-                            delete_photo_files.req,
-                            add_album_update_log.req //add_album_update_log only be called if photos are deleted from an album
+                            delete_photo_files.req
                         );
 app.post("/set_photo_as_cover", set_photo_as_cover.req);
 

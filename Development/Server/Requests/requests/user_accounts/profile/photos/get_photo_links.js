@@ -2,10 +2,20 @@ let request = function() {
     
     this.req = async (req, res, next) => { 
         
-        let {target_id, target_type, id} = req.body;
+        let {target_id, target_type, id, time_uploaded} = req.body;
 
-        //If id exists, we just wanted to search one photo link, else search based off on target_id and target_type
+        //If id exists, we just wanted to search one photo link, else search for a list of photo links based on target_id and target_type
         let requirements = id ? [id] : [target_id, target_type];
+
+        //If time_uploaded exists, then we probably want photos for updates in a timeline
+        requirements = time_uploaded ? [target_id, target_type, time_uploaded] : requirements;
+
+        /*----*/
+
+        //part of the query for the requirements. 
+        let where_query = id ? "pl.id = ?" : "pl.target_id = ? and pl.target_type = ?";
+
+        where_query = time_uploaded ? "pl.target_id ? and pl.target_type = ? and time_uploaded = ?" : where_query;
         
         let query = `select 
                         pl.*,
@@ -27,7 +37,7 @@ let request = function() {
                         c.target_id = pl.id
 
                     where 
-                        ${id ? "pl.id = ?" : "pl.target_id = ? and pl.target_type = ?"}`;
+                        ${where_query}`;
         
         try {
 

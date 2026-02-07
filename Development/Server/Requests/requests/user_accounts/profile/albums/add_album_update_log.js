@@ -2,18 +2,16 @@ let request = function() {
     
     this.req = async (req, res, next) => { 
         
-        let {album_id, change_type, changes} = req.body;
-        
-        let time_occured = Date.now();
+        //time_occured is strictly mapped to the time of the update
+        let {album_id, time_occurred, user_id} = req.body;
 
         let data = [
             album_id,
-            change_type,
-            changes,
-            time_occured
+            time_occurred,
+            user_id
         ];
 
-        let query = `insert into Photo_Album_Update_Logs(album_id, change_type, changes, time_occured) values(?,?,?,?);`;
+        let query = `insert into Photo_Album_Update_Logs(album_id, time_occurred, user_id) values(?,?,?);`;
         
         try {
 
@@ -21,7 +19,7 @@ let request = function() {
 
             req.body.target_type = "album_updates";
             req.body.target_id = result.insertId;
-            req.body.created_on = time_occured;
+            req.body.created_on = time_occurred;
 
             //Should called add_to_feeds.js
             next();

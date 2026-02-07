@@ -78,7 +78,7 @@ let request = function(){
 
                     req.body.user_id = parseInt(user_id);
 
-                    //Move onto adding filepaths to the database
+                    //Move onto adding filepaths to the database (add_photo_links.js)
                     next();
                     
                 }

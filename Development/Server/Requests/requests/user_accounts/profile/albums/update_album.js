@@ -24,7 +24,6 @@ let request = function() {
             
             res.json({message: "Error updating Photo Album", failed: true});
         }
-
         
     };
 };
