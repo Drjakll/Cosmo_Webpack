@@ -15,34 +15,35 @@ let request = function() {
         //part of the query for the requirements. 
         let where_query = id ? "pl.id = ?" : "pl.target_id = ? and pl.target_type = ?";
 
-        where_query = time_uploaded ? "pl.target_id ? and pl.target_type = ? and time_uploaded = ?" : where_query;
+        where_query = time_uploaded ? "pl.target_id = ? and pl.target_type = ? and time_uploaded = ?" : where_query;
         
         let query = `select 
                         pl.*,
-                        coalesce(c.cc, 0) as comments_count
+                        coalesce(count(c.id), 0) as comments_count
                     from 
                         Photo_Links as pl
                     left join
-                        (select 
-                            target_id,
-                            count(*) as cc
-                        from 
-                            Comments
-                        where 
-                            target_type = 'photo'
-                        group by
-                            target_id
-                        ) as c
+                        Comments as c
                     on
                         c.target_id = pl.id
 
                     where 
-                        ${where_query}`;
+                        ${where_query}
+                    group by 
+                        pl.id`;
         
         try {
 
             let [results] = await this.sql.query(query, requirements);
 
+            if(time_uploaded){
+                //If time_uploaded exists, it means it's searching for a time line in a single album. So album_info should exist as well.
+                let {album_info} = req.body;
+
+                res.json({message: `Successfully retrieved ${results.length} photo links`, photos: results, album_info});
+                return;
+            }
+            
             req.body.targets = results;
             req.body.target_type = "photo";
             

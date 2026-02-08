@@ -2,9 +2,9 @@ let request = function() {
     
     this.req = async (req, res) => { 
         
-        let {id} = req.params;
+        let {id:user_id} = req.params;
 
-        let requirements = [id];
+        let requirements = [user_id];
         
         let query = `select 
                         pa.*,

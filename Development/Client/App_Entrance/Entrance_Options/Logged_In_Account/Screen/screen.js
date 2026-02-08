@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import Explore from './Explore/explore.js';
-import News from './News/news.js';
+import Feeds from './Feeds/feeds.js';
 import Profile from './Profile/profile.js';
 import Messaging from './Messaging/messaging.js';
 import Search from './Search/search.js';

@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import Context from '@context/context.js';
-import './post_news.less';
+import './post_feed.less';
 
 class Post_News extends Component {
 

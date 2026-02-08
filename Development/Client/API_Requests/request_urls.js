@@ -15,6 +15,7 @@ const update_album = '/update_album';
 const add_album = '/add_album';
 const get_albums = '/get_albums';
 const delete_album = '/delete_album';
+const get_album_update_logs = "/get_album_update_logs";
 
 //photos
 const upload_photos = '/upload_photos';
@@ -66,6 +67,9 @@ const get_follow_request_alert = "/get_follow_request_alert";
 //User News Updates
 const get_user_news_updates = '/get_user_news_updates';
 
+//Feeds
+const get_feeds = '/get_feeds';
+
 //Messaging
 const create_conversation = "/create_conversation";
 const get_conversations = "/get_conversations";
@@ -104,12 +108,12 @@ export default {
     delete_photos,
     set_photo_as_cover,
 
-
     //Albums
     update_album,
     add_album,
     get_albums,
     delete_album,
+    get_album_update_logs,
         
     //Comments
     submit_comment,
@@ -126,7 +130,6 @@ export default {
     update_post,
     delete_post,
     get_last_time_posted,
-
 
     //Connections
     get_connection_list,
@@ -155,6 +158,9 @@ export default {
     //User News Updates
     get_user_news_updates,
 
+    //Feeds
+    get_feeds,
+
     //Messaging
     get_conversations,
     delete_conversation,
@@ -170,7 +176,6 @@ export default {
     get_favorite_public_channels,
     leave_public_channel,
     create_public_channel,
-
 
     //Amazon Web Service Storage 3 URL
     aws_s3_url

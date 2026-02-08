@@ -15,15 +15,17 @@ let request = function() {
             let [result] = await this.sql.query(query, data);
 
             if(result.length === 0){
-                res.json({message: "Error fetching photo album update logs"});
+                res.json({message: "Photo album log doesn't exist"});
                 return;
             }
 
+            //Preparing to call get_photo_links.js
             let {album_id, time_occurred} = result[0];
 
             req.body.album_id = album_id;
             req.body.time_uploaded = time_occurred;
 
+            //Should be get_single_album.js
             next();
 
         }catch(err){

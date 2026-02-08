@@ -64,7 +64,9 @@ let {
         delete_album,
         get_albums,
         update_album,
-        add_album_update_log
+        add_album_update_log,
+        get_album_update_logs,
+        get_single_album
     } = albums;
 
 //User_Accounts -> Profile -> Comments
@@ -207,6 +209,10 @@ app.post("/delete_album", delete_album.req,
                             delete_general_reactions.req, 
                             delete_comments_from_targets.req,
                             delete_photo_files.req);
+app.post("/get_album_update_logs", get_album_update_logs.req,
+                                    get_single_album.req,
+                                    get_photo_links.req
+                            );
 
 //Photos
 app.post("/upload_photos", uploads.array('files', 100), 
@@ -268,6 +274,8 @@ app.get("/get_follow_request_alert/:user_id", get_follow_request_alert.req);
 //User News Updates
 app.post("/get_user_news_updates", get_user_news_updates.req);
 
+//Feeds 
+app.get("/get_feeds", get_feeds.req);
 
 //Messaging
 app.post("/create_conversation", create_conversation.req, add_conversation_participants.req);

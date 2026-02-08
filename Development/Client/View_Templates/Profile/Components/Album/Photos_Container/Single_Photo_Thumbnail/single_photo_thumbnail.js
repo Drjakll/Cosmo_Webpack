@@ -26,7 +26,7 @@ class Single_Photo extends Component {
 
     componentDidMount(){
 
-
+        
 
     }
     

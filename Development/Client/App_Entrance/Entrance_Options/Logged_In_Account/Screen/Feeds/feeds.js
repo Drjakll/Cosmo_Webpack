@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
 import Context from '@context/context.js';
-import Post_News from './News_Types/Post_News/post_news.js';
-import './news.less';
+import Post_Feed from './Feed_Types/Post_Feed/post_feed.js';
+import Album_Feed from './Feed_Types/Album_Feed/album_feed.js';
+import './feeds.less';
 
 class News extends Component {
 
@@ -13,22 +14,22 @@ class News extends Component {
         
         super(props);
 
-        let {connection_list, owner_user_account} = props;
+        let {owner_user_account} = props;
 
         this.state = {
-            connection_list,
             owner_user_account,
-            news_updates: [],
-            news_types: {},
+            feeds: [],
+            feed_types: {},
+            following: [],
             render_callback: this.Render_Main_Display
         };
     }
 
     async componentDidMount(){
 
-        await this.setState({
-            news_updates: await this.Get_User_News_Updates(this.state.connection_list),
-        });
+        await this.Get_Followings();
+
+        await this.Get_Feeds(Date.now());
     }
 
     async componentDidUpdate(prevProps, prevState){
@@ -36,32 +37,23 @@ class News extends Component {
         if(prevProps === this.props){
             return;
         }
-
-        let stateObj = {};
-
-        for(let i in this.props){
-            stateObj[i] = this.props[i];
-        }
         
-        stateObj.news_updates = await this.Get_User_News_Updates(this.props.connection_list);
-        
-        this.setState(stateObj);
+        this.setState(this.props);
 
     }
 
-    Get_User_News_Updates = async (connection_list) => {
+    Get_Followings = async ()=>{
 
-        if(!connection_list){
-            return [];
-        }
+        let {get_all_followings} = this.context.Request_URLs;
 
-        let {get_user_news_updates} = this.context.Request_URLs;
+        let {owner_user_account} = this.state;
 
         let body = {
-            connection_list
+            id: owner_user_account.id
         };
 
-        let data = await(await fetch(get_user_news_updates,
+        let results = await(await fetch(
+            get_all_followings,
             {
                 method: "POST",
                 body: JSON.stringify(body),
@@ -71,25 +63,37 @@ class News extends Component {
             }
         )).json();
 
-        if(data){
+        await this.setState({following: results});
+    }
 
-            let {results} = data;
+    Get_Feeds = async (offset)=>{
 
-            for(let i in results){
+        let {get_feeds} = this.context.Request_URLs;
 
-                results[i].news_data = await JSON.parse(results[i].news_data) || {};
+        let {following} = this.state;
 
-            }
+        let ids = [];
 
-            return results;
+        for(let follow of following){
+
+            ids.push(follow.id);
+            
         }
 
-        return [];
+        let results = await(await fetch(
+            `${get_feeds}/?ids=${ids.join(',')}&offset=${offset}`,
+            {
+                method: "GET"
+            }
+        )).json();
+
+        await this.setState({feeds: results});
+
     }
 
     Render_Main_Display = () => {
 
-        let {news_updates} = this.state;
+        let {feeds} = this.state;
 
         return <div id="news">
 
@@ -101,13 +105,13 @@ class News extends Component {
 
             <div id="news-updates">
 
-                {news_updates?.map((data, index)=>{
+                {feeds?.map((data, index)=>{
 
-                    let {news_type, news_data, time_created} = data;
+                    let {target_type, created_on} = data;
 
                     return (<div className="news-update-section">
 
-                        {this.News_Types[news_type]({news_data})}
+                        {this.Feed_Types[target_type]({created_on})}
 
                     </div>);
 
@@ -156,22 +160,26 @@ class News extends Component {
 
     }
 
-    News_Types = {
-        "post": ({news_data})=>{
+    Feed_Types = {
+        "post": ({created_on})=>{
 
             let {owner_user_account} = this.state;
 
-            let {owner_email} = news_data;
-
-            return <Post_News 
-                owner_user_account={{email: owner_email}} 
-                visitor_user_account={owner_user_account} 
-                post={news_data}
+            return <Post_Feed 
+                owner_user_account={owner_user_account} 
+                created_on={created_on}
                 change_display={this.Change_Display}
             />;
         },
-        "album_updates": ()=>{
+        "album_updates": (created_on)=>{
             
+            let {owner_user_account} = this.state;
+
+            return <Album_Feed 
+                owner_user_account={owner_user_account} 
+                created_on={created_on}
+                change_display={this.Change_Display}
+            />;
         }
     }
     
