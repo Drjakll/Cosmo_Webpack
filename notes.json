@@ -1,8 +1,9 @@
 {
     "2026":{
         "2": {
-            "7": {"currently working on": "getting album feeds",
-                  "new ideas": ["trie on data structure on advertisement", "ask user for what advertisement they are interested in"]
+            "7": {"currently working on": ["getting album feeds"],
+                  "new ideas": ["trie on data structure on advertisement", 
+                                "ask user for what advertisement they are interested in"]
                 }
         }
     } 

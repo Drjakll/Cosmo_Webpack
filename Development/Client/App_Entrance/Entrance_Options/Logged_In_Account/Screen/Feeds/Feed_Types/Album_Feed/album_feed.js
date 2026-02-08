@@ -57,7 +57,6 @@ class Album_Feed extends Component {
         });
     }
 
-
     render(){
 
         return (
