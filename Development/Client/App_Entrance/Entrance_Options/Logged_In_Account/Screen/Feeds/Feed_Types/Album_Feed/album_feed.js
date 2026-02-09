@@ -19,6 +19,13 @@ class Album_Feed extends Component {
         };
     }
 
+    async componentDidMount(){
+
+        let {feed_id} = this.props;
+
+        this.Get_Album_Update_Info(feed_id);
+    }
+
     componentDidUpdate(prevProps, prevState){
 
         if(this.props === prevProps){
@@ -28,11 +35,11 @@ class Album_Feed extends Component {
         this.setState(this.props);
     }
 
-    Get_Album_Update_Info = async (update_id)=>{
+    Get_Album_Update_Info = async (feed_id)=>{
 
         let {get_album_update_logs} = this.context.Request_URLs;
 
-        let body = {id: update_id};
+        let body = {id: feed_id};
 
         let data = await(await fetch(
             get_album_update_logs,

@@ -20,7 +20,7 @@ class Logged_In_Account extends Component {
     Columns = [
         { screen: "Profile", is_main: false, id: "Profile" },
         { screen: "Livestream", is_main: false, id: "Livestream" },
-        { screen: "News", is_main: false, id: "News" },
+        { screen: "Feeds", is_main: false, id: "Feeds" },
         { screen: "Messaging", is_main: false, id: "Messaging"},
         { screen: "Search", is_main: false, id: "Search"}
     ];
@@ -37,9 +37,9 @@ class Logged_In_Account extends Component {
 
         this.state = {
             Columns: [ //This Columns will dynamically rearrange by the user
-                { screen: "Empty", is_main: false, id: "Empty" },
+                { screen: "Empty", is_main: false, id: "Empty1" },
                 { screen: "Profile", is_main: true, id: "Profile" },
-                { screen: "Empty", is_main: false, id: "Empty" },
+                { screen: "Empty", is_main: false, id: "Empty2" },
             ],
             owner_user_account,
             visitor_user_account,

@@ -8,13 +8,13 @@ let {Photos_Container} = Albums.Photos_Container;
 
 class Photos_Container_Editor extends Photos_Container {
 
-    static contextType = Context
+    static contextType = Context;
+
+    Thumbnail = Photo_Thumbnail_Editor;
 
     constructor(props){
         
         super(props);
-
-        this.Single_Photo_Thumbnail = Photo_Thumbnail_Editor;
         
         let state = {
             selected_files: [],

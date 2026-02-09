@@ -30,6 +30,8 @@ let request = function() {
             }
 
             req.body.album_info = result[0];
+            req.body.target_id = album_id;
+            req.body.target_type = "album";
 
             //Next should be get_photo_links.js
             next();

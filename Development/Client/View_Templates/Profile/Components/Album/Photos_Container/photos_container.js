@@ -72,13 +72,6 @@ class Photos_Container extends Component {
 
                             return <div className="photo-thumbnail-wrapper" key={index}>
 
-                                <div id="photo-select-button" 
-                                    onClick={(e)=>{ this.Insert_Photo_To_Delete(photo_info)}}
-                                    className={photos_to_be_deleted[id] ? "selected-to" : ""}
-                                >
-
-                                </div>
-
                                 <Thumbnail
                                     photo_info={photo_info}
                                     owner_user_account={owner_user_account}

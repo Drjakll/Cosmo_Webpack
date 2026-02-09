@@ -12,7 +12,7 @@ class Screen extends Component {
     
     Screen_Types = {
         "Livestream": Explore,
-        "News": Empty,
+        "Feeds": Feeds,
         "Profile": Profile,
         "Messaging": Messaging,
         "Search": Search,

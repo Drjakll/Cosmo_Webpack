@@ -4,7 +4,7 @@ import Post_Feed from './Feed_Types/Post_Feed/post_feed.js';
 import Album_Feed from './Feed_Types/Album_Feed/album_feed.js';
 import './feeds.less';
 
-class News extends Component {
+class Feeds extends Component {
 
     static contextType = Context;
 
@@ -52,7 +52,7 @@ class News extends Component {
             id: owner_user_account.id
         };
 
-        let results = await(await fetch(
+        let data = await(await fetch(
             get_all_followings,
             {
                 method: "POST",
@@ -63,7 +63,13 @@ class News extends Component {
             }
         )).json();
 
-        await this.setState({following: results});
+        if(!data){
+            return;
+        }
+
+        this.state.following = data.results;
+
+        await this.setState({following: data.results});
     }
 
     Get_Feeds = async (offset)=>{
@@ -80,14 +86,18 @@ class News extends Component {
             
         }
 
-        let results = await(await fetch(
-            `${get_feeds}/?ids=${ids.join(',')}&offset=${offset}`,
+        let data = await(await fetch(
+            `${get_feeds}/?user_ids=${ids.join(',')}&offset=${offset}`,
             {
                 method: "GET"
             }
         )).json();
 
-        await this.setState({feeds: results});
+        if(!data){
+            return;
+        }
+
+        await this.setState({feeds: data.results});
 
     }
 
@@ -95,23 +105,17 @@ class News extends Component {
 
         let {feeds} = this.state;
 
-        return <div id="news">
+        return <div id="feeds">
 
-            <div id="news-updates-headline">
-
-                News Updates
-
-            </div>
-
-            <div id="news-updates">
+            <div id="feeds-updates">
 
                 {feeds?.map((data, index)=>{
 
-                    let {target_type, created_on} = data;
+                    let {target_type, target_id} = data;
 
-                    return (<div className="news-update-section">
+                    return (<div className="feeds-update-section" key={`${target_type}${target_id}`}>
 
-                        {this.Feed_Types[target_type]({created_on})}
+                        {this.Feed_Types[target_type]({feed_id: target_id})}
 
                     </div>);
 
@@ -161,23 +165,23 @@ class News extends Component {
     }
 
     Feed_Types = {
-        "post": ({created_on})=>{
+        "post": ({feed_id})=>{
 
             let {owner_user_account} = this.state;
 
             return <Post_Feed 
                 owner_user_account={owner_user_account} 
-                created_on={created_on}
+                feed_id={feed_id}
                 change_display={this.Change_Display}
             />;
         },
-        "album_updates": (created_on)=>{
+        "album_updates": ({feed_id})=>{
             
             let {owner_user_account} = this.state;
 
             return <Album_Feed 
                 owner_user_account={owner_user_account} 
-                created_on={created_on}
+                feed_id={feed_id}
                 change_display={this.Change_Display}
             />;
         }
@@ -197,4 +201,4 @@ class News extends Component {
     }
 }
 
-export default News;
+export default Feeds;

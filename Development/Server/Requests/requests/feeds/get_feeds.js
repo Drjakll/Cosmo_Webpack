@@ -2,7 +2,7 @@ let request = function(){
 
     this.req = async (req, res)=>{
 
-        let {user_ids, offset} = this.req.query;
+        let {user_ids, offset} = req.query;
 
         if(user_ids === ""){
             res.json({message: "No results", results: []});
