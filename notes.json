@@ -5,7 +5,10 @@
                   "new ideas": ["trie on data structure on advertisement", 
                                 "ask user for what advertisement they are interested in"]
                 },
-            ""
+            "12": {
+                "currently working on": ["need to refactor/touch up"],
+                "new ideas": ["none at the moment"]
+            }
         }
     } 
 }
