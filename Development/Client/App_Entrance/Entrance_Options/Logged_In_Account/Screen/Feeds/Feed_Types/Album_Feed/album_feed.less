@@ -1,0 +1,69 @@
+#album-feed {
+    width: 100%;
+    height: 600px;
+    display: block;
+
+    #album-feed-detail-description {
+        width: 100%;
+        height: 50%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        #album-feed-cover-wrapper {
+            width: 100%;
+            height: 75%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            #album-cover {
+                width: 200px;
+                height: 250px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+        }
+
+        label {
+            width: 100%;
+            height: 10%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 16px;
+            font-weight: bold;
+            color: rgb(50,50,50);
+        }
+    }
+
+    #list-of-added-photos-wrapper {
+        width: 100%;
+        height: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        //background-color: rgba(0,0,0,0.1);
+        background: linear-gradient(to top, rgba(0,0,0,0.1), rgba(0,0,0,0));
+
+        #list-of-photos-horiz-scroll {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            overflow-x: auto;
+            overflow-y: hidden;
+            scrollbar-width: none;
+            white-space: nowrap;
+
+            .added-photo {
+                width: 200px;
+                height: 200px;
+                margin-top: 50px;
+                display: inline-block;
+                margin-left: 25px
+            }
+        }
+    }
+}

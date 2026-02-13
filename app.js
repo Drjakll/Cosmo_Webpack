@@ -243,7 +243,7 @@ app.post("/update_reaction", update_reaction.req);
 app.post("/submit_reaction", submit_reaction.req);
 
 //Post Data                         
-app.post("/create_post", create_post.req);
+app.post("/create_post", create_post.req, add_to_feeds.req);
 app.post("/update_post", update_post.req);
 app.post("/get_posts", get_posts.req, get_general_reactions.req);
 app.post("/delete_post", delete_post.req, 

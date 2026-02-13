@@ -2,7 +2,7 @@ let request = function(){
 
     this.req = async (req, res)=>{
 
-        let {user_id, target_id, target_type, created_on} = req.body;
+        let {user_id, target_id, target_type, created_on, result} = req.body;
 
         let values = [
             user_id,
@@ -17,7 +17,7 @@ let request = function(){
 
             await this.sql.query(query, values);
 
-            res.json({message: "Successfully added to feeds"});
+            res.json({message: "Successfully added to feeds", result: result ?? null});
 
         }catch(err){
 

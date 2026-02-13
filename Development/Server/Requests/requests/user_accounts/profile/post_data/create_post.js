@@ -1,6 +1,6 @@
 let request = function() {
     
-    this.req = async (req, res) => { 
+    this.req = async (req, res, next) => { 
         
         let {user_id, body, title} = req.body;
 
@@ -16,7 +16,13 @@ let request = function() {
 
             let post_obj = {id: result.insertId, title, body, user_id, created_on, last_edited: created_on};
 
-            res.json({message: "Successfully added new post", result: post_obj});
+            req.body.target_id = post_obj.id;
+            req.body.target_type = "post"; 
+            req.body.created_on = created_on;
+            req.body.result = post_obj;
+
+            //Should call add_to_feeds.js
+            next();
 
         } catch(err){
 

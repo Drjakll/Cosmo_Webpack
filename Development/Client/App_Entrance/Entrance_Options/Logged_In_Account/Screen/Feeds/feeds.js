@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import Context from '@context/context.js';
 import Post_Feed from './Feed_Types/Post_Feed/post_feed.js';
 import Album_Feed from './Feed_Types/Album_Feed/album_feed.js';
+import Profile_Thumbnail from '@universal_components/Profile_Thumbnail/profile_thumbnail.js';
 import './feeds.less';
 
 class Feeds extends Component {
@@ -103,19 +104,50 @@ class Feeds extends Component {
 
     Render_Main_Display = () => {
 
-        let {feeds} = this.state;
+        let {feeds, owner_user_account} = this.state;
 
         return <div id="feeds">
+
+            <div id="feeds-updates-headline">
+
+                Feeds
+
+            </div>
 
             <div id="feeds-updates">
 
                 {feeds?.map((data, index)=>{
 
-                    let {target_type, target_id} = data;
+                    let {target_type, target_id, created_on, user_id, gender, first_name, last_name, profile_picture_link} = data;
+
+                    let from_account = {first_name, last_name, gender, profile_picture_link, id: user_id};
 
                     return (<div className="feeds-update-section" key={`${target_type}${target_id}`}>
 
-                        {this.Feed_Types[target_type]({feed_id: target_id})}
+                        <div id="feed-account-information">
+
+                            <div id="profile-thumbnail">
+
+                                <Profile_Thumbnail
+                                    profile={from_account}
+                                    owner_user_account={owner_user_account}
+                                    visitor_user_account={owner_user_account}
+                                    rounded_portrait={0}
+                                />
+
+                            </div>
+
+                            <label>{first_name} {last_name}</label>
+
+                            <div id="time-created">{new Date(created_on).toLocaleString()}</div>
+
+                        </div>
+
+                        <div id="feed-update-information">
+
+                            {this.Feed_Types[target_type]({feed_id: target_id, from_account})}
+
+                        </div>
 
                     </div>);
 
@@ -158,31 +190,37 @@ class Feeds extends Component {
 
             </div>
 
-            {render_callback()}
+            <div id="content-container">
+
+                {render_callback()}
+
+            </div>
 
         </div>;
 
     }
 
     Feed_Types = {
-        "post": ({feed_id})=>{
+        "post": ({feed_id, from_account})=>{
 
             let {owner_user_account} = this.state;
 
             return <Post_Feed 
-                owner_user_account={owner_user_account} 
+                visitor_user_account={owner_user_account}
                 feed_id={feed_id}
                 change_display={this.Change_Display}
+                from_account={from_account}
             />;
         },
-        "album_updates": ({feed_id})=>{
+        "album_updates": ({feed_id, from_account})=>{
             
             let {owner_user_account} = this.state;
 
             return <Album_Feed 
-                owner_user_account={owner_user_account} 
+                visitor_user_account={owner_user_account}
                 feed_id={feed_id}
                 change_display={this.Change_Display}
+                from_account={from_account}
             />;
         }
     }

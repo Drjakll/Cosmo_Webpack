@@ -59,7 +59,7 @@ class Enlarged_Photo_Editor extends Enlarged_Single_Photo {
             )).json();
 
 
-            this.props.Get_Albums();
+            this.props.Get_Albums && this.props.Get_Albums();
 
         };
 

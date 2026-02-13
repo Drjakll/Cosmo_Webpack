@@ -13,8 +13,7 @@ class Album_Cover extends Component {
         let {album_info} = props;
         
         this.state = {
-            album_info,
-            photos: []
+            album_info
         };
     }
     

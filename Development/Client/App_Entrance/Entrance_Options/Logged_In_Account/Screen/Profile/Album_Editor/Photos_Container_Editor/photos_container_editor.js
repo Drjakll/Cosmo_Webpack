@@ -82,7 +82,7 @@ class Photos_Container_Editor extends Photos_Container {
 
             await this.props.Get_Albums();
 
-            this.props.return_previous_display();
+            this.props.return_previous_display && this.props.return_previous_display();
 
         }
 

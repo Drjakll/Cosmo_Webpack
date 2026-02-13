@@ -11,12 +11,27 @@ let request = function(){
         
         let users = user_ids !== "" ? user_ids.split(",") : [];
 
-        let query = `select * 
+        let query = `select 
+                        f.*,
+                        ua.first_name as first_name,
+                        ua.last_name as last_name,
+                        ua.gender as gender,
+                        pl.link as profile_picture_link
                     from 
-                        Feeds 
+                        Feeds as f 
+                    join
+                        User_Accounts as ua
+                    on
+                        ua.id = f.user_id
+
+                    left join 
+                        Photo_Links as pl
+                    on
+                        pl.target_id = ua.id and pl.target_type = "profile" and pl.is_a_cover = 1
+
                     where 
-                        user_id in (?) and created_on < ?
-                    order by created_on desc
+                        f.user_id in (?) and f.created_on < ?
+                    order by f.created_on desc
                     limit 5`;
 
         try {

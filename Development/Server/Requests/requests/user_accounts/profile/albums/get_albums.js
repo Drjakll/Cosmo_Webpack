@@ -22,7 +22,7 @@ let request = function() {
                     left join
                         (select 
                             target_id,
-                            count(*) as photo_count
+                            count(target_id) as photo_count
                         from
                             Photo_Links
                         where 

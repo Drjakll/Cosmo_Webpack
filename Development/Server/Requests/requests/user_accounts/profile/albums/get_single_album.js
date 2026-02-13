@@ -8,17 +8,27 @@ let request = function() {
         
         let query = `select 
                         pa.*,
-                        pl.link as album_cover_link
+                        pl.link as album_cover_link,
+                        count(pl2.target_id) as photo_count
                     from 
                         Photo_Albums as pa 
 
                     left join
                         Photo_Links as pl
                     on
-                        pl.target_id = pa.id and target_type = 'album' and is_a_cover = true
+                        pl.target_id = pa.id and pl.target_type = 'album' and is_a_cover = true
+
+                    left join
+                        Photo_Links as pl2
+                    on
+                        pl2.target_id = pa.id and pl2.target_type = 'album'
                 
                     where 
-                        pa.id = ?`;
+                        pa.id = ?
+                    group by
+                        pl2.target_id
+                    `;
+                
 
         try {
 
