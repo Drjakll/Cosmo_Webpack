@@ -38,7 +38,12 @@ class Messaging extends Component {
     }
 
     componentWillUnmount(){
+
+        let {id} = this.state.owner_user_account;
         
+        this.msg_socket?.emit('send_report_offline', {from_user_id: id});
+
+        this.msg_socket?.disconnect();
     }
 
     async componentDidMount(){

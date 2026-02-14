@@ -1,9 +1,25 @@
 let Wrapper = function(){
 
-    this.event = ({room_tag, to_user_id, from_user_id}) => {
+    this.event = ({from_user_id}) => {
+
+        let user_private_rooms = this.user_socket[from_user_id]?.private.rooms_joined;
+        let user_public_rooms = this.user_socket[from_user_id]?.public.rooms_joined;
         
-        //The reason why massive_send_out is false because it's not sent out to a massive amount of users
-        this.user_socket[to_user_id]?.emit('report_private_online', {room_tag, user_id: from_user_id, massive_send_out: true});
+        for(let i in user_private_rooms){
+
+            let room_tag = parseInt(user_private_rooms[i]);
+
+            this.io.to(room_tag).emit('report_private_offline', {room_tag, user_id: from_user_id});
+        }
+
+        for(let i in user_public_rooms){
+
+            let room_tag = user_public_rooms[i];
+
+            this.io.to(room_tag).emit('report_public_offline', {room_tag, user_id: from_user_id});
+
+        }
+
     };
     
 };

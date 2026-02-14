@@ -1,4 +1,5 @@
 import fs from 'fs';
+import { parse } from 'path';
 
 //This is a intended for a trie data structure
 let Existing_Public_Channels = {
@@ -72,6 +73,7 @@ let Wrapper = function (){
         socket.on('clear_seen_by', events.clear_seen_by.event);
         socket.on('ping', events.ping.event);
         socket.on('send_report_online', events.send_report_online.event);
+        socket.on('send_report_offline', events.send_report_offline.event);
         socket.on('join_public_channels', events.join_public_channels.event);
         socket.on('search_public_chats', events.search_public_chats.event);
         socket.on('leave_public_channel', events.leave_public_channel.event);
@@ -90,9 +92,11 @@ let Wrapper = function (){
 
                 if(time_now - soc.last_pinged > 11000){
 
-                    for(let name in soc.private.rooms_joined){
+                    for(let room_tag in soc.private.rooms_joined){
 
-                        this.io.to(name).emit('report_private_offline', {room_tag: name, user_id});
+                        room_tag = parseInt(room_tag);
+
+                        this.io.to(room_tag).emit('report_private_offline', {room_tag, user_id});
 
                     }        
 
@@ -103,7 +107,7 @@ let Wrapper = function (){
                         this.io.to(name).emit('report_public_offline', {room_tag: name, user_id});
 
                         //Delete the online user from the public record
-                        delete public_channel_list[name]?.online_users[user_id];
+                        delete public_channel_list[name].online_users[user_id];
 
                     }
                 }
