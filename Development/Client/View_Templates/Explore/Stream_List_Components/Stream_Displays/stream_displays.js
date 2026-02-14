@@ -57,7 +57,7 @@ class Stream_Displays extends Component {
                             return <div className="thumbnail-wrapper" key={index}>
 
                                 <Individual_Stream_Thumbnail 
-                                    image_link={stream_info?.thumbnail_link} 
+                                    image_link={stream_info?.profile_picture_link} 
                                     title={stream_info?.room_title}
                                     stream_id={stream_info?.stream_id}
                                     set_current_screen={this.state.properties.set_current_screen}

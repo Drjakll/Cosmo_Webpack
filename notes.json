@@ -1,13 +1,20 @@
 {
     "2026":{
         "2": {
-            "7": {"currently working on": ["getting album feeds"],
-                  "new ideas": ["trie on data structure on advertisement", 
-                                "ask user for what advertisement they are interested in"]
-                },
+            "7": {
+                "currently working on": ["getting album feeds"],
+                "new ideas": ["trie data structure on advertisement", 
+                                "ask users for what advertisement they are interested in"]
+            },
             "12": {
                 "currently working on": ["need to refactor/touch up"],
                 "new ideas": ["none at the moment"]
+            },
+            "13": {
+                "currently working on": ["thinking of new ideas and touch up on the visual design"],
+                "new ideas": ["anonymous review from other users on their following's profile so that people can be aware of red flags about the person if any.",
+                                "anonymous reviews are made public for everyone to see",
+                                "anonymous reviews can be responded by the holder of the account in case of any accusations that aren't true."]
             }
         }
     } 

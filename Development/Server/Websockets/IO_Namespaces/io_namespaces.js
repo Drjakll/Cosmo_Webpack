@@ -106,7 +106,11 @@ let Storage = function(store_obj){
 
     let Insert_Entry = async (entry, value, dest)=>{
 
-        let vSplit = value.toLowerCase().split("");
+        if(value === null || value === undefined){
+            return;
+        }
+
+        let vSplit = value?.toLowerCase().split("");
 
         //This is the key for identifying the entry, must be manually added to the entry object
         let {key} = entry;
@@ -127,12 +131,12 @@ let Storage = function(store_obj){
 
         let add = (ptr)=>{
 
-            if(ptr === null){
+            if(!ptr){
                 ptr = create_letter_array();
             }
 
             //Toggle between deleting the storage or inserting the storage
-            if(ptr.storage[key]){
+            if(ptr?.storage[key]){
 
                 delete ptr.storage[key];
                 
@@ -229,7 +233,11 @@ let Storage = function(store_obj){
 
         let Search_Entry = async (value, i_ptr, result_ptr)=>{
 
-            let vSplit = value.toLowerCase().split("");
+            if(value === null || value === undefined){
+                return;
+            }
+
+            let vSplit = value?.toLowerCase().split("");
 
             let recursion = async (i, ptr) =>{
 
@@ -409,7 +417,11 @@ let Storage = function(store_obj){
 
     let Search_Entry = async (value, ptr, tag)=>{
 
-        let vSplit = value.toLowerCase().split("");
+        if(value === null || value === undefined){
+            return;
+        }
+
+        let vSplit = value?.toLowerCase().split("");
 
         let {key} = tag;
 

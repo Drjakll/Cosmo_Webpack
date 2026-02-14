@@ -7,30 +7,33 @@ let active_streams = {
     marital_status: null,
     gender: null,
     date_of_birth: null,
-    current_location: {
-        "State/Province": null,
-        "City": null,
-        "Country": null
+    User_Locations: {
+        "state": null,
+        "city": null,
+        "country": null,
+        "start_date": null,
+        "end_date": null,
+        "location_type": null
     },
-    location_of_birth: {
-        "State/Province": null,
-        "City": null,
-        "Country": null
+    User_Hobbies: {
+        "hobby_name": null,
+        "proficiency": null,
+        "start_date": null,
+        "story": null        
     },
-    hobbies: {
-        "Hobby": null,
-        "Profeciency": null,
-        "Date Started": null        
+    User_Schools: {
+        "school_type": null,
+        "start_date": null,
+        "end_date": null,
+        "school_name": null,
+        "city": null,
+        "state": null,
+        "country": null
     },
-    schools: {
-        "Type": null,
-        "Year Graduate": null,
-        "School": null
-    },
-    professions: {
-        "Talent": null,
-        "Profeciency": null,
-        "Date Started": null
+    User_Professions: {
+        "profession_name": null,
+        "profeciency": null,
+        "start_date": null
     }
 };
 

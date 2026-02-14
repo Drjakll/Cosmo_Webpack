@@ -37,6 +37,10 @@ class Messaging extends Component {
         };  
     }
 
+    componentWillUnmount(){
+        
+    }
+
     async componentDidMount(){
 
         let {owner_user_account: account} = this.state;

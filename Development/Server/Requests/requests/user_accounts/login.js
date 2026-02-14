@@ -81,7 +81,7 @@ function request() {
             req.body.table_name = "User_Hobbies";
             req.body.user_id = result[0].id;
 
-            
+            //next should be get_user_data_table.js
             next();
 
         } catch(err){

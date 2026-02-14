@@ -62,6 +62,8 @@ class Explore_Template extends Component {
         });
         
         this.socket?.on('catch_streams', ({ streams })=>{
+
+            console.log(streams);
             
             this.setState({
                 active_streams: streams
