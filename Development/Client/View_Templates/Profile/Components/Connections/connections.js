@@ -22,7 +22,7 @@ class Connections extends Component {
     }
 
     componentDidMount(){
-
+        
     }
 
     async componentDidUpdate(prevProps, prevState){

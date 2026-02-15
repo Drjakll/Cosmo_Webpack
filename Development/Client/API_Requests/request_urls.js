@@ -59,6 +59,7 @@ const find_public_user_info = "/find_public_user_info";
 const search_within_followers = "/search_within_followers";
 const search_within_followings = "/search_within_followings";
 const remove_follower = "/remove_follower";
+const get_mutual_recommendations = "/get_mutual_recommendations";
 
 //Alerts
 const get_alerts = "/get_alerts";
@@ -150,6 +151,7 @@ export default {
     get_connection_request_to,
     update_connection_request,
     remove_follower,
+    get_mutual_recommendations,
 
     //Alerts
     get_alerts,

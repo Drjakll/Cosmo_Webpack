@@ -31,6 +31,8 @@ class Feeds extends Component {
         await this.Get_Followings();
 
         await this.Get_Feeds(Date.now());
+
+        this.Get_Mutual_Recommendations();
     }
 
     async componentDidUpdate(prevProps, prevState){
@@ -100,6 +102,26 @@ class Feeds extends Component {
 
         await this.setState({feeds: data.results});
 
+    }
+
+    Get_Mutual_Recommendations = async ()=>{
+
+        let {get_mutual_recommendations} = this.context.Request_URLs;
+
+        let {id} = this.state.owner_user_account;
+
+        let data = await(await fetch(
+            `${get_mutual_recommendations}/${id}`,
+            {
+                method: "GET"
+            }
+        )).json();
+
+        if(!data){
+            return;
+        }
+
+        console.log(data.results);
     }
 
     Render_Main_Display = () => {
