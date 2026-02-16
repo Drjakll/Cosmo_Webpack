@@ -6,7 +6,7 @@ let request = function () {
 
         if (!user_id) {
             return res.status(400).json({
-                message: 'Missing user_id',
+                message: 'Missing id',
                 results: [],
             });
         }
@@ -16,59 +16,43 @@ let request = function () {
         let query = `
             select 
                 ua.*,
-                pl.link as profile_picture_link
+                pl.link as profile_picture_link,
+                count(distinct c.followed_id) as mutual_count
 
-            from 
-                Connections as c
+            from Connections as c
 
-            join
-                (
-                    select 
-                        count(b.follower_id) as counts,
-                        b.follower_id,
-                        b.status
-                    from
-                        Connections as b
-                ) as mutual
-            on
-                mutual.follower_id = c.followed_id 
-            and 
-                mutual.status = 'accepted'
+            join Connections as b
+                on b.follower_id = c.followed_id
+                and b.status = 'accepted'
 
-            join
-                User_Accounts as ua
-            on
-                c.followed_id = ua.id
+            join User_Accounts as ua
+                on ua.id = b.followed_id
 
-            left join
-                Photo_Links as pl
-            on
-                pl.target_type = 'profile' and pl.target_id = ua.id and pl.is_a_cover = 1
+            left join Photo_Links as pl
+                on pl.target_type = 'profile'
+                and pl.target_id = ua.id
+                and pl.is_a_cover = 1
 
             where 
-                c.follower_id = ? 
-            and 
-                c.status = 'accepted' 
-            and 
-                b.followed_id != ? 
-            and 
-                b.followed_id not in (
-                    select 
-                        followed_id
-                    from 
-                        Connections
-                    where 
-                        follower_id = ?
-                    and 
-                        status = 'accepted'
+                c.follower_id = ?
+                and c.status = 'accepted'
+                and b.followed_id != ?
+                and not exists (
+                    select 1
+                    from Connections x
+                    where x.follower_id = ?
+                    and x.status = 'accepted'
+                    and x.followed_id = b.followed_id
                 )
+
+            group by ua.id
+            having count(distinct c.followed_id) >= 3
+            order by mutual_count desc;
         `;
 
         try {
 
             let [results] = await this.sql.query(query, data);
-
-            console.log(results);
             
             res.json({message: `Found ${results.length} recommendations`, results});
 

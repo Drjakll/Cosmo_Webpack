@@ -121,7 +121,6 @@ class Feeds extends Component {
             return;
         }
 
-        console.log(data.results);
     }
 
     Render_Main_Display = () => {
