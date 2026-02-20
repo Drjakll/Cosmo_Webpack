@@ -51,7 +51,7 @@ class Date_Type extends Component {
             return;
         }
         
-        this.setState(this.props);
+        //this.setState(this.props);
     }
 
     render() {

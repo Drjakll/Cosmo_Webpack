@@ -33,7 +33,7 @@ class Text_Type extends Component {
             return;
         }
         
-        this.setState(this.props);
+        //this.setState(this.props);
     }
     
     render() {

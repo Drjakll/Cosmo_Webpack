@@ -59,24 +59,12 @@ class Profile_Info_Data extends Component {
 
                 <div id="profile-data-label-wrapper">
 
-                    <label>
-                        Details
-                    </label>
+                    <img src={'./static/personal_details_icon.png'}/>
+
+                    <label>Details</label>
 
                 </div>
-
-                {/*this is just a gap for decoration*/}
-                <div id="gap">
-
-                    <div id="left"></div>
-
-                    <div id="right">
-
-
-                    </div>
-
-                </div>
-
+                
                 <div id="info-wrapper"
 
                     ref={infoWrapperRef}

@@ -26,7 +26,7 @@ class Choice_Type extends Component {
             return;
         }
         
-        this.setState(this.props);
+        //this.setState(this.props);
     }
 
     Generate_Options = null

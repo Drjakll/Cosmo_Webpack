@@ -32,7 +32,7 @@ let request = function(){
                     where 
                         f.user_id in (?) and f.created_on < ?
                     order by f.created_on desc
-                    limit 5`;
+                    limit 2`;
 
         try {
 

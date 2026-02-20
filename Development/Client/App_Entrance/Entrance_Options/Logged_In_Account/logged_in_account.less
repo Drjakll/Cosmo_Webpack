@@ -102,6 +102,31 @@ Click nbfs://nbhost/SystemFileSystem/Templates/ClientSide/style.less to edit thi
                     font-family: sans-serif;
                     user-select: none;
 
+                    img {
+                        width: 40px;
+                        height: 40px;
+                        margin-right: 5px;
+                        object-fit: contain;
+                        object-position: center;
+                        object-repeat: no-repeat;
+
+                        &:hover {
+                            cursor: pointer;
+                        }
+                    }
+
+                    label {
+                        width: 75%;
+                        height: 100%;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+
+                        &:hover {
+                            cursor: pointer;
+                        }
+                    }
+
                     &:hover {
                         cursor: pointer;
                         background-color: rgba(150,150,150,1);

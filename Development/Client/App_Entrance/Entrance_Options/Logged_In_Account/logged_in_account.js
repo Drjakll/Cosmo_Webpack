@@ -9,11 +9,11 @@ import './logged_in_account.less';
 class Logged_In_Account extends Component {
     
     Button_Data = [
-        "Profile",
-        "Livestream",
-        "Feeds",
-        "Chat",
-        "Search"
+        {label: "Profile", icon: "profile_button.png"},
+        {label: "Livestream", icon: "livestream_button.png"},
+        {label: "Feeds", icon: "feeds_button.png"},
+        {label: "Chat", icon: "chat_button.png"},
+        {label: "Search", icon: "search_button.png"}
     ];
 
     //Fixed index of screens
@@ -136,6 +136,8 @@ class Logged_In_Account extends Component {
 
             {this.Button_Data.map((value, index) => {
 
+                let {label, icon} = value;
+
                 return <div className="logged-in-option-button"
                         key={index}
                         onClick={(e) => {
@@ -143,7 +145,10 @@ class Logged_In_Account extends Component {
                             this.Change_View(index);
                         }}>
 
-                        {value}
+
+                        <img src={`./static/${icon}`} />
+
+                        <label>{label}</label>
 
                     </div>;
 

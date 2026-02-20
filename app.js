@@ -266,7 +266,7 @@ app.patch("/update_follow_request", update_follow_request.req);
 app.post("/search_within_followers", search_within_followers.req);
 app.post("/search_within_followings", search_within_followings.req);
 app.post("/remove_follower", remove_follower.req);
-app.get("/get_mutual_recommendations/:id", get_mutual_recommendations.req);
+app.get("/get_mutual_recommendations/:id/:offset_id", get_mutual_recommendations.req);
 
 //Alerts
 app.post("/get_alerts", get_alerts.req);

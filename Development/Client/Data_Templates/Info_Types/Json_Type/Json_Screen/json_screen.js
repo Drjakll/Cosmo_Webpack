@@ -104,6 +104,7 @@ class Json_Popup extends Component {
             }
         )).json();
 
+        console.log(data?.results);
 
         this.setState({ value: data?.results ?? [] })
 
@@ -150,7 +151,7 @@ class Json_Popup extends Component {
 
                                     let {data_type, label, choices, data_name} = this.Name_Map[key] || {};
 
-                                    return key === "id" ? "" : key === "privacy" && visitor_id !== owner_id ? "" : <div className="detail-segment" key={index_1}>
+                                    return key === "id" || key === "user_id" ? "" : key === "privacy" && visitor_id !== owner_id ? "" : <div className="detail-segment" key={index_1}>
 
                                         <div id="detail-segment-label">
 

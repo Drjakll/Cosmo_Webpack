@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import Context from '@context/context.js';
 import Post_Feed from './Feed_Types/Post_Feed/post_feed.js';
 import Album_Feed from './Feed_Types/Album_Feed/album_feed.js';
+import Suggestions from './Feed_Types/Suggestions/suggestions.js';
 import Profile_Thumbnail from '@universal_components/Profile_Thumbnail/profile_thumbnail.js';
 import './feeds.less';
 
@@ -10,6 +11,8 @@ class Feeds extends Component {
     static contextType = Context;
 
     Last_Render_Callback = [];
+
+    No_More_Feeds = false;
     
     constructor(props){
         
@@ -22,6 +25,7 @@ class Feeds extends Component {
             feeds: [],
             feed_types: {},
             following: [],
+            offset: Date.now(), //This is used for pagination, which will be passed to the backend to retrieve the next batch of feeds
             render_callback: this.Render_Main_Display
         };
     }
@@ -30,9 +34,8 @@ class Feeds extends Component {
 
         await this.Get_Followings();
 
-        await this.Get_Feeds(Date.now());
+        await this.Get_Feeds(this.state.offset);
 
-        this.Get_Mutual_Recommendations();
     }
 
     async componentDidUpdate(prevProps, prevState){
@@ -100,30 +103,46 @@ class Feeds extends Component {
             return;
         }
 
-        await this.setState({feeds: data.results});
+        let {feeds} = this.state;
 
-    }
+        if(data.results.length === 0){
 
-    Get_Mutual_Recommendations = async ()=>{
+            this.No_More_Feeds = true;
 
-        let {get_mutual_recommendations} = this.context.Request_URLs;
-
-        let {id} = this.state.owner_user_account;
-
-        let data = await(await fetch(
-            `${get_mutual_recommendations}/${id}`,
-            {
-                method: "GET"
-            }
-        )).json();
-
-        if(!data){
             return;
         }
+
+        feeds = feeds.concat(data.results);
+
+        offset = feeds[feeds.length - 1]?.created_on;
+
+        feeds.push({target_type: "suggestions"});
+
+        await this.setState({feeds, offset});
 
     }
 
     Render_Main_Display = () => {
+
+        let previous_scroll_pos = 0;
+
+        let scroll_listener = async (e)=>{
+
+            let {scrollTop, scrollHeight, clientHeight} = e.target;
+
+            let scroll_pos = scrollTop + clientHeight;
+
+            //If it reaches to the bottom and the scroll position moved
+            if(scroll_pos === scrollHeight && previous_scroll_pos !== scroll_pos && !this.No_More_Feeds){
+
+                let {offset} = this.state;
+
+                await this.Get_Feeds(offset);
+
+            }
+
+            previous_scroll_pos = scroll_pos;
+        }
 
         let {feeds, owner_user_account} = this.state;
 
@@ -135,7 +154,7 @@ class Feeds extends Component {
 
             </div>
 
-            <div id="feeds-updates">
+            <div id="feeds-updates" onScroll={scroll_listener}>
 
                 {feeds?.map((data, index)=>{
 
@@ -145,7 +164,8 @@ class Feeds extends Component {
 
                     return (<div className="feeds-update-section" key={`${target_type}${target_id}`}>
 
-                        <div id="feed-account-information">
+                        {/*The reason that user_id is undefined is because it's a suggestions feed*/}
+                        {user_id !== undefined ? <div id="feed-account-information">
 
                             <div id="profile-thumbnail">
 
@@ -162,7 +182,7 @@ class Feeds extends Component {
 
                             <div id="time-created">{new Date(created_on).toLocaleString()}</div>
 
-                        </div>
+                        </div> : ""}
 
                         <div id="feed-update-information">
 
@@ -243,6 +263,16 @@ class Feeds extends Component {
                 change_display={this.Change_Display}
                 from_account={from_account}
             />;
+        },
+        "suggestions": ({})=>{
+
+            let {owner_user_account} = this.state;
+
+            return <Suggestions
+                visitor_user_account={owner_user_account}
+                change_display={this.Change_Display}
+            />;
+
         }
     }
     

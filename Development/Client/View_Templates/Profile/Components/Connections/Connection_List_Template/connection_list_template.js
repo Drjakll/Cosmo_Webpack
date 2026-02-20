@@ -50,7 +50,7 @@ class Connection_List_Template extends Component {
 
         return <div id="connection-list-template">
 
-            <div id="the-list-wrapper">
+            {list.length ? <div id="the-list-wrapper">
 
                 {list.map((entry, key)=>{
 
@@ -67,7 +67,7 @@ class Connection_List_Template extends Component {
 
                 })}
 
-            </div>
+            </div> : <div id="no-results-wrapper">No Results</div>}
 
         </div>;
     }

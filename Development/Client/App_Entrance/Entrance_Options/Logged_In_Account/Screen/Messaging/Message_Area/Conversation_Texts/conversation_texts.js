@@ -82,7 +82,7 @@ class Conversation_Texts extends Component {
 
             this.last_scroll_position = e.target.scrollTop;
             
-            if(is_scrolling_down || e.target.scrollTop > 300 || this.no_more_text_msg === true){
+            if(is_scrolling_down || e.target.scrollTop > 50 || this.no_more_text_msg === true){
 
                 return;
             }

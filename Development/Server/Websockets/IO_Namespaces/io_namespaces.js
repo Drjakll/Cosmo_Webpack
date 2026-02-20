@@ -110,7 +110,7 @@ let Storage = function(store_obj){
             return;
         }
 
-        let vSplit = value?.toLowerCase().split("");
+        let vSplit = value?.toLowerCase ? value?.toLowerCase().split("") : value.toString().split("");
 
         //This is the key for identifying the entry, must be manually added to the entry object
         let {key} = entry;
@@ -237,7 +237,7 @@ let Storage = function(store_obj){
                 return;
             }
 
-            let vSplit = value?.toLowerCase().split("");
+            let vSplit = value?.toLowerCase ? value?.toLowerCase().split("") : value.toString().split("");
 
             let recursion = async (i, ptr) =>{
 
@@ -421,13 +421,13 @@ let Storage = function(store_obj){
             return;
         }
 
-        let vSplit = value?.toLowerCase().split("");
+        let vSplit = value?.toLowerCase ? value?.toLowerCase().split("") : value.toString().split("");
 
         let {key} = tag;
 
         let recursion = async (i, sub_ptr)=>{
 
-            delete sub_ptr.storage[key];
+            delete sub_ptr?.storage?.[key];
 
             if(i >= vSplit.length){
                 return;
@@ -435,7 +435,7 @@ let Storage = function(store_obj){
 
             let c = vSplit[i];
             
-            if(sub_ptr[c] === null){
+            if(sub_ptr[c] === null || sub_ptr[c] === undefined){
                 return;
             }
 
