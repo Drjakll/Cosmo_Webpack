@@ -5,6 +5,11 @@ let request = function() {
         
         let { last_cover_id, photo_cover_id} = req.body;
 
+        if(!last_cover_id <= 0 || !photo_cover_id <= 0){
+            res.json({message: null});
+            return;
+        }
+
         let query = `
             update Photo_Links 
             set 
@@ -20,12 +25,15 @@ let request = function() {
 
             await this.sql.query(query);
 
+            res.json({message: "Successfully updated cover photo"});
+
         } catch(err){
 
             console.log(err, query);
+
+            res.json({message: null});
         }
 
-        res.end();
     };
 };
 

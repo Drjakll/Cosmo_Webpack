@@ -20,7 +20,7 @@ let request = function () {
             //If anyone of these doesn't exist, then the request must be coming from need only one table
             if(at_index === undefined || !table_names || !acc_info){
 
-                res.json({message: "Successfully retrieved results", results});
+                res.json({message: "Successfully retrieved results", results}); //It is no mistake that this uses results as the key instead of acc_info
 
             } else {
 

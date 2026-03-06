@@ -23,7 +23,7 @@ let request = function(){
 
             console.log(query, err);
 
-            res.json({message:"Error adding to feeds"});
+            res.json({message:"Error adding to feeds", result: null});
         }
 
     };
