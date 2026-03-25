@@ -8,9 +8,9 @@ let request = function() {
         
         let query = `select 
                         pa.*,
-                        pl.link as album_cover_link,
-                        pl.id as album_cover_id,
-                        pc.photo_count as photo_count
+                        coalesce(pl.link, '') as album_cover_link,
+                        coalesce(pl.id, '') as album_cover_id,
+                        coalesce(pc.photo_count, 0) as photo_count
                     from 
                         Photo_Albums as pa 
 

@@ -11,15 +11,15 @@ exports.id = "Development_Server_Requests_requests_user_accounts_profile_albums_
 exports.ids = ["Development_Server_Requests_requests_user_accounts_profile_albums_delete_album_js"];
 exports.modules = {
 
-/***/ "./Development/Server/Requests/requests/user_accounts/profile/albums/delete_album.js":
+/***/ "./Development/Server/Requests/requests/user_accounts/profile/albums/delete_album.js"
 /*!*******************************************************************************************!*\
   !*** ./Development/Server/Requests/requests/user_accounts/profile/albums/delete_album.js ***!
   \*******************************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 eval("{__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\nlet request = function () {\n  this.req = async (req, res, next) => {\n    let {\n      id,\n      user_id\n    } = req.body;\n    if (!id || !user_id) {\n      console.log(\"id or user_id is invalid\");\n      res.end();\n      return;\n    }\n    let requirements = [id, user_id];\n    let query = `delete from Photo_Albums where id = ? and user_id = ?`;\n    try {\n      await this.sql.query(query, requirements);\n      req.body.target_id = id;\n      req.body.target_type = \"album\";\n      next();\n    } catch (err) {\n      console.log(err, query);\n      res.json({\n        message: \"Album failed to delete!\"\n      });\n    }\n  };\n};\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (request);\n\n//# sourceURL=webpack://cosmo_webpack/./Development/Server/Requests/requests/user_accounts/profile/albums/delete_album.js?\n}");
 
-/***/ })
+/***/ }
 
 };
 ;

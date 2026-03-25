@@ -11,15 +11,15 @@ exports.id = "Development_Server_Requests_requests_alerts_delete_alert_js";
 exports.ids = ["Development_Server_Requests_requests_alerts_delete_alert_js"];
 exports.modules = {
 
-/***/ "./Development/Server/Requests/requests/alerts/delete_alert.js":
+/***/ "./Development/Server/Requests/requests/alerts/delete_alert.js"
 /*!*********************************************************************!*\
   !*** ./Development/Server/Requests/requests/alerts/delete_alert.js ***!
   \*********************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 eval("{__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\nlet request = function () {\n  this.req = (req, res, next) => {\n    let {\n      alert_id\n    } = req.body;\n    let query = `delete from User_Alerts where id = ${alert_id}`;\n    this.sql.query(query, (err, result) => {\n      if (err) {\n        console.log(query, err.sqlMessage);\n        res.json({\n          message: \"Error deleting alert\"\n        });\n      } else {\n        res.json({\n          message: \"Successfully deleted alert!\"\n        });\n      }\n      res.end();\n    });\n  };\n};\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (request);\n\n//# sourceURL=webpack://cosmo_webpack/./Development/Server/Requests/requests/alerts/delete_alert.js?\n}");
 
-/***/ })
+/***/ }
 
 };
 ;

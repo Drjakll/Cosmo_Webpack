@@ -11,15 +11,15 @@ exports.id = "Development_Server_Requests_requests_user_accounts_create_account_
 exports.ids = ["Development_Server_Requests_requests_user_accounts_create_account_js"];
 exports.modules = {
 
-/***/ "./Development/Server/Requests/requests/user_accounts/create_account.js":
+/***/ "./Development/Server/Requests/requests/user_accounts/create_account.js"
 /*!******************************************************************************!*\
   !*** ./Development/Server/Requests/requests/user_accounts/create_account.js ***!
   \******************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 eval("{__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\nfunction request() {\n  this.req = async (req, res) => {\n    let acc_details = req.body;\n    let {\n      email,\n      password\n    } = acc_details;\n    let query = `insert into User_Accounts(email, password) values(?,?);`;\n    try {\n      let [result] = await this.sql.query(query, [email, password]);\n      acc_details.id = result.insertId;\n      res.json({\n        message: \"Account successfully created.\",\n        success: true,\n        acc_info: acc_details\n      });\n    } catch (err) {\n      console.log(query, err.sqlMessage);\n      res.json({\n        message: \"Error creating the account.\",\n        success: false,\n        acc_info: null\n      });\n    }\n  };\n}\n;\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (request);\n\n//# sourceURL=webpack://cosmo_webpack/./Development/Server/Requests/requests/user_accounts/create_account.js?\n}");
 
-/***/ })
+/***/ }
 
 };
 ;

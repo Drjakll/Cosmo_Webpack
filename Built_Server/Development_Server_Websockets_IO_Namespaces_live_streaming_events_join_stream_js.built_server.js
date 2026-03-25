@@ -11,15 +11,15 @@ exports.id = "Development_Server_Websockets_IO_Namespaces_live_streaming_events_
 exports.ids = ["Development_Server_Websockets_IO_Namespaces_live_streaming_events_join_stream_js"];
 exports.modules = {
 
-/***/ "./Development/Server/Websockets/IO_Namespaces/live_streaming/events/join_stream.js":
+/***/ "./Development/Server/Websockets/IO_Namespaces/live_streaming/events/join_stream.js"
 /*!******************************************************************************************!*\
   !*** ./Development/Server/Websockets/IO_Namespaces/live_streaming/events/join_stream.js ***!
   \******************************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 eval("{__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\nlet Wrapper = function () {\n  this.event = ({\n    room_tag,\n    account_data\n  }) => {\n    let {\n      stream_id\n    } = room_tag;\n    this.my_socket.tag = room_tag;\n    this.my_socket.join(stream_id);\n    this.my_socket.to(stream_id).emit('new_viewer_joined', room_tag);\n    this.my_socket.to(stream_id).emit('new_viewer_enter_chat', {\n      room_tag: room_tag,\n      account_data\n    });\n  };\n};\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Wrapper);\n\n//# sourceURL=webpack://cosmo_webpack/./Development/Server/Websockets/IO_Namespaces/live_streaming/events/join_stream.js?\n}");
 
-/***/ })
+/***/ }
 
 };
 ;

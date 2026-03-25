@@ -23,27 +23,36 @@ let Connect = () => {
     return SQL;
 };
 
-let sql = Connect();
+let sql;
 
-sql.on('connection', conn => {
+function Reconnect() {
 
-  console.log('MySQL connected:', conn.threadId);
+  sql = Connect();
 
-  conn.on('error', err => {
+  sql.on('connection', conn => {
 
-    if (err.code === 'PROTOCOL_CONNECTION_LOST' || err.code === 'ECONNRESET'){
-      
-      console.warn('MySQL connection dropped, pool will recover');
+      console.log('MySQL connected:', conn.threadId);
 
-    } else {
+      conn.on('error', err => {
 
-      console.error('MySQL pool error:', err);
+        if (err.code === 'PROTOCOL_CONNECTION_LOST' || err.code === 'ECONNRESET'){
+          
+          console.warn('MySQL connection dropped, pool will recover');
 
-    }
+        } else {
 
+          console.error('MySQL pool error:', err);
+
+        }
+
+        Reconnect();
+
+      });
   });
-});
 
+}
+
+Reconnect();
 
 
 export { sql };

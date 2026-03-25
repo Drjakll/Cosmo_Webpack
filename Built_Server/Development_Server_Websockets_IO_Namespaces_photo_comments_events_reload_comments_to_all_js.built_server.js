@@ -11,15 +11,15 @@ exports.id = "Development_Server_Websockets_IO_Namespaces_photo_comments_events_
 exports.ids = ["Development_Server_Websockets_IO_Namespaces_photo_comments_events_reload_comments_to_all_js"];
 exports.modules = {
 
-/***/ "./Development/Server/Websockets/IO_Namespaces/photo_comments/events/reload_comments_to_all.js":
+/***/ "./Development/Server/Websockets/IO_Namespaces/photo_comments/events/reload_comments_to_all.js"
 /*!*****************************************************************************************************!*\
   !*** ./Development/Server/Websockets/IO_Namespaces/photo_comments/events/reload_comments_to_all.js ***!
   \*****************************************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 eval("{__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\nlet Wrapper = function () {\n  this.event = photo_id => {\n    this.socket.to(photo_id).emit('reload_comments', '');\n  };\n};\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Wrapper);\n\n//# sourceURL=webpack://cosmo_webpack/./Development/Server/Websockets/IO_Namespaces/photo_comments/events/reload_comments_to_all.js?\n}");
 
-/***/ })
+/***/ }
 
 };
 ;

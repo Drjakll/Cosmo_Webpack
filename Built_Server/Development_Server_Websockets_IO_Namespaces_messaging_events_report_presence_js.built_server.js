@@ -11,15 +11,15 @@ exports.id = "Development_Server_Websockets_IO_Namespaces_messaging_events_repor
 exports.ids = ["Development_Server_Websockets_IO_Namespaces_messaging_events_report_presence_js"];
 exports.modules = {
 
-/***/ "./Development/Server/Websockets/IO_Namespaces/messaging/events/report_presence.js":
+/***/ "./Development/Server/Websockets/IO_Namespaces/messaging/events/report_presence.js"
 /*!*****************************************************************************************!*\
   !*** ./Development/Server/Websockets/IO_Namespaces/messaging/events/report_presence.js ***!
   \*****************************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 eval("{__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\nlet Wrapper = function () {\n  this.event = ({\n    user_id\n  }) => {\n    if (!user_id) {\n      return;\n    }\n\n    //Assign the socket to the key email for accessing the socket with the given email\n    this.user_socket[user_id] = this.socket;\n    this.user_socket[user_id].last_pinged = Date.now();\n  };\n};\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Wrapper);\n\n//# sourceURL=webpack://cosmo_webpack/./Development/Server/Websockets/IO_Namespaces/messaging/events/report_presence.js?\n}");
 
-/***/ })
+/***/ }
 
 };
 ;

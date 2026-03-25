@@ -33,7 +33,7 @@
                 height: 35px;
                 width: 70px;
                 display: flex;
-                justify-content: center;
+                justify-content: space-evenly;
                 align-items: center;
 
                 img {
@@ -76,11 +76,12 @@
                 overflow-y: scroll;
                 scrollbar-width: none;
                 position: absolute;
-                top: 100%;
+                bottom: 100%;
                 left: 0%;
                 display: none;
                 background-color: rgba(245,245,245,1);
                 border: rgba(0,0,0,0.5) solid 0.5px;
+                border-radius: 15px;
                 //border-radius: 10px;
 
                 .entry {
@@ -179,7 +180,7 @@
                 cursor: pointer;
 
                 #emojis-dropdown {
-                    display: block;
+                    display: flex;
                 }
             }
 
@@ -201,17 +202,16 @@
             }
 
             #emojis-dropdown {
-                width: 100%;
                 display: none;
                 position: absolute;
-                top: 100%;
+                bottom: 100%;
                 left: 0%;
                 background-color: rgba(235,235,235,1);
                 border-radius: 10px;
                 border: rgba(0,0,0,0.5) solid 0.5px;
 
                 .emoji-icon {
-                    width: 100%;
+                    width: 35px;
                     height: 35px;
                     display: flex;
                     justify-content: center;

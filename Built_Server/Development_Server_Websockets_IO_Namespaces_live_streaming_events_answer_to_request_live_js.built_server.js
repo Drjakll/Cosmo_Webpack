@@ -11,15 +11,15 @@ exports.id = "Development_Server_Websockets_IO_Namespaces_live_streaming_events_
 exports.ids = ["Development_Server_Websockets_IO_Namespaces_live_streaming_events_answer_to_request_live_js"];
 exports.modules = {
 
-/***/ "./Development/Server/Websockets/IO_Namespaces/live_streaming/events/answer_to_request_live.js":
+/***/ "./Development/Server/Websockets/IO_Namespaces/live_streaming/events/answer_to_request_live.js"
 /*!*****************************************************************************************************!*\
   !*** ./Development/Server/Websockets/IO_Namespaces/live_streaming/events/answer_to_request_live.js ***!
   \*****************************************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 eval("{__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\nlet Wrapper = function () {\n  this.event = data => {\n    let {\n      to,\n      answer\n    } = data;\n    this.io.to(to.id).emit('receive_answer_to_go_live', {\n      answer: answer\n    });\n  };\n};\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Wrapper);\n\n//# sourceURL=webpack://cosmo_webpack/./Development/Server/Websockets/IO_Namespaces/live_streaming/events/answer_to_request_live.js?\n}");
 
-/***/ })
+/***/ }
 
 };
 ;

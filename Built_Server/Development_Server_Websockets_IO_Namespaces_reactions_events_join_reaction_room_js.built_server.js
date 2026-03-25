@@ -11,15 +11,15 @@ exports.id = "Development_Server_Websockets_IO_Namespaces_reactions_events_join_
 exports.ids = ["Development_Server_Websockets_IO_Namespaces_reactions_events_join_reaction_room_js"];
 exports.modules = {
 
-/***/ "./Development/Server/Websockets/IO_Namespaces/reactions/events/join_reaction_room.js":
+/***/ "./Development/Server/Websockets/IO_Namespaces/reactions/events/join_reaction_room.js"
 /*!********************************************************************************************!*\
   !*** ./Development/Server/Websockets/IO_Namespaces/reactions/events/join_reaction_room.js ***!
   \********************************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 eval("{__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\nlet Wrapper = function () {\n  this.event = ({\n    room_name\n  }) => {\n    this.socket.join(room_name);\n  };\n};\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Wrapper);\n\n//# sourceURL=webpack://cosmo_webpack/./Development/Server/Websockets/IO_Namespaces/reactions/events/join_reaction_room.js?\n}");
 
-/***/ })
+/***/ }
 
 };
 ;

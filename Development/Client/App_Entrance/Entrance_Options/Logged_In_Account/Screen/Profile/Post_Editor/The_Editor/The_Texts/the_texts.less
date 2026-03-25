@@ -3,54 +3,72 @@
     height: calc(100% - 1px);
     border-bottom: rgba(0,0,0,0.5) solid 1px;
     display: block;
+    background-color: rgba(0,0,0,0.1);
 
     #the-text-editor-area {
-        height: 85%;
+        height: 87.5%;
         width: 100%;
 
         #the-title-input-wrapper {
             width: 100%;
-            height: 15%;
+            height: 20%;
             display: flex;
             justify-content: center;
             align-items: center;
 
             #the-title-input {
-                width: calc(75% - 0.7vh - 0.7vw);
-                height: calc(75% - 0.7vh - 0.7vw);
-                font-size: calc(1vh + 1vw);
-                padding: calc(0.35vh + 0.35vw);
+                width: calc(80%);
+                height: calc(80% - 10px);
+                font-size: calc(32px);
+                padding: 5px;
                 border: rgba(0,0,0,0.5) solid 0.5px;
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                border-radius: 50px;
-                background-color: rgba(255,255,255,0.5);
+                border-radius: 15px;
+                background-color: rgba(0,0,0,0.5);
                 font-weight: bold;
-                color: rgba(0,0,0,0.75);
+                color: rgba(255,255,255,0.75);
             }
         }
 
         #text-editor-button-area {
             width: 100%;
-            height: 5%;
+            height: 10%;
             display: flex;
             justify-content: space-evenly;
             align-items: center;
+
+            button {
+                width: 125px;
+                padding: 7.5px 12.5px 7.5px 12.5px ;
+                border-radius: 50px;
+                box-shadow: none;
+                border: rgba(0,0,0,0.5) solid 1px;
+                background-color: black;
+                color: rgba(255,255,255,0.75);
+                transition: 0.5s;
+                font-weight: 503;
+
+                &:hover {
+                    cursor: pointer;
+                    background-color: rgba(0,0,0,0.75);
+                }
+            }
         }
 
         #the-body-input-wrapper {
             width: 100%;
-            height: 80%;
+            height: 70%;
             display: flex;
             justify-content: center;
             align-items: center;
 
             #the-body-input {
-                width: calc(85% - 1.2vh - 1.2vw);
-                height: calc(85% - 1.2vh - 1.2vw);
-                font-size: calc(0.5vh + 0.5vw);
-                padding: calc(0.6vh + 0.6vw);
+                width: calc(80%);
+                height: calc(90% - 20px);
+                font-size: calc(14px);
+                padding: calc(10px);
                 border: rgba(0,0,0,0.5) solid 0.5px;
                 border-radius: 10px;
                 //background-color: rgba(255,255,255,0.65);
@@ -59,21 +77,24 @@
                 white-space: break-spaces;
                 color: rgba(50,50,50,1);
                 background-color: rgb(232, 236, 239);
+                overflow-y: auto;
+                scrollbar-width: none;
             }
         }
     }
 
 
     #the-buttons-area {
-        height: 15%;
+        height: 12.5%;
         width: 100%;
         display: flex;
         justify-content: space-evenly;
         align-items: center;
 
         .post-button {
-            padding: calc(0.5vh + 0.5vw);
-            font-size: calc(0.35vh + 0.35vw);
+            width: 100px;
+            padding: 7.5px 12.5px 7.5px 12.5px;
+            font-size: calc(14px);
             border-radius: 50px;
             border: rgba(0,0,0,0.5) solid 0.5px;
             background-color: darkolivegreen;
@@ -82,12 +103,16 @@
             justify-content: center;
             align-items: center;
             transition: 1s;
-            font-weight: bold;
+            font-weight: 500;
 
             &:hover {
                 cursor: pointer;
-                background-color: olive;
+                background-color: olive !important;
             }
+        }
+
+        #the-delete-button {
+            background-color: rgba(175,25,25,0.9);
         }
     }
 }

@@ -25,7 +25,7 @@ let request = function() {
                         cr.*,
                         ua.first_name as first_name,
                         ua.last_name as last_name,
-                        pl.link as profile_picture_link
+                        coalesce(pl.link, "") as profile_picture_link
                     from 
                         Comment_Reactions as cr
 

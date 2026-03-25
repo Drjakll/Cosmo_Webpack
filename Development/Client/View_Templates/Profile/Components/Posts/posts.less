@@ -35,11 +35,22 @@ Click nbfs://nbhost/SystemFileSystem/Templates/ClientSide/style.less to edit thi
         display: flex;
         justify-content: center;
         align-items: center;
-        color: rgba(75,75,75,1);
-        font-size: 18px;
-        font-weight: bold;
-        //background-color: rgba(0,0,0,0.1);
-        padding: 10px 0px 10px 0px;
+
+        img {
+            object-fit: contain;
+            object-position: center;
+            height: 40px;
+            width: 40px;
+            opacity: 0.8;
+        }
+
+        label {
+            color: rgba(75,75,75,1);
+            font-size: 18px;
+            font-weight: bold;
+            //background-color: rgba(0,0,0,0.1);
+            padding: 10px 0px 10px 0px;
+        }
     }
 
     #post-editor-wrapper {

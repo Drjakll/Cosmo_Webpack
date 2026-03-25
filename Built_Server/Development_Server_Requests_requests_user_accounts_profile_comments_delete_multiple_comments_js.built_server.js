@@ -11,15 +11,15 @@ exports.id = "Development_Server_Requests_requests_user_accounts_profile_comment
 exports.ids = ["Development_Server_Requests_requests_user_accounts_profile_comments_delete_multiple_comments_js"];
 exports.modules = {
 
-/***/ "./Development/Server/Requests/requests/user_accounts/profile/comments/delete_multiple_comments.js":
+/***/ "./Development/Server/Requests/requests/user_accounts/profile/comments/delete_multiple_comments.js"
 /*!*********************************************************************************************************!*\
   !*** ./Development/Server/Requests/requests/user_accounts/profile/comments/delete_multiple_comments.js ***!
   \*********************************************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 eval("{__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\nlet request = function () {\n  this.req = async (req, res) => {\n    let {\n      requirements\n    } = req.body;\n    if ((requirements && requirements[0]).length === 0) {\n      res.json({\n        message: \"No comments to delete\",\n        failed: true\n      });\n      return;\n    }\n    let query = `delete from Comments where id in (?)`;\n    try {\n      await this.sql.query(query, requirements);\n      res.json({\n        message: \"Successfully deleted comments\",\n        failed: false\n      });\n    } catch (err) {\n      console.log(err);\n      res.json({\n        message: \"Failed to delete the comment\",\n        failed: true\n      });\n    }\n  };\n};\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (request);\n\n//# sourceURL=webpack://cosmo_webpack/./Development/Server/Requests/requests/user_accounts/profile/comments/delete_multiple_comments.js?\n}");
 
-/***/ })
+/***/ }
 
 };
 ;

@@ -263,7 +263,11 @@ class Posts extends Component {
             <div id="posts" tabIndex="0">
                 
                 <div id="post-label">
-                    Posts
+
+                    <img src="./static/post_icon.png"/>
+
+                    <label>Posts</label>
+                    
                 </div>
 
                 <div id="top">

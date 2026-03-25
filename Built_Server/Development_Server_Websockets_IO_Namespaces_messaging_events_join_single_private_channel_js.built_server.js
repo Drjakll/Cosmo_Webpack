@@ -11,15 +11,15 @@ exports.id = "Development_Server_Websockets_IO_Namespaces_messaging_events_join_
 exports.ids = ["Development_Server_Websockets_IO_Namespaces_messaging_events_join_single_private_channel_js"];
 exports.modules = {
 
-/***/ "./Development/Server/Websockets/IO_Namespaces/messaging/events/join_single_private_channel.js":
+/***/ "./Development/Server/Websockets/IO_Namespaces/messaging/events/join_single_private_channel.js"
 /*!*****************************************************************************************************!*\
   !*** ./Development/Server/Websockets/IO_Namespaces/messaging/events/join_single_private_channel.js ***!
   \*****************************************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 eval("{__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\nlet Wrapper = function () {\n  this.event = private_conversation => {\n    this.socket.join(private_conversation.room_tag);\n  };\n};\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Wrapper);\n\n//# sourceURL=webpack://cosmo_webpack/./Development/Server/Websockets/IO_Namespaces/messaging/events/join_single_private_channel.js?\n}");
 
-/***/ })
+/***/ }
 
 };
 ;

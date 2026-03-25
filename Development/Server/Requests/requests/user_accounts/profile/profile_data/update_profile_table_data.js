@@ -5,7 +5,9 @@ let request = function () {
         let { to_update, table_name, id } = req.body;
 
         if(Object.keys(to_update).length === 0 || !table_name || !id){
-            res.end();
+
+            res.json({message: "No account information found", success: 0});
+            
             return;
         }
         
@@ -14,13 +16,15 @@ let request = function () {
         try {
 
             await this.sql.query(query, [to_update, id]);
+
+            res.json({message: "Successfully updated account table", success: 1});
             
         }catch(err){
 
             console.log(query, err);
-        }
 
-        res.end();
+            res.json({message: "Error while updating table", success: 0});
+        }
 
     };
 };

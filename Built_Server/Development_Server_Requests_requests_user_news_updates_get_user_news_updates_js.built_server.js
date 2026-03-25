@@ -11,15 +11,15 @@ exports.id = "Development_Server_Requests_requests_user_news_updates_get_user_ne
 exports.ids = ["Development_Server_Requests_requests_user_news_updates_get_user_news_updates_js"];
 exports.modules = {
 
-/***/ "./Development/Server/Requests/requests/user_news_updates/get_user_news_updates.js":
+/***/ "./Development/Server/Requests/requests/user_news_updates/get_user_news_updates.js"
 /*!*****************************************************************************************!*\
   !*** ./Development/Server/Requests/requests/user_news_updates/get_user_news_updates.js ***!
   \*****************************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 eval("{__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\nlet request = function () {\n  let Modify_Query = (original_query, connection_list) => {\n    for (let i in connection_list) {\n      let {\n        email\n      } = connection_list[i];\n      original_query += `nu.owner_email = '${email}' or `;\n    }\n    return original_query.slice(0, -4);\n  };\n  this.req = (req, res) => {\n    let {\n      connection_list\n    } = req.body;\n    if (Object.keys(connection_list).length === 0) {\n      res.json({\n        message: \"No results found\",\n        results: []\n      });\n      res.end();\n      return;\n    }\n    let query = Modify_Query(`select \n                                    nu.*, \n                                    ua.profile_picture_link,\n                                    ua.first_name,\n                                    ua.last_name\n                                from \n                                    User_News_Updates as nu\n                                join \n                                    User_Accounts as ua \n                                on\n                                    ua.email = nu.owner_email\n                                where \n                                `, connection_list);\n    this.sql.query(query, (err, results) => {\n      if (err) {\n        console.log(query, err.sqlMessage);\n        res.json({\n          message: \"Error getting news update\",\n          results: []\n        });\n      } else {\n        res.json({\n          message: \"Successfully retrieved news update!\",\n          results: results\n        });\n      }\n      res.end();\n    });\n  };\n};\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (request);\n\n//# sourceURL=webpack://cosmo_webpack/./Development/Server/Requests/requests/user_news_updates/get_user_news_updates.js?\n}");
 
-/***/ })
+/***/ }
 
 };
 ;

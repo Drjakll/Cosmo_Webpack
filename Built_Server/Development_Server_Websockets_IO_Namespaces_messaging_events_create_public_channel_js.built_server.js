@@ -11,15 +11,15 @@ exports.id = "Development_Server_Websockets_IO_Namespaces_messaging_events_creat
 exports.ids = ["Development_Server_Websockets_IO_Namespaces_messaging_events_create_public_channel_js"];
 exports.modules = {
 
-/***/ "./Development/Server/Websockets/IO_Namespaces/messaging/events/create_public_channel.js":
+/***/ "./Development/Server/Websockets/IO_Namespaces/messaging/events/create_public_channel.js"
 /*!***********************************************************************************************!*\
   !*** ./Development/Server/Websockets/IO_Namespaces/messaging/events/create_public_channel.js ***!
   \***********************************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 eval("{__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\nlet Wrapper = function () {\n  this.event = channel_info => {\n    let {\n      channel_name\n    } = channel_info;\n    this.socket.join(channel_name);\n    this.channel_storage.store(channel_info);\n  };\n};\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Wrapper);\n\n//# sourceURL=webpack://cosmo_webpack/./Development/Server/Websockets/IO_Namespaces/messaging/events/create_public_channel.js?\n}");
 
-/***/ })
+/***/ }
 
 };
 ;

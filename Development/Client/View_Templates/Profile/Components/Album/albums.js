@@ -172,6 +172,8 @@ class Albums extends Component {
 
                     <div id="albums-label">
 
+                        <img src="./static/album_icon.png"/>
+                        
                         <label>Albums</label>
 
                     </div>

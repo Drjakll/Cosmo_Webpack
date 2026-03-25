@@ -11,15 +11,15 @@ exports.id = "Development_Server_Requests_requests_user_accounts_profile_comment
 exports.ids = ["Development_Server_Requests_requests_user_accounts_profile_comments_delete_general_reactions_js"];
 exports.modules = {
 
-/***/ "./Development/Server/Requests/requests/user_accounts/profile/comments/delete_general_reactions.js":
+/***/ "./Development/Server/Requests/requests/user_accounts/profile/comments/delete_general_reactions.js"
 /*!*********************************************************************************************************!*\
   !*** ./Development/Server/Requests/requests/user_accounts/profile/comments/delete_general_reactions.js ***!
   \*********************************************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 eval("{__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\nlet request = function () {\n  this.req = async (req, res, next) => {\n    let {\n      requirements\n    } = req.body;\n    let query = `delete from General_Reactions where target_id in (?) and target_type in (?)`;\n    try {\n      await this.sql.query(query, requirements);\n\n      //Should call to delete whatever it needs to delete next, post or photo files\n      next();\n    } catch (err) {\n      console.log(err);\n      res.json({\n        message: \"Failed to delete the comment\",\n        failed: true\n      });\n    }\n  };\n};\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (request);\n\n//# sourceURL=webpack://cosmo_webpack/./Development/Server/Requests/requests/user_accounts/profile/comments/delete_general_reactions.js?\n}");
 
-/***/ })
+/***/ }
 
 };
 ;

@@ -1,10 +1,10 @@
 import React , {Component} from 'react';
 import Context from '@context/context.js';
 import Search_Parameters from '@data_templates/Search_Parameters/search_parameters.js';
-import Account_Data from '@data_templates/account_data.js';
+import Search_Data from '@data_templates/search_data.js';
 import './search_criteria_box.less';
 
-let {Account_Info_Data_Template} = Account_Data;
+let {Search_Data_Template} = Search_Data;
 
 class Criteria_Box extends Component {
 
@@ -17,7 +17,7 @@ class Criteria_Box extends Component {
         super(props);
 
         this.state = {
-            available_search_parameters: Account_Info_Data_Template(Search_Parameters),
+            available_search_parameters: Search_Data_Template(Search_Parameters),
             added_parameters: {}
         };
 

@@ -12,15 +12,21 @@ let request = function() {
         ];
 
         if(reply_to_ids){
+            //The reason why it's getting reply_to_ids is because we need to find out how many replies each comment has.
+            //It should be the second time the request has called this function.
             reply_to_ids = reply_to_ids.split(","); 
             data.push(reply_to_ids);
         }
 
         let query = `select 
                         c.*,
-                        pl.link as profile_picture_link,
+                        coalesce(pl.link, "") as profile_picture_link,
                         ua.first_name as first_name,
-                        ua.last_name as last_name
+                        ua.last_name as last_name,
+
+                        json_array() as replies,
+                        json_array() as reactions
+
                     from 
                         Comments as c
 
@@ -55,6 +61,7 @@ let request = function() {
                     replies: results
                 };
 
+                //All the results will be assembled at the front end
                 return res.json({message: "Successfully retrieved comments", results: all_results});
             }
 

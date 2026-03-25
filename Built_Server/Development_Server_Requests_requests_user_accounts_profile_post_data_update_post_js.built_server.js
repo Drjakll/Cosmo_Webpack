@@ -11,15 +11,15 @@ exports.id = "Development_Server_Requests_requests_user_accounts_profile_post_da
 exports.ids = ["Development_Server_Requests_requests_user_accounts_profile_post_data_update_post_js"];
 exports.modules = {
 
-/***/ "./Development/Server/Requests/requests/user_accounts/profile/post_data/update_post.js":
+/***/ "./Development/Server/Requests/requests/user_accounts/profile/post_data/update_post.js"
 /*!*********************************************************************************************!*\
   !*** ./Development/Server/Requests/requests/user_accounts/profile/post_data/update_post.js ***!
   \*********************************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 eval("{__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\nlet request = function () {\n  this.req = async (req, res) => {\n    let {\n      user_id,\n      id,\n      title,\n      body\n    } = req.body;\n    let query = `update Post_Data set title = ?, body = ? where id = ? and user_id = ?`;\n    let data = [title, body, id, user_id];\n    try {\n      let [result] = await this.sql.query(query, data);\n      if (result.affectedRows === 0) {\n        res.json({\n          message: \"No post found\"\n        });\n      } else {\n        res.json({\n          message: \"Successfully updated post\"\n        });\n      }\n    } catch (err) {\n      console.log(err);\n      res.json({\n        message: \"Error editing post\"\n      });\n    }\n  };\n};\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (request);\n\n//# sourceURL=webpack://cosmo_webpack/./Development/Server/Requests/requests/user_accounts/profile/post_data/update_post.js?\n}");
 
-/***/ })
+/***/ }
 
 };
 ;

@@ -11,15 +11,15 @@ exports.id = "Development_Server_Websockets_IO_Namespaces_messaging_events_join_
 exports.ids = ["Development_Server_Websockets_IO_Namespaces_messaging_events_join_private_channels_js"];
 exports.modules = {
 
-/***/ "./Development/Server/Websockets/IO_Namespaces/messaging/events/join_private_channels.js":
+/***/ "./Development/Server/Websockets/IO_Namespaces/messaging/events/join_private_channels.js"
 /*!***********************************************************************************************!*\
   !*** ./Development/Server/Websockets/IO_Namespaces/messaging/events/join_private_channels.js ***!
   \***********************************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 eval("{__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\nlet Wrapper = function () {\n  this.event = ({\n    private_conversations,\n    user_id\n  }) => {\n    for (let room_tag in private_conversations) {\n      room_tag = parseInt(room_tag);\n      this.socket.join(room_tag);\n      this.socket.private.rooms_joined[room_tag] = room_tag;\n\n      //The reason why massive_send_out is true is because this report is sent out to the mass amount of users\n      this.io.to(room_tag).emit('report_private_online', {\n        user_id,\n        room_tag,\n        massive_send_out: true\n      });\n    }\n  };\n};\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Wrapper);\n\n//# sourceURL=webpack://cosmo_webpack/./Development/Server/Websockets/IO_Namespaces/messaging/events/join_private_channels.js?\n}");
 
-/***/ })
+/***/ }
 
 };
 ;

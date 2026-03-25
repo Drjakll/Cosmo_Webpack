@@ -11,15 +11,15 @@ exports.id = "Development_Server_Requests_requests_user_news_updates_add_user_ne
 exports.ids = ["Development_Server_Requests_requests_user_news_updates_add_user_news_update_js"];
 exports.modules = {
 
-/***/ "./Development/Server/Requests/requests/user_news_updates/add_user_news_update.js":
+/***/ "./Development/Server/Requests/requests/user_news_updates/add_user_news_update.js"
 /*!****************************************************************************************!*\
   !*** ./Development/Server/Requests/requests/user_news_updates/add_user_news_update.js ***!
   \****************************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 eval("{__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\nlet request = function () {\n  let news_type = {\n    album: \"album_id\",\n    user_accounts: \"user_account_id\",\n    post: \"post_id\"\n  };\n  this.req = (req, res) => {\n    let {\n      owner,\n      news_data,\n      type,\n      id_ref,\n      message\n    } = req.body;\n    news_data = JSON.stringify(news_data || {}).replace(/\\\\/g, \"\\\\\\\\\").replace(/\\'/g, \"\\\\'\").replace(/\\\"/g, '\\\\\"');\n    let time_created = Date.now();\n    let query = `insert into User_News_Updates (\n                            owner_email, \n                            news_data, \n                            news_type, \n                            ${news_type[type]}, \n                            message,\n                            time_created) \n                        values(\n                            '${owner.email}', \n                            '${news_data}', \n                            '${type}', \n                            ${id_ref}, \n                            '${message}', \n                            ${time_created})\n                        `;\n    this.sql.query(query, (err, result) => {\n      if (err) {\n        console.log(query, err.sqlMessage);\n        res.json({\n          message: \"Error adding a news update\"\n        });\n      } else {\n        res.json({\n          message: \"Successfully added a news update!\"\n        });\n      }\n      res.end();\n    });\n  };\n};\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (request);\n\n//# sourceURL=webpack://cosmo_webpack/./Development/Server/Requests/requests/user_news_updates/add_user_news_update.js?\n}");
 
-/***/ })
+/***/ }
 
 };
 ;

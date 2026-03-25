@@ -1,6 +1,9 @@
 import React, {Component} from 'react';
 import Context from '@context/context.js';
+import Search_Data from '@data_templates/search_data.js';
 import './search_streams.less';
+
+let {Search_Data_Template} = Search_Data;
 
 class Search_Streams extends Component {
 
@@ -43,7 +46,7 @@ class Search_Streams extends Component {
 
         let { search_parameter_options} = this.state;
 
-        this.search_data_templates = Account_Info_Data_Template(null);
+        this.search_data_templates = Search_Data_Template();
 
         for(let i in Search_Parameters){
 

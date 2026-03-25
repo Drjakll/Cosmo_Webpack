@@ -39,6 +39,7 @@ let request = function() {
             if(time_uploaded){
                 //If time_uploaded exists, it means it's searching for a time line in a single album, which means it's coming from
                 //get_single_album.js, so album_info should exist as well.
+                //This block is made mainly for the purpose of getting feed updates
                 let {album_info} = req.body;
 
                 res.json({message: `Successfully retrieved ${results.length} photo links`, photos: results, album_info});

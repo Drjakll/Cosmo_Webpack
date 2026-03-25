@@ -11,15 +11,15 @@ exports.id = "Development_Server_Requests_requests_connections_remove_follow_req
 exports.ids = ["Development_Server_Requests_requests_connections_remove_follow_request_js"];
 exports.modules = {
 
-/***/ "./Development/Server/Requests/requests/connections/remove_follow_request.js":
+/***/ "./Development/Server/Requests/requests/connections/remove_follow_request.js"
 /*!***********************************************************************************!*\
   !*** ./Development/Server/Requests/requests/connections/remove_follow_request.js ***!
   \***********************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 eval("{__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\nlet request = function () {\n  this.req = async (req, res) => {\n    let {\n      from_id,\n      to_id\n    } = req.body;\n    let data = [from_id, to_id];\n    let query = `\n            delete from Connections where follower_id = ? and followed_id = ?;\n        `;\n    try {\n      this.sql.query(query, data);\n      res.json({\n        message: \"Successfully removed follow request\"\n      });\n    } catch (err) {\n      console.log(err);\n      res.json({\n        message: \"Error removing follow request\"\n      });\n    }\n  };\n};\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (request);\n\n//# sourceURL=webpack://cosmo_webpack/./Development/Server/Requests/requests/connections/remove_follow_request.js?\n}");
 
-/***/ })
+/***/ }
 
 };
 ;

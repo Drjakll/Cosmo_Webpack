@@ -11,15 +11,15 @@ exports.id = "Development_Server_Requests_requests_messaging_insert_message_js";
 exports.ids = ["Development_Server_Requests_requests_messaging_insert_message_js"];
 exports.modules = {
 
-/***/ "./Development/Server/Requests/requests/messaging/insert_message.js":
+/***/ "./Development/Server/Requests/requests/messaging/insert_message.js"
 /*!**************************************************************************!*\
   !*** ./Development/Server/Requests/requests/messaging/insert_message.js ***!
   \**************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 eval("{__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\nfunction request() {\n  this.req = async (req, res) => {\n    let {\n      conversation_id,\n      text,\n      sender_id,\n      created_on\n    } = req.body;\n    let query = `\n                insert into\n                    Private_Messages(conversation_id, text, sender_id, created_on)\n                values (?,?,?,?);\n            `;\n    try {\n      await this.sql.query(query, [conversation_id, text, sender_id, created_on]);\n      res.json({\n        message: \"Successfully inserted the message\"\n      });\n    } catch (err) {\n      console.log(query, err);\n      res.json({\n        message: \"An error occured while inserting the message\"\n      });\n    }\n  };\n}\n;\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (request);\n\n//# sourceURL=webpack://cosmo_webpack/./Development/Server/Requests/requests/messaging/insert_message.js?\n}");
 
-/***/ })
+/***/ }
 
 };
 ;

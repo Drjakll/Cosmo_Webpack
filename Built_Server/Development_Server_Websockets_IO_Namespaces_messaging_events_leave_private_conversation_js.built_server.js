@@ -11,15 +11,15 @@ exports.id = "Development_Server_Websockets_IO_Namespaces_messaging_events_leave
 exports.ids = ["Development_Server_Websockets_IO_Namespaces_messaging_events_leave_private_conversation_js"];
 exports.modules = {
 
-/***/ "./Development/Server/Websockets/IO_Namespaces/messaging/events/leave_private_conversation.js":
+/***/ "./Development/Server/Websockets/IO_Namespaces/messaging/events/leave_private_conversation.js"
 /*!****************************************************************************************************!*\
   !*** ./Development/Server/Websockets/IO_Namespaces/messaging/events/leave_private_conversation.js ***!
   \****************************************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 eval("{__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\nlet Wrapper = function () {\n  this.event = ({\n    room_tag,\n    remaining_users\n  }) => {\n    this.socket.leave(room_tag);\n\n    //refresh theirselve's conversation list\n    this.socket.emit('refresh_conversation_list', {});\n    for (let user of remaining_users) {\n      this.user_socket[user.id]?.emit('refresh_conversation_list', {});\n    }\n  };\n};\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Wrapper);\n\n//# sourceURL=webpack://cosmo_webpack/./Development/Server/Websockets/IO_Namespaces/messaging/events/leave_private_conversation.js?\n}");
 
-/***/ })
+/***/ }
 
 };
 ;

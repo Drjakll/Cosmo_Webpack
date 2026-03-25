@@ -11,15 +11,15 @@ exports.id = "Development_Server_Requests_requests_user_accounts_profile_post_da
 exports.ids = ["Development_Server_Requests_requests_user_accounts_profile_post_data_get_last_time_posted_js"];
 exports.modules = {
 
-/***/ "./Development/Server/Requests/requests/user_accounts/profile/post_data/get_last_time_posted.js":
+/***/ "./Development/Server/Requests/requests/user_accounts/profile/post_data/get_last_time_posted.js"
 /*!******************************************************************************************************!*\
   !*** ./Development/Server/Requests/requests/user_accounts/profile/post_data/get_last_time_posted.js ***!
   \******************************************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 eval("{__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\nlet request = function () {\n  this.req = async (req, res) => {\n    let {\n      user_id\n    } = req.body;\n    let query = `select * from Post_Data where user_id = ?\n                                               order by created_on desc \n                                               limit 1`;\n    try {\n      let [results] = await this.sql.query(query, [user_id]);\n      let last_posted = results.length === 0 ? 0 : results[0].created_on;\n      res.json({\n        last_time_posted: last_posted\n      });\n    } catch (err) {\n      console.log(err);\n      res.json({\n        last_time_posted: null\n      });\n    }\n  };\n};\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (request);\n\n//# sourceURL=webpack://cosmo_webpack/./Development/Server/Requests/requests/user_accounts/profile/post_data/get_last_time_posted.js?\n}");
 
-/***/ })
+/***/ }
 
 };
 ;

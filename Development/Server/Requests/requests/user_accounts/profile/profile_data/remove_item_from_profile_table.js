@@ -11,11 +11,15 @@ let request = function () {
 
             await this.sql.query(query, [id]);
 
+            res.json({message: "Successfully removed entry", success: 1});
+
         } catch(err){
+            
             console.log(query, err);
+
+            res.json({message: "Error on removing entry", success: 0});
         }   
 
-        res.end();
     };
 };
 

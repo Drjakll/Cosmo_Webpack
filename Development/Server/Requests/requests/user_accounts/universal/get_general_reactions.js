@@ -50,7 +50,7 @@ let request = function() {
                 targets
             };
 
-            res.json({message: "Successfully rertrieved some results", results: final_results});
+            res.json({message: "Successfully rertrieved some results", results: final_results, failed: false});
 
         } catch(err){
 

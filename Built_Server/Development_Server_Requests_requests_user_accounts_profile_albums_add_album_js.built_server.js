@@ -11,15 +11,15 @@ exports.id = "Development_Server_Requests_requests_user_accounts_profile_albums_
 exports.ids = ["Development_Server_Requests_requests_user_accounts_profile_albums_add_album_js"];
 exports.modules = {
 
-/***/ "./Development/Server/Requests/requests/user_accounts/profile/albums/add_album.js":
+/***/ "./Development/Server/Requests/requests/user_accounts/profile/albums/add_album.js"
 /*!****************************************************************************************!*\
   !*** ./Development/Server/Requests/requests/user_accounts/profile/albums/add_album.js ***!
   \****************************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 eval("{__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\nlet request = function () {\n  this.req = async (req, res) => {\n    let {\n      title,\n      user_id\n    } = req.body;\n    let created_on = Date.now();\n    let data = [{\n      title,\n      user_id,\n      created_on\n    }];\n    let query = `insert into Photo_Albums set ?`;\n    try {\n      await this.sql.query(query, data);\n      res.json({\n        message: \"Successfully created an album!\",\n        failed: false\n      });\n    } catch (err) {\n      console.log(query, err);\n      res.json({\n        message: \"Failed to created the album!\",\n        failed: true\n      });\n    }\n  };\n};\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (request);\n\n//# sourceURL=webpack://cosmo_webpack/./Development/Server/Requests/requests/user_accounts/profile/albums/add_album.js?\n}");
 
-/***/ })
+/***/ }
 
 };
 ;

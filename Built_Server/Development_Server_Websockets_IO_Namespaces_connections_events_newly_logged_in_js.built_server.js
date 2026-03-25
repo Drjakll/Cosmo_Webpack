@@ -11,15 +11,15 @@ exports.id = "Development_Server_Websockets_IO_Namespaces_connections_events_new
 exports.ids = ["Development_Server_Websockets_IO_Namespaces_connections_events_newly_logged_in_js"];
 exports.modules = {
 
-/***/ "./Development/Server/Websockets/IO_Namespaces/connections/events/newly_logged_in.js":
+/***/ "./Development/Server/Websockets/IO_Namespaces/connections/events/newly_logged_in.js"
 /*!*******************************************************************************************!*\
   !*** ./Development/Server/Websockets/IO_Namespaces/connections/events/newly_logged_in.js ***!
   \*******************************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 eval("{__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\nlet Wrapper = function () {\n  this.event = ({\n    email\n  }) => {\n    this.user_email[email] = this.socket;\n  };\n};\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Wrapper);\n\n//# sourceURL=webpack://cosmo_webpack/./Development/Server/Websockets/IO_Namespaces/connections/events/newly_logged_in.js?\n}");
 
-/***/ })
+/***/ }
 
 };
 ;

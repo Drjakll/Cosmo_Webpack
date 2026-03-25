@@ -11,15 +11,15 @@ exports.id = "Development_Server_Requests_requests_messaging_leave_private_conve
 exports.ids = ["Development_Server_Requests_requests_messaging_leave_private_conversation_js"];
 exports.modules = {
 
-/***/ "./Development/Server/Requests/requests/messaging/leave_private_conversation.js":
+/***/ "./Development/Server/Requests/requests/messaging/leave_private_conversation.js"
 /*!**************************************************************************************!*\
   !*** ./Development/Server/Requests/requests/messaging/leave_private_conversation.js ***!
   \**************************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 eval("{__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\nfunction request() {\n  this.req = async (req, res) => {\n    let {\n      conversation_id,\n      user_id\n    } = req.body;\n    let query = `delete from Users_In_Private_Conversations where conversation_id = ? and user_id = ?`;\n    try {\n      await this.sql.query(query, [conversation_id, user_id]);\n      res.json({\n        message: \"You have left the conversation!\"\n      });\n    } catch (err) {\n      console.log(query, err);\n      res.json({\n        message: \"Error leaving the conversation\"\n      });\n    }\n  };\n}\n;\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (request);\n\n//# sourceURL=webpack://cosmo_webpack/./Development/Server/Requests/requests/messaging/leave_private_conversation.js?\n}");
 
-/***/ })
+/***/ }
 
 };
 ;

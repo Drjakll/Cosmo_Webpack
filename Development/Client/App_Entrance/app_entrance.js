@@ -33,7 +33,7 @@ class App_Entrance extends Component {
                 onMouseDown={(e) => { drag.init_drag(e); } }
             >
                     
-                    <Entrance_Options/>
+                <Entrance_Options/>
                     
             </div>
         );

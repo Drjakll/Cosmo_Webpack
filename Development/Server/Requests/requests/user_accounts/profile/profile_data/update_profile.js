@@ -7,7 +7,7 @@ let request = function () {
         let {password, id} = credentials;
 
         if(Object.keys(to_update).length === 0 || !password || !id){
-            res.end();
+            res.json({message: "Credentials not found", success: 0});
             return;
         }
         
@@ -16,13 +16,13 @@ let request = function () {
         try {
 
             await this.sql.query(query, [to_update, password, id]);
+            res.json({message: "Successfully updated the account", success: 1});
             
         }catch(err){
 
             console.log(query, err);
+            res.json({message: "Error while updating", success: 0});
         }
-
-        res.end();
 
     };
 };

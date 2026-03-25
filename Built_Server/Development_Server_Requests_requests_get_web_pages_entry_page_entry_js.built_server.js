@@ -11,15 +11,15 @@ exports.id = "Development_Server_Requests_requests_get_web_pages_entry_page_entr
 exports.ids = ["Development_Server_Requests_requests_get_web_pages_entry_page_entry_js"];
 exports.modules = {
 
-/***/ "./Development/Server/Requests/requests/get_web_pages/entry_page/entry.js":
+/***/ "./Development/Server/Requests/requests/get_web_pages/entry_page/entry.js"
 /*!********************************************************************************!*\
   !*** ./Development/Server/Requests/requests/get_web_pages/entry_page/entry.js ***!
   \********************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 eval("{__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\n/* harmony import */ var fs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! fs */ \"fs\");\n/* harmony import */ var fs__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(fs__WEBPACK_IMPORTED_MODULE_0__);\n\nfunction request() {\n  this.req = (req, res) => {\n    try {\n      const entry_page = fs__WEBPACK_IMPORTED_MODULE_0___default().readFileSync(`${__dirname}/entry.html`, 'utf8');\n      res.send(entry_page);\n    } catch (err) {\n      console.log(err);\n    }\n    res.end();\n  };\n}\n;\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (request);\n\n//# sourceURL=webpack://cosmo_webpack/./Development/Server/Requests/requests/get_web_pages/entry_page/entry.js?\n}");
 
-/***/ })
+/***/ }
 
 };
 ;

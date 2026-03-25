@@ -11,15 +11,15 @@ exports.id = "Development_Server_Websockets_IO_Namespaces_reactions_events_signa
 exports.ids = ["Development_Server_Websockets_IO_Namespaces_reactions_events_signal_all_refresh_reactions_js"];
 exports.modules = {
 
-/***/ "./Development/Server/Websockets/IO_Namespaces/reactions/events/signal_all_refresh_reactions.js":
+/***/ "./Development/Server/Websockets/IO_Namespaces/reactions/events/signal_all_refresh_reactions.js"
 /*!******************************************************************************************************!*\
   !*** ./Development/Server/Websockets/IO_Namespaces/reactions/events/signal_all_refresh_reactions.js ***!
   \******************************************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 eval("{__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\nlet Wrapper = function () {\n  this.event = ({\n    room_name\n  }) => {\n    this.io.to(room_name).emit('refresh_reactions', {});\n  };\n};\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Wrapper);\n\n//# sourceURL=webpack://cosmo_webpack/./Development/Server/Websockets/IO_Namespaces/reactions/events/signal_all_refresh_reactions.js?\n}");
 
-/***/ })
+/***/ }
 
 };
 ;

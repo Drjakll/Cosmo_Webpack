@@ -5,10 +5,12 @@ let request = function() {
         
         let { last_cover_id, photo_cover_id} = req.body;
 
-        if(!last_cover_id <= 0 || !photo_cover_id <= 0){
+        if(photo_cover_id <= 0 || photo_cover_id === last_cover_id){
             res.json({message: null});
             return;
         }
+
+        last_cover_id = last_cover_id === "" ? 0 : last_cover_id
 
         let query = `
             update Photo_Links 
@@ -20,6 +22,8 @@ let request = function() {
                     end
             where id in (${last_cover_id},${photo_cover_id})
         `;
+
+        console.log(query);
         
         try {
 

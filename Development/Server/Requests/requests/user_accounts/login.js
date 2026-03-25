@@ -17,7 +17,7 @@ function request() {
                         ua.created_on,
                         ua.password,
                         ua.privacy,
-                        pl.link as profile_picture_link,
+                        coalesce(pl.link, '')  as profile_picture_link,
                         pl.id as profile_picture_id,
 
                         coalesce(fc.following_ids, json_array()) as following_ids,
