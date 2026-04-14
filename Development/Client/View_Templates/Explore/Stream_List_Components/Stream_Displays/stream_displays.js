@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import Individual_Stream_Thumbnail from './Individual_Stream_Thumbnail/individual_stream_thumbnail.js';
+import Init_Stream from './Init_Stream/init_stream.js';
 import './stream_displays.less';
 
 class Stream_Displays extends Component {
@@ -67,6 +68,12 @@ class Stream_Displays extends Component {
 
                         })}
                     
+                    </div>
+
+                    <div id="init-stream">
+
+                        <Init_Stream properties={{set_current_screen: this.props.properties.set_current_screen}} />
+
                     </div>
                     
                 </div>

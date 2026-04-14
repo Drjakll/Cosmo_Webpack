@@ -128,7 +128,8 @@ let {
         join_public_channel,
         leave_private_conversation,
         leave_public_channel,
-        user_seen_last_msg
+        user_seen_last_msg,
+        edit_private_conversation_name
 
     } = messaging;
 
@@ -276,7 +277,7 @@ app.get("/get_follow_request_alert/:user_id", get_follow_request_alert.req);
 app.post("/get_user_news_updates", get_user_news_updates.req);
 
 //Feeds 
-app.get("/get_feeds", get_feeds.req);
+app.post("/get_feeds", get_feeds.req);
 
 //Messaging
 app.post("/create_conversation", create_conversation.req, add_conversation_participants.req);
@@ -292,6 +293,7 @@ app.post("/create_public_channel", create_public_channel.req, join_public_channe
 app.post("/join_public_channel", join_public_channel.req);
 app.post("/get_favorite_public_channels", get_favorite_public_channels.req);
 app.post("/leave_public_channel", leave_public_channel.req);
+app.patch("/edit_private_conversation_name", edit_private_conversation_name.req);
 
 server.listen(8080, () => {
    

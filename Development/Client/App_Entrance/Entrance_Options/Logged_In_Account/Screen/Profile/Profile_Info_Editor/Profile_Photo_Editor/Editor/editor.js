@@ -171,9 +171,11 @@ class Editor extends Component {
 
                         <input type="file" ref={fileRef} accept="image/*" multiple={true}/>
 
-                        <button onClick={(e) => {
+                        <button onClick={async (e) => {
 
-                            this.Upload_Profile_Pictures(fileRef.current.files);
+                            await this.Upload_Profile_Pictures(fileRef.current.files);
+
+                            fileRef.current.value = "";
 
                         }}>Upload</button>
 

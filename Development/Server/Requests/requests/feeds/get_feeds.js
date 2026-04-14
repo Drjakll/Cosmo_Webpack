@@ -2,14 +2,13 @@ let request = function(){
 
     this.req = async (req, res)=>{
 
-        let {user_ids, offset} = req.query;
+        let {user_ids, offset} = req.body;
 
-        if(user_ids === ""){
+        if(user_ids.length === 0){
             res.json({message: "No results", results: []});
             return;
-        }    
-        
-        let users = user_ids !== "" ? user_ids.split(",") : [];
+        }   
+
 
         let query = `select 
                         f.*,
@@ -36,7 +35,8 @@ let request = function(){
 
         try {
 
-            let [results] = await this.sql.query(query, [users, parseInt(offset)]);
+            let [results] = await this.sql.query(query, [user_ids, parseInt(offset)]);
+
 
             ///Return the feeds to the front end and they will retrieve each feed as they scroll down
             res.json({message: `Found ${results.length} feeds`, results});

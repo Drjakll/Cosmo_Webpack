@@ -1,6 +1,9 @@
 import Cookie_Tools from '@root/Utilities/cookie.js';
 import Configurations from '@root/Utilities/configurations.js';
 import Request_URLs from '@root/API_Requests/request_urls.js';
+import Account_Templates from '@data_templates/account_data.js';
+
+let {Account_Data_Template} = Account_Templates;
 
 let Login = async (document) =>{
         

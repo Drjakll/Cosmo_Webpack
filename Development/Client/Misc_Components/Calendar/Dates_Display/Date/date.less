@@ -5,19 +5,30 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: calc(0.35vh + 0.35vw);
+    font-size: 12px;
     transition: 1s;
     position: relative;
+    border-radius: 5px;
+
+    #the-date-value {
+        height: 100%;
+        width: 100%;
+        border-radius: 5px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .selected-date {
+        background-color: rgba(50,50,50,1);
+        color: rgba(255,255,255,0.85);
+    }
     
     &:hover {
         cursor: pointer;
         background-color: rgba(0,0,0,0.1) !important;
         user-select: none;
         color: rgba(0,0,0,0.85) !important;
-        
-        #the-date-value {
-            
-        }
         
         #popup {
             display: block;

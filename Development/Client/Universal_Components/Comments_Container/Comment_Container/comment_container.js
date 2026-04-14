@@ -3,6 +3,7 @@ import Context from '@context/context.js';
 import Comments_Container from '@comments_container/comments_container.js';
 import Reaction_Container from '@comments_container/Reaction_Container/reaction_container.js';
 import Profile_Thumbnail from '@universal_components/Profile_Thumbnail/profile_thumbnail.js';
+import Popup_Msg from '@popup_template/Popup_Message/popup_message.js';
 import './comment_container.less';
 
 class Comment_Container extends Component {
@@ -97,7 +98,11 @@ class Comment_Container extends Component {
 
         let Delete_This_Comment = async (e)=>{
 
-            if(!confirm("Are you sure?")){
+            let confirmation = {agree: false};
+
+            await Popup_Msg("confirm","Are you sure?", confirmation);
+
+            if(!confirmation.agree){
                 return;
             }
 

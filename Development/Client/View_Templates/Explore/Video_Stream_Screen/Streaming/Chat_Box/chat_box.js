@@ -9,6 +9,12 @@ class Chat_Box extends Component {
     chat_box_ref = createRef();
     textRef = createRef();
 
+    streaming_status = {
+        not_streaming: "Not Streaming",
+        requested: "Requested",
+        streaming: "Streaming"
+    }
+
     constructor(props) {
 
         super(props);
@@ -22,7 +28,8 @@ class Chat_Box extends Component {
             socket: this.props.socket,
             my_room_tag: this.props.my_room_tag,
             owner_user_account: this.props.owner_user_account,
-            the_host: this.props.the_host
+            the_host: this.props.the_host,
+            streaming_status: this.props.streaming_status
         };
     }
 
@@ -97,6 +104,9 @@ class Chat_Box extends Component {
 
     Generate_Button = (my_tag) => {
 
+        let status = this.state.streaming_status;
+        let {not_streaming, requested} = this.streaming_status;
+
         return my_tag?.is_host ? <div className="button-wrapper" id="go-live">
 
                                     <div id="button" onClick={(e)=>{this.End_Streaming(my_tag);}}>
@@ -111,7 +121,7 @@ class Chat_Box extends Component {
 
                                     <div id="button" onClick={(e)=>{this.Request_To_Go_Live(my_tag);}}>
 
-                                        Go Live
+                                        {status === not_streaming ?  "Go Live" : (status == requested ? "Pull Request" : "Stop Streaming")}
 
                                     </div>
 
@@ -120,9 +130,16 @@ class Chat_Box extends Component {
     
     Request_To_Go_Live = (my_tag) => {
         
-        let {the_host} = this.state;
+        let {the_host, streaming_status : status} = this.state;
+        let {not_streaming, requested} = this.streaming_status;
+
+        let request_route = status === not_streaming ? "request_to_go_live" : (status === requested ? "pull_request_to_live" : "stop_streaming");
         
-        this.props.socket.emit('request_to_go_live', {host: the_host, from: this.state.my_room_tag});
+        this.props.socket.emit(request_route, {host: the_host, from: my_tag});
+
+        this.setState({
+            streaming_status: status === not_streaming ? requested : not_streaming
+        });
         
     }
 

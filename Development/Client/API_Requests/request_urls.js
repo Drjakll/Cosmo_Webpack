@@ -86,6 +86,7 @@ const join_public_channel = "/join_public_channel";
 const get_favorite_public_channels = "/get_favorite_public_channels";
 const leave_public_channel = "/leave_public_channel";
 const create_public_channel = "/create_public_channel";
+const edit_private_conversation_name = "/edit_private_conversation_name";
 
 //Amazon Web Service Storage 3 URL
 const aws_s3_url = 'https://cosmo-social-app.s3.us-west-1.amazonaws.com/';
@@ -178,6 +179,7 @@ export default {
     get_favorite_public_channels,
     leave_public_channel,
     create_public_channel,
+    edit_private_conversation_name,
 
     //Amazon Web Service Storage 3 URL
     aws_s3_url

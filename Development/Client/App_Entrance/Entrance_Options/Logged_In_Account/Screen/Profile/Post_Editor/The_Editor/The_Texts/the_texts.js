@@ -1,5 +1,6 @@
 import React, { Component, createRef } from 'react';
-import Text_Node from './Text_Node/text_node.js';   
+import Text_Node from './Text_Node/text_node.js';
+import Popup_Msg from '@popup_template/Popup_Message/popup_message.js';   
 import './the_texts.less';
 
 // Lexical imports
@@ -35,7 +36,9 @@ class The_Texts extends Component {
 
     componentDidMount() {
 
-        this.titleRef.current.innerHTML = this.state.post?.title ? this.state.post.title : "";
+        this.titleRef.current.value = this.state.post?.title ?? "";
+        
+
         this.bodyRef.current.innerHTML = this.state.post?.body ? this.state.post.body : "";
 
     }
@@ -57,7 +60,7 @@ class The_Texts extends Component {
         let { Post_Data_Templates } = this.context;
         let { Post_Data_Template } = Post_Data_Templates;
 
-        let title = this.titleRef.current.innerText;
+        let title = this.titleRef.current.value;
         let body = this.bodyRef.current.innerHTML;
 
         post = post ? post : Post_Data_Template({ user_id: owner_user_account.id });
@@ -71,19 +74,31 @@ class The_Texts extends Component {
 
     Delete_Post = async (e) => {
 
+        let confirmation = {agree: false};
+
+        await Popup_Msg("confirm", "Are you sure you want to delete this post?", confirmation);
+
+        if(!confirmation.agree){
+            return;
+        }
+
         let { delete_post } = this.context.Request_URLs;
+
+        let {id, created_on} = this.state.post;
+
+        let {id: user_id} = this.state.user_account_data;
 
         let res = await (await fetch(delete_post, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify({ id: this.state.post.id, user_id: this.state.owner_user_account?.id })
+            body: JSON.stringify({ id, user_id, created_on })
         })).json();
 
         let {refresh_posts, return_previous_display} = this.props;
 
-        alert(res?.message);
+        await Popup_Msg("message", res?.message);
 
         await refresh_posts();
 
@@ -156,6 +171,19 @@ class The_Texts extends Component {
         }
     }
 
+    Tab = (e)=>{
+
+        if(e.key === "Tab"){
+            e.preventDefault();
+            let selection = window.getSelection();
+            let range = selection.getRangeAt(0);
+
+            range.insertNode(document.createTextNode("\t"));
+
+            selection.removeAllRanges();
+        }
+    }
+
     render() {
 
         let { post } = this.state;
@@ -166,7 +194,7 @@ class The_Texts extends Component {
 
                 <div id="the-title-input-wrapper">
 
-                    <pre id="the-title-input" contentEditable={true} ref={this.titleRef} />
+                    <input id="the-title-input" ref={this.titleRef}></input>
 
                 </div>
 
@@ -180,7 +208,7 @@ class The_Texts extends Component {
 
                 <div id="the-body-input-wrapper">
 
-                    <pre id="the-body-input" contentEditable={true} ref={this.bodyRef} /> 
+                    <pre id="the-body-input" contentEditable={true} ref={this.bodyRef} onKeyDown={this.Tab}/> 
 
                 </div>
 

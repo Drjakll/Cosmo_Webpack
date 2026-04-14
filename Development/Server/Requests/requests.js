@@ -1,5 +1,5 @@
 import fs from 'fs';
-import { sql } from './configurations/sql_connect.js';
+import { sql, SQL_Middleware, query_wrapper } from './configurations/sql_connect.js';
 import { s3, PutObjectCommand } from './configurations/aws_s3_config.js';
 import global_data from './configurations/global_data.js';
 import generate_update_query from './tools/generate_update_query.js';
@@ -42,7 +42,7 @@ const GatherRequests = async (rootPath) => {
 
                 requests[key] = requests[key].default;
 
-                requests[key].prototype.sql = sql;
+                requests[key].prototype.sql = query_wrapper; //SQL_Middleware; //sql;
 
                 requests[key].prototype.s3 = s3;
 

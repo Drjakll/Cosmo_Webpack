@@ -122,14 +122,18 @@ class Messaging extends Component {
 
             let private_conversations = {};
 
+            let {id: owner_id} = owner_user_account;
+
+            //Organizing and place each user according to the conversation_id
             for(let user of results){
 
                 let {conversation_id: id} = user;
 
                 private_conversations[id] = private_conversations[id] || {};
 
-                if(user.user_id === owner_user_account.id){
+                if(user.user_id === owner_id){
                     private_conversations[id].self_time_joined = user.time_joined;
+                    private_conversations[id].conversation_name = user.conversation_name === "" ? `${id}` : user.conversation_name;
                 }
 
                 private_conversations[id].id = id;
@@ -375,8 +379,13 @@ class Messaging extends Component {
 
         let {selected_room_tag, owner_user_account, private_or_public} = this.state;
 
-        if(!selected_room_tag){
+        if(!selected_room_tag || selected_room_tag === 'connections'){
             alert("No conversation is selected");
+            return;
+        }
+
+        if(/^\s*$/.test(msg)){
+            alert("Input field cannot be empty");
             return;
         }
 
@@ -390,7 +399,7 @@ class Messaging extends Component {
 
         let {id, first_name, last_name, profile_picture_link} = owner_user_account;
 
-        let msg_obj = {sender_id: id, first_name, last_name, profile_picture_link, text: msg, created_on};
+        let msg_obj = {sender_id: id, conversation_id: selected_room_tag, first_name, last_name, profile_picture_link, text: msg, created_on};
 
         this.msg_socket?.emit('send_msg_to_channel', {room_tag: selected_room_tag, msg_obj, private_or_public});
     }
@@ -437,8 +446,10 @@ class Messaging extends Component {
 
         this.setState({
             private_or_public,
-            selected_room_tag
+            selected_room_tag,
+            visible_users: private_or_public === 'private' ? this.state.following : this.state.visible_users
         });
+
     }
 
     Select_User = (user_id)=>{

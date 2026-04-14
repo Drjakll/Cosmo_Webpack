@@ -1,6 +1,7 @@
 import React, { Component, createRef } from 'react';
 import Photo_Thumbnail_Editor from './Photo_Thumbnail_Editor/photo_thumbnail_editor.js';
 import Context from '@context/context.js';
+import Popup_Msg from '@popup_template/Popup_Message/popup_message.js';
 import {Albums} from '@profile_template/profile_template.js';
 import './photos_container_editor.less';
 
@@ -60,10 +61,16 @@ class Photos_Container_Editor extends Photos_Container {
 
             let { owner_user_account, album_info } = this.state;
 
-            let response = prompt("Enter the album's name to delete");
+            let input = {input: "", submit: false};
 
-            if (response !== album_info.title) {
-                alert("You entered the wrong album name!");
+            await Popup_Msg("input", "Enter the album's name to delete", input);
+
+            if(!input.submit){
+                return;
+            }
+
+            if (input.input !== album_info.title) {
+                await Popup_Msg("message","You entered the wrong album name!");
                 return;
             }
 
@@ -149,7 +156,11 @@ class Photos_Container_Editor extends Photos_Container {
 
         let delete_photos = async (e) => {
 
-            if(!confirm("Are you sure?")){
+            let confirm = {agree: false};
+
+            await Popup_Msg("confirm", `Are you sure you wish to delete ${Object.keys(this.Photos_To_Be_Deleted).length} photos?`, confirm);
+
+            if(!confirm.agree){
                 return;
             }   
 
@@ -187,11 +198,15 @@ class Photos_Container_Editor extends Photos_Container {
 
         let Change_Title = async (e)=>{
 
-            let new_title = prompt("Insert a new title.");
+            let input = {input: "", submit: false};
 
-            if(!new_title){
+            await Popup_Msg("input", "Insert a new title", input);
+
+            if(!input.submit){
                 return;
             }
+
+            let new_title = input.input;
 
             let {album_info, owner_user_account} = this.state;
 
@@ -231,9 +246,11 @@ class Photos_Container_Editor extends Photos_Container {
 
         let Change_Description = async (e)=>{
 
-            let new_description = prompt("Insert a new description.");
+            let input = {input: "", submit: false, maxLength: 256};
 
-            if(!new_description){
+            await Popup_Msg("input", "Insert a new description", input);
+
+            if(!input.submit){
                 return;
             }
 
@@ -241,7 +258,7 @@ class Photos_Container_Editor extends Photos_Container {
 
             let {id} = owner_user_account;
 
-            album_info.brief_description = new_description;
+            album_info.brief_description = input.input;
 
             this.setState({album_info});
 

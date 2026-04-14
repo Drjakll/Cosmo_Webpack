@@ -223,10 +223,6 @@ class Single_Post extends Component {
                     
                 </div>
 
-                <div className="bottom-body-section">
-
-                </div>
-
             </div>
 
         </div>;

@@ -15,20 +15,27 @@ let request = function () {
 
         let query = `
             select 
-                ua.*,
+                ac.id,
+                ac.first_name,
+                ac.last_name,
+                ac.gender,
+                ac.marital_status,
+                ac.date_of_birth,
+                ac.privacy,
+                ac.personal_traits,
                 pl.link as profile_picture_link
             from 
                 Connections as c
 
             join
-                User_Accounts as ua
+                User_Accounts as ac
             on
-                c.follower_id = ua.id
+                c.follower_id = ac.id
 
             left join
                 Photo_Links as pl
             on
-                pl.target_type = 'profile' and pl.target_id = ua.id and pl.is_a_cover = 1
+                pl.target_type = 'profile' and pl.target_id = ac.id and pl.is_a_cover = 1
 
             where 
                 c.followed_id = ? and c.status = 'accepted'

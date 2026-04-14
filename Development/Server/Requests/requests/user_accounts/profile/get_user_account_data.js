@@ -12,6 +12,9 @@ let request = function(){
                             ac.date_of_birth,
                             ac.email,
                             ac.privacy,
+                            ac.mood_today,
+                            ac.last_mood_updated,
+                            ac.personal_traits,
                             pl.link as profile_picture_link,
                             pl.id as profile_picture_id,
 

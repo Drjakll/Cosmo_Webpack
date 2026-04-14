@@ -24,18 +24,26 @@ class Date_Editor extends Date_Data {
 
             year = new Date().getFullYear();
             month = new Date().getMonth() + 1;
+            date = new Date().getDate();
 
         } else {
 
-            [year, month, date] = value.split("-");
+            [year, month, date] = value.split("T")[0].split("-");
             year = parseInt(year);
             month = parseInt(month);
+            date = parseInt(date);
         
         }
 
         return <div id="calendar-wrapper">
 
-            <Calendar date_properties={[]} capture_date={this.Capture_Date} year={year} month={month} />
+            <Calendar 
+                date_properties={[]} 
+                capture_date={this.Capture_Date} 
+                year={year} 
+                month={month} 
+                date={date}
+            />
 
         </div>
     }

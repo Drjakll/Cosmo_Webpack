@@ -1,6 +1,9 @@
 import React, {Component, createRef} from 'react';
 import Context from '@context/context.js';
+import Account_Data_Templates from '@data_templates/account_data.js';
 import './profile_info_data.less';
+
+let {Mood_Options} = Account_Data_Templates;
 
 class Profile_Info_Data extends Component {
 
@@ -41,7 +44,26 @@ class Profile_Info_Data extends Component {
     }
 
     Update_Value = null;
+
+    Create_Mood_Selections = null;
     
+    Get_Mood = ()=>{
+
+        let {owner_user_account} = this.state;
+        let {last_mood_updated, mood_today} = owner_user_account;
+
+        last_mood_updated = last_mood_updated?.split("T")[0];
+
+        let utc_today = new Date().toISOString().split("T")[0];
+
+        if(!last_mood_updated || utc_today !== last_mood_updated){
+            return <div>-</div>;
+        }
+
+        return <div id="current-mood"><img src={`./static/${Mood_Options[mood_today]}`}/> {mood_today}</div>;
+
+    }
+
     render(){
         
         const { Drag_Scroll } = this.context;
@@ -59,9 +81,31 @@ class Profile_Info_Data extends Component {
 
                 <div id="profile-data-label-wrapper">
 
-                    <img src={'./static/personal_details_icon.png'}/>
+                    <div id="today-mood-wrapper">
 
-                    <label>Details</label>
+                        <div id="mood-label">
+
+                            Mood Today
+
+                        </div>
+
+                        <div id="the-mood" className={this.Create_Mood_Selections && "mood-selectable"}>
+
+                            {this.Get_Mood()}
+
+                            {this.Create_Mood_Selections && <div id="mood-selection-wrapper">{this.Create_Mood_Selections()}</div>}
+
+                        </div>
+
+                    </div>
+
+                    <div id="detail-label">
+
+                        <img src={'./static/personal_details_icon.png'}/>
+
+                        <label>Details</label>
+
+                    </div>
 
                 </div>
                 
@@ -92,13 +136,15 @@ class Profile_Info_Data extends Component {
 
                         const Com = template.component;
                         let value = owner_user_account[key];
-                        let { label, options } = template;
+                        let { label, options, background, label_icon } = template;
 
                         return <div className="individual-info-wrapper" key={index}>
 
                             <div id="info-label">
 
-                                {label}
+                                <div id="label-icon" style={{backgroundImage: `url(./static/${label_icon})`}}></div> 
+                                
+                                <label>{label}</label> 
 
                             </div>
 
@@ -113,6 +159,7 @@ class Profile_Info_Data extends Component {
                                     visitor_user_account={visitor_user_account}
                                     options={options}
                                     change_main_display={change_main_display}
+                                    background={background}
                                 />
 
                             </div>

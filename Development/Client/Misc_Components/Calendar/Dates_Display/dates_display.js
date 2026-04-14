@@ -8,15 +8,27 @@ class Dates_Display extends Component {
 
         super(props);
 
-        let { days, first_day, properties, capture_date, selected_year, selected_month } = this.props;
+        let { days, 
+            first_day, 
+            properties, 
+            capture_date, 
+            selected_year, 
+            selected_month, 
+            selected_date,
+            month,
+            year
+         } = this.props;
 
         this.state = {
-            days: days,
-            first_day: first_day,
-            properties: properties,
-            capture_date: capture_date,
-            selected_year: selected_year,
-            selected_month: selected_month
+            days,
+            month,
+            year,
+            first_day,
+            properties,
+            capture_date,
+            selected_year,
+            selected_month,
+            selected_date
         };
     }
 
@@ -87,7 +99,7 @@ class Dates_Display extends Component {
 
         let date_array = this.Generate_Date_Array(this.state); 
 
-        let { capture_date, selected_month, selected_year } = this.state;
+        let { capture_date, month, year, selected_month, selected_year, selected_date } = this.state;
 
         return <div id="dates-display">
 
@@ -101,7 +113,17 @@ class Dates_Display extends Component {
 
                         return <div className="col" key={c_ind}>
 
-                            <Date date={date} callback={callback} style={style} popup ={popup} capture_date={capture_date} selected_year={selected_year} selected_month={selected_month} />
+                            <Date date={date} 
+                                month={month}
+                                year={year}
+                                callback={callback} 
+                                style={style} 
+                                popup={popup} 
+                                capture_date={capture_date} 
+                                selected_year={selected_year} 
+                                selected_month={selected_month} 
+                                selected_date={selected_date}
+                            />
 
                         </div>;
 

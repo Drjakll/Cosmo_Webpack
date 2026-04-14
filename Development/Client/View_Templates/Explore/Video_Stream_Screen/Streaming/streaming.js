@@ -8,6 +8,12 @@ import './streaming.less';
 class Streaming extends Component {
 
     small_screen_ref = createRef();
+
+    streaming_status = {
+        not_streaming: "Not Streaming",
+        requested: "Requested",
+        streaming: "Streaming"
+    }
     
     constructor(props){
         
@@ -25,18 +31,21 @@ class Streaming extends Component {
         this.the_host = null;
         this.my_media_source = null;
         this.socket = io('/video_streams'); //this.props.stream_socket;
+
+        let {owner_user_account, is_host, stream_id} = props;
         
         this.state = {
-            owner_user_account: this.props.owner_user_account,
-            is_host: this.props.is_host,
-            stream_id: this.props.stream_id, //The stream_id is the host socket.id + Date.now()
+            owner_user_account,
+            is_host,
+            stream_id, //The stream_id is the host socket.id + Date.now()
             room_title: "New Room",
             streamer_small_screens: {}, //Streamers at the smaller screen
             streamer_big_screen: null, //Streamer at the bigger screen
             my_room_tag: null,
             view_account_data: null, //User account data for popup profile view
             the_host: null,
-            big_screen_id: null
+            big_screen_id: null,
+            streaming_status: this.streaming_status.not_streaming
         };
     }
 
@@ -50,7 +59,7 @@ class Streaming extends Component {
 
         this.Shut_Off_Camera();
         this.socket.emit('leave_stream', this.my_room_tag);
-
+        this.socket.disconnect();
     }
     
     componentDidUpdate(prevProps, prevState){
@@ -68,6 +77,8 @@ class Streaming extends Component {
             console.log("no device found!");
             return null;
         }
+
+        this.setState({streaming_status: this.streaming_status.streaming});
         
         return await navigator?.mediaDevices?.getUserMedia({ video: true, audio: true });
         
@@ -217,6 +228,19 @@ class Streaming extends Component {
 
             this.props.set_main_screen("Stream_List_Components");
 
+        });
+
+        this.socket.on('stop_streaming', ({from})=>{
+
+            let { streamer_small_screens, my_room_tag} = this.state;
+
+            delete streamer_small_screens[from.id];
+
+            this.setState({streamer_small_screens});
+
+            if(from.id === my_room_tag.id){
+                this.Shut_Off_Camera();
+            }
         });
     }
 
@@ -426,14 +450,6 @@ class Streaming extends Component {
             <div id="streaming">
     
                 {this.Generate_Profile_View(this.state.view_account_data)}
-                    
-                <div id="big-stream-screen">
-
-                    <Main_Video owner_user_account={this.state.owner_user_account}
-                        media_source={this.state.streamer_big_screen}
-                        is_self={this.state.big_screen_id === this.state.my_room_tag?.id ? true : false} />
-                        
-                </div>
 
                 <div id="smaller-stream-screens"
                     ref={this.small_screen_ref}
@@ -456,17 +472,28 @@ class Streaming extends Component {
                     })}
 
                 </div>
-                
-                <div id="chatbox-wrapper">
 
-                    <Chat_Box socket={this.socket} 
-                                my_room_tag={this.state.my_room_tag} 
-                                owner_user_account={this.state.owner_user_account}
-                                set_account_view={this.Set_Account_View}
-                                the_host={this.state.the_host}
-                                change_screen={this.props.root_change_screen}
-                    />
+                <div id="main-stream-side">
+                    <div id="big-stream-screen">
 
+                        <Main_Video owner_user_account={this.state.owner_user_account}
+                            media_source={this.state.streamer_big_screen}
+                            is_self={this.state.big_screen_id === this.state.my_room_tag?.id ? true : false} />
+                            
+                    </div>
+                    
+                    <div id="chatbox-wrapper">
+
+                        <Chat_Box socket={this.socket} 
+                                    my_room_tag={this.state.my_room_tag} 
+                                    owner_user_account={this.state.owner_user_account}
+                                    set_account_view={this.Set_Account_View}
+                                    the_host={this.state.the_host}
+                                    change_screen={this.props.root_change_screen}
+                                    streaming_status={this.state.streaming_status}
+                        />
+
+                    </div>
                 </div>  
             </div>
         );

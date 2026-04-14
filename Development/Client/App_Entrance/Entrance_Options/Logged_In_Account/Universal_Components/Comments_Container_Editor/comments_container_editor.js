@@ -2,6 +2,7 @@ import React from 'react';
 import Context from '@context/context.js';
 import Comments_Container from '@comments_container/comments_container.js';
 import Comment_Container_Editor from './Comment_Container_Editor/comment_container_editor.js';
+import Popup_Msg from '@popup_template/Popup_Message/popup_message.js';
 import './comments_container_editor.less';
 
 class Comments_Container_Editor extends Comments_Container {
@@ -50,7 +51,11 @@ class Comments_Container_Editor extends Comments_Container {
 
         let Delete_Comments = async ()=>{
 
-            if(!confirm("Are you sure?")){
+            let confirmation = {agree: false};
+
+            await Popup_Msg("confirm","Are you sure?", confirmation)
+
+            if(!confirmation.agree){
                 return;
             }
 

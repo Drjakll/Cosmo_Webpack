@@ -29,8 +29,13 @@ class App_Entrance extends Component {
         
         return (
             <div id="app-entrance" className="" ref={this.entrance_ref}
-                onMouseMove={(e) => { Drag_Scroll.update_pageXY(e); drag.dragging(e); }}
-                onMouseDown={(e) => { drag.init_drag(e); } }
+                onMouseMove={(e) => { 
+                    Drag_Scroll.update_pageXY && Drag_Scroll.update_pageXY(e); 
+                    drag.dragging(e); 
+                }}
+                onMouseDown={(e) => { 
+                    drag.init_drag(e);
+                }}
             >
                     
                 <Entrance_Options/>

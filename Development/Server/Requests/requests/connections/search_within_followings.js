@@ -130,6 +130,7 @@ let request = function () {
                             ac.marital_status,
                             ac.date_of_birth,
                             ac.privacy,
+                            ac.personal_traits,
                             pl.link as profile_picture_link
 
                         from 

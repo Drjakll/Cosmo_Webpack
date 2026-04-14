@@ -47,9 +47,9 @@ let request = function () {
                 )
 
             group by ua.id
-            having count(distinct c.followed_id) > 0
+            having count(distinct c.followed_id) > 1
             order by ua.id asc
-            limit 3;
+            limit 5;
         `;
 
         try {

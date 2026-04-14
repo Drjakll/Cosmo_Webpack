@@ -13,10 +13,10 @@ class Viewer_Entry extends Component {
             Viewer_Entry.contextType = window.Context;
 
             this.state = {
-                account_data: account_data,
-                room_tag: room_tag,
-                request_live: request_live,
-                socket: socket,
+                account_data,
+                room_tag,
+                request_live,
+                socket,
                 owner_user_account
             };
 	}

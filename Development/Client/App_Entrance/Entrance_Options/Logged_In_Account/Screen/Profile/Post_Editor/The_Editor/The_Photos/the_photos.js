@@ -1,4 +1,5 @@
 import React, { Component, createRef } from 'react';
+import Popup_Msg from '@popup_template/Popup_Message/popup_message.js';
 import './the_photos.less';
 
 class The_Photos extends Component {
@@ -52,7 +53,7 @@ class The_Photos extends Component {
         let { id } = owner_user_account;
 
         if (!post_info || !post_info.id) {
-            alert("Please save the post before adding photos.");
+            await Popup_Msg("message", "Please save the post before adding photos.");
             return;
         }
 
@@ -148,7 +149,7 @@ class The_Photos extends Component {
             body: JSON.stringify({photos: selected_photos})
         })).json();
 
-        alert(res?.message);
+        Popup_Msg("message", res?.message);
 
         photos = photos.filter((p)=>{
             for(let i in selected_photos){

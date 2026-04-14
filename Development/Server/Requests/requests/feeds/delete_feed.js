@@ -1,0 +1,33 @@
+let request = function(){
+
+    this.req = async (req, res)=>{
+
+        let {user_id, target_id, target_type, created_on} = req.body;
+
+        let values = [
+            user_id,
+            target_id,
+            target_type,
+            created_on
+        ];
+
+        let query = `delete from Feeds where user_id = ? and target_id = ? and target_type = ? and created_on = ?`;
+
+        try {
+
+            let result = await this.sql.query(query, values);
+
+            res.json({message: `Successfully deleted ${result.affectedRows} feeds`});
+
+        }catch(err){
+
+            console.log(query, err);
+
+            res.json({message:"Error deleting feeds"});
+        }
+
+    };
+
+};
+
+export default request;

@@ -1,5 +1,6 @@
-import React, {Component} from 'react';
+import React from 'react';
 import Photos_Container_Editor from './Photos_Container_Editor/photos_container_editor.js';
+import Popup_Msg from '@popup_template/Popup_Message/popup_message.js';
 import Context from '@context/context.js';
 import  {Albums} from '@profile_template/profile_template.js';
 import './album_editor.less';
@@ -38,11 +39,15 @@ class Album_Editor extends Albums_Component {
 
     Add_Photo_Album = async (e) => {
 
-        let album_name = prompt("Please enter an album name.");
+        let input = {input: "", submit: false};
 
-        if (!album_name) {
+        await Popup_Msg("input", "Please enter an album name", input);
+
+        if (!input.submit) {
             return;
         }
+
+        let album_name = input.input;
 
         let {owner_user_account} = this.state;
         let {Photo_Album_Data_Templates, Request_URLs} = this.context;
@@ -65,7 +70,7 @@ class Album_Editor extends Albums_Component {
         })).json();
 
         if(result.failed){
-            alert(result.message);
+            Popup_Msg("message",result.message);
             return;
         }
 

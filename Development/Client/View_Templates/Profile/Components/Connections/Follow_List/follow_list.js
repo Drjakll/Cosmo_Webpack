@@ -157,12 +157,6 @@ class Follow_List extends Connection_List_Template {
 
             </div>
 
-            <div id="following-label">
-
-                {list.length} {label}
-                
-            </div>
-
             <div id="connection-list-container"
                 className="res-focusing"
                 ref={this.result_box_ref}
@@ -172,7 +166,17 @@ class Follow_List extends Connection_List_Template {
                  }}
             >
 
-                {super.render()}
+                <div id="following-label">
+
+                    {list.length} {label}
+                    
+                </div>
+
+                 <div id="the-following-list-body">
+
+                    {super.render()}
+
+                </div>
 
             </div>
 

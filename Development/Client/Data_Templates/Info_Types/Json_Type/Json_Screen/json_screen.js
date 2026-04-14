@@ -22,7 +22,7 @@ class Json_Popup extends Component {
 
         super(props);
 
-        let {label, table_name, owner_user_account, visitor_user_account, options} = props;
+        let {label, table_name, background, owner_user_account, visitor_user_account, options} = props;
 
         this.Name_Mapping(options);
 
@@ -34,6 +34,7 @@ class Json_Popup extends Component {
             owner_user_account,
             options,
             popup: false,
+            background,
             json_obj: {} //This will be used for adding item using the editor
         };
     }
@@ -104,20 +105,20 @@ class Json_Popup extends Component {
             }
         )).json();
 
-        console.log(data?.results);
-
         this.setState({ value: data?.results ?? [] })
 
     }
 
     render(){
 
-        let {value, label, visitor_user_account, owner_user_account, table_name, popup} = this.state;
+        let {value, label, visitor_user_account, owner_user_account, table_name, background, popup} = this.state;
 
         let {id: visitor_id} = visitor_user_account;
         let {id: owner_id} = owner_user_account;
 
         return <div id="json-type-contents">
+
+            <div id="background-image" style={{backgroundImage: `url('./static/${background}')`}}></div>
 
             {this.Editor && <div id="add-button-wrapper">
                 <div id="add-entry-button" onClick={(e)=>{this.setState({popup: true})}}>
@@ -140,8 +141,6 @@ class Json_Popup extends Component {
                         return <div className="detail-wrapper" key={index_0}>
 
                             <div id="detail-index">
-
-                                {index_0 + 1}
 
                             </div>
 

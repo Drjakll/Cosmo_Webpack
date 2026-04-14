@@ -91,6 +91,21 @@ class Viewer_Display extends Component {
 
         });
 
+        socket?.on('pull_request_to_live', async ({from})=>{
+
+            let {participants} = this.state;
+            let {id} = from;
+
+            if(participants[id] !== undefined){
+
+                participants[id].request_live = false;
+
+                this.setState({participants});
+
+            }
+
+        });
+
         socket?.on('leave_chat_room', ({room_tag})=>{
 
             let {participants} = this.state;

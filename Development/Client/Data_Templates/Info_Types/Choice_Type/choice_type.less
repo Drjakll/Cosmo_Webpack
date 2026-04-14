@@ -50,6 +50,8 @@
             top: 100%;
             box-shadow: 5px 5px 10px rgba(0,0,0,0.25);
             border: rgba(100,100,100,1) solid 0.5px;
+            border-radius: 5px;
+            overflow: hidden;
 
             #selections {
                 min-width: 100px;
@@ -66,10 +68,11 @@
                     align-items: center;
                     font-size: 12px;
                     border-bottom: rgba(100,100,100,1) solid 0.5px;
+                    transition: 0.5s;
 
                     &:hover {
                         cursor: pointer;
-                        background-color: rgba(0,0,0,0.1);
+                        background-color: rgba(255,255,255,0.25);
                     }
 
                     &:last-child {

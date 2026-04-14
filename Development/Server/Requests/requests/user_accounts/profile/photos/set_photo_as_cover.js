@@ -22,8 +22,6 @@ let request = function() {
                     end
             where id in (${last_cover_id},${photo_cover_id})
         `;
-
-        console.log(query);
         
         try {
 

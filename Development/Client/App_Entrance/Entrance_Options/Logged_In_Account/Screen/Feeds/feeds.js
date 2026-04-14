@@ -13,6 +13,8 @@ class Feeds extends Component {
     Last_Render_Callback = [];
 
     No_More_Feeds = false;
+
+    last_scroll_pos = 0;
     
     constructor(props){
         
@@ -93,9 +95,16 @@ class Feeds extends Component {
         }
 
         let data = await(await fetch(
-            `${get_feeds}/?user_ids=${ids.join(',')}&offset=${offset}`,
+            `${get_feeds}`,
             {
-                method: "GET"
+                method: "POST",
+                body: JSON.stringify({
+                    user_ids: ids,
+                    offset
+                }),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
             }
         )).json();
 
@@ -122,26 +131,40 @@ class Feeds extends Component {
 
     }
 
+    pause_get_feeds = false;
+
     Render_Main_Display = () => {
 
-        let previous_scroll_pos = 0;
-
         let scroll_listener = async (e)=>{
+
+            if(this.pause_get_feeds){
+                return;
+            }
 
             let {scrollTop, scrollHeight, clientHeight} = e.target;
 
             let scroll_pos = scrollTop + clientHeight;
 
+            let is_scroll_down = this.last_scroll_pos - scrollTop < 0;
+
             //If it reaches to the bottom and the scroll position moved
-            if(scroll_pos === scrollHeight && previous_scroll_pos !== scroll_pos && !this.No_More_Feeds){
+            if(is_scroll_down && scroll_pos > ( scrollHeight - 300 ) && !this.No_More_Feeds){
+
+                this.pause_get_feeds = true;
 
                 let {offset} = this.state;
 
                 await this.Get_Feeds(offset);
 
+                //Wait for 1 second before retrieving more feeds
+                setTimeout(()=>{
+                    this.pause_get_feeds = false;
+                }, 500);
+
             }
 
-            previous_scroll_pos = scroll_pos;
+            this.last_scroll_pos = scrollTop;
+
         }
 
         let {feeds, owner_user_account} = this.state;
@@ -162,7 +185,9 @@ class Feeds extends Component {
 
                     let from_account = {first_name, last_name, gender, profile_picture_link, id: user_id};
 
-                    return (<div className="feeds-update-section" key={`${target_type}${target_id}`}>
+                    let key = `${target_type}${target_id}`;
+
+                    return (<div className="feeds-update-section" key={index}>
 
                         {/*The reason that user_id is undefined is because it's a suggestions feed*/}
                         {user_id !== undefined ? <div id="feed-account-information">
@@ -184,7 +209,7 @@ class Feeds extends Component {
 
                         </div> : ""}
 
-                        <div id="feed-update-information">
+                        <div id="feed-update-information" key={index}>
 
                             {this.Feed_Types[target_type]({feed_id: target_id, from_account})}
 

@@ -1,6 +1,6 @@
 {
     "compilerOptions": {
-        "outDir": "/Built_Client",
+        "outDir": "./Built_Client",
         "sourceMap": true,
         "noImplicitAny": true,
         "module": "ES6",

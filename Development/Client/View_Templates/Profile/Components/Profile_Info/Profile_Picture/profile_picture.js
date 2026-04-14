@@ -59,7 +59,7 @@ class Profile_Picture extends Component {
         const { aws_s3_url } = Request_URLs;
         
         let { owner_user_account } = this.state;
-        const { profile_picture_link } = owner_user_account;
+        const { profile_picture_link, first_name, last_name } = owner_user_account;
 
         return (
             <div id="profile-picture" className={this.state.enlarge_photo ? "enlarged-photo" : ""}>
@@ -73,6 +73,12 @@ class Profile_Picture extends Component {
                         onClick ={(e) => { this.Inject_Large_Photo_To_Body(); }}
                     >
                                 
+                    </div>
+
+                    <div id="name-tag">
+
+                        {first_name} {last_name}
+
                     </div>
                         
                 </div>

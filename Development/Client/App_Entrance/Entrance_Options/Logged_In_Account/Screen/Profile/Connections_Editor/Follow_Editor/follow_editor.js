@@ -1,6 +1,7 @@
 import React from 'react';
 import Context from '@context/context.js';
 import Follow_List from '@profile_template/Components/Connections/Follow_List/follow_list.js';
+import Popup_Msg from '@popup_template/Popup_Message/popup_message.js';
 import './follow_editor.less';
 
 class Follow_Editor extends Follow_List {
@@ -15,7 +16,11 @@ class Follow_Editor extends Follow_List {
 
     Remove_Follower = async (follower_id)=>{
 
-        if(!confirm("Are you sure you want to remove this follower?")){
+        let confirmation = {agree: false};
+
+        await Popup_Msg("confirm", "Are you sure you want to remove this follower?", confirmation);
+
+        if(!confirmation.agree){
             return;
         }
 
@@ -43,7 +48,11 @@ class Follow_Editor extends Follow_List {
 
     Unfollow_User = async (following_id)=>{
 
-        if(!confirm("Are you sure you want to unfollow this user?")){
+        let confirmation = {agree: false};
+
+        await Popup_Msg("confirm", "Are you sure you want to unfollow this user?", confirmation);
+
+        if(!confirmation.agree){
             return;
         }
 

@@ -44,18 +44,16 @@ class Conversation_Input extends Component {
 
         let msg = this.msg_ref.current.value;
 
-        if(msg.replace(/ /g, '') === ''){
-            return;
-        }
+        this.msg_ref.current.value = '';
 
         this.props.send_msg(msg);
 
-        this.msg_ref.current.value = "";
     }
 
     Press_Enter_To_Send_Msg = (e)=>{
 
         if(e.key === 'Enter' && !this.Shift_Down){
+            e.preventDefault();
             this.Send_Message(e);
         }
     }
@@ -78,7 +76,7 @@ class Conversation_Input extends Component {
 
     render(){
 
-        return <div id="conversation-input" onKeyDown={this.Is_Shift_Key_Down} onKeyUp={this.Is_Shift_Key_Up}>
+        return <div id="conversation-input">
 
             <div id="misc-functions">
 
@@ -102,7 +100,7 @@ class Conversation_Input extends Component {
             
             <div id="text-input-wrapper">
 
-                <textarea id="text-input" ref={this.msg_ref}>
+                <textarea id="text-input" ref={this.msg_ref} onKeyDown={this.Is_Shift_Key_Down} onKeyUp={this.Is_Shift_Key_Up}>
 
                 </textarea>
 

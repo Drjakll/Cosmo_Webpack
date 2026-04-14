@@ -46,26 +46,30 @@ class Criteria_Box extends Component {
 
             <div id="available-parameters-header">
 
-                <div>Available Parameters</div>
+                <div>Search Requirements</div>
 
             </div>
 
             <div id="available-parameters-list">
 
-                {Object.keys(available_search_parameters).map((key_label, index)=>{
+                <div id="options-wrapper">
 
-                    let {label} = available_search_parameters[key_label];
+                    {Object.keys(available_search_parameters).map((key_label, index)=>{
 
-                    if(added_parameters[key_label]){
-                        return "";
-                    }
+                        let {label} = available_search_parameters[key_label];
 
-                    return <div className="available-parameter-item" key={index} onClick={(e)=>{ Add_To_Parameters(key_label); }}>
+                        if(added_parameters[key_label]){
+                            return "";
+                        }
 
-                            {label}
+                        return <div className="available-parameter-item" key={index} onClick={(e)=>{ Add_To_Parameters(key_label); }}>
 
-                        </div>;
-                })}
+                                {label}
+
+                            </div>;
+                    })}
+
+                </div>
 
             </div>
 
@@ -80,11 +84,7 @@ class Criteria_Box extends Component {
 
         return <div id="search-parameters-box-wrapper" >
 
-            <div id="search-parameters-box-header">
 
-                <div>Search Parameters</div>
-
-            </div>
 
             <div id="search-parameters-box-list">
 

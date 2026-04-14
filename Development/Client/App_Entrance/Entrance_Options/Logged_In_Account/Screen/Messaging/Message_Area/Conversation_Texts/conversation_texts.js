@@ -40,7 +40,7 @@ class Conversation_Texts extends Component {
         let {conversation: this_conversation} = this.props;
         let {conversation: last_conversation} = prevProps;
 
-        if(this_conversation?.id !== last_conversation?.id && !this_conversation?.messages.length){
+        if(this_conversation?.id !== last_conversation?.id){
 
             await this.Scroll_To_View_More_Messages(null);
 

@@ -65,6 +65,11 @@ let request = function() {
                 return res.json({message: "Successfully retrieved comments", results: all_results});
             }
 
+            if(results.length === 0){
+                
+                return res.json({message: "No comments available", results: []});
+            }
+
             
             req.body.comments = results;
 

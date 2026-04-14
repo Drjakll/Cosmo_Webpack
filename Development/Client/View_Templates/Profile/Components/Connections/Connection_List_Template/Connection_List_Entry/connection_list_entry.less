@@ -10,6 +10,8 @@
         display: block;
         position: relative;
         z-index: 9;
+        border-radius: 15px;
+        box-shadow: rgba(0,0,0,0.0) 0px 0px 0px;
     }
 
     #name-label-wrapper {
@@ -20,11 +22,12 @@
         align-items: center;
         position: relative;
         font-size: 14px;
+        color: rgba(0,0,0,0.75);
     }
 
     #remove-user-button-wrapper {
-        width: 25px;
-        height: 25px;
+        width: 20px;
+        height: 20px;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -38,7 +41,7 @@
 
         &:hover {
             cursor: pointer;
-            background-color: rgb(235, 231, 231);
+            background-color: rgba(235, 231, 231,0);
         }
 
         #remove-user-button {
@@ -53,6 +56,7 @@
             transition: 0.5s;
             border-radius: 100%;
             background-color:rgb(159, 12, 12);
+            border: rgba(0,0,0,0.5) solid 0.5px;
 
             &:hover {
                 cursor: pointer;

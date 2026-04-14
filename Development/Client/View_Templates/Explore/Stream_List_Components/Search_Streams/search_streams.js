@@ -131,17 +131,21 @@ class Search_Streams extends Component {
 
                         <div id="search-parameters">
 
-                            {Object.keys(search_parameter_options).map((key, index)=>{
+                            <div id="options-wrapper">
 
-                                let {label} = search_parameter_options[key];
+                                {Object.keys(search_parameter_options).map((key, index)=>{
 
-                                return <div className="search-parameter-option" key={index} onClick={(e)=>{this.Add_Search_Parameter_Option(key);}}>
+                                    let {label} = search_parameter_options[key];
 
-                                        {label}
+                                    return <div className="search-parameter-option" key={index} onClick={(e)=>{this.Add_Search_Parameter_Option(key);}}>
 
-                                    </div>;
+                                            {label}
 
-                            })}
+                                        </div>;
+
+                                })}
+
+                            </div>
 
                         </div>
 

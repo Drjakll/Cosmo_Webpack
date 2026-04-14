@@ -30,6 +30,10 @@ class Explore_Template extends Component {
     componentDidMount(){
 
     }
+
+    componentWillUnmount(){
+        this.socket.disconnect();
+    }
     
     componentDidUpdate(prevProps, prevState){
         

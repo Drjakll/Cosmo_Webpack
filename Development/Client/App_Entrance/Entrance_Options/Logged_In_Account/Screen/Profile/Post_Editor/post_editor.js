@@ -3,6 +3,7 @@ import The_Editor from './The_Editor/the_editor.js';
 import Single_Post_Editor from '@logged_in_account/Universal_Components/Single_Post_Editor/single_post_editor.js';
 import Context from '@context/context.js';
 import {Posts} from '@profile_template/profile_template.js';
+import Popup_Msg from '@popup_template/Popup_Message/popup_message.js';
 import './post_editor.less';
 
 class Post_Editor extends Posts {
@@ -112,7 +113,7 @@ class Post_Editor extends Posts {
 
             let seconds_left = Math.floor((24 * 60 * 60 * 1000 - time_diff) % (60 * 1000) / 1000);
 
-            alert(`You can create your next post in ${hours_left} hours, ${minutes_left} minutes, and ${seconds_left} seconds.`);
+            await Popup_Msg('message',`You can create your next post in ${hours_left} hours, ${minutes_left} minutes, and ${seconds_left} seconds.`);
             
             return;
         }

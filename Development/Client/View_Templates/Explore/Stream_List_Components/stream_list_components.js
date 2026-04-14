@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import Search_Streams from './Search_Streams/search_streams.js';
 import Stream_Displays from './Stream_Displays/stream_displays.js';
-import Init_Stream from './Init_Stream/init_stream.js';
+import Init_Stream from './Stream_Displays/Init_Stream/init_stream.js';
 import './stream_list_components.less';
 
 class Stream_List_Components extends Component {
@@ -14,8 +14,7 @@ class Stream_List_Components extends Component {
         this.state = {
             components: [
                 {component: Search_Streams, classname: "search-streams", props: {owner_user_account: this.props.owner_user_account, search_streams: this.props.search_streams}},
-                {component: Stream_Displays, classname: "stream-displays", props: {set_current_screen: this.props.set_current_screen}},
-                {component: Init_Stream, classname: "init-stream", props: {set_current_screen: this.props.set_current_screen}}
+                {component: Stream_Displays, classname: "stream-displays", props: {set_current_screen: this.props.set_current_screen}}
             ],
             owner_user_account: this.props.owner_user_account,
             active_streams: this.props.active_streams

@@ -7,18 +7,18 @@
     #criteria-box-columns-wrapper {
         height: calc(100% - 40px);
         width: 100%;
-        display: flex;
+        display: block;
         justify-content: center;
         align-items: center;
         position: relative;
 
-        #search-parameters-columns-wrapper {
-            width: 60% !important;
+        #available-parameters-columns-wrapper {
+            background-color: rgba(0,0,0,0.5);
         }
 
         #available-parameters-columns-wrapper, #search-parameters-columns-wrapper {
-            height: 100%;
-            width: 40%;
+            height: 50%;
+            width: 100%;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -30,8 +30,8 @@
                 display: block;
 
                 #available-parameters-header {
-                    background-color:rgba(100, 100, 100, 0.85);
-                    color: rgb(233, 230, 230);
+                    background-color:rgb(12, 49, 2);
+                    color: rgba(233, 230, 230, 0.85);
                     border-right: rgba(0,0,0,0.5) solid 0.5px;
                 }
 
@@ -40,7 +40,7 @@
                     color: rgb(233, 230, 230);
                 }
 
-                #search-parameters-box-header, #available-parameters-header {
+                #available-parameters-header {
                     width: 100%;
                     height: 40px;
                     display: flex;
@@ -48,12 +48,14 @@
                     align-items: center;
                     font-size: 13px;
                     font-weight: 500;
-                    border-bottom: rgba(0,0,0,0.5) solid 0.5px;
+                    border-bottom: rgba(0,0,0,1) solid 0.5px;
                 }
 
                 #search-parameters-box-list {
                     background-color: rgba(0,0,0,0.1);
                     border-left: rgba(0,0,0,0.5) solid 0.5px;
+                    width: 100%;
+                    height: 100%;
 
                     #no-search-criteria {
                         width: 100%;
@@ -63,7 +65,12 @@
                         align-items: center;
                         font-size: 16px;
                         color: rgba(0,0,0,0.25);
+                        user-select: none;
                     }
+                }
+
+                #search-parameters-box-list {
+                    height: 100% !important;
                 }
 
                 #search-parameters-box-list, #available-parameters-list {
@@ -72,6 +79,7 @@
                     display: block;
                     overflow-y: auto;
                     scroll-behavior: smooth;
+                    //background-color: rgba(0,0,0,0.1);
                     scrollbar-width: none; /* Firefox */
                     -ms-overflow-style: none;  /* Internet Explorer 10+ */
                     &::-webkit-scrollbar { /* WebKit */
@@ -79,22 +87,32 @@
                         height: 0;
                     }
 
-                    .available-parameter-item {
+                    #options-wrapper {
                         width: 100%;
-                        height: 40px;
-                        display: flex;
-                        justify-content: center;
-                        align-items: center;
-                        border-bottom: rgba(255,255,255,0.4) solid 0.5px;
-                        transition: 0.5s;
-                        background-color: rgba(13, 42, 5, 0.777); 
-                        color: rgb(236, 227, 227);
-                        font-size: 12px;
+                        display: block;
+                        box-shadow: rgba(0,0,0,0.25) 0px 5px 10px;
 
-                        &:hover {
-                            cursor: pointer;
-                            background-color: rgb(221, 221, 221); 
-                            color:  rgb(32, 22, 22);
+                        .available-parameter-item {
+                            width: 100%;
+                            height: 35px;
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                            border-bottom: rgba(14, 11, 11, 1) solid 0.5px;
+                            transition: 0.5s;
+                            background-color: rgba(32, 101, 110, 0.75); 
+                            color: rgba(238, 231, 231, 0.75);
+                            font-size: 12px;
+
+                            &:hover {
+                                cursor: pointer;
+                                background-color: rgb(221, 221, 221); 
+                                color:  rgb(32, 22, 22);
+                            }
+
+                            &:first-child {
+                                border-top: rgba(14,11,11,1) solid 0.5px;
+                            }
                         }
                     }
 
@@ -102,6 +120,14 @@
                         width: 100%;
                         display: block;
                         border-bottom: rgba(0,0,0,0.1) solid 0.5px;
+                        margin-bottom: 15px;
+                        z-index: 9;
+                        position: relative;
+                        box-shadow: rgba(0,0,0,0.25) 0px 5px 10px;
+
+                        &:hover {
+                            z-index: 999 !important;
+                        }
 
                         &:last-child {
                             margin-bottom: 100px;
@@ -110,17 +136,17 @@
                         #search-parameter-item {
                             width: 100%;
                             display: block;
-                            padding: 10px 0 10px 0;
+                            padding: 0px 0 0px 0;
                             background-color: whitesmoke;
                         }
 
                         #remove-parameter-button-wrapper {
                             width: 100%;
-                            height: 50px;
+                            height: 35px;
                             display: flex;
                             justify-content: center;
                             align-items: center;
-                            background-color: rgba(235,235,235,0.85);
+                            background-color: whitesmoke;
 
                             button {
                                 border: rgba(0,0,0,0.5) solid 0.5px;
@@ -128,8 +154,8 @@
                                 padding: 5px 15px 5px 15px;
                                 font-size: 12px;        
                                 transition: 0.5s;
-                                background-color: rgb(221, 221, 221);
-                                color: rgb(32, 22, 22);
+                                background-color: rgb(158, 7, 7);
+                                color: rgb(224, 220, 220);
 
                                 &:hover {
                                     cursor: pointer;

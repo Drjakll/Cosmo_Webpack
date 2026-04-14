@@ -38,7 +38,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/ClientSide/style.less to edit thi
             display: block;
             overflow-y: auto;
             overflow-x: hidden;
-            scrollbar-width: none;
+            //scrollbar-width: none;
 
             .feeds-update-section {
                 width: 97.5%;
@@ -47,10 +47,11 @@ Click nbfs://nbhost/SystemFileSystem/Templates/ClientSide/style.less to edit thi
                 //background-color: rgba(0,0,0,0.1);
                 margin-top: 50px;
                 left: 1.25%;
-                border-radius: 10px;
+                border-radius: 15px;
                 box-shadow: rgba(0,0,0,0.25) 0px 0px 0px;
                 transition: 0.5s;
-                border: rgba(0,0,0,1) solid 0.5px;
+                //border: rgba(0,0,0,1) solid 0.5px;
+                overflow: hidden;
 
                 &:hover {
                     box-shadow: rgba(0,0,0,0.25) 0px 0px 2px;
@@ -70,6 +71,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/ClientSide/style.less to edit thi
                     background: linear-gradient(to bottom, rgba(0,0,0,0.1), rgba(0,0,0,0));
                     padding-top: 25px;
                     padding-bottom: 25px;
+                    border-bottom: rgba(0,0,0,0.25) solid 0.5px;
 
                     #profile-thumbnail {
                         width: 75px;
@@ -104,6 +106,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/ClientSide/style.less to edit thi
 
                 #feed-update-information {
                     width: 100%;
+                    //height: calc(100% - 125px);
                     display: block;
                 }
             }

@@ -142,10 +142,17 @@ class Text_Node extends HTMLElement {
 
         });
 
+        let textNode = this.querySelector("#text-node");
+
+        textNode.addEventListener("input", (e)=>{
+
+            this.setAttribute('text', e.target.textContent);
+        });
     }
 
     attributeChangedCallback(name, oldValue, newValue) {
-        //this.render();
+
+
     }
 
     render() {
@@ -153,6 +160,10 @@ class Text_Node extends HTMLElement {
         let text = this.getAttribute('text') || "";
         let photo_links_str = this.getAttribute('photo_links') || "{}";
         let aws_s3_url = this.getAttribute('aws_s3_url') || "";
+
+        let editable = this.parentElement.getAttribute('contenteditable');
+
+        editable = editable === null ? 'false' : 'true';
 
         let photo_links_obj = JSON.parse(photo_links_str);
 
@@ -166,7 +177,7 @@ class Text_Node extends HTMLElement {
 
                 `<div id="photo-sample" style="background-image: url('${aws_s3_url}${first_photo_link}')"></div>` +
 
-                `<div id="text-node">${text}</div>` +
+                `<div id="text-node" contenteditable='${editable}'>${text}</div>` +
 
             `</div>`;
 

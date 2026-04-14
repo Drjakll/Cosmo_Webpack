@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import Context  from '@context/context.js';
 import Follow_List from './Follow_List/follow_list.js';
+import Popup_Msg from '@popup_template/Popup_Message/popup_message.js';
 import './connections.less';
 
 class Connections extends Component {
@@ -65,8 +66,8 @@ class Connections extends Component {
         let {Refresh_Profile_Data} = this.props;
 
         Refresh_Profile_Data && Refresh_Profile_Data();
-
-        alert(data?.message);
+        
+        Popup_Msg("message", data?.message, null);
     }
 
     Show_Follow_Request_Button = ()=>{
@@ -138,8 +139,10 @@ class Connections extends Component {
                         this.props.change_display(this.Display_Followers_List);
                     }}
                 > 
+                
+                    <div id="follow-icon" style={{backgroundImage: `url(./static/followers_icon.png)`}}></div>
 
-                    {follower_ids?.length} Followers
+                    <label>{follower_ids?.length} Followers</label>
 
                 </div>
 
@@ -152,7 +155,9 @@ class Connections extends Component {
                     }}
                 >
                         
-                    {following_ids?.length} Following
+                    <div id="follow-icon" style={{backgroundImage: `url(./static/following_icon.png)`}}></div>
+
+                    <label>{following_ids?.length} Following</label>
                         
                 </div>
 

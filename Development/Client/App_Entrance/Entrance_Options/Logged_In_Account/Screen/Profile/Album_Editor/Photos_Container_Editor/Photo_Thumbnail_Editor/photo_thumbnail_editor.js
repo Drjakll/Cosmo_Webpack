@@ -44,7 +44,8 @@ class Single_Photo_Thumbnail_Editor extends Single_Photo {
 
                     className={`${photos_to_be_deleted[photo_info.id] ? "selected-to-delete" : "" }`}
                 >
-
+                    <label>x</label>
+                    
                     <div id="instruction">
 
                         Click to Select

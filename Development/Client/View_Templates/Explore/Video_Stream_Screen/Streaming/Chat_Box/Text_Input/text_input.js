@@ -1,5 +1,6 @@
 import React, { Component, createRef } from 'react';
 import './text_input.less';
+
 class Text_Input extends Component {
 
     inputRef = createRef();
@@ -39,6 +40,11 @@ class Text_Input extends Component {
         }
 
         let text = this.inputRef.current.value;
+
+        if(/^\s*$/.test(text)){
+            alert("Input field cannot be empty");
+            return;
+        }
 
         this.inputRef.current.value = ``;
 

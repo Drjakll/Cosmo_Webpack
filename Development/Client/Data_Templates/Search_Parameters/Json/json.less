@@ -1,10 +1,14 @@
 #search-json-input-wrapper {
     width: 100%;
-    display: block;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
 
     #json-label-wrapper {
         width: 100%;
         height: 40px;
+        background-color: rgb(9, 133, 50);
 
         #search-label {
             width: 100%;
@@ -12,20 +16,20 @@
             display: flex;
             justify-content: center;
             align-items: center;
+            color: whitesmoke;
+            font-size: 13px;
         }
     }    
 
     #input-wrapper {
-        width: 100%;
+        width: 95%;
         display: block;
         
         .input-item {
-            width: 90%;
+            width: 100%;
             display: block;
-            margin-bottom: 10px;
             border-bottom: rgba(0,0,0,0.1) solid 0.5px;
             padding-bottom: 10px;
-            left: 5%;
             position: relative;
             z-index: 9;
 

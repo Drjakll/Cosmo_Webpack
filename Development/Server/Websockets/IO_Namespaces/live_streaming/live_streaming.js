@@ -101,6 +101,8 @@ let Wrapper = function (){
         socket.on('acknowledge_new_viewer', events.acknowledge_new_viewer.event);
         socket.on('request_to_go_live', events.request_to_go_live.event);
         socket.on('answer_to_request_live', events.answer_to_request_live.event);
+        socket.on('pull_request_to_live', events.pull_request_to_live.event);
+        socket.on('stop_streaming', events.stop_streaming.event);
     };
 };
 

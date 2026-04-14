@@ -12,7 +12,7 @@ class Json_Type extends Component {
         
         super(props);
 
-        let {label, owner_user_account, visitor_user_account, options, column_name: table_name} = props;
+        let {label, owner_user_account, visitor_user_account, options, column_name: table_name, background} = props;
 
         this.state = {
             label,
@@ -21,7 +21,8 @@ class Json_Type extends Component {
             owner_user_account,
             options,
             table_name,
-            popup: false
+            popup: false,
+            background
         };
     }
     
@@ -44,7 +45,7 @@ class Json_Type extends Component {
 
     Contents = ({owner_user_account}) => { 
 
-        let {label, value, visitor_user_account, options, table_name} = this.state;
+        let {label, value, visitor_user_account, options, table_name, background} = this.state;
 
         let {Json_Popup} = this;
 
@@ -55,6 +56,7 @@ class Json_Type extends Component {
                     visitor_user_account={visitor_user_account} 
                     options={options} 
                     table_name={table_name}
+                    background={background}
                 />
     }
     

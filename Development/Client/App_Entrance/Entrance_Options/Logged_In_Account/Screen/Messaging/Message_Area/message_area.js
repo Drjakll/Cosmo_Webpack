@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 import Conversation_Thumbnail from './Conversation_Thumbnail/conversation_thumbnail.js';
 import Conversation_Input from './Conversation_Input/conversation_input.js';
 import Conversation_Texts from './Conversation_Texts/conversation_texts.js';
+import Popup_Msg from '@popup_template/Popup_Message/popup_message.js';
+import Context from '@context/context.js';
 import './message_area.less';
 
 class Message_Area extends Component {
@@ -10,7 +12,7 @@ class Message_Area extends Component {
         
         super(props);
 
-        Message_Area.contextType = window.Context;
+        Message_Area.contextType = Context;
 
         let {conversations, private_or_public, owner_user_account, following_list, selected_room_tag, selected_users, current_users_info} = props;
 
@@ -21,13 +23,13 @@ class Message_Area extends Component {
             following_list,
             selected_room_tag,
             selected_users, //Selected users for any purpose, (example: add selected users to a conversation)
-            current_users_info //Current user information that are currently in the chat room
+            current_users_info //Current user information that are in the chat room
         };  
-    }
+    } 
 
     componentDidMount(){
 
-
+        
 
     }
 
@@ -64,7 +66,7 @@ class Message_Area extends Component {
         let selected_conversation = conversations.private[selected_room_tag];
 
         if(!selected_conversation){
-            alert("Invalid conversation selected");
+            await Popup_Msg("message", "Invalid conversation selected", null);
             return;
         }
 
@@ -83,7 +85,7 @@ class Message_Area extends Component {
         let selected_conversation = conversations.public[selected_room_tag];
         
         if(!selected_conversation){
-            alert("Invalid conversation selected");
+            await Popup_Msg("message","Invalid conversation selected", null);
             return;
         }           
 
@@ -102,7 +104,7 @@ class Message_Area extends Component {
         let selected_users_id = Object.keys(this.state.selected_users);
 
         if(selected_users_id.length === 0){
-            alert("Select at least 1 user to add to the conversation");
+            await Popup_Msg("message","Select at least 1 user to add to the conversation",null);
             return;
         }
 
@@ -121,7 +123,7 @@ class Message_Area extends Component {
 
             //Check see if the user email is already added
             if(users.some((user)=>{ return user.user_id === id})){
-                alert("user already exists");
+                await Popup_Msg("message","user already exists",null);
                 continue;
             }
 
@@ -129,6 +131,7 @@ class Message_Area extends Component {
             
         }
 
+        //SQL database would not allow duplicate user_id so this is safe
         await this.Update_Conversation_Participants(selected_users_id, room_tag);
 
         this.props.clear_selected_users();
@@ -156,7 +159,7 @@ class Message_Area extends Component {
         )).json();
 
         if(!result){
-            alert("Something wrong add participants to conversation");
+            await Popup_Msg("message","Something wrong add participants to conversation", null);
         }
 
     }

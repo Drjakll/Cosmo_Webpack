@@ -39,7 +39,7 @@ class Message extends Component {
 
         return <div id="message" className={`${id === sender_id ? "self-parent" : "others-parent"}`}>
 
-            <div id="msg-info" className={`${id === sender_id ? "self" : "others"}`}>
+            <div id="msg-info" className={`${id === sender_id ? "self-info" : "others-info"}`}>
 
                 <div id="profile-picture-message" style={{ backgroundImage: `url('${aws_s3_url}${this.state.profile_picture_link}')` }}>
 
@@ -55,7 +55,7 @@ class Message extends Component {
 
             </div>
 
-            <div id="message-wrapper" className={`${id === sender_id ? "self-wrapper" : "others-wrapper"}`}>
+            <div id="message-wrapper" className={`${id === sender_id ? "self-msg-wrapper" : "others-msg-wrapper"}`}>
 
                 <pre id="msg" className={`${id === sender_id ? "self" : "others"}`}>
 

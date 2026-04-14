@@ -12,7 +12,7 @@ let request = function() {
 
         /*----*/
 
-        //part of the query for the requirements. 
+        //part of the query for the requirements. If only search for a single id or search within the group of target_id
         let where_query = id ? "pl.id = ?" : "pl.target_id = ? and pl.target_type = ?";
 
         where_query = time_uploaded ? "pl.target_id = ? and pl.target_type = ? and time_uploaded = ?" : where_query;

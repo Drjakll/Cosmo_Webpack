@@ -59,7 +59,7 @@ class Suggestions extends Component {
 
         let {suggestions, visitor_user_account} = this.state;
 
-        return <div id="suggestions-wrapper">
+        let has_suggestions = <div id="suggestions-wrapper">
 
             <div id="suggestions-header">
 
@@ -67,7 +67,8 @@ class Suggestions extends Component {
 
             </div>
 
-            {suggestions.length ? <div id="suggestion-contents">
+            <div id="suggestion-contents">
+
                 {suggestions.map((value, index)=> {
 
                     let {first_name, last_name} = value;
@@ -92,13 +93,14 @@ class Suggestions extends Component {
 
                     </div>
                 })}
-            </div> : <div id="no-suggestions">
 
-                <label>No suggestions at the moment</label>
-
-            </div>}
+            </div>
 
         </div>;
+
+        let has_no_suggestions = <></>;
+
+        return suggestions.length ? has_suggestions : has_no_suggestions;
     }
 }
 

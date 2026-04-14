@@ -5,6 +5,20 @@
     //background-color: rgba(0,0,0,0.25);
     z-index: 99999999;
     display: block;
+    position: relative;
+    overflow: hidden;
+
+    #background-image {
+        background-position: center;
+        background-size: contain;
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        height: 100%;
+        width: 100%;
+        opacity: 0.05;
+        z-index: -1;
+    }
 
     #add-button-wrapper {
         width: 100%;
@@ -15,19 +29,23 @@
 
         #add-entry-button {
             padding: 10px 20px 10px 20px;
-            font-size: 18px;
-            font-weight: bold;
+            font-size: 16px;
+            //font-weight: bold;
             display: flex;
             justify-content: center;
             align-items: center; 
             border-radius: 25px;
             border: rgba(0,0,0,0.5) solid 0.5px;
-            box-shadow: 0px 0px 0px rgba(0,0,0,1);
+            box-shadow: 0px 0px 5px rgba(0,0,0,25);
             transition: 0.5s;
+            background-color: rgba(50,50,50,0.85);
+            color: rgba(255,255,255,0.85);
 
             &:hover {
                 cursor: pointer;
-                box-shadow: 0px 0px 15px rgba(0,0,0,0.5);
+                box-shadow: 0px 0px 0px rgba(0,0,0,0.25);
+                background-color: rgba(150,150,150,0.85);
+                color: black;
             }
         }
     }
@@ -70,13 +88,14 @@
     #json-info-details {
         width: 100%;
         height: calc(100% - 100px);
-        //background-color: white;
         z-index: 99;
         //box-shadow: rgba(0,0,0,0.25) 5px 5px 5px;
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: flex-start;
+        overflow: auto;
+        scrollbar-width: none;
 
         #json-data-label {
             width: 100%;
@@ -96,11 +115,9 @@
         }
 
         #details {
-            width: 95%;
+            width: 60%;
             height: calc(100% - 50px);
             display: block;
-            overflow: auto;
-            scrollbar-width: none;
 
             &::-webkit-scrollbar {
                 display: none;
@@ -109,7 +126,10 @@
             .detail-wrapper {
                 width: 100%;
                 min-height: 35px;
-                margin: 5vh 0px 5vh 0px;
+                margin: 50px 0px 50px 0px;
+                background-color: rgba(255,255,255,0.5);
+                border-radius: 25px;
+                padding: 10px;
 
                 #detail-index {
                     width: 100%;
@@ -175,13 +195,14 @@
                     align-items: center;
 
                     .button {
-                        padding: calc(0.25vw + 0.25vh);
-                        border: rgba(0,0,0,0.5) solid 0.01vw;
+                        padding: calc(10px);
+                        border: rgba(0,0,0,0.5) solid 0.5px;
                         border-radius: 25px;
-                        background-color: antiquewhite;
-                        box-shadow: 0px 0px 0.25vw rgba(0,0,0,0.25);
-                        transition: 1s;
-                        font-size: calc(0.5vh + 0.5vw);
+                        background-color: rgba(50,50,50,0.85);
+                        box-shadow: 0px 0px 5px rgba(0,0,0,0.25);
+                        transition: 0.5s;
+                        font-size: calc(13px);
+                        color: rgba(255,255,255,0.85);
 
                         &:hover {
                             cursor: pointer;

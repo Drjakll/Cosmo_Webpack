@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import The_Texts from './The_Texts/the_texts.js';
 import The_Photos from './The_Photos/the_photos.js';
+import Popup_Msg from '@popup_template/Popup_Message/popup_message.js';
 import './the_editor.less';
 
 class The_Editor extends Component {
@@ -42,7 +43,7 @@ class The_Editor extends Component {
             body: JSON.stringify(post)
         })).json();
 
-        alert(res?.message);
+        Popup_Msg("message", res?.message, null);
 
         let {refresh_posts} = this.props;
 
@@ -66,7 +67,7 @@ class The_Editor extends Component {
             body: JSON.stringify(post)
         })).json();
 
-        alert(res?.message);
+        Popup_Msg("message", res?.message, null);
 
         this.setState({selected_post: res?.result});
 

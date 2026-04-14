@@ -17,6 +17,9 @@ function request() {
                         ua.created_on,
                         ua.password,
                         ua.privacy,
+                        ua.mood_today,
+                        ua.last_mood_updated,
+                        ua.personal_traits,
                         coalesce(pl.link, '')  as profile_picture_link,
                         pl.id as profile_picture_id,
 

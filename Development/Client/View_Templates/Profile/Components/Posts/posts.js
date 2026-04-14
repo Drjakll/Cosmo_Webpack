@@ -150,7 +150,7 @@ class Posts extends Component {
             this.setState({
                 properties_for_calendar_dates: calendar_posts,
                 selected_year: year,
-                selected_date: last_day_of_month,
+                selected_date: 1,
                 selected_month: month
             });
 

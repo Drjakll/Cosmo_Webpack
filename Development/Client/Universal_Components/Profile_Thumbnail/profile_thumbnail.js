@@ -80,7 +80,7 @@ class Profile_Thumbnail extends Component {
                     onClick={(e)=>{
                         this.setState({show_popup: true});
                     }}
-                    style={{ borderRadius: rounded_portrait ? "50%" : "" }}
+                    style={{ borderRadius: rounded_portrait ? "50px" : "" }}
                     draggable={false}
                 />
 
