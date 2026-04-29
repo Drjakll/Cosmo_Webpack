@@ -87,7 +87,7 @@ class Alert_Buttons extends Component {
 
         let {alerts, owner_user_account} = this.state;
 
-        return <div id="alert-buttons-wrapper">
+        return <div id="alert-buttons-inner-wrapper">
 
             <div id="alert-buttons">
 

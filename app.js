@@ -25,8 +25,8 @@ const certificate = fs.readFileSync(certPath, 'utf8');
 
 let app = express();
 
-//let server = https.createServer({ key: privateKey, cert: certificate },app);
-let server = http.createServer(app);
+let server = https.createServer({ key: privateKey, cert: certificate },app);
+//let server = http.createServer(app);
 
 websocket(server);
 

@@ -76,6 +76,10 @@
         height: 100%;
         display: block;
 
+        #mobile-show-conversations-button {
+            display: none;
+        }
+
         #top-right-message-area {
             width: 100%;
             height: calc(7.5% - 0.5px);
@@ -114,6 +118,63 @@
                     }
                 }
             }
+        }
+    }
+}
+
+@media only screen and (max-width: 1000px){
+    
+    #message-area {
+        flex-direction: column;
+        position: relative;
+
+        #left-message-area {
+            width: 100%;
+        }
+
+        #right-message-area {
+
+            #mobile-show-conversations-button {
+                right: 100%;
+                top: calc(50% - 12.5px);
+                position: absolute;
+                width: 25px;
+                height: 25px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                background-color: rgba(0,0,0,0.5);
+                color: rgb(200,200,200);
+                font-size: 14px;
+                user-select: none;
+                transition: 0.5s;
+                z-index: 9999999;
+                border-radius: 50px;
+
+                &:hover {
+                    cursor: pointer;
+                    background-color: rgba(0,0,0,0.75) !important;
+                    color: rgb(225,225,225);
+                }
+            }
+        }
+
+        .mobile-screen {
+            position: absolute;
+            width: 55% !important;
+            height: 100%;
+            transition: 0.5s;
+            z-index: 9999999;
+            background-color: rgba(200,200,200,1);
+            border-left: rgba(0,0,0,0.5) solid 0.5px;
+        }
+
+        .no-show {
+            left: 100%;
+        }
+
+        .show {
+            left: 45%;
         }
     }
 }

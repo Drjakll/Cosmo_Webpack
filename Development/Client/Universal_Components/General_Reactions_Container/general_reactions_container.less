@@ -65,7 +65,8 @@
             }
 
             #given-reactions {
-                width: 300px;
+                min-width: 60px;
+                max-width: 300px;
                 display: none;
                 position: absolute;
                 bottom: 100%;
@@ -125,7 +126,6 @@
                     }
 
                     #user-given-emojis {
-                        width: calc(100% - 50px);
                         height: 100%;
                         display: flex;
                         justify-content: flex-start;
@@ -181,7 +181,7 @@
             #emoji-options-dropdown {
                 position: absolute;
                 bottom: 100%;
-                left: 25%;
+                right: -70px;
                 display: none;
                 border: rgba(0,0,0,0.5) solid 0.5px;
                 background-color: rgba(235,235,235,1);
@@ -212,6 +212,31 @@
                         box-shadow: rgba(0,0,0,0.25) 0px 0px 10px;
                     }
                 }
+            }
+        }
+
+    }
+}
+
+@media only screen and (max-width: 1000px){
+
+    #general-reactions-container-wrapper {
+
+        #general-reactions-given {
+
+        }
+
+        #general-emojis-given {
+
+            #emoji-options {
+
+                #emoji-options-label {
+                    font-size: 12px;
+                }
+            }
+
+            #emoji-options-dropdown {
+
             }
         }
 

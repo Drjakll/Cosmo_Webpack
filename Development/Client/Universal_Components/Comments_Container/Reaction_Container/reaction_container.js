@@ -131,7 +131,7 @@ class Reaction_Container extends Component {
                         <div id="reaction-dropdown" className={like_dislike[key].length ? "" : "no-reaction"}>
 
                             {like_dislike[key].map((value, index)=>{
-
+                                
                                 let {profile_picture_link, first_name, last_name, emojis, user_id} = value;
 
 

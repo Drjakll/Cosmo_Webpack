@@ -41,3 +41,25 @@ Click nbfs://nbhost/SystemFileSystem/Templates/ClientSide/style.less to edit thi
         
     }
 }
+
+@media only screen and (max-width: 1000px){
+
+    #stream-list-component {
+
+        #components-wrapper {
+            flex-direction: column;
+
+            .component {
+                width: 100%;
+            }
+
+            .search-streams {
+                height: 30% !important;
+            }
+
+            .stream-displays {
+                height: 70% !important;
+            }
+        }
+    }
+}

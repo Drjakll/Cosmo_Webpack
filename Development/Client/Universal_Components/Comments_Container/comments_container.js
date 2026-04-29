@@ -94,7 +94,9 @@ class Comments_Container extends Component {
 
         let {comments} = this.state;
 
-        comments = comments.concat(await this.Get_Comments(Date.now(), 1, "<=", "desc"));
+        comments = (await this.Get_Comments(Date.now(), 1, "<=", "desc")).concat(comments);
+
+        console.log(comments)
 
         this.setState({comments});
 
@@ -102,23 +104,23 @@ class Comments_Container extends Component {
 
     Refresh_Current_Comments = async () => {
 
-        let {comments} = this.state;
+        let time_stamp =  Date.now();
 
-        let {time_stamp} = comments.length ? comments[0] : {time_stamp: Date.now()};
-
-        this.setState({comments: await this.Get_Comments(time_stamp, this.maxComments, ">=", 'asc', true)});
+        this.setState({comments: await this.Get_Comments(time_stamp, this.maxComments, "<=", 'desc', true)});
 
     }
 
+    //For now, scrolling up and down refresh the new set of comments. Number of comments only display limited amount at a time.
     Get_More_Comments = async (scrolldown = true) => {
 
         let {comments} = this.state;
 
+        //If scrolling down, get the last time stamp, if scrolling up, get the first time stamp
         let {time_stamp} = comments.length ? (scrolldown ? comments[comments.length - 1] : comments[0]) : {time_stamp: Date.now()};
 
         let more_comments = scrolldown ? 
-                                comments.concat(await this.Get_Comments(time_stamp, this.limits_per_request, ">")) : 
-                                (await this.Get_Comments(time_stamp, this.limits_per_request, "<")).concat(comments);
+                                comments.concat(await this.Get_Comments(time_stamp, this.limits_per_request, "<", "desc")) : 
+                                (await this.Get_Comments(time_stamp, this.limits_per_request, ">", "asc")).reverse().concat(comments);
 
         
 
@@ -169,7 +171,7 @@ class Comments_Container extends Component {
     }
 
     //if is_refresh flag is true, then don't do the stop_get_comments mechanic
-    Get_Comments = async (offset_timestamp, limit = 10, greater_or_less = "<", asc_desc = "asc", is_refresh = false)=>{
+    Get_Comments = async (offset_timestamp, limit = 10, greater_or_less = "<", asc_desc = "desc", is_refresh = false)=>{
 
         if(this.stop_get_comments && !is_refresh){
             return [];
@@ -308,7 +310,7 @@ class Comments_Container extends Component {
 
             moving_down ? comments.splice(0, comments_to_cut) : comments.splice(this.maxComments, comments_to_cut);
 
-            this.setState({comments});
+            await this.setState({comments});
         }
     }
 

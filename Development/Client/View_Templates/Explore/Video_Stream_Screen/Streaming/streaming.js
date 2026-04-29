@@ -203,6 +203,11 @@ class Streaming extends Component {
                 this.my_media_source = await this.Capture_Video();
                 
                 this.Go_Live_To_All();
+
+            } else {
+
+                this.setState({streaming_status: this.streaming_status.not_streaming})
+
             }
 
 
@@ -240,6 +245,7 @@ class Streaming extends Component {
 
             if(from.id === my_room_tag.id){
                 this.Shut_Off_Camera();
+                this.setState({streaming_status: this.streaming_status.not_streaming})
             }
         });
     }
@@ -399,7 +405,7 @@ class Streaming extends Component {
 
         //    //this.New_Offer(this.participants[i]);
         //}
-
+        
     }
     
     Go_Live_To_One = (tag) => {

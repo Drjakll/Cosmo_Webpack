@@ -194,25 +194,29 @@ class Single_Post extends Component {
             
             <div id="bottom-body">
 
-                <div id="reactions-wrapper" className="bottom-body-section">
+                <div id="user-judgements-wrapper">
 
-                    <General_Reactions_Container 
-                        visitor_user_account={visitor_user_account}
-                        owner_user_account={owner_user_account}
-                        target_id={id}
-                        target_type={"post"}
-                        refresh_parent={this.Signal_All_Refresh_Reactions}
-                        reactions={post.reactions}
-                    />
+                    <div id="reactions-wrapper" className="bottom-body-section">
 
-                </div>
+                        <General_Reactions_Container 
+                            visitor_user_account={visitor_user_account}
+                            owner_user_account={owner_user_account}
+                            target_id={id}
+                            target_type={"post"}
+                            refresh_parent={this.Signal_All_Refresh_Reactions}
+                            reactions={post.reactions}
+                        />
 
-                <div id="comments-count-wrapper" className="bottom-body-section">
+                    </div>
 
-                    <div id="open-to-comment-button" onClick={this.Open_Comments_Container}>
+                    <div id="comments-count-wrapper" className="bottom-body-section">
 
-                        Comments({comments_count})
-                        
+                        <div id="open-to-comment-button" onClick={this.Open_Comments_Container}>
+
+                            Comments({comments_count})
+                            
+                        </div>
+
                     </div>
 
                 </div>

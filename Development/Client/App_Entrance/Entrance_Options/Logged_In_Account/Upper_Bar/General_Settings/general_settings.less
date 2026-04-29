@@ -4,7 +4,6 @@
     display: flex;
     justify-content: space-evenly;
     align-items: center;
-    color: whitesmoke;
 
     #available-privacy-options {
         width: 50%;
@@ -15,8 +14,12 @@
 
         &:hover {
             cursor: pointer;
-            //background-color: rgba(150,150,150,1);
-            //color: black;
+            background-color: rgba(150,150,150,1);
+            color: black !important;
+
+            #selected-privacy-label {
+                color: black;
+            }
 
             #privacy-options-list {
                 display: block;
@@ -31,6 +34,7 @@
             align-items: center;
             font-size: 14px;
             color: rgba(255,255,255,0.75);
+            transition: 0.5s;
             //background-color: rgb(3, 76, 124)
         }
 
@@ -58,6 +62,27 @@
                     background-color: rgba(255,255,255,0.85);
                     color: black;
                 }   
+            }
+        }
+    }
+}
+
+@media only screen and (max-width: 1000px){
+
+    #general-settings {
+
+        #available-privacy-options {
+            width: 100%;
+
+            #selected-privacy-label {
+                font-size: 12px;
+            }
+
+            #privacy-options-list {
+
+                .privacy-option-item {
+                    font-size: 12px;
+                }
             }
         }
     }

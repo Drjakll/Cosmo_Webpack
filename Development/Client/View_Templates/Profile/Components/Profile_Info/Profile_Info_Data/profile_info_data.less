@@ -229,23 +229,48 @@ Click nbfs://nbhost/SystemFileSystem/Templates/ClientSide/style.less to edit thi
     #profile-info-data {
 
         #profile-data-label-wrapper {
+            z-index: 99999;
 
-            label {
-                font-size: calc(1vw + 0.75vh);
+            #today-mood-wrapper {
+                flex-direction: row;
+                z-index: 9999;
+
+                #mood-label {
+                    font-size: 13px;
+                }
+            }
+
+            #detail-label {
+
+                label {
+                    font-size: 13px;
+                }
             }
         }
 
         #info-wrapper {
+            z-index: 99;
             overflow: auto;
+
+            &:hover {
+                z-index: 99;
+            }
 
             .individual-info-wrapper {
 
+                &:hover {
+                    z-index: 999;
+                }
+
                 #info-label {
-                    font-size: 15px;
+                    
+                    label {
+                        font-size: 12px;
+                    }
                 }
 
                 #info-value {
-                    font-size: 15px;
+                    font-size: 16px;
                 }
             }
         }

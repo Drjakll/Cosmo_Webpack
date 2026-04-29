@@ -6,7 +6,7 @@ let request = function () {
 
         if(Object.keys(to_update).length === 0 || !table_name || !id){
 
-            res.json({message: "No account information found", success: 0});
+            res.json({message: "No table information found", success: 0});
             
             return;
         }

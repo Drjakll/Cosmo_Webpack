@@ -21,36 +21,36 @@ class Viewer_Entry extends Component {
             };
 	}
         
-        componentDidUpdate(prevProps, prevState){
-            
-            if(this.props === prevProps){
-                return;
-            }
-            
-            this.setState(this.props);
+    componentDidUpdate(prevProps, prevState){
+        
+        if(this.props === prevProps){
+            return;
         }
         
-        Generate_Request_Live = (request_live) => {
-            
-            return request_live ? <div id="request-live-buttons">
-                
-                <div id="label">Request Live: </div>
-                <div id="button" onClick={(e)=>{this.Answer_To_Request_Live(this.state.room_tag, true);}}>Accept</div>
-                <div id="button" onClick={(e)=>{this.Answer_To_Request_Live(this.state.room_tag, false);}}>Decline</div>
-
-            </div> : <></>;
-        }
+        this.setState(this.props);
+    }
+    
+    Generate_Request_Live = (request_live) => {
         
-        Answer_To_Request_Live = (to, answer) => {
+        return request_live ? <div id="request-live-buttons">
             
-            this.state.socket?.emit('answer_to_request_live', {to: to, answer: answer});
             
-            this.setState({ request_live: false });
+            <div className="button" onClick={(e)=>{this.Answer_To_Request_Live(this.state.room_tag, true);}}>Accept</div>
+            <div className="button" onClick={(e)=>{this.Answer_To_Request_Live(this.state.room_tag, false);}}>Decline</div>
+            
+        </div> : <></>;
+    }
+    
+    Answer_To_Request_Live = (to, answer) => {
+        
+        this.state.socket?.emit('answer_to_request_live', {to: to, answer: answer});
+        
+        this.setState({ request_live: false });
 
-            //Let the Viewer_Display component change the request_live to false.
-            this.props.request_to_go_live_answered(to);
-            
-        }
+        //Let the Viewer_Display component change the request_live to false.
+        this.props.request_to_go_live_answered(to);
+        
+    }
 
 	render() {
                 

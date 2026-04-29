@@ -213,6 +213,12 @@ class Comment_Container extends Component {
 
                 </div>
 
+                <pre id="timestamp-wrapper">
+
+                    {new Date(time_stamp).toLocaleString()}
+
+                </pre>
+
             </div>
 
             <div id="comment-middle-section">
@@ -240,12 +246,6 @@ class Comment_Container extends Component {
             </div>
 
             <div id="comment-bottom-section">
-
-                <pre id="timestamp-wrapper">
-
-                    {new Date(time_stamp).toLocaleString()}
-
-                </pre>
 
                 <div id="reply-wrapper">
 

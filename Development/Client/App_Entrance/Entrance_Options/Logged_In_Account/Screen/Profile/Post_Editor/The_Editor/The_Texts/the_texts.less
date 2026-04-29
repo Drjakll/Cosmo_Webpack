@@ -21,7 +21,7 @@
                 width: calc(80%);
                 height: 70%;
                 padding: 0px 10px 0px 10px;
-                font-size: calc(32px);
+                font-size: calc(16px);
                 border: rgba(0,0,0,0.5) solid 0.5px;
                 display: flex;
                 justify-content: center;
@@ -69,8 +69,8 @@
 
             #the-body-input {
                 width: calc(80%);
-                height: calc(90% - 20px);
-                font-size: calc(14px);
+                height: calc(90%);
+                font-size: calc(12px);
                 padding: calc(10px);
                 border: rgba(0,0,0,0.5) solid 0.5px;
                 border-radius: 10px;
@@ -117,6 +117,47 @@
         #the-delete-button {
             background-color: rgba(6, 78, 100, 0.85);
             //color: rgba(6, 78, 100, 0.85) !important; 
+        }
+    }
+}
+
+@media only screen and (max-width: 1000px) {
+
+    #the-post-texts-editor {
+
+        #the-text-editor-area {
+
+            #the-title-input-wrapper {
+
+                #the-title-input {
+                    font-size: calc(12px);
+                }
+            }
+
+            #text-editor-button-area {
+
+                button {
+                    width: 100px;
+                    padding: 5px 10px 5px 10px;
+                    font-size: calc(10px);
+                }
+            }
+
+            #the-body-input-wrapper {
+
+                #the-body-input {
+                    font-size: calc(10px);
+                }
+            }
+        }
+
+        #the-buttons-area {
+
+            .post-button {
+                width: 80px;
+                padding: 5px 10px 5px 10px;
+                font-size: calc(12px);
+            }
         }
     }
 }

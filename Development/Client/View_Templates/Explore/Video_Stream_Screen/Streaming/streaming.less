@@ -28,7 +28,6 @@ Click nbfs://nbhost/SystemFileSystem/Templates/ClientSide/style.less to edit thi
         //background-color: blue;
         display: block;
         overflow-y: auto;
-        white-space: nowrap;
         scrollbar-width: none;
 
         &::-webkit-scrollbar {
@@ -69,14 +68,24 @@ Click nbfs://nbhost/SystemFileSystem/Templates/ClientSide/style.less to edit thi
 @media only screen and (max-width: 1000px){
 
     #streaming {
+        flex-direction: column;
 
         #smaller-stream-screens {
-            height: 35%;
-            white-space: nowrap;
+            height: 20%;
+            width: 100%;
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+
+            .sub-video {
+                width: 15vh;
+                height: 15vh;
+            }
         }
 
-        #chatbox-wrapper {
-            height: 15%;
+        #main-stream-side {
+            height: 80%;
+            width: 100%;
         }
     }
 }

@@ -70,7 +70,7 @@ class General_Settings extends Component {
             <div id="available-privacy-options">
 
                 <div id="selected-privacy-label">
-                    {this.Privacy_Options[selected_privacy]?.label}
+                    Privacy ({this.Privacy_Options[selected_privacy]?.label})
                 </div>
 
                 <div id="privacy-options-list">

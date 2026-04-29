@@ -10,11 +10,28 @@
         justify-content: flex-start;
         align-items: center;
 
-        label {
+        #commenter-name-wrapper {
+            width: 40%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            label {
+                font-size: 12px;
+                color: rgba(0,0,0,0.75);
+                font-weight: 600;
+                padding: 5px 20px 5px 20px;
+            }
+        }
+
+        #timestamp-wrapper {
+            width: 50%;
+            height: 100%;
             font-size: 12px;
-            color: rgba(0,0,0,0.75);
-            font-weight: 600;
-            padding: 5px 20px 5px 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
     }
 
@@ -64,16 +81,8 @@
         justify-content: space-evenly;
         align-items: center;
 
-        #timestamp-wrapper {
-            width: 150px;
-            font-size: 12px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
         #reply-wrapper {
-            width: 100px;
+            width: 25%;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -98,7 +107,7 @@
         }
 
         #reaction-wrapper {
-            width: calc(100% - 350px);
+            width: calc(50%);
             height: 100%;
             display: flex;
             justify-content: space-evenly;
@@ -106,7 +115,7 @@
         }
 
         #comment-editor-wrapper {
-            width: 100px;
+            width: 25%;
             height: 100%;
             position: relative;
 

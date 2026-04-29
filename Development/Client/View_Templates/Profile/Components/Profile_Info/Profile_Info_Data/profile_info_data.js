@@ -57,7 +57,7 @@ class Profile_Info_Data extends Component {
         let utc_today = new Date().toISOString().split("T")[0];
 
         if(!last_mood_updated || utc_today !== last_mood_updated){
-            return <div>-</div>;
+            return <div id="current-mood"><img src={`./static/dunno.png`}/> No Update </div>;
         }
 
         return <div id="current-mood"><img src={`./static/${Mood_Options[mood_today]}`}/> {mood_today}</div>;

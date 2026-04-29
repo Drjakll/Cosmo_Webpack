@@ -23,7 +23,8 @@ class Message_Area extends Component {
             following_list,
             selected_room_tag,
             selected_users, //Selected users for any purpose, (example: add selected users to a conversation)
-            current_users_info //Current user information that are in the chat room
+            current_users_info, //Current user information that are in the chat room
+            show_right_thumbnails: false
         };  
     } 
 
@@ -166,7 +167,7 @@ class Message_Area extends Component {
 
     render(){
 
-        let {conversations, selected_room_tag, private_or_public} = this.state;
+        let {conversations, selected_room_tag, private_or_public, show_right_thumbnails} = this.state;
 
         let conversation = conversations[private_or_public][selected_room_tag];
 
@@ -227,11 +228,18 @@ class Message_Area extends Component {
 
                     </div>
 
-                    <div id="right-message-area">
+                    <div id="right-message-area" className={`mobile-screen ${show_right_thumbnails ? "show" : "no-show"}`}>
+
+                        <div id="mobile-show-conversations-button" 
+                            onClick={(e)=>{ this.setState({show_right_thumbnails: !show_right_thumbnails}); }}>
+
+                            {show_right_thumbnails ? ">" :"<"}
+
+                        </div>
 
                         <div id="top-right-message-area">
 
-                            Private Conversations
+                            Conversations
     
                         </div>
 
