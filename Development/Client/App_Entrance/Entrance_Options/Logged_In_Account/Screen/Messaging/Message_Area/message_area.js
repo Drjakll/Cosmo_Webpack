@@ -177,7 +177,10 @@ class Message_Area extends Component {
         return (
                 <div id="message-area">
 
-                    <div id="left-message-area" onClick={(e)=>{this.props.seen_by(selected_room_tag); }}>
+                    <div id="left-message-area" onClick={(e)=>{
+                            this.props.seen_by(selected_room_tag); 
+                            this.setState({show_right_thumbnails: false});
+                        }}>
 
                         <div id="top-left-message-area">
 

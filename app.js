@@ -20,8 +20,11 @@ const uploads = multer({
 const keyPath = './my-key.pem'; // Replace with your actual key file
 const certPath = './my-cert.pem';    // Replace with your actual cert file
 
-const privateKey = fs.readFileSync(keyPath, 'utf8');
-const certificate = fs.readFileSync(certPath, 'utf8');
+const keyPath2 = './localhost+2-key.pem';
+const certPath2 = './localhost+2.pem';
+
+const privateKey = fs.readFileSync(keyPath2, 'utf8');
+const certificate = fs.readFileSync(certPath2, 'utf8');
 
 let app = express();
 
@@ -295,8 +298,8 @@ app.post("/get_favorite_public_channels", get_favorite_public_channels.req);
 app.post("/leave_public_channel", leave_public_channel.req);
 app.patch("/edit_private_conversation_name", edit_private_conversation_name.req);
 
-server.listen(8080, () => {
+server.listen(8080, "0.0.0.0",() => {
    
-    console.log("Listening to port 8080");
+    console.log("Listening to localhost port 8080");
 
 });

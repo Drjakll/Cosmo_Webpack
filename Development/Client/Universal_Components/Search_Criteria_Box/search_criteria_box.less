@@ -200,3 +200,53 @@
         }
     }
 }
+
+@media only screen and (max-width: 1000px){
+    #criteria-box-wrapper {
+        
+        #criteria-box-columns-wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: calc(100% - 30px);
+
+            #available-parameters-columns-wrapper, #search-parameters-columns-wrapper {
+                height: 100%;
+
+                #search-parameters-box-wrapper, #available-parameters-wrapper {
+
+                    #available-parameters-header{
+                        height: 35px;
+                        font-size: 11px;
+                    }
+
+                    #available-parameters-list {
+                        height: calc(100% - 35px);
+                    }
+
+                    #search-parameters-box-list {
+                        height: calc(100%) !important;
+                    }
+                }
+            }
+
+
+            #available-parameters-columns-wrapper {
+                width: 30%;
+            }
+
+            #search-parameters-columns-wrapper {
+                width: 70%;
+            }
+        }
+
+        #apply-search-button-wrapper {
+            height: 30px;
+
+            button {
+                font-size: 12px;
+                padding: 5px 10px 5px 10px;
+            }
+        }
+    }
+}

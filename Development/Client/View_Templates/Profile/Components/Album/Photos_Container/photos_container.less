@@ -65,9 +65,9 @@ Click nbfs://nbhost/SystemFileSystem/Templates/ClientSide/style.less to edit thi
             flex-shrink: 0;
             overflow: auto;
             position: relative;
-            gap: 10px;
-            margin: 0% 25px 0% 25px;
+            gap: calc((100% - 180px * 5)/4);
             z-index: 99;
+            left: 2.5%;
             
             .photo-thumbnail-wrapper {
                 width: 180px;
@@ -107,11 +107,9 @@ Click nbfs://nbhost/SystemFileSystem/Templates/ClientSide/style.less to edit thi
     #photos-container {
 
         #photo-container-wrapper {
-            width: 90%;
-            left: 5%;
 
             #photo-container-title {
-                font-size: calc(1.25vw + 0.6vh);
+                font-size: calc(12px);
             }
 
             #editor-wrapper {
@@ -119,6 +117,8 @@ Click nbfs://nbhost/SystemFileSystem/Templates/ClientSide/style.less to edit thi
             }
 
             #photos {
+                width: 100%;
+                left: 2%;
 
                 .photo-thumbnail-wrapper {
                     width: calc(100%/2 - 5px);
