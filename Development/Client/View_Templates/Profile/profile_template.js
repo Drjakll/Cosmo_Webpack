@@ -157,7 +157,7 @@ class Profile_Template extends Component {
 
                 const unique_props = com.props;
 
-                return <div className={`profile-template-component ${com.classname}`} key={key} tabIndex={0}>
+                return <div className={`profile-template-component ${com.classname}`} key={key}>
 
                     {Com_Render(general_props, unique_props)}
 

@@ -118,7 +118,7 @@ class Json_Text_Screen_Editor extends Json_Text_Screen {
 
                         <div id="trait-name">
 
-                            <label>Trait Name</label>
+                            <label>Name</label>
 
                             <input type="text" onChange={(e)=>{ this.Edit_Key(e.target.value); }} maxLength={25} placeholder="Trait Name" />
 
@@ -126,7 +126,7 @@ class Json_Text_Screen_Editor extends Json_Text_Screen {
 
                         <div id="trait-value">
 
-                            <label>Trait Value</label>
+                            <label>Value</label>
 
                             <input type="text" onChange={(e)=>{ this.Edit_Value(e.target.value); }} maxLength={25} placeholder="Trait Value" />
                             
