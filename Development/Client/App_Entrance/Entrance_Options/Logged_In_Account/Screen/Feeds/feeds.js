@@ -202,11 +202,14 @@ class Feeds extends Component {
                                 />
 
                             </div>
+                            
+                            <div id="feed-info-wrapper">
 
-                            <label>{first_name} {last_name}</label>
+                                <label>{first_name} {last_name}</label>
 
-                            <div id="time-created">{new Date(created_on).toLocaleString()}</div>
+                                <div id="time-created">{new Date(created_on).toLocaleString()}</div>
 
+                            </div>
                         </div> : ""}
 
                         <div id="feed-update-information" key={index}>

@@ -17,7 +17,7 @@ class Login_Account extends Component {
     
     state = {
         selected: "Buttons"
-    }
+    };
     
     constructor(props){
         
@@ -41,7 +41,7 @@ class Login_Account extends Component {
         return (
                 <div id="login-account">
                         
-                    <Logo sizeScale={3} ratio={0.75} top={25}/>
+                    <Logo sizeScale={3} ratio={1} top={25}/>
 
                      <div id="account-buttons-wrapper">
 

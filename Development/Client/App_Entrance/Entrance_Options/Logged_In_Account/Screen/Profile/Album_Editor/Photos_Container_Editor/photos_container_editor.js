@@ -94,7 +94,7 @@ class Photos_Container_Editor extends Photos_Container {
         }
 
         return <div id="delete-album-button" onClick={delete_album}>
-            Delete Album
+            Del Album
         </div>;
     }
 
@@ -189,7 +189,7 @@ class Photos_Container_Editor extends Photos_Container {
 
         return <div id="delete-photo-button">
 
-            <button onClick={delete_photos}>Delete {Object.keys(this.state.photos_to_be_deleted).length} photo(s)</button>
+            <button onClick={delete_photos}>Del {Object.keys(this.state.photos_to_be_deleted).length} photo(s)</button>
 
         </div>;
     }
@@ -294,15 +294,23 @@ class Photos_Container_Editor extends Photos_Container {
         
             <div id="editor-buttons-wrapper">
 
-                {this.Delete_Album_Button()}
+                <div id="album-management-delete-buttons-wrapper">
 
-                {this.Title_Editor()}
+                    {this.Delete_Album_Button()}
 
-                {this.Description_Editor()}
+                    {this.Delete_Selected_Photos_Button()}
 
-                {this.Add_Photos_Button()}
+                </div>
 
-                {this.Delete_Selected_Photos_Button()}
+                <div id="album-management-edit-buttons-wrapper">
+
+                    {this.Title_Editor()}
+
+                    {this.Description_Editor()}
+
+                    {this.Add_Photos_Button()}
+
+                </div>
 
             </div>
 

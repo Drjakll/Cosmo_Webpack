@@ -52,15 +52,18 @@ function Reconnect() {
 
 Reconnect();
 
+let count = 0;
+
 setInterval(async ()=>{
 
   try {
     await sql.query('select 1');
+    console.log(++count);
   } catch(err){
     console.error('Failed ping', err);
   }
 
-}, 60000)
+}, 30000)
 
 let query_wrapper = {
   query: async function(q, data = null, tries = 3){
