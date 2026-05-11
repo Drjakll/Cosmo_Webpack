@@ -3,6 +3,10 @@ let Wrapper = function(){
     
     this.event = async (search) => {
 
+        if(!search){
+            return;
+        }
+
         if(Object.keys(search).length === 0){
             search.first_name = ""; //Must have at least 1 requirement to find results
         }

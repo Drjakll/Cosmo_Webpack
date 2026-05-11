@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import Context  from '@context/context.js';
 import Follow_List from './Follow_List/follow_list.js';
 import Popup_Msg from '@popup_template/Popup_Message/popup_message.js';
+import {Get_Follows, Queue_Set_State, Refresh} from '@universal_components/Account_Functions/get_follows.js';
 import './connections.less';
 
 class Connections extends Component {
@@ -18,11 +19,23 @@ class Connections extends Component {
 
         this.state = {
             owner_user_account,
-            visitor_user_account
+            visitor_user_account,
+            followings: [],
+            followers: []
         };
     }
 
     componentDidMount(){
+
+        let {owner_user_account } = this.state;
+
+        Queue_Set_State(this.setState.bind(this), owner_user_account, "get_followers", "Connections");
+        Queue_Set_State(this.setState.bind(this), owner_user_account, "get_followings", "Connections");
+
+        //Refresh followers
+        Refresh(true);
+        //Refresh followings
+        Refresh(false);
         
     }
 
@@ -36,6 +49,10 @@ class Connections extends Component {
 
     }
 
+    Refresh_List = async (refresh_followers = true) => {
+
+        Refresh(refresh_followers);
+    }
 
     Send_Follow_Request = async ()=>{
 
@@ -87,7 +104,7 @@ class Connections extends Component {
 
     Display_Followers_List = ()=>{
 
-        let {owner_user_account, visitor_user_account} = this.state;
+        let {owner_user_account, visitor_user_account, followers} = this.state;
 
         let {List} = this;
 
@@ -97,6 +114,8 @@ class Connections extends Component {
                 owner_user_account={owner_user_account}
                 visitor_user_account={visitor_user_account}
                 label={"Followers"}
+                list={followers}
+                Refresh_List={this.Refresh_List}
             />
 
         </div>;
@@ -104,7 +123,7 @@ class Connections extends Component {
 
     Display_Following_List = ()=>{
 
-        let {owner_user_account, visitor_user_account} = this.state;
+        let {owner_user_account, visitor_user_account, followings} = this.state;
 
         let {List} = this;
 
@@ -114,6 +133,8 @@ class Connections extends Component {
                 owner_user_account={owner_user_account}
                 visitor_user_account={visitor_user_account}
                 label={"Following"}
+                list={followings}
+                Refresh_List={this.Refresh_List}
             />
 
         </div>;
@@ -121,9 +142,9 @@ class Connections extends Component {
 
     render(){
 
-        let {visitor_user_account, owner_user_account} = this.state;
+        let {visitor_user_account, owner_user_account, followers, followings} = this.state;
 
-        let {following_ids, follower_ids} = owner_user_account;
+        //let {following_ids, follower_ids} = owner_user_account;
 
         let {id: follower_id} = visitor_user_account;
 
@@ -142,7 +163,7 @@ class Connections extends Component {
                 
                     <div id="follow-icon" style={{backgroundImage: `url(./static/followers_icon.png)`}}></div>
 
-                    <label>{follower_ids?.length} Followers</label>
+                    <label>{followers?.length} Followers</label>
 
                 </div>
 
@@ -157,7 +178,7 @@ class Connections extends Component {
                         
                     <div id="follow-icon" style={{backgroundImage: `url(./static/following_icon.png)`}}></div>
 
-                    <label>{following_ids?.length} Following</label>
+                    <label>{followings?.length} Following</label>
                         
                 </div>
 
@@ -165,7 +186,7 @@ class Connections extends Component {
 
             <div id="request-buttons">
 
-                {visitor_user_account.id !== owner_user_account.id && !follower_ids?.includes(follower_id) ? this.Show_Follow_Request_Button() : ""}
+                {visitor_user_account.id !== owner_user_account.id && !followers.some(u => u.id === follower_id) ? this.Show_Follow_Request_Button() : ""}
 
             </div>
 

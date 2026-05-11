@@ -24,12 +24,6 @@ class Connection_List_Template extends Component {
         };
     }
 
-    componentDidMount(){
-
-        
-
-    }
-
     componentDidUpdate(prevProps, prevState){
 
         if(this.props === prevProps){

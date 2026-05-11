@@ -41,9 +41,8 @@ class Follow_Editor extends Follow_List {
             }
         });
 
-        await this.Refresh();
+        await this.Refresh(true);
 
-        window.Refresh_Login();
     }
 
     Unfollow_User = async (following_id)=>{
@@ -73,9 +72,8 @@ class Follow_Editor extends Follow_List {
             }
         });
 
-        await this.Refresh();
+        await this.Refresh(false);
 
-        window.Refresh_Login();
     }
     
     render(){

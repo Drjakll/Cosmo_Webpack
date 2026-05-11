@@ -86,6 +86,7 @@ let Wrapper = function (){
             events[i].storage = this.streams_storage;
             events[i].active_streams = active_streams;
             events[i].all_sockets = this.all_sockets;
+            events[i].MAX_PERSONS_IN_STREAM = 10;
         }
         
         socket.on('create_stream', events.create_stream.event);
@@ -103,6 +104,7 @@ let Wrapper = function (){
         socket.on('answer_to_request_live', events.answer_to_request_live.event);
         socket.on('pull_request_to_live', events.pull_request_to_live.event);
         socket.on('stop_streaming', events.stop_streaming.event);
+        socket.on('stream_to_all', events.stream_to_all.event);
     };
 };
 

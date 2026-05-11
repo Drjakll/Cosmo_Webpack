@@ -19,12 +19,17 @@ let Wrapper = function(){
 
             this.my_socket.leave(stream_id);
 
+            if(this.all_sockets[stream_id]){
+
+                delete this.all_sockets[stream_id][room_tag?.id];
+                
+            }
             return;
         }
 
         //await this.Delete_Active_Stream(room_tag);
 
-        room_tag.key = room_tag.email;
+        room_tag.key = room_tag.id;
 
         await this.storage.Delete_Entry(room_tag);
         
@@ -35,6 +40,8 @@ let Wrapper = function(){
         this.my_socket.to(stream_id).emit('disband_room', {msg: "The host has disconnected from the stream."});
 
         this.my_socket.leave(stream_id);
+
+        delete this.all_sockets[stream_id];
     };
     
 };

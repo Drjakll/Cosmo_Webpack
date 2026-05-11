@@ -1,7 +1,7 @@
 import React, {createRef} from 'react';
 import Connection_List_Template from '../Connection_List_Template/connection_list_template.js';
 import Search_Criteria_Box from '@universal_components/Search_Criteria_Box/search_criteria_box.js';
-import Get_Follows from '@universal_components/Account_Functions/get_follows.js';
+import {Get_Follows, Queue_Set_State, Refresh} from '@universal_components/Account_Functions/get_follows.js';
 import Context from '@context/context.js';
 import './follow_list.less';
 
@@ -27,15 +27,8 @@ class Follow_List extends Connection_List_Template {
 
     componentDidMount(){
 
-        let {label} = this.props;
+        this.Refresh = Refresh;
 
-        this.Refresh = label === "Followers" ? this.Get_All_Followers : this.Get_All_Following;
-
-        this.setState({
-            Refresh: this.Refresh
-        });
-        
-        this.Refresh();
     }
 
     componentDidUpdate(prevProps, prevState){
@@ -46,32 +39,10 @@ class Follow_List extends Connection_List_Template {
 
         this.setState(this.props);
 
-        this.Refresh();
+        let {label} = this.props;
+
+        this.Refresh(label === "Followers");
         
-    }
-
-    Get_All_Followers = async ()=>{
-
-        let {owner_user_account} = this.state;
-
-        let list = await Get_Follows(owner_user_account, true);
-
-        this.setState({
-            list
-        });
-
-    }
-
-    Get_All_Following = async ()=>{
-
-        let {owner_user_account} = this.state;
-
-        let list = await Get_Follows(owner_user_account, false);
-
-        this.setState({
-            list
-        });
-
     }
 
     Search_Followers = async (search_criteria)=>{
@@ -130,6 +101,7 @@ class Follow_List extends Connection_List_Template {
         if(data){
 
             this.setState({list: data.results});
+
         } else {
             alert("Error applying search");
         }

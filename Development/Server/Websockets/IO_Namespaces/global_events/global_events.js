@@ -37,11 +37,12 @@ let Wrapper = function (){
         
         for(let i in this.events){
             events[i] = new this.events[i]();
-            
+        
             events[i].socket = socket;
             events[i].root_io = this.root_io;
         }
         
+        socket.on('report_online', events.report_online.event);
     };
 };
 

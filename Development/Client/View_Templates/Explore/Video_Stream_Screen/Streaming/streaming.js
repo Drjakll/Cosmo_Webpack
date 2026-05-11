@@ -23,7 +23,17 @@ class Streaming extends Component {
         
         this.peerConfig = {
             iceServers: [
-                { urls: 'stun:stun.l.google.com:19302' } // Public STUN server
+                { 
+                    urls: 'stun:stun.l.google.com:19302' // Public STUN server
+                }, 
+                {
+                    urls: [
+                        "turn:turn.cosmo-one.com:3478?transport=udp", 
+                        "turn:turn.cosmo-one.com:3478?transport=tcp"
+                    ],
+                    username: "dr_jakll",
+                    credential: "Kingman123!"
+                }
             ]
         };
 
@@ -38,7 +48,7 @@ class Streaming extends Component {
             owner_user_account,
             is_host,
             stream_id, //The stream_id is the host socket.id + Date.now()
-            room_title: "New Room",
+            stream_title: props.stream_title ?? "New Room",
             streamer_small_screens: {}, //Streamers at the smaller screen
             streamer_big_screen: null, //Streamer at the bigger screen
             my_room_tag: null,
@@ -94,7 +104,7 @@ class Streaming extends Component {
 
             if(this.socket?.id){
 
-                let { is_host } = this.state;
+                let { is_host, owner_user_account } = this.state;
                 
                 if (is_host) {
 
@@ -125,9 +135,7 @@ class Streaming extends Component {
                         socket: this.socket
                     });
                     
-                    //this.my_media_source = await this.Capture_Video();
-                    
-                    this.socket.emit('join_stream', {room_tag: this.my_room_tag, account_data: this.state.owner_user_account});
+                    this.socket.emit('join_stream', {room_tag: this.my_room_tag, account_data: owner_user_account});
                     
                 }
                 
@@ -150,9 +158,20 @@ class Streaming extends Component {
 
             this.Give_Self_Tracks_To_Peer(this.participants[id]);
 
+            this.New_Offer(this.participants[id]);
+        });
+
+        this.socket.on('video_stream_from_user', ({user_room_tag})=>{
+
+            let {id} = user_room_tag;
+
+            this.participants[id] = {};
+            this.participants[id].tag = user_room_tag;
+            this.participants[id].peer = this.Init_Peer_Connection(user_room_tag);
+
+            this.Give_Self_Tracks_To_Peer(this.participants[id]);
             
             this.New_Offer(this.participants[id]);
-
         });
 
         this.socket.on('receive_offer', async ({ from, remote_offer }) => {
@@ -178,6 +197,13 @@ class Streaming extends Component {
 
             this.socket.emit('answer_to_offer', { from: this.my_room_tag, to: from, answer: answer });
 
+        });
+
+        this.socket.on('stream_full', async({})=>{
+
+            alert("Sorry, this stream is full. The maximum number of viewers has been reached.");
+
+            this.props.set_main_screen("Stream_List_Components");
         });
 
         this.socket.on('receive_answer', async ({ from, answer }) => {
@@ -210,10 +236,7 @@ class Streaming extends Component {
 
             }
 
-
-
         });
-        
 
         this.socket.on('leave_room', ({ tag }) => {
 
@@ -273,7 +296,7 @@ class Streaming extends Component {
 
         acc_copy.thumbnail_link = acc_copy.profile_picture_link;
 
-        acc_copy.room_title = this.state.room_title;
+        acc_copy.stream_title = this.state.stream_title;
 
         acc_copy.is_host = this.state.is_host;
 
@@ -396,7 +419,7 @@ class Streaming extends Component {
 
     Go_Live_To_All = async () => {
 
-        this.socket.emit('join_stream', { room_tag: this.my_room_tag, account_data: this.state.owner_user_account });
+        this.socket.emit('stream_to_all', { user_room_tag: this.my_room_tag});
 
 
         //for (let i in this.participants) {
@@ -434,7 +457,7 @@ class Streaming extends Component {
 
     }
 
-    Swap_With_Main_Screen = ({ media_src, id }) => {
+    Swap_With_Main_Screen = ({ id }) => {
 
         let { streamer_small_screens, streamer_big_screen, big_screen_id } = this.state;
 
@@ -442,7 +465,7 @@ class Streaming extends Component {
 
         big_screen_id = id;
 
-        this.setState({ streamer_small_screens: streamer_small_screens, streamer_big_screen: media_src, big_screen_id: big_screen_id });
+        this.setState({ streamer_small_screens, streamer_big_screen, big_screen_id });
 
     }
     
@@ -467,10 +490,12 @@ class Streaming extends Component {
                     
                     {Object.keys(this.state.streamer_small_screens).map((key, index) => {
                         
-                        return key === this.state.big_screen_id ? "" : <div className="sub-video" key={index}>
+                        return key === this.state.big_screen_id ? "" : <div className="sub-video" key={key}>
 
-                            <Sub_Video media_source={this.state.streamer_small_screens[key]}
-                                id={key} swap_screen={this.Swap_With_Main_Screen}
+                            <Sub_Video 
+                                media_source={this.state.streamer_small_screens[key]}
+                                id={key} 
+                                swap_screen={this.Swap_With_Main_Screen}
                                 is_self={this.state.my_room_tag?.id === key ? true : false} />
                                 
                         </div>;
@@ -480,9 +505,11 @@ class Streaming extends Component {
                 </div>
 
                 <div id="main-stream-side">
+
                     <div id="big-stream-screen">
 
-                        <Main_Video owner_user_account={this.state.owner_user_account}
+                        <Main_Video 
+                            owner_user_account={this.state.owner_user_account}
                             media_source={this.state.streamer_big_screen}
                             is_self={this.state.big_screen_id === this.state.my_room_tag?.id ? true : false} />
                             
@@ -490,13 +517,15 @@ class Streaming extends Component {
                     
                     <div id="chatbox-wrapper">
 
-                        <Chat_Box socket={this.socket} 
-                                    my_room_tag={this.state.my_room_tag} 
-                                    owner_user_account={this.state.owner_user_account}
-                                    set_account_view={this.Set_Account_View}
-                                    the_host={this.state.the_host}
-                                    change_screen={this.props.root_change_screen}
-                                    streaming_status={this.state.streaming_status}
+                        <Chat_Box 
+                            socket={this.socket} 
+                            my_room_tag={this.state.my_room_tag} 
+                            owner_user_account={this.state.owner_user_account}
+                            set_account_view={this.Set_Account_View}
+                            the_host={this.state.the_host}
+                            change_screen={this.props.root_change_screen}
+                            streaming_status={this.state.streaming_status}
+                            co_streamers={this.state.streamer_small_screens}
                         />
 
                     </div>

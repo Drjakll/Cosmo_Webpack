@@ -18,9 +18,6 @@ let request = function(){
                             pl.link as profile_picture_link,
                             pl.id as profile_picture_id,
 
-                            coalesce(fcp.pending, json_array()) as pending_follow_requests,
-                            coalesce(fc.following_ids, json_array()) as following_ids,
-                            coalesce(frc.follower_ids, json_array()) as follower_ids,
                             json_array()  as User_Hobbies,
                             json_array()  as User_Locations,
                             json_array()  as User_Professions,
@@ -28,48 +25,6 @@ let request = function(){
 
                         from 
                             User_Accounts as ac
-
-                        left join
-                            (select
-                                follower_id,
-                                json_arrayagg(followed_id) as following_ids
-                            from
-                                Connections
-                            where
-                                status = 'accepted'
-                            group by
-                                follower_id
-                            ) as fc
-                        on
-                            fc.follower_id = ac.id
-
-                        left join
-                            (select
-                                followed_id,
-                                json_arrayagg(follower_id) as follower_ids
-                            from
-                                Connections
-                            where
-                                status = 'accepted'
-                            group by
-                                followed_id
-                            ) as frc
-                        on
-                            frc.followed_id = ac.id
-
-                        left join
-                            (select
-                                followed_id,
-                                json_arrayagg(follower_id) as pending
-                            from
-                                Connections
-                            where
-                                status = 'pending'
-                            group by
-                                followed_id
-                            ) as fcp
-                        on
-                            fcp.followed_id = ac.id
 
                         left join
                             Photo_Links as pl

@@ -8,7 +8,9 @@ let request = function () {
 
             case "mutual":
 
-                let data = [from_id, to_id];
+                //let data = [from_id, to_id];
+
+                let data = [to_id, from_id ];
 
                 let [mutual] = await this.sql.query(`
                     select 
@@ -18,17 +20,34 @@ let request = function () {
 
                     join 
                         Connections as B
-                    on 
-                        A.followed_id = B.follower_id
+
+                    join
+                        Connections as C
+                    on
+                        C.followed_id = B.follower_id
 
                     where 
-                       ( A.follower_id = ?
-                    and 
-                        B.followed_id = ?
+                        (
+                            B.followed_id = ?
+                        and
+                            A.followed_id = ?
+                        )
                     and
-                        A.status = 'accepted'
-                    and
-                        B.status = 'accepted' )
+                        (
+                            (  
+                                B.followed_id = A.follower_id 
+                            and
+                                A.status = 'accepted'
+                            )
+                        or
+                            (
+                                A.followed_id = C.follower_id
+                            and
+                                B.status = 'accepted'
+                            and
+                                C.status = 'accepted'
+                            )
+                        )
                 `, data);
 
                 if(mutual[0].count > 0){

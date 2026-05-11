@@ -1,6 +1,10 @@
 let Wrapper = function(){
     
     this.event = (data) => {
+
+        if(!data){
+            return;
+        }
         
         let {to, from} = data;
         

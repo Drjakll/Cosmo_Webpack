@@ -2,6 +2,7 @@ import React, { Component, createRef } from 'react';
 import Message from './Message/message.js';
 import Text_Input from './Text_Input/text_input.js';
 import Viewer_Display from './Viewer_Display/viewer_display.js';
+import Popup_Msg from '@popup_template/Popup_Message/popup_message.js';
 import './chat_box.less';
 
 class Chat_Box extends Component {
@@ -14,6 +15,8 @@ class Chat_Box extends Component {
         requested: "Requested",
         streaming: "Streaming"
     }
+
+    MAX_CO_STREAMERS = 3; //Max number of co-streamers allowed (not including the host)
 
     constructor(props) {
 
@@ -29,7 +32,8 @@ class Chat_Box extends Component {
             my_room_tag: this.props.my_room_tag,
             owner_user_account: this.props.owner_user_account,
             the_host: this.props.the_host,
-            streaming_status: this.props.streaming_status
+            streaming_status: this.props.streaming_status,
+            co_streamers: this.props.co_streamers
         };
     }
 
@@ -104,12 +108,12 @@ class Chat_Box extends Component {
 
     Generate_Button = (my_tag) => {
 
-        let status = this.state.streaming_status;
+        let {streaming_status : status, owner_user_account, the_host} = this.state;
         let {not_streaming, requested} = this.streaming_status;
 
         return my_tag?.is_host ? <div className="button-wrapper" id="go-live">
 
-                                    <div id="button" onClick={(e)=>{this.End_Streaming(my_tag);}}>
+                                    <div className="button" onClick={(e)=>{this.End_Streaming(my_tag);}}>
 
                                         End Stream
 
@@ -119,28 +123,50 @@ class Chat_Box extends Component {
                                 : 
                                 <div className="button-wrapper" id="go-live">
 
-                                    <div id="button" onClick={(e)=>{this.Request_To_Go_Live(my_tag);}}>
+                                    <div className="button" onClick={(e)=>{this.Request_To_Go_Live(my_tag);}}>
 
                                         {status === not_streaming ?  "Go Live" : (status == requested ? "Pull Request" : "Stop Streaming")}
 
                                     </div>
+
+                                    {
+                                        owner_user_account.id != the_host?.id ? 
+                                        <div className="button" onClick={(e)=>{this.Leave_Stream(my_tag);}}>
+
+                                            Leave
+
+                                        </div>
+                                        : ""
+                                    }
 
                                 </div>;
     }
     
     Request_To_Go_Live = (my_tag) => {
         
-        let {the_host, streaming_status : status} = this.state;
+        let {the_host, streaming_status : status, co_streamers} = this.state;
         let {not_streaming, requested} = this.streaming_status;
 
         let request_route = status === not_streaming ? "request_to_go_live" : (status === requested ? "pull_request_to_live" : "stop_streaming");
-        
+
+        if (request_route === "request_to_go_live" && Object.keys(co_streamers).length >= (this.MAX_CO_STREAMERS + 1)) //+1 because co_streamers doesn't include the host, but we want to count the host in the total number of streamers
+        {
+            Popup_Msg("message", `Sorry, you cannot go live at the moment because the stream already has ${this.MAX_CO_STREAMERS} co-streamers. Please try again later.`);
+            return;
+        }
+
         this.props.socket.emit(request_route, {host: the_host, from: my_tag});
 
         this.setState({
             streaming_status: status === not_streaming ? requested : not_streaming
         });
         
+    }
+
+    Leave_Stream = (my_tag)=>{
+
+        this.props.change_screen('Stream_List_Components', false, null);
+
     }
 
     render() {
@@ -150,15 +176,6 @@ class Chat_Box extends Component {
             <div id="chat-box" ref={this.chat_box_ref}>
     
                 <div id="top-bar">
-
-                    <div id="drag-bar"
-                        onMouseDown={(e) => { this.drag.init_child(e, this.chat_box_ref.current); }}
-                        onMouseUp={(e) => { this.drag.disable_drag(e); }}
-                    >
-
-                        Drag here
-
-                    </div>
 
                     <div id="buttons-area">
 

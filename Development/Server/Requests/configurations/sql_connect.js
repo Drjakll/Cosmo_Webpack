@@ -4,6 +4,8 @@ import config_data from './global_data.js';
 
 //var {host, user, password, databaseName} = config_data.sql_data;
 
+console.log(process.env.DB_HOST, process.env.DB_USER, process.env.DB_PASS, process.env.DB_NAME);
+
 let Connect_Pool = () => {
 
     let SQL = mysql.createPool({
@@ -13,11 +15,12 @@ let Connect_Pool = () => {
         database: process.env.DB_NAME,
         timezone: 'Z', // UTC
         waitForConnections: true,
-        connectionLimit: 20,
+        connectionLimit: 10,
         queueLimit: 0,
         connectTimeout: 10000, 
         keepAliveInitialDelay: 0,
         enableKeepAlive: true
+        
     });
     
     return SQL;
@@ -58,7 +61,7 @@ setInterval(async ()=>{
 
   try {
     await sql.query('select 1');
-    console.log(++count);
+    //console.log(++count);
   } catch(err){
     console.error('Failed ping', err);
   }

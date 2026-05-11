@@ -2,7 +2,7 @@ import React, {Component, createRef} from 'react';
 import Message_Area from './Message_Area/message_area.js';
 import Users from './Users/users.js';
 import Channel_Selections from './Channel_Selections/channel_selections.js';
-import Get_Follows from '@universal_components/Account_Functions/get_follows.js';
+import {Get_Follows, Refresh, Queue_Set_State} from '@universal_components/Account_Functions/get_follows.js';
 import Context from '@context/context.js';
 import { io } from 'socket.io-client';
 import './messaging.less';

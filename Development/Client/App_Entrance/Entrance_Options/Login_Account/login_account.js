@@ -41,7 +41,17 @@ class Login_Account extends Component {
         return (
                 <div id="login-account">
                         
-                    <Logo sizeScale={3} ratio={1} top={25}/>
+                     <div id="logo-wrapper">   
+
+                        <Logo sizeScale={{x: 3, y: 15}} ratio={1} top={25}/>
+
+                        <div id="slogan">
+
+                            Unite our differences through understanding - Cosmopolitanism
+                            
+                        </div>
+
+                    </div>
 
                      <div id="account-buttons-wrapper">
 

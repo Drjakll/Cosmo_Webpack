@@ -17,7 +17,7 @@ exports.modules = {
   \**********************************************************************************************/
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
-eval("{__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\nlet Wrapper = function () {\n  this.event = async search => {\n    if (Object.keys(search).length === 0) {\n      search.first_name = \"\"; //Must have at least 1 requirement to find results\n    }\n    let result = await this.storage.Search(search);\n    this.my_socket.emit('catch_streams', {\n      streams: result\n    });\n  };\n};\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Wrapper);\n\n//# sourceURL=webpack://cosmo_webpack/./Development/Server/Websockets/IO_Namespaces/live_streaming/events/request_streams.js?\n}");
+eval("{__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\nlet Wrapper = function () {\n  this.event = async search => {\n    if (!search) {\n      return;\n    }\n    if (Object.keys(search).length === 0) {\n      search.first_name = \"\"; //Must have at least 1 requirement to find results\n    }\n    let result = await this.storage.Search(search);\n    this.my_socket.emit('catch_streams', {\n      streams: result\n    });\n  };\n};\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Wrapper);\n\n//# sourceURL=webpack://cosmo_webpack/./Development/Server/Websockets/IO_Namespaces/live_streaming/events/request_streams.js?\n}");
 
 /***/ }
 

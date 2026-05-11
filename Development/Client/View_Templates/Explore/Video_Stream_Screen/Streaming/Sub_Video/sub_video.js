@@ -18,6 +18,7 @@ class Sub_Video extends Component {
         
         this.videoRef.current.srcObject = this.props.media_source;
         this.videoRef.current.play = true;
+        this.videoRef.current.muted = this.props.is_self ? true : false;
     }
     
     componentDidUpdate(prevProps, prevState){
@@ -33,9 +34,9 @@ class Sub_Video extends Component {
 
     Swap_Screen = () => {
 
-        let { swap_screen, id, media_source } = this.props;
+        let { swap_screen, id } = this.props;
 
-        swap_screen({ media_src: media_source, id });
+        swap_screen({ id });
 
     }
     

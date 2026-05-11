@@ -15,7 +15,6 @@ let websocket = async (server) => {
     let namespaces = await Gather_Namespaces(io);
     
     
-    
     const photo_comments_namespace = io.of('/photo_comments');
     const video_streams_namespace = io.of('/video_streams');
     const connections_namespace = io.of('/connections');

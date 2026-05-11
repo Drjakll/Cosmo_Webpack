@@ -2,9 +2,17 @@ let Wrapper = function(){
     
     this.event = async (tag) => {
 
+        if(!tag){
+            return;
+        }
+
         let { stream_id } = tag;
 
-        tag.key = tag.email;
+        this.all_sockets[stream_id] = {};
+
+        this.all_sockets[stream_id][tag.id] = this.my_socket;
+
+        tag.key = tag.id;
 
         this.my_socket.join(stream_id);
 

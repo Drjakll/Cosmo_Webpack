@@ -17,7 +17,7 @@ exports.modules = {
   \*****************************************************************************************************/
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
-eval("{__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\nlet Wrapper = function () {\n  this.event = ({\n    to_room_tag,\n    from_account,\n    from_tag\n  }) => {\n    let {\n      id\n    } = to_room_tag;\n    this.io.to(id).emit('received_knowledgement', {\n      from_account: from_account,\n      from_tag: from_tag\n    });\n  };\n};\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Wrapper);\n\n//# sourceURL=webpack://cosmo_webpack/./Development/Server/Websockets/IO_Namespaces/live_streaming/events/acknowledge_new_viewer.js?\n}");
+eval("{__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\nlet Wrapper = function () {\n  this.event = ({\n    to_room_tag,\n    from_account,\n    from_tag\n  }) => {\n    if (!to_room_tag) {\n      return;\n    }\n    let {\n      id\n    } = to_room_tag;\n    this.io.to(id).emit('received_knowledgement', {\n      from_account: from_account,\n      from_tag: from_tag\n    });\n  };\n};\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Wrapper);\n\n//# sourceURL=webpack://cosmo_webpack/./Development/Server/Websockets/IO_Namespaces/live_streaming/events/acknowledge_new_viewer.js?\n}");
 
 /***/ }
 

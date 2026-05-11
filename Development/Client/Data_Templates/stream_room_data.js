@@ -15,7 +15,7 @@ let Stream_Room_Data_Template = function(initial){
         marital_status: "",
         profile_picture_link: "",
         time_created: null,
-        room_title: "",
+        stream_title: "",
         is_host: false
     };
     

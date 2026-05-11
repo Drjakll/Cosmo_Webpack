@@ -17,6 +17,7 @@ class Main_Video extends Component {
         
         this.videoRef.current.srcObject = this.props.media_source;
         this.videoRef.current.play = true;
+        this.videoRef.current.muted = this.props.is_self ? true : false;
     }
     
     componentDidUpdate(prevProps, prevState){

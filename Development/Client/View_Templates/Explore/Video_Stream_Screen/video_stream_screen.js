@@ -21,7 +21,8 @@ class Video_Stream_Screen extends Component {
             current_screen: this.props.stream_id ? "Streaming" : "Prepare_To_Stream",
             is_host: this.props.is_host,
             stream_id: this.props.stream_id,
-            stream_socket: this.props.stream_socket
+            stream_socket: this.props.stream_socket,
+            stream_title: ""
         };
     }
     
@@ -39,7 +40,11 @@ class Video_Stream_Screen extends Component {
         this.setState({current_screen: screen, is_host: is_hosting});
         
     }
-    
+
+    Update_Stream_Title = (title) => {
+        this.setState({stream_title: title});
+    }
+
     render(){
         
         const Com = this.Screens[this.state.current_screen];
@@ -54,6 +59,8 @@ class Video_Stream_Screen extends Component {
                     stream_id={this.state.stream_id}
                     set_main_screen={this.props.set_current_screen}
                     stream_socket={this.state.stream_socket}
+                    update_stream_title={this.Update_Stream_Title}
+                    stream_title={this.state.stream_title}
                     />
                     
                 </div>

@@ -23,6 +23,8 @@ class Stream_List_Components extends Component {
     
     componentDidMount(){
         
+        this.setState({active_streams: this.props.active_streams});
+
     } 
     
     componentDidUpdate(prevProps, prevState){

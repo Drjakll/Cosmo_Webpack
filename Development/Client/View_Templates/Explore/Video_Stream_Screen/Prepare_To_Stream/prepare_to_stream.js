@@ -11,7 +11,7 @@ class Prepare_To_Stream extends Component {
         super(props);
         
         this.state = {
-            owner_user_account: this.props.owner_user_account
+            owner_user_account: this.props.owner_user_account,
         };
     }
     
@@ -19,15 +19,34 @@ class Prepare_To_Stream extends Component {
         
         this.props.change_screen("Streaming", true);
     }
+
+    Go_Back = (e) => {
+        
+        this.props.root_change_screen("Stream_List_Components", false, null);
+    }
     
     render(){
         
         return (
                 <div id="prepare-to-stream">
+
+                    <div id="go-back-button" onClick={this.Go_Back}>
+                        Go Back
+                    </div>
                     
                     <div id="video-playback-wrapper">
                     
                         <Video_Playback owner_user_account={this.state.owner_user_account} />
+
+                    </div>
+
+                    <div id="stream-title-input-wrapper">
+
+                        <input type="text" placeholder="Stream Title" 
+                                id="stream-title-input" 
+                                onBlur={(e)=>{
+                                    this.props.update_stream_title(e.target.value);
+                                }}/>
 
                     </div>
                     
