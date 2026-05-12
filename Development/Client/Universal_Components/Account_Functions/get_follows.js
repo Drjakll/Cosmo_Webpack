@@ -6,20 +6,39 @@ let set_state_ptrs = {
     get_followings: {}
 };
 
+let visiting_set_state_ptrs = {
+    get_followers: {},
+    get_followings: {}
+}
+
 let account_data = null;
 
-let Queue_Set_State = (setState, user_account, slot, component_label) => {
+let visiting_account_data = null;
 
-    set_state_ptrs[slot][component_label] = setState;
+let Queue_Set_State = (setState, user_account, slot, component_label, is_visiting = false) => {
 
-    account_data = user_account;
+    if(!is_visiting){
+
+        set_state_ptrs[slot][component_label] = setState;
+
+        account_data = user_account;
+
+    } else {
+
+        visiting_set_state_ptrs[slot][component_label] = setState;
+
+        visiting_account_data = user_account;
+
+    }
 };
 
-let Refresh = async (refresh_followers = true) => {
+let Refresh = async (refresh_followers = true, is_visiting = false) => {
 
-    let {get_followers, get_followings} = set_state_ptrs;
+    let {get_followers, get_followings} = (is_visiting ? visiting_set_state_ptrs : set_state_ptrs);
 
-    let list = await Get_Follows(account_data, refresh_followers);
+    let account = is_visiting ? visiting_account_data : account_data
+
+    let list = await Get_Follows(account, refresh_followers);
 
     if(refresh_followers) {
 

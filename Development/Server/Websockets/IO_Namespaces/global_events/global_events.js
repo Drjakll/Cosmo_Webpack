@@ -1,6 +1,8 @@
 import fs from 'fs';
 
 let Wrapper = function (){
+
+    this.online_users = {};
     
     (async () => {
         
@@ -40,9 +42,14 @@ let Wrapper = function (){
         
             events[i].socket = socket;
             events[i].root_io = this.root_io;
+            events[i].online_users = this.online_users;
         }
         
         socket.on('report_online', events.report_online.event);
+        socket.on('who_is_online', events.who_is_online.event);
+        socket.on('report_offline', events.report_offline.event);
+        socket.on('report_update_followers', events.report_update_followers.event);
+        socket.on('report_update_followings', events.report_update_followings.event);
     };
 };
 

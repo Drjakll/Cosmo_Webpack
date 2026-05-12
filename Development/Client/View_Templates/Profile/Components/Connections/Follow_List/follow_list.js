@@ -29,6 +29,12 @@ class Follow_List extends Connection_List_Template {
 
         this.Refresh = Refresh;
 
+        let {owner_user_account, visitor_user_account} = this.state;
+
+        let follow_type = this.props.label === "Followers" ? "get_followers" : "get_followings"
+        
+        Queue_Set_State(this.setState.bind(this), owner_user_account, follow_type, "Follow_List", owner_user_account.id !== visitor_user_account.id);
+
     }
 
     componentDidUpdate(prevProps, prevState){
@@ -39,9 +45,9 @@ class Follow_List extends Connection_List_Template {
 
         this.setState(this.props);
 
-        let {label} = this.props;
+        let {label, owner_user_account, visitor_user_account} = this.props;
 
-        this.Refresh(label === "Followers");
+        this.Refresh(label === "Followers", owner_user_account.id !== visitor_user_account.id);
         
     }
 
@@ -69,7 +75,7 @@ class Follow_List extends Connection_List_Template {
 
         if(data){
 
-            this.setState({list: data.results});
+            this.setState({followers: data.results});
         } else {
             alert("Error applying search");
         }
@@ -100,7 +106,7 @@ class Follow_List extends Connection_List_Template {
 
         if(data){
 
-            this.setState({list: data.results});
+            this.setState({followings: data.results});
 
         } else {
             alert("Error applying search");
@@ -112,7 +118,7 @@ class Follow_List extends Connection_List_Template {
     render(){
 
         let {label} = this.props;
-        let {list} = this.state;
+        let {followings, followers} = this.state;
 
         return <div id="following-connection-list-wrapper">
 
@@ -138,13 +144,13 @@ class Follow_List extends Connection_List_Template {
                  }}
             >
 
-                <div id="following-label">
+                <div id="follow-label">
 
-                    {list.length} {label}
+                    {(followings || followers).length} {label}
                     
                 </div>
 
-                 <div id="the-following-list-body">
+                 <div id="the-follow-list-body">
 
                     {super.render()}
 

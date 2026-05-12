@@ -4,7 +4,7 @@ let Wrapper = function(){
         
         let {id} = user_account;
 
-        this.online_users[id] = {user_account, socket: this.socket};
+        delete this.online_users[id]
 
         //Report to the user's followers that the user is online
         for(let i in followers){
@@ -13,7 +13,11 @@ let Wrapper = function(){
 
             let follower_socket = this.online_users[follower_id]?.socket;
 
-            follower_socket?.emit("add_online_user", {online_user: user_account});
+            if(!follower_socket){
+                continue;
+            }
+
+            follower_socket?.emit("remove_offline_user", {offline_user: user_account});
 
         }
     };

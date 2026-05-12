@@ -2,6 +2,7 @@ import React from 'react';
 import Context from '@context/context.js';
 import Follow_List from '@profile_template/Components/Connections/Follow_List/follow_list.js';
 import Popup_Msg from '@popup_template/Popup_Message/popup_message.js';
+import { io } from 'socket.io-client';
 import './follow_editor.less';
 
 class Follow_Editor extends Follow_List {
@@ -11,6 +12,14 @@ class Follow_Editor extends Follow_List {
     constructor(props){
         
         super(props);
+
+        this.Init_Socket();
+
+    }
+
+    Init_Socket = ()=>{
+
+        this.socket = io('/global_events');
 
     }
 
@@ -41,7 +50,11 @@ class Follow_Editor extends Follow_List {
             }
         });
 
-        await this.Refresh(true);
+        //Update the removed follower's followings list
+        this.socket.emit('report_update_followings', {follower_acc: {id: follower_id}});
+
+        //Update this account's followers list
+        this.socket.emit('report_update_followers', {following_acc: {id}, follower_acc: {id: follower_id}});
 
     }
 
@@ -72,7 +85,11 @@ class Follow_Editor extends Follow_List {
             }
         });
 
-        await this.Refresh(false);
+        //Update the unfollowed user's followers list
+        this.socket.emit('report_update_followers', {following_acc: {id: following_id}, follower_acc: {id}});
+
+        //Update this acccount's followings list
+        this.socket.emit('report_update_followings', {follower_acc: {id}});
 
     }
     

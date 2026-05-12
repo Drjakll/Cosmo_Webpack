@@ -13,11 +13,11 @@ class Connection_List_Template extends Component {
         super(props);
 
         //The list is either followings, or followers
-        let {list, owner_user_account, visitor_user_account} = props;
-
-        list = list || [];
+        let {followings, followers, list, owner_user_account, visitor_user_account} = props;
 
         this.state = {
+            followings,
+            followers,
             list,
             owner_user_account,
             visitor_user_account
@@ -36,7 +36,9 @@ class Connection_List_Template extends Component {
 
     render(){
 
-        let {owner_user_account, visitor_user_account, list} = this.state;
+        let {owner_user_account, visitor_user_account, followings, followers, list} = this.state;
+
+        let the_list = followings || followers || list || [];
 
         let {label} = this.props;
 
@@ -44,9 +46,9 @@ class Connection_List_Template extends Component {
 
         return <div id="connection-list-template">
 
-            {list.length ? <div id="the-list-wrapper">
+            {the_list.length ? <div id="the-list-wrapper">
 
-                {list.map((entry, key)=>{
+                {the_list.map((entry, key)=>{
 
                     return <div className="connection-entry-wrapper" key={key}>
 

@@ -3,6 +3,7 @@ import Context  from '@context/context.js';
 import Follow_List from './Follow_List/follow_list.js';
 import Popup_Msg from '@popup_template/Popup_Message/popup_message.js';
 import {Get_Follows, Queue_Set_State, Refresh} from '@universal_components/Account_Functions/get_follows.js';
+import { io } from 'socket.io-client';
 import './connections.less';
 
 class Connections extends Component {
@@ -16,6 +17,8 @@ class Connections extends Component {
         super(props);
 
         let {owner_user_account, visitor_user_account} = props;
+        
+        this.Setup_Socket();
 
         this.state = {
             owner_user_account,
@@ -27,16 +30,24 @@ class Connections extends Component {
 
     componentDidMount(){
 
-        let {owner_user_account } = this.state;
+        let {owner_user_account, visitor_user_account } = this.state;
 
-        Queue_Set_State(this.setState.bind(this), owner_user_account, "get_followers", "Connections");
-        Queue_Set_State(this.setState.bind(this), owner_user_account, "get_followings", "Connections");
+        let is_visiting = owner_user_account.id !== visitor_user_account.id;
+
+        Queue_Set_State(this.setState.bind(this), owner_user_account, "get_followers", "Connections", is_visiting);
+        Queue_Set_State(this.setState.bind(this), owner_user_account, "get_followings", "Connections", is_visiting);
 
         //Refresh followers
-        Refresh(true);
+        Refresh(true, is_visiting);
         //Refresh followings
-        Refresh(false);
+        Refresh(false, is_visiting);
         
+    }
+
+    Setup_Socket = () =>{
+
+        this.socket = io('/global_events');
+
     }
 
     async componentDidUpdate(prevProps, prevState){
@@ -49,9 +60,9 @@ class Connections extends Component {
 
     }
 
-    Refresh_List = async (refresh_followers = true) => {
+    Refresh_List = async (refresh_followers = true, is_visiting = false) => {
 
-        Refresh(refresh_followers);
+        Refresh(refresh_followers, is_visiting);
     }
 
     Send_Follow_Request = async ()=>{
@@ -78,11 +89,14 @@ class Connections extends Component {
             }
         )).json();  
 
-        await window.Refresh_Login();
+        //Refresh the followings list
+        this.Refresh_List(false, owner_user_account.id !== visitor_user_account.id);
 
-        let {Refresh_Profile_Data} = this.props;
+        //Refresh the following account's followers list
+        this.socket.emit("report_update_followers", {following_acc: owner_user_account});
 
-        Refresh_Profile_Data && Refresh_Profile_Data();
+        //Update the follower's account on following list
+        this.socket.emit("report_update_followings", {follower_acc: visitor_user_account});
         
         Popup_Msg("message", data?.message, null);
     }
@@ -114,7 +128,7 @@ class Connections extends Component {
                 owner_user_account={owner_user_account}
                 visitor_user_account={visitor_user_account}
                 label={"Followers"}
-                list={followers}
+                followers={followers}
                 Refresh_List={this.Refresh_List}
             />
 
@@ -133,7 +147,7 @@ class Connections extends Component {
                 owner_user_account={owner_user_account}
                 visitor_user_account={visitor_user_account}
                 label={"Following"}
-                list={followings}
+                followings={followings}
                 Refresh_List={this.Refresh_List}
             />
 
