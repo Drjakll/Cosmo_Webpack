@@ -1,11 +1,5 @@
 import mysql from 'mysql2/promise';
 
-import config_data from './global_data.js'; 
-
-//var {host, user, password, databaseName} = config_data.sql_data;
-
-console.log(process.env.DB_HOST, process.env.DB_USER, process.env.DB_PASS, process.env.DB_NAME);
-
 let Connect_Pool = () => {
 
     let SQL = mysql.createPool({
