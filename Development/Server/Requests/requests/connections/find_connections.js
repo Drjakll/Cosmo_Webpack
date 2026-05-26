@@ -119,6 +119,10 @@ let request = function () {
             return;
         }
 
+        if(isNaN(parseInt(self_account.id))){
+            self_account.id = 0;
+        }
+
         let data = [self_account.id];
 
         let sub_query = Build_Conditions(requirements, data, self_account);

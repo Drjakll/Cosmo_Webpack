@@ -4,6 +4,11 @@ let request = function() {
         
         let {user_id, body, title} = req.body;
 
+        if(isNaN(parseInt(user_id)) || !body || !title){
+            res.json({ message: "Missing required fields", result: null });
+            return;
+        }
+
         let created_on = Date.now();
 
         let data = [title, body, user_id, created_on, created_on];

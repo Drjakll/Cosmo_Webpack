@@ -56,6 +56,9 @@ class Entrance_Options extends Component {
 
     }
 
+    Change_Screen = (screen_name) => {
+        this.setState({selected_screen: screen_name});
+    }
     
     render(){
 
@@ -69,7 +72,9 @@ class Entrance_Options extends Component {
                 <div id="entrance-options">
                     
                     <Selected_Screen owner_user_account={owner_user_account} 
-                                    visitor_user_account={owner_user_account} />
+                                    visitor_user_account={owner_user_account} 
+                                    Change_Screen={this.Change_Screen}
+                                />
                     
                 </div>
             );

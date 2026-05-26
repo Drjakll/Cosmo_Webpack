@@ -34,7 +34,7 @@ class Search_Streams extends Component {
         if(prevProps === this.props){
             return;
         }
-        
+
         this.setState(this.props);
         
     }
@@ -103,11 +103,15 @@ class Search_Streams extends Component {
 
         this.search_requirements[key_index] = value;
 
+        this.props.properties.update_search_criteria(this.search_requirements);
+
     }
 
     Remove_From_Search_Parameter = (key_index)=>{
 
         this.Remove_Search_Parameter_Option(key_index);
+
+        this.props.properties.update_search_criteria(this.search_requirements);
     }
 
     Apply_Search = ()=>{

@@ -29,8 +29,14 @@ class Stream_Displays extends Component {
         }
         
         this.setState(this.props);
-        
-        
+    }
+
+    Trigger_Search_Streams = () => {
+
+        let {properties} = this.props;
+        let {trigger_search_streams} = properties;
+
+        trigger_search_streams();
     }
 
     
@@ -42,6 +48,15 @@ class Stream_Displays extends Component {
         
         return (
                 <div id="stream-displays">
+
+                    <div id="refresh-button-wrapper">
+
+                        <div id="refresh-button" 
+                            style={{backgroundImage: `url(./static/refresh_icon.png)`}}
+                            onClick={this.Trigger_Search_Streams}
+                        ></div>
+
+                    </div>
                     
                     <div id="thumbnails-wrapper">
                     

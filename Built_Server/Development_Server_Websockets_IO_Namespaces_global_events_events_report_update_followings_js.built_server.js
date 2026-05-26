@@ -17,7 +17,7 @@ exports.modules = {
   \******************************************************************************************************/
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
-eval("{__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\nlet Wrapper = function () {\n  this.event = ({\n    follower_acc,\n    following_acc = null\n  }) => {\n    let {\n      id\n    } = follower_acc;\n    let follower_socket = this.online_users[id].socket;\n    follower_socket?.emit(\"followings_update\", {\n      removed_following: following_acc\n    });\n  };\n};\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Wrapper);\n\n//# sourceURL=webpack://cosmo_webpack/./Development/Server/Websockets/IO_Namespaces/global_events/events/report_update_followings.js?\n}");
+eval("{__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\nlet Wrapper = function () {\n  this.event = ({\n    follower_acc,\n    following_acc = null\n  }) => {\n    let {\n      id\n    } = follower_acc;\n    let follower_socket = this.online_users[id]?.socket;\n    follower_socket?.emit(\"followings_update\", {\n      removed_following: following_acc\n    });\n  };\n};\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Wrapper);\n\n//# sourceURL=webpack://cosmo_webpack/./Development/Server/Websockets/IO_Namespaces/global_events/events/report_update_followings.js?\n}");
 
 /***/ }
 

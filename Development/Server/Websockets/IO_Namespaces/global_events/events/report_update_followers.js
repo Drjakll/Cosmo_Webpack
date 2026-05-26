@@ -4,7 +4,7 @@ let Wrapper = function(){
 
         let {id} = following_acc;
 
-        let following_socket = this.online_users[id].socket;
+        let following_socket = this.online_users[id]?.socket;
 
         following_socket?.emit("followers_update", {});
 
@@ -14,7 +14,7 @@ let Wrapper = function(){
         
         let {id: follower_id} = follower_acc;
 
-        let follower_socket = this.online_users[follower_id].socket;
+        let follower_socket = this.online_users[follower_id]?.socket;
 
         follower_socket?.emit("remove_offline_user", {offline_user: {id}});
 

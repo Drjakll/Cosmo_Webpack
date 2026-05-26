@@ -4,6 +4,11 @@ let request = function() {
     this.req = async (req, res) => { 
         
         let {target_id, emoji, reaction, user_id, target_type} = req.body;
+
+        if(isNaN(parseInt(user_id)) || !target_id || !emoji || !reaction){
+            res.json({message: "Missing required fields!", failed: true});
+            return;
+        }
  
         //Differnt number of values for data depending on whether it's a comment type or some other types. Comment type would comes target_type as null
         let data = target_type ? 

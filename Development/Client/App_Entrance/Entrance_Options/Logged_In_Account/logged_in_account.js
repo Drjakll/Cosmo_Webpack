@@ -166,7 +166,10 @@ class Logged_In_Account extends Component {
 
                 <div id="upper-bar-wrapper">
 
-                    <Upper_Bar owner_user_account={owner_user_account} />
+                    <Upper_Bar 
+                        owner_user_account={owner_user_account} 
+                        Change_Screen={this.props.Change_Screen}
+                    />
 
                 </div>
 

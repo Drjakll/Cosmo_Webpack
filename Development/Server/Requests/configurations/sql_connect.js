@@ -20,7 +20,6 @@ let Connect_Pool = () => {
         connectTimeout: 10000, 
         keepAliveInitialDelay: 0,
         enableKeepAlive: true
-        
     });
     
     return SQL;

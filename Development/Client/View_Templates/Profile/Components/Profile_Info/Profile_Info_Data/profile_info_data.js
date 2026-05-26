@@ -29,6 +29,9 @@ class Profile_Info_Data extends Component {
 
         let info_templates = await Account_Info_Data_Template();
 
+        delete info_templates["email"];
+        delete info_templates["password"];
+
         this.setState({info_templates});
         
     }

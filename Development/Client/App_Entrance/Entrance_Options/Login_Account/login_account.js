@@ -4,9 +4,12 @@ import Buttons from './Buttons/buttons.js';
 import Create from './Create/create.js';
 import Login from './Login/login.js';
 import Restore from './Restore/restore.js';
+import Context from '@context/context.js';
 
 
 class Login_Account extends Component {
+
+    static contextType = Context;
     
     Selections = {
         "Create": Create,
@@ -22,8 +25,6 @@ class Login_Account extends Component {
     constructor(props){
         
         super(props);
-
-        Login_Account.contextType = window.Context;
     }
     
     ChangeScreen = (screen) => {
@@ -41,9 +42,9 @@ class Login_Account extends Component {
         return (
                 <div id="login-account">
                         
-                     <div id="logo-wrapper">   
+                    <div id="logo-wrapper">   
 
-                        <Logo sizeScale={{x: 3, y: 15}} ratio={1} top={25}/>
+                        <Logo style={{}}/>
 
                         <div id="slogan">
 

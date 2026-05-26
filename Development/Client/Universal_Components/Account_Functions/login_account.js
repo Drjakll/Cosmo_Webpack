@@ -11,9 +11,10 @@ let Login = async (document) =>{
         
         let email = cookie_data?.email;
         let password = cookie_data?.password;
+        let id = cookie_data?.id;
         
-        if(!email || !password){
-            return null;
+        if(!id ||!email || !password){
+            return Account_Data_Template();
         }
         
         let acc_credentials = {email: email, password: password};
@@ -37,7 +38,7 @@ let Login = async (document) =>{
             date.setTime(date.getTime() + Configurations.Cookie_Expire_Days * 24 * 60 * 60 * 1000);
 
             //saving only the email and password
-            let acc_info_auth = {email: account.email, password: account.password};
+            let acc_info_auth = {email: account.email, password: account.password, id: account.id};
 
             //Convert the account_data_copy into cookie strings
             const cookieStrs = Cookie_Tools.cookie_converter(acc_info_auth, {"expires": date.toUTCString(), "path": "/"});
@@ -49,7 +50,7 @@ let Login = async (document) =>{
             
         }   
 
-        return account;
+        return account || Account_Data_Template();
 };
 
 export default Login;

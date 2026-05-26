@@ -35,7 +35,7 @@ class Account_Buttons extends Component {
             document.cookie = cStr;
         }
 
-        location.reload();
+        this.props.Change_Screen("Login Account");
     }
 
     Privacy_Options = async (privacy_value) => {

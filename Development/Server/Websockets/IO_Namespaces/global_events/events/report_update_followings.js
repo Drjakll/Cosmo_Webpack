@@ -4,7 +4,7 @@ let Wrapper = function(){
 
         let {id} = follower_acc;
 
-        let follower_socket = this.online_users[id].socket;
+        let follower_socket = this.online_users[id]?.socket;
 
         follower_socket?.emit("followings_update", {removed_following: following_acc});
 

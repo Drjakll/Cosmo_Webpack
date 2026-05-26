@@ -3,6 +3,11 @@ let request = function() {
     this.req = async (req, res) => { 
         
         let {title, user_id} = req.body;
+
+        if(!title || isNaN(parseInt(user_id))){
+            res.json({message: "Missing required fields!", failed: true});
+            return;
+        }
         
         let created_on = Date.now();
 

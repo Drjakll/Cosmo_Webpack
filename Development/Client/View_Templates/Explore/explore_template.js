@@ -82,12 +82,17 @@ class Explore_Template extends Component {
         return this.socket;
         
     }
+
+    Update_Search_Criteria = (new_criteria) => {
+
+        this.setState({search_criteria: new_criteria});
+    }
     
-    Gather_Stream_List = (search_parameters) => {
+    Gather_Stream_List = () => {
+
+        let {search_criteria: search_parameters} = this.state;
         
         this.socket?.emit('request_streams', search_parameters);
-
-        this.setState({search_criteria: search_parameters});
         
     }
     
@@ -105,6 +110,7 @@ class Explore_Template extends Component {
                     stream_socket={this.state.socket}
                     active_streams={this.state.active_streams}
                     search_streams={this.Gather_Stream_List}
+                    update_search_criteria={this.Update_Search_Criteria}
                 />
 
             </div>

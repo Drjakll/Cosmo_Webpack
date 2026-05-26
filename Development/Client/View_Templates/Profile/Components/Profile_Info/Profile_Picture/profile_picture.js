@@ -59,6 +59,7 @@ class Profile_Picture extends Component {
         const { aws_s3_url } = Request_URLs;
         
         let { owner_user_account } = this.state;
+        let  is_official_account = !isNaN(parseInt(owner_user_account?.id))
         const { profile_picture_link, first_name, last_name } = owner_user_account;
 
         return (
@@ -72,7 +73,15 @@ class Profile_Picture extends Component {
                         }}
                         onClick ={(e) => { this.Inject_Large_Photo_To_Body(); }}
                     >
-                                
+
+                        {!is_official_account && 
+                        <pre id="official-account-label">
+                            Please create an official account for full access to Cosmo. 
+                            <br/>
+                            <br/>
+                            However, feel free to explore the demo account.
+                        </pre>}
+
                     </div>
 
                     <div id="name-tag">

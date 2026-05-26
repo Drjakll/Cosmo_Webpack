@@ -6,7 +6,7 @@ let request = function () {
 
         let {password, id} = credentials;
 
-        if(Object.keys(to_update).length === 0 || !password || !id){
+        if(Object.keys(to_update).length === 0 || !password || isNaN(parseInt(id))){
             res.json({message: "Credentials not found", success: 0});
             return;
         }

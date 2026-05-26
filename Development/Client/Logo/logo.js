@@ -2,30 +2,22 @@ import React, {Component, createRef} from 'react';
 import './logo.less';
 
 class Logo extends Component {
-    
-    state = {
-        fontSize: 1,
-        width: 12.5,
-        height: 4,
-        borderRadius: 50,
-        padding: {h: 0.8, v: 0.4}
-    }
-    
+
     constructor(props){
         
         super(props);
     }
     
     render(){
+
+        let {style} = this.props;
         
         return <div id="logo" 
-                    style={{
-                        
-                    }}
+                    style={style.wrapper || {}}
         >
         
-            <div id="cos">Cos</div>
-            <div id="mo">mo</div>
+            <div id="cos" style={style.cos || {}}>Cos</div>
+            <div id="mo" style={style.mo || {}}>mo</div>
         
         </div>;
     }

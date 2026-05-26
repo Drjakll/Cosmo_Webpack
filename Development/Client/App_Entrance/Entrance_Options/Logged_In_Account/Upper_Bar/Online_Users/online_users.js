@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './online_users.less';
 import { Queue_Set_State, Refresh} from '@universal_components/Account_Functions/get_follows.js';
+import Profile_Thumbnail from '@universal_components/Profile_Thumbnail/profile_thumbnail.js';
 import { io } from 'socket.io-client';
 
 class Online_Users extends Component {
@@ -42,7 +43,7 @@ class Online_Users extends Component {
 
     componentDidUpdate(prevProps, prevState){
 
-        if(this.state.followers === prevState.followers){
+        if(this.state.followers === prevState.followers && this.state.followings === prevState.followings){
             return;
         }
 
@@ -112,7 +113,7 @@ class Online_Users extends Component {
 
     render() {
 
-        let {online_followings, followings} = this.state;
+        let {online_followings, followings, owner_user_account} = this.state;
 
         return <div id="online-users">
 
@@ -124,7 +125,40 @@ class Online_Users extends Component {
 
             <div id="online-users-list">
 
-                
+                {Object.entries(online_followings).map(([key,value])=>{
+
+                    let {first_name, last_name} = value;
+
+                    return <div key={key} className="online-user-entry">
+
+                        <div id="profile-thumbnail-wrapper">
+
+                            <Profile_Thumbnail 
+                                profile={value}
+                                owner_user_account={owner_user_account}
+                                visitor_user_account={owner_user_account}
+                            />
+
+                        </div>
+
+                        <div id="online-profile-status">
+
+                            <div id="name-tag">
+
+                                {first_name} {last_name}
+
+                            </div>
+
+                            <div id="status">
+
+                                <div id="green-dot"></div> (Online)
+
+                            </div>
+
+                        </div>
+
+                    </div>;
+                })}
 
             </div>
 

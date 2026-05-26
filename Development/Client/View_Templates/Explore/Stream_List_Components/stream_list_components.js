@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import Search_Streams from './Search_Streams/search_streams.js';
 import Stream_Displays from './Stream_Displays/stream_displays.js';
-import Init_Stream from './Stream_Displays/Init_Stream/init_stream.js';
 import './stream_list_components.less';
 
 class Stream_List_Components extends Component {
@@ -13,8 +12,21 @@ class Stream_List_Components extends Component {
         //this.props.set_current_screen is a callback from the explore_template.js
         this.state = {
             components: [
-                {component: Search_Streams, classname: "search-streams", props: {owner_user_account: this.props.owner_user_account, search_streams: this.props.search_streams}},
-                {component: Stream_Displays, classname: "stream-displays", props: {set_current_screen: this.props.set_current_screen}}
+                {component: Search_Streams, 
+                    classname: "search-streams", 
+                    props: {
+                        owner_user_account: this.props.owner_user_account, 
+                        search_streams: this.props.search_streams,
+                        update_search_criteria: this.props.update_search_criteria
+                    }
+                },
+                {component: Stream_Displays, 
+                    classname: "stream-displays", 
+                    props: {
+                        set_current_screen: this.props.set_current_screen,
+                        trigger_search_streams: this.Trigger_Search_Streams
+                    }
+                }
             ],
             owner_user_account: this.props.owner_user_account,
             active_streams: this.props.active_streams
@@ -62,6 +74,11 @@ class Stream_List_Components extends Component {
         
         this.setState({components: this.state.components});
     }
+
+    Trigger_Search_Streams = () =>{
+        
+        this.props.search_streams();
+    }
     
     render(){
             return (
@@ -75,7 +92,10 @@ class Stream_List_Components extends Component {
                             
                             return <div className={`component ${com.classname}`} key={index}>
                                 
-                                <Com properties={com.props} owner_user_account={this.state.owner_user_account} active_streams={this.state.active_streams} />
+                                <Com properties={com.props} 
+                                    owner_user_account={this.state.owner_user_account} 
+                                    active_streams={this.state.active_streams} 
+                                />
             
                             </div>;
                             

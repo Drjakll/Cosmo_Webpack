@@ -1,18 +1,33 @@
+
+
 function request() {
+
+    const Verify_Email = function(email){
+    
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        
+        return emailRegex.test(email);
+    };
     
     this.req = async (req, res) => {
         
         let acc_details = req.body;
 
-        let {email, password} = acc_details;
+        let {email, password, first_name, last_name, date_of_birth, gender, marital_status} = acc_details;
 
+        if(!Verify_Email(email)){
+            res.json({message: "Invalid email format.", success: false, acc_info: null});
+            return;
+        }
 
-        
-        let query = `insert into User_Accounts(email, password) values(?,?);`;
+        let created_on = Date.now();
+
+        let query = `insert into User_Accounts(email, password, first_name, last_name, date_of_birth, gender, marital_status, created_on) values(?,?,?,?,?,?,?,?);`;
+
         
         try {
 
-            let [result] = await this.sql.query(query, [email, password]);
+            let [result] = await this.sql.query(query, [email, password, first_name, last_name, date_of_birth, gender, marital_status, created_on]);
 
             acc_details.id = result.insertId;
 

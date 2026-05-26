@@ -137,10 +137,12 @@ let {
     } = messaging;
 
 //Get_Web_Pages
-let {entry_page} = get_web_pages;
+let {entry_page, demos} = get_web_pages;
 
 //Get_Web_Pages -> Entry_Page
-let {entry} = entry_page;
+let { entry } = entry_page;
+
+let { demo } = demos;
 
 //Dummy_Middle_Ware
 let {dummy_middleware: result_sender} = dummy_middleware;
@@ -181,6 +183,7 @@ let {
 
 //Below are the API routes
 
+app.get("/demo", demo.req);
 
 //Entry page
 app.get("/", entry.req);

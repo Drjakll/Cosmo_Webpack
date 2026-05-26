@@ -9,6 +9,12 @@ import Json_Type from './Info_Types/Json_Type/json_type.js';
 import Text_Type from './Info_Types/Text_Type/text_type.js';
 import Json_Text_Type from './Info_Types/Json_Text_Type/json_text_type.js';
 
+let Generate_Temp_ID = function(){
+
+    return "temp_" + `${(Math.random() * 100).toFixed(0)}${Date.now()}`;
+
+};
+
 let Account_Data_Template = function(initial){
   
     let template = {
@@ -36,6 +42,10 @@ let Account_Data_Template = function(initial){
         template[i] = initial[i];
         
     }
+
+    if(isNaN(parseInt(template.id))) {
+        template.id = Generate_Temp_ID();
+    }
     
     return template;
 };
@@ -43,6 +53,20 @@ let Account_Data_Template = function(initial){
 let Account_Info_Data_Template = function(initial = {}){
 
     let template = {
+        email: {
+            component: Text_Type,
+            label: "E-mail",
+            value: "",
+            options: [],
+            label_icon: "name_tag_icon.png"
+        },
+        password: {
+            component: Text_Type,
+            label: "Password",
+            value: "",
+            options: [],
+            label_icon: "name_tag_icon.png"
+        },
         first_name: {
             component: Text_Type,
             label: "First Name",

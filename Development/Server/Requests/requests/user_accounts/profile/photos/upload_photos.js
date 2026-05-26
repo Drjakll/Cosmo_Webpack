@@ -21,7 +21,7 @@ let request = function(){
         const {user_id, target_type, target_id, album_name} = JSON.parse(req.body.metadata);
 
         
-        if (!uploadedFiles || uploadedFiles.length === 0 || !target_type || !target_id || !user_id) {
+        if (!uploadedFiles || uploadedFiles.length === 0 || !target_type || !target_id || isNaN(parseInt(user_id))) {
     
             return res.status(400).json({message: 'No files uploaded.'});
         }

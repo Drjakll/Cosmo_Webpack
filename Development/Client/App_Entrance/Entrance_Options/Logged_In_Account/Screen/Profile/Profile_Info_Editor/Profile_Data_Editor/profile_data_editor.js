@@ -1,6 +1,7 @@
 import React from 'react';
 import './profile_data_editor.less';
 import Context from '@context/context.js';
+import Cookie_Tools from '@root/Utilities/cookie.js';
 import {Profile_Info_Data} from '@profile_template/profile_template.js';
 import Account_Data from '@data_templates/account_data.js';
 import Text_Type_Editor from './Text_Editor/text_editor.js';
@@ -25,9 +26,43 @@ class Profile_Data_Editor extends Profile_Info_Data {
 
     componentDidMount(){
 
+        this.Setup_Editors();
+
+    }
+
+    componentDidUpdate(prevProps, prevState){
+
+        super.componentDidUpdate(prevProps, prevState);
+
+        if(this.state.owner_user_account?.id === prevState.owner_user_account?.id){
+            return;
+        }
+
+        this.Setup_Editors();
+    }
+
+    Profile_Data_Editors = {        
+        email: Text_Type_Editor,
+        password: Text_Type_Editor,
+        first_name: Text_Type_Editor,
+        last_name: Text_Type_Editor,
+        date_of_birth: Date_Type_Editor,
+        gender: Choice_Type_Editor,
+        marital_status: Choice_Type_Editor,
+        User_Locations: Json_Type_Editor,
+        User_Hobbies: Json_Type_Editor, 
+        User_Professions: Json_Type_Editor,
+        User_Schools: Json_Type_Editor,
+        personal_traits: Json_Text_Editor
+    }
+
+    Setup_Editors = () => {
+
         let {Account_Info_Data_Template} = this.context.Account_Data_Templates;
 
         let info_templates = Account_Info_Data_Template();
+
+        let {owner_user_account} = this.state;
 
         for(let data_name in this.Profile_Data_Editors){
 
@@ -39,20 +74,15 @@ class Profile_Data_Editor extends Profile_Info_Data {
             info_templates[data_name].component = this.Profile_Data_Editors[data_name];
         }
 
-        this.setState({info_templates});
-    }
+        if(!isNaN(parseInt(owner_user_account.id))){
 
-    Profile_Data_Editors = {
-        first_name: Text_Type_Editor,
-        last_name: Text_Type_Editor,
-        date_of_birth: Date_Type_Editor,
-        gender: Choice_Type_Editor,
-        marital_status: Choice_Type_Editor,
-        User_Locations: Json_Type_Editor,
-        User_Hobbies: Json_Type_Editor, 
-        User_Professions: Json_Type_Editor,
-        User_Schools: Json_Type_Editor,
-        personal_traits: Json_Text_Editor
+            delete info_templates.email;
+            delete info_templates.password;
+
+        }
+
+        this.setState({info_templates});
+
     }
 
     Update_Value = ({column_name, value})=>{
@@ -169,7 +199,77 @@ class Profile_Data_Editor extends Profile_Info_Data {
         </div>
     }
 
+    Create_Account = async () => {
+        
+        let {email, password, first_name, last_name, date_of_birth, gender, marital_status} = this.Account_Changes;
+        
+        const {Account_Data_Templates, Request_URLs, Configurations} = this.context;
+        
+        //Verify email
+        if(!Configurations.Verify_Email(email)){
+            alert("Please Enter a valid email");
+            return;
+        }
+        
+        //Verify password
+        if(!Configurations.Verify_Password(password)){
+            alert("Does not satisfy password requirements");
+            return;
+        }
+        
+        //Create a json data template to hold account information
+        let account_data = Account_Data_Templates.Account_Data_Template({
+            email, password, first_name, last_name, date_of_birth, gender, marital_status
+        });
+        
+        let jsonData = JSON.stringify(account_data);
+        
+        let res = await fetch(Request_URLs.create_account, {
+            method: "POST",
+            body: jsonData,
+            headers: {
+                'Content-Type': "application/json"
+            }
+        });
+        
+        let resJson = await res.json();
+        
+        let {success, message, acc_info: account} = resJson;
+        
+        alert(message);
+        
+        if(!success){
+            return;
+        }
+
+        if(account){
+
+            let date = new Date();
+
+            //Setting the expiration date that's set on the configurations
+            date.setTime(date.getTime() + Configurations.Cookie_Expire_Days * 24 * 60 * 60 * 1000);
+
+            //saving only the email and password
+            let acc_info_auth = {email: account.email, password: account.password, id: account.id};
+
+            //Convert the account_data_copy into cookie strings
+            const cookieStrs = Cookie_Tools.cookie_converter(acc_info_auth, {"expires": date.toUTCString(), "path": "/"});
+
+            //Store the cookie strings into cookie
+            for(let cookieStr of cookieStrs){
+                document.cookie = cookieStr;
+            }
+            
+        } 
+        
+        this.setState({owner_user_account: account});
+    }
+
     render(){
+
+        let {owner_user_account} = this.state;
+
+        let create_account = isNaN(parseInt(owner_user_account.id));
 
         return (
             <div id="profile-data-editor">
@@ -182,7 +282,8 @@ class Profile_Data_Editor extends Profile_Info_Data {
 
                 <div id="save-button-wrapper">
 
-                    <button onClick={this.Save_Changes}>Save</button>
+                    {create_account ? <button onClick={this.Create_Account}>Create_Account</button> 
+                                    : <button onClick={this.Save_Changes}>Save</button>}
                     
                 </div>   
 
