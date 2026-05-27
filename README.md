@@ -12,10 +12,6 @@ Engineering highlight:
 7. Apache support
 
 <a href="https://cosmo-one.com">Here is a live demo</a>
-
-<br/>
-<br/>
-<br/>
 </pre>
 
 <img width="1992" height="1860" alt="image" src="https://github.com/user-attachments/assets/711f8818-1513-402c-b038-17c7d5bf1748" />
