@@ -11,6 +11,17 @@ Engineering highlight:
 6. AWS EC2 deployment
 7. Apache support
 
+Tech Stack:
+1. React.js
+2. MySQL
+3. Node.js/Express.js
+4. Socket.io/WebSocket
+5. WebRTC
+6. LESS/CSS
+7. Webpack
+8. AWS EC2
+9. Apache
+
 <a href="https://cosmo-one.com">Here is a live demo</a>
 </pre>
 
@@ -84,7 +95,7 @@ User can stay in the chat only while watching the main streamer and other co-str
 <br/>
 I achieved this by using WebRTC with combination of WebSocket
 Currently I am using the peer to peer method by using a STUN server to
-reduce the cost of data usage send out by the server.
+reduce the cost of server bandwidth usage.
 </pre>
 
 <img width="2006" height="1854" alt="image" src="https://github.com/user-attachments/assets/29caf284-5b5a-40d8-89c9-9f7c9033afe3" />
