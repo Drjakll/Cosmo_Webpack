@@ -46,9 +46,8 @@ User will be able to add photo album
 
 
 <img width="1998" height="1860" alt="image" src="https://github.com/user-attachments/assets/b662bc5d-73e1-44d1-a96b-d823a5ba1af6" />
-User will be able to upload photos to each of the album
+Photo album and media upload system integrated with AWS S3
 
-Photo files are uploaded to AWS S3
 <pre>
 <br/>
 <br/>  
@@ -79,21 +78,21 @@ Here is the full layout
 User will be able to allow other users to follow them. 
 <pre>
   
-This implemented by use of separate tables on MySQL for follower/following with 
-a pair of following_id and follower_id that are associates with the user id 
+This implemented using a separate table on MySQL for follower/following with 
+a pair of following_id and follower_id that are associated with the user ID 
 and those pairs are used as primary key. Then I tailor each following or 
-follower associates with the user account id and use the left join query
+follower associated with the user account ID with the user of left join query
 to retrieve their user information.
 <br/>
 <br/>
 </pre>
 
 <img width="2000" height="1860" alt="image" src="https://github.com/user-attachments/assets/633158ea-1a50-4fb7-8cfb-ea5babf82b6c" />
-Users will be able to live stream and others can co-stream
+Supports live streaming with multi-user co-streaming functionality
 User can stay in the chat only while watching the main streamer and other co-streamers to live stream.
 <pre>
 <br/>
-I achieved this by using WebRTC with combination of WebSocket
+Implemented this by using WebRTC with combination of WebSocket
 Currently I am using the peer to peer method by using a STUN server to
 reduce the cost of server bandwidth usage.
 </pre>
