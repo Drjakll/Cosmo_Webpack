@@ -1,4 +1,12 @@
 
+<pre>
+The following is a brief explanation of the platform I've made for the web version.
+<br/>
+<br/>
+<br/>
+<br/>
+</pre>
+
 <img width="1992" height="1860" alt="image" src="https://github.com/user-attachments/assets/711f8818-1513-402c-b038-17c7d5bf1748" />
 
 Every user will have their own profile where it contains their 
