@@ -67,12 +67,11 @@ Here is the full layout
 <img width="1996" height="1860" alt="image" src="https://github.com/user-attachments/assets/2e03ad67-0f04-414c-981e-c3a854c39c58" />
 User will be able to allow other users to follow them. 
 <pre>
-<br/>
   
-This achieved by use of separate tables on MySQL for follower/following with <br/>
-a pair of following_id and follower_id that are associates with the user id <br/>
-and those pairs are used as primary key. Then I tailor each following or <br/>
-follower associates with the user account id and use the left join query <br/>
+This implemented by use of separate tables on MySQL for follower/following with 
+a pair of following_id and follower_id that are associates with the user id 
+and those pairs are used as primary key. Then I tailor each following or 
+follower associates with the user account id and use the left join query
 to retrieve their user information.
 <br/>
 <br/>
@@ -83,13 +82,9 @@ Users will be able to live stream and others can co-stream
 User can stay in the chat only while watching the main streamer and other co-streamers to live stream.
 <pre>
 <br/>
-
-
 I achieved this by using WebRTC with combination of WebSocket
-Currently I am using the peer to peer method by using a STUN server to <br/>
+Currently I am using the peer to peer method by using a STUN server to
 reduce the cost of data usage send out by the server.
-<br/>
-<br/>
 </pre>
 
 <img width="2006" height="1854" alt="image" src="https://github.com/user-attachments/assets/29caf284-5b5a-40d8-89c9-9f7c9033afe3" />
