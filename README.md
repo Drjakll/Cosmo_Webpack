@@ -69,7 +69,11 @@ User will be able to allow other users to follow them.
 <pre>
 <br/>
   
-This achieved by use of separate tables on MySQL for follower/following with a pair of following_id and follower_id that are associates with the user id and those pairs are used as primary key. Then I tailor each following or follower associates with the user account id and use the left join query to retrieve their user information.
+This achieved by use of separate tables on MySQL for follower/following with <br/>
+a pair of following_id and follower_id that are associates with the user id <br/>
+and those pairs are used as primary key. Then I tailor each following or <br/>
+follower associates with the user account id and use the left join query <br/>
+to retrieve their user information.
 <br/>
 <br/>
 </pre>
@@ -82,7 +86,8 @@ User can stay in the chat only while watching the main streamer and other co-str
 
 
 I achieved this by using WebRTC with combination of WebSocket
-Currently I am using the peer to peer method by using a STUN server to reduce the cost of data usage send out by the server.
+Currently I am using the peer to peer method by using a STUN server to <br/>
+reduce the cost of data usage send out by the server.
 <br/>
 <br/>
 </pre>
