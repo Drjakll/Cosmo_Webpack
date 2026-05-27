@@ -7,6 +7,7 @@ Login: Dr_kimsora@yahoo.com
 Password: 123
 
 If you wish to test it with a premade account. 
+After you entered the live demo, log out and then log back in with the login and password.
 
 <br/>
 <br/>
