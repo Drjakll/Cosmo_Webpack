@@ -1,7 +1,13 @@
 
 <pre>
 The following is a brief explanation of the platform I've made for the web version.
-<br/>
+
+<a href="https://cosmo-one.com">Here is a live demo</a>
+Login: Dr_kimsora@yahoo.com
+Password: 123
+
+If you wish to test it with a premade account. 
+
 <br/>
 <br/>
 <br/>
