@@ -1,6 +1,6 @@
 
 <pre>
-Cosmo — Full-Stack Real-Time Social Platform
+Cosmo — Full-Stack Social Media Platform (with muti-user life video feature + individual profiles)
 
 Engineering highlight:
 1. WebRTC Live Streaming
