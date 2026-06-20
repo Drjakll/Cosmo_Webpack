@@ -31,6 +31,8 @@ Tech Stack:
 9. Apache
 
 <a href="https://cosmo-one.com">Here is a live demo</a>
+
+My written codes are in the  "Development" folder and the "app.js" file
 </pre>
 
 <img width="1992" height="1860" alt="image" src="https://github.com/user-attachments/assets/711f8818-1513-402c-b038-17c7d5bf1748" />
