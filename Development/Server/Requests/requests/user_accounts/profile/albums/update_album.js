@@ -1,6 +1,10 @@
 let request = function() {
     
     
+    this.req_path = "/update_album";
+    this.req_type = "post";
+    this.callbacks = ["update_album"];
+
     this.req = async (req, res) => { 
         
         let {id, user_id, album_info} = req.body;

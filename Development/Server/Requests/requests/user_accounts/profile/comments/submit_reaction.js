@@ -1,5 +1,8 @@
 let request = function() {
     
+    this.req_path = "/submit_reaction";
+    this.req_type = "post";
+    this.callbacks = ["submit_reaction"];
     
     this.req = async (req, res) => { 
         

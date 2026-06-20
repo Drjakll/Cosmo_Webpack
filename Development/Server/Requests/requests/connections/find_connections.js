@@ -1,5 +1,9 @@
 let request = function () {
 
+    this.req_path = "/find_connections";
+    this.req_type = "post";
+    this.callbacks = ["find_connections"];
+
     let Build_Conditions = (req, data, self_account) => {
 
         let accountFields = [

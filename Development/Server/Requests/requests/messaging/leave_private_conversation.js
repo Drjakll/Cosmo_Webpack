@@ -1,5 +1,8 @@
 function request() {
 
+    this.req_path = "/leave_private_conversation";
+    this.req_type = "post";
+    this.callbacks = ["leave_private_conversation"];
     
     this.req = async (req, res) => {
         

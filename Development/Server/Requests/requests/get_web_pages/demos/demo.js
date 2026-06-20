@@ -3,6 +3,11 @@ import fs from 'fs';
 
 
 function request() {
+
+    this.req_path = "/demo";
+    this.req_type = "get";
+    this.callbacks = ["demo"];
+
     
     this.req = (req, res) => {
         

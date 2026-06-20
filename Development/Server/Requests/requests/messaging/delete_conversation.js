@@ -1,5 +1,9 @@
 function request() {
 
+    this.req_path = "/delete_conversation";
+    this.req_type = "post";
+    this.callbacks = ["delete_conversation"];
+
     this.req = async (req, res)=>{
 
         let {conversation_id} = req.body;

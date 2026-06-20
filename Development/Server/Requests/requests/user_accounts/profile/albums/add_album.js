@@ -1,4 +1,8 @@
 let request = function() {
+
+    this.req_path = "/add_album";
+    this.req_type = "post";
+    this.callbacks = ["add_album"];
     
     this.req = async (req, res) => { 
         

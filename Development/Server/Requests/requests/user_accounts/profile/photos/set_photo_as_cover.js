@@ -1,5 +1,8 @@
 let request = function() {
 
+    this.req_path = "/set_photo_as_cover";
+    this.req_type = "post";
+    this.callbacks = ["set_photo_as_cover"];    
     
     this.req = async (req, res) => { 
         

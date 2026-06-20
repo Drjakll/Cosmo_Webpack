@@ -1,4 +1,8 @@
 let request = function() {
+
+    this.req_path = "/get_posts";
+    this.req_type = "post";
+    this.callbacks = ["get_posts", "get_general_reactions"];
     
     this.req = async (req, res, next) => { 
         

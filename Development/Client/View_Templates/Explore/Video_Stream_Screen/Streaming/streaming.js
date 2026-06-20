@@ -180,11 +180,9 @@ class Streaming extends Component {
 
             this.participants[id] = {};
             this.participants[id].tag = from;
-            
-            let peer = this.Init_Peer_Connection(from);
+            this.participants[id].peer = this.Init_Peer_Connection(from);;
 
-            this.participants[id].peer = peer;
-
+            let { peer } = this.participants[id];
             
             await peer?.setRemoteDescription(new RTCSessionDescription(remote_offer));
 
@@ -310,7 +308,7 @@ class Streaming extends Component {
 
         if (!peer) {
             peer = new RTCPeerConnection(this.peerConfig)
-        }
+        } 
         
         peer.onicecandidate = (event) => {
 

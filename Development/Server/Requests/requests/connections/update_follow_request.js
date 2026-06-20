@@ -1,5 +1,9 @@
 let request = function () {
 
+    this.req_path = "/update_follow_request";
+    this.req_type = "patch";
+    this.callbacks = ["update_follow_request"];
+
     this.req = async (req, res)=>{
 
         let { follower_id, followed_id, status } = req.body;

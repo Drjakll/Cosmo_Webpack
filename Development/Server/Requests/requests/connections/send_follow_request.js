@@ -1,5 +1,9 @@
 let request = function () {
 
+    this.req_path = "/send_follow_request";
+    this.req_type = "post";
+    this.callbacks = ["send_follow_request"];
+
     let calculate_status = async (privacy, to_id, from_id) => {
 
         switch(privacy){
@@ -99,7 +103,6 @@ let request = function () {
 
                     return res.json({message: "User set privacy to only mutual followers will be allow to request to follow. "});
 
-            
                 case 'pending':
                 
                     return res.json({message: "Follow request has been sent!"});

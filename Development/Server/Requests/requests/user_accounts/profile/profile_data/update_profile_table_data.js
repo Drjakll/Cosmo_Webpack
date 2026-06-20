@@ -1,4 +1,8 @@
 let request = function () {
+
+    this.req_path = "/update_profile_table_data";
+    this.req_type = "patch";
+    this.callbacks = ["update_profile_table_data"];
     
     this.req = async (req, res) => { 
         

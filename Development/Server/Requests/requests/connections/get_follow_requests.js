@@ -1,5 +1,9 @@
 let request = function () {
 
+    this.req_path = "/get_follow_requests";
+    this.req_type = "get";
+    this.callbacks = ["get_follow_requests"];
+
     this.req = async (req, res)=>{
 
         let { user_id } = req.params;

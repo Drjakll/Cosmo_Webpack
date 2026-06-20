@@ -24,11 +24,12 @@ class Connections extends Component {
             owner_user_account,
             visitor_user_account,
             followings: [],
-            followers: []
+            followers: [],
+            follow_req_status: null
         };
     }
 
-    componentDidMount(){
+    async componentDidMount(){
 
         let {owner_user_account, visitor_user_account } = this.state;
 
@@ -37,11 +38,23 @@ class Connections extends Component {
         Queue_Set_State(this.setState.bind(this), owner_user_account, "get_followers", "Connections", is_visiting);
         Queue_Set_State(this.setState.bind(this), owner_user_account, "get_followings", "Connections", is_visiting);
 
-        //Refresh followers
-        Refresh(true, is_visiting);
-        //Refresh followings
-        Refresh(false, is_visiting);
         
+        await this.Update_Follow_Request_Status();
+
+        //Refresh followers
+        await Refresh(true, is_visiting);
+        //Refresh followings
+        await Refresh(false, is_visiting);
+        
+    }
+
+    Update_Follow_Request_Status = async () => {
+
+        let {visitor_user_account, owner_user_account} = this.state;
+
+        let req_status = await this.Get_Request_Status(visitor_user_account.id, owner_user_account.id);
+        
+        this.setState({follow_req_status: req_status});
     }
 
     Setup_Socket = () =>{
@@ -62,7 +75,7 @@ class Connections extends Component {
 
     Refresh_List = async (refresh_followers = true, is_visiting = false) => {
 
-        Refresh(refresh_followers, is_visiting);
+        await Refresh(refresh_followers, is_visiting);
     }
 
     Send_Follow_Request = async ()=>{
@@ -90,30 +103,38 @@ class Connections extends Component {
         )).json();  
 
         //Refresh the followings list
-        this.Refresh_List(false, owner_user_account.id !== visitor_user_account.id);
+        await this.Refresh_List(false, owner_user_account.id !== visitor_user_account.id);
 
         //Refresh the following account's followers list
         this.socket.emit("report_update_followers", {following_acc: owner_user_account});
 
         //Update the follower's account on following list
         this.socket.emit("report_update_followings", {follower_acc: visitor_user_account});
+
+        await this.Update_Follow_Request_Status();
         
-        Popup_Msg("message", data?.message, null);
+        //Popup_Msg("message", data?.message, null);
     }
 
     Show_Follow_Request_Button = ()=>{
 
-        let {owner_user_account, visitor_user_account} = this.state;
+        let {owner_user_account, follow_req_status} = this.state;
 
-        let {privacy, pending_follow_requests} = owner_user_account;
-
-        let pending = pending_follow_requests?.includes(visitor_user_account.id);
+        let {privacy} = owner_user_account;
 
         return  <div id="request-to-follow-button" onClick={this.Send_Follow_Request}>
 
-            {privacy === "private" || privacy === "mutual" ? (pending ? "Remove follow request" : "Request to Follow") : "Follow"}
+            {privacy === "private" || privacy === "mutual" ? (follow_req_status === "pending" ? "Remove follow request" : "Request to Follow") : "Follow"}
 
         </div>;
+    }
+
+    Get_Request_Status = async (from_id, to_id) => {
+
+        let result = await (await fetch(`/get_request_status/${from_id}/${to_id}`, {
+            method: "GET"})).json();
+
+        return result.status;
     }
 
     Display_Followers_List = ()=>{
@@ -158,7 +179,6 @@ class Connections extends Component {
 
         let {visitor_user_account, owner_user_account, followers, followings} = this.state;
 
-        //let {following_ids, follower_ids} = owner_user_account;
 
         let {id: follower_id} = visitor_user_account;
 

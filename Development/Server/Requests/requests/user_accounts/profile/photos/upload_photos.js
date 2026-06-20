@@ -2,6 +2,15 @@ import fs from 'fs';
 
 
 let request = function(){
+
+    this.req_path = "/upload_photos";
+    this.req_type = "post";
+    this.callbacks = ["uploads",
+        "upload_photos",
+        "add_photo_links",
+        "add_album_update_log",
+        "add_to_feeds"
+    ];
     
     var upload_file = async (path_name, data, bucket_name) => {
 

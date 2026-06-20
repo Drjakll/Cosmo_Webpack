@@ -1,6 +1,10 @@
 let request = function() {
     
-    
+
+    this.req_path = "/update_reaction";
+    this.req_type = "post";
+    this.callbacks = ["update_reaction"];
+
     this.req = async (req, res) => { 
         
         let {target_id, emojis, reaction, user_id, target_type} = req.body;

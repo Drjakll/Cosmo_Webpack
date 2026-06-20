@@ -1,5 +1,9 @@
 let request = function () {
 
+    this.req_path = "/search_within_followings";
+    this.req_type = "post";
+    this.callbacks = ["search_within_followings"];
+
     let Build_Conditions = (req, data, self_account) => {
 
         let accountFields = [

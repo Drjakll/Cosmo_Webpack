@@ -1,5 +1,8 @@
 let request = function () {
 
+    this.req_path = "/get_alerts";
+    this.req_type = "post";
+    this.callbacks = ["get_alerts"];
 
     this.req = async (req, res) => {
 

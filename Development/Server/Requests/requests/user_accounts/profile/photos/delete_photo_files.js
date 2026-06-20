@@ -1,4 +1,8 @@
 let request = function(){
+
+    this.req_path = "/delete_photo_files";
+    this.req_type = "post";
+    this.callbacks = ["delete_photo_files"];
     
     var delete_files = async (path_name, bucket_name) => {
 

@@ -1,4 +1,13 @@
 let request = function() {
+
+    this.req_path = "/delete_post";
+    this.req_type = "post";
+    this.callbacks = ["delete_post",
+                        "delete_general_reactions",
+                        "delete_comments_from_targets",
+                        "delete_photo_links",
+                        "delete_photo_files"
+                    ];
     
     this.req = async (req, res, next) => { 
         

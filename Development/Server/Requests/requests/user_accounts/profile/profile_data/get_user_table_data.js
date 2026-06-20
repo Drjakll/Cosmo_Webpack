@@ -1,4 +1,8 @@
 let request = function () {
+
+    this.req_path = "/get_user_table_data";
+    this.req_type = "post";
+    this.callbacks = ["get_user_table_data"];
     
     this.req = async (req, res, next) => { 
         

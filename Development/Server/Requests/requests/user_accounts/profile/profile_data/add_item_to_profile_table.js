@@ -1,5 +1,9 @@
 let request = function () {
     
+    this.req_path = "/add_item_to_profile_table";
+    this.req_type = "post";
+    this.callbacks = ["add_item_to_profile_table"];
+
     this.req = async (req, res) => { 
         
         let { to_insert, table_name } = req.body;

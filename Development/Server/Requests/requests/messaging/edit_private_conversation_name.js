@@ -1,5 +1,9 @@
 function request() {
-    
+
+    this.req_path = "/edit_private_conversation_name";
+    this.req_type = "patch";
+    this.callbacks = ["edit_private_conversation_name"];
+
     this.req = async (req, res) => {
         
         let {user_id, conversation_id, conversation_name} = req.body;

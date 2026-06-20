@@ -1,5 +1,8 @@
 let request = function() {
     
+    this.req_path = "/add_photo_links";
+    this.req_type = "post";
+    this.callbacks = ["add_photo_links"];
     
     this.req = async (req, res, next) => { 
         

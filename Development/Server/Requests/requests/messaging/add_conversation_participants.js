@@ -1,5 +1,9 @@
 function request() {
-    
+
+    this.req_path = "/add_conversation_participants";
+    this.req_type = "post";
+    this.callbacks = ["add_conversation_participants"];
+
     this.req = async (req, res) => {
         
         let {new_users, conversation_id} = req.body;

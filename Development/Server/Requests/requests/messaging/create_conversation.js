@@ -1,5 +1,9 @@
 function request() {
 
+    this.req_path = "/create_conversation";
+    this.req_type = "post";
+    this.callbacks = ["create_conversation"];
+
     this.req = async (req,res, next)=>{
 
         let {from_id, oppose_id} = req.body;

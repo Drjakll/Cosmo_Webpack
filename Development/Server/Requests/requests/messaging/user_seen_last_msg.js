@@ -1,4 +1,8 @@
 function request() {
+
+    this.req_path = "/user_seen_last_msg";
+    this.req_type = "post";
+    this.callbacks = ["user_seen_last_msg"];
     
     this.req = async (req, res) => {
         

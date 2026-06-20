@@ -1,4 +1,8 @@
 function request() {
+
+    this.req_path = "/clear_seen_by";
+    this.req_type = "post";
+    this.callbacks = ["clear_seen_by"];
     
     this.req = async (req, res) => {
         

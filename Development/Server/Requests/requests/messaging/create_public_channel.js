@@ -1,5 +1,11 @@
 function request() {
     
+    this.req_path = "/create_public_channel";
+    this.req_type = "post";
+    this.callbacks = ["create_public_channel",
+        "join_public_channel"
+    ];
+
     this.req = async (req, res, next) => {
         
         let {channel_name, channel_description} = req.body;

@@ -1,5 +1,9 @@
 let request = function () {
 
+    this.req_path = "/remove_follower";
+    this.req_type = "post";
+    this.callbacks = ["remove_follower"];
+
     this.req = async (req, res)=>{
 
         let { follower_id, followed_id} = req.body;

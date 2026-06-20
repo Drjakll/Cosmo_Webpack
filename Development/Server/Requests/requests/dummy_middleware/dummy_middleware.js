@@ -1,6 +1,10 @@
 //A dummy middleware that just returns the results passed to it
 
 function request() {
+
+    this.req_path = "/dummy_middleware";
+    this.req_type = "post";
+    this.callbacks = ["dummy_middleware"];
     
     this.req = (req, res) => {
         

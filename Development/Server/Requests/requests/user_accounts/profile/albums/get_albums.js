@@ -1,5 +1,9 @@
 let request = function() {
     
+    this.req_path = "/get_albums/:id";
+    this.req_type = "get";
+    this.callbacks = ["get_albums"];
+
     this.req = async (req, res) => { 
         
         let {id:user_id} = req.params;

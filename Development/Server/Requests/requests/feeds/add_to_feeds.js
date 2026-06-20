@@ -1,5 +1,9 @@
 let request = function(){
 
+    this.req_path = "/add_to_feeds";
+    this.req_type = "post";
+    this.callbacks = ["add_to_feeds"];
+
     this.req = async (req, res)=>{
 
         let {user_id, target_id, target_type, created_on, result} = req.body;

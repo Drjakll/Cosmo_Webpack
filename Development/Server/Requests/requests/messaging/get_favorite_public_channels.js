@@ -1,5 +1,9 @@
 function request() {
     
+    this.req_path = "/get_favorite_public_channels";
+    this.req_type = "post";
+    this.callbacks = ["get_favorite_public_channels"];
+
     this.req = async (req, res) => {
         
         let {user_id} = req.body;

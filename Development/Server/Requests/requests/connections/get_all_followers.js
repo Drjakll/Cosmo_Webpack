@@ -1,5 +1,9 @@
 let request = function () {
 
+    this.req_path = "/get_all_followers";
+    this.req_type = "post";
+    this.callbacks = ["get_all_followers"];
+
     this.req = async (req, res)=>{
 
         let { id: user_id } = req.body;

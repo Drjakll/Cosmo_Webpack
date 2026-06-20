@@ -1,5 +1,9 @@
 let request = function () {
 
+    this.req_path = "/search_within_followers";
+    this.req_type = "post";
+    this.callbacks = ["search_within_followers"];
+
     let Build_Conditions = (req, data, self_account) => {
 
         let accountFields = [
@@ -154,7 +158,7 @@ let request = function () {
 
             console.log(err);
 
-            res.json({mnessage: "Error finding results", results: []});
+            res.json({message: "Error finding results", results: []});
 
         }
     };

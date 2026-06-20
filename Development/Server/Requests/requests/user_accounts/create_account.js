@@ -8,6 +8,10 @@ function request() {
         
         return emailRegex.test(email);
     };
+
+    this.req_path = "/create_account";
+    this.req_type = "post";
+    this.callbacks = ["create_account"];
     
     this.req = async (req, res) => {
         

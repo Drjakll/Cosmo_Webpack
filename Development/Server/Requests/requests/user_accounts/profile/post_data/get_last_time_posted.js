@@ -1,4 +1,8 @@
 let request = function() {
+
+    this.req_path = "/get_last_time_posted";
+    this.req_type = "post";
+    this.callbacks = ["get_last_time_posted"];
     
     this.req = async (req, res) => { 
         

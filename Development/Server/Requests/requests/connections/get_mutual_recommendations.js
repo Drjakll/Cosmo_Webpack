@@ -1,5 +1,9 @@
 let request = function () {
 
+    this.req_path = "/get_mutual_recommendations/:id/:offset_id";
+    this.req_type = "get";
+    this.callbacks = ["get_mutual_recommendations"];
+
     this.req = async (req, res)=>{
 
         let { id: user_id, offset_id } = req.params;

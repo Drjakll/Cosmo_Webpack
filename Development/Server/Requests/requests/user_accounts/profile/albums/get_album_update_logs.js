@@ -1,4 +1,11 @@
 let request = function() {
+
+    this.req_path = "/get_album_update_logs";
+    this.req_type = "post";
+    this.callbacks = ["get_album_update_logs",
+        "get_single_album",
+        "get_photo_links"
+    ];
     
     this.req = async (req, res, next) => { 
         

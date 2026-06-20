@@ -1,5 +1,9 @@
 let request = function(){
 
+    this.req_path = "/delete_feed";
+    this.req_type = "post";
+    this.callbacks = ["delete_feed"];
+
     this.req = async (req, res)=>{
 
         let {user_id, target_id, target_type, created_on} = req.body;

@@ -1,4 +1,8 @@
 let request = function () {
+
+    this.req_path = "/remove_item_from_profile_table";
+    this.req_type = "delete";
+    this.callbacks = ["remove_item_from_profile_table"];
     
     this.req = async (req, res) => { 
         
