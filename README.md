@@ -2,6 +2,14 @@
 <pre>
 Cosmo — Social Networking Platform with Multi-User Live Streaming and Real-Time Interaction
 
+Platform Features:
+1. Multi-user live video streaming
+2. User profiles and social connections
+3. Real-time messaging
+4. Posts, comments, and reactions
+5. Interest-based user discovery
+6. Photo albums and content feeds
+
 Engineering highlight:
 1. WebRTC Live Streaming
 2. Websocket signaling
