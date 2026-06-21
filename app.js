@@ -42,7 +42,7 @@ app.set('trust proxy', true);
 
 import requests from './Development/Server/Requests/requests.js';
 
-let req = {uploads: {req: uploads.array('files', 100)}};
+let route_obj = {uploads: {req: uploads.array('files', 100)}};
 
 //Round up all the requests
 let recursion = (obj) => {
@@ -51,7 +51,7 @@ let recursion = (obj) => {
 
         if(obj[key].req !== undefined){
 
-            req[key] = obj[key];
+            route_obj[key] = obj[key];
 
         } else {
 
@@ -63,22 +63,34 @@ let recursion = (obj) => {
 
 };
 
+const valid_req_types = ["get", "post", "put", "delete", "patch"];
+
 //Apply the requests to the express app
 let apply_paths = () => {
 
-    for(let key in req){
+    for(let key in route_obj){
 
         if(key === "uploads"){
             continue;
         }
 
-        let {req_path, req_type, callbacks: callback_labels} = req[key];
+        let {req_path, req_type, callbacks: callback_labels} = route_obj[key];
+
+        if(!valid_req_types.includes(req_type)){
+
+            throw new Error(`Invalid request type '${req_type}' for route '${req_path}'`);
+        }
 
         let callbacks = [];
 
         for(let label of callback_labels){
 
-            callbacks.push(req[label].req);
+            if(!route_obj[label]){
+
+                throw new Error(`Invalid callback label '${label}' for route '${req_path}'`);
+            }
+
+            callbacks.push(route_obj[label].req);
         }
 
         //Call the express app with the request path, type, and callbacks

@@ -16,14 +16,6 @@ aws.config.update({
     "region": process.env.AWS_REGION
 });
 
-//let s3 = new S3Client({
-//    "credentials": {
-//        "accessKeyId": "AKIAJH32XZD6ZNNFCQHQ",
-//        "secretAccessKey": "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",
-//    },
-//    "region": "us-west-1"
-//});
-
 let s3 = new aws.S3();
 
 export { s3, PutObjectCommand }
