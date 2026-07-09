@@ -42,7 +42,18 @@ let Wrapper = function (){
             events[i].root_io = this.root_io;
             events[i].io = this.io;
         }
+
+        //console.log("connected: photo_comments", socket.id);
+
+        socket.on("disconnect", (reason) => {
+            //console.log("disconnected photo_comments:", socket.id, reason);
+        });
+
+        socket.on("error", (err) => {
+            //console.log("socket error: photo_comments", err);
+        });
         
+        socket.on('ping', events.pong.event);
         socket.on('join_comment_group', events.join_comment_group.event);
         socket.on('reload_comments_to_all', events.reload_comments_to_all.event);
         

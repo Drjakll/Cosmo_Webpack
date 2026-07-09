@@ -23,7 +23,7 @@ let Create_Popup = async function(type = "message", msg = "", result = null){
 
     let create_message = ()=>{
 
-        let the_msg_label = document.createElement("label");
+        let the_msg_label = document.createElement("pre");
 
         the_msg_label.textContent = msg;
 

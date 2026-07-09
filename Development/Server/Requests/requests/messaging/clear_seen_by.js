@@ -1,4 +1,4 @@
-function request() {
+function request(sql, s3, PutObjectCommand) {
 
     this.req_path = "/clear_seen_by";
     this.req_type = "post";

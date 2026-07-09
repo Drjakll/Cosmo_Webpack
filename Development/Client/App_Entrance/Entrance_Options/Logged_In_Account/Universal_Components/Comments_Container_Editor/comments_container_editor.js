@@ -69,7 +69,7 @@ class Comments_Container_Editor extends Comments_Container {
                 to_delete.push(id);
             }
 
-            let body = {requirements: [to_delete]};
+            let body = {comment_ids: [to_delete]};
 
             await fetch(delete_multiple_comments,
                 {

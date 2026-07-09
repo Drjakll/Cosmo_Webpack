@@ -83,7 +83,7 @@ class Album_Editor extends Albums_Component {
         
             <div id="add-button" onClick={this.Add_Photo_Album}>
 
-                <div id="new-album-icon" style={{backgroundImage: `url(./static/add_album_icon.png)`}}></div>
+                <div id="new-album-icon" style={{backgroundImage: `url(./static/add_album_icon.webp)`}}></div>
 
                 <label>Add Album</label> 
 

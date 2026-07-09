@@ -4,6 +4,7 @@ let Wrapper = function(){
         
         this.socket.join(room_name);
         
+        this.socket.emit('confirm_joined_room', {});
     };
     
 };

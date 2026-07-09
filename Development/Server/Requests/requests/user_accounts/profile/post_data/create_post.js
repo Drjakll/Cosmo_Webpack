@@ -1,4 +1,4 @@
-let request = function() {
+let request = function(sql, s3, PutObjectCommand) {
 
     this.req_path = "/create_post";
     this.req_type = "post";
@@ -26,7 +26,7 @@ let request = function() {
             let post_obj = {id: result.insertId, title, body, user_id, created_on, last_edited: created_on};
 
             req.body.target_id = post_obj.id;
-            req.body.target_type = "post"; 
+            req.body.target_id_type = "post_id"; 
             req.body.created_on = created_on;
             req.body.result = post_obj;
 

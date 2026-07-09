@@ -11,15 +11,15 @@ exports.id = "Development_Server_Websockets_IO_Namespaces_messaging_events_pong_
 exports.ids = ["Development_Server_Websockets_IO_Namespaces_messaging_events_pong_js"];
 exports.modules = {
 
-/***/ "./Development/Server/Websockets/IO_Namespaces/messaging/events/pong.js":
+/***/ "./Development/Server/Websockets/IO_Namespaces/messaging/events/pong.js"
 /*!******************************************************************************!*\
   !*** ./Development/Server/Websockets/IO_Namespaces/messaging/events/pong.js ***!
   \******************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
-eval("{__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\nlet Wrapper = function () {\n  this.users_heart_beat = {};\n  this.event = ({}) => {\n    this.socket.last_pinged = Date.now();\n  };\n};\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Wrapper);\n\n//# sourceURL=webpack://cosmo_webpack/./Development/Server/Websockets/IO_Namespaces/messaging/events/pong.js?\n}");
+eval("{__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\nlet Wrapper = function () {\n  this.event = ({\n    user_account\n  }) => {\n    let {\n      id\n    } = user_account;\n\n    //If it got disconnected, this will be reconnecting...\n    if (!this.user_socket[id]) {\n      this.user_socket[id] = this.socket;\n      this.socket.emit('reconnect_all_rooms', {});\n    }\n    this.socket.last_pinged = Date.now();\n    this.socket.emit('pong', {});\n  };\n};\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Wrapper);\n\n//# sourceURL=webpack://cosmo_webpack/./Development/Server/Websockets/IO_Namespaces/messaging/events/pong.js?\n}");
 
-/***/ })
+/***/ }
 
 };
 ;

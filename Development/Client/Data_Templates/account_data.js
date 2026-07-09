@@ -30,7 +30,8 @@ let Account_Data_Template = function(initial){
         mood_today: "",
         personal_traits: {},
         last_mood_updated: null,
-        is_online: false,
+        verification_code: null,
+        email_verified: false,
     };
     
     for(let i in initial){
@@ -44,7 +45,7 @@ let Account_Data_Template = function(initial){
     }
 
     if(isNaN(parseInt(template.id))) {
-        template.id = Generate_Temp_ID();
+        //template.id = Generate_Temp_ID();
     }
     
     return template;
@@ -53,54 +54,54 @@ let Account_Data_Template = function(initial){
 let Account_Info_Data_Template = function(initial = {}){
 
     let template = {
-        email: {
+        /*email: {
             component: Text_Type,
             label: "E-mail",
             value: "",
             options: [],
-            label_icon: "name_tag_icon.png"
+            label_icon: "name_tag_icon.webp"
         },
         password: {
             component: Text_Type,
             label: "Password",
             value: "",
             options: [],
-            label_icon: "name_tag_icon.png"
-        },
+            label_icon: "name_tag_icon.webp"
+        },*/
         first_name: {
             component: Text_Type,
             label: "First Name",
             value: "",
             options: [],
-            label_icon: "name_tag_icon.png"
+            label_icon: "name_tag_icon.webp"
         },
         last_name: {
             component: Text_Type,
             label: "Last Name",
             value: "",
             options: [],
-            label_icon: "name_tag_icon.png"
+            label_icon: "name_tag_icon.webp"
         },
         date_of_birth: { 
             component: Date_Type,
             label: "Date of Birth", 
             value: "", 
             options: [],
-            label_icon: "birthdate_icon.png"
+            label_icon: "birthdate_icon.webp"
         },
         gender: {
             component: Choice_Type,
             label: "Gender",
             value: "",
             options: ["Male", "Female", "Unspecified"],
-            label_icon: "gender_icon.png"
+            label_icon: "gender_icon.webp"
         },
         marital_status: {
             component: Choice_Type,
             label: "Marital Status",
             value: "",
             options: ["Single", "Dating", "Engaged", "Married", "Divorce", "Widow", "Unspecified"],
-            label_icon: "marital_status_icon.png"
+            label_icon: "marital_status_icon.webp"
         },
         User_Locations: {
             component: Json_Type,
@@ -115,8 +116,8 @@ let Account_Info_Data_Template = function(initial = {}){
                 { label: "Type of Location", data_name: "location_type", data_type: "enum", choices: ["birth","hometown","current","previous"]},
                 { label: "Privacy", data_name: "privacy", data_type: "enum", choices: ["private", "public", "mutual"]  }
             ],
-            background: "location_background.png",
-            label_icon: "location_icon.png"
+            background: "location_background.webp",
+            label_icon: "location_icon.webp"
         },
         User_Hobbies: {
             component: Json_Type,
@@ -129,8 +130,8 @@ let Account_Info_Data_Template = function(initial = {}){
                 { label: "Story", data_name: "story", data_type: "string" },
                 { label: "Privacy", data_name: "privacy", data_type: "enum", choices: ["private", "public", "mutual"]  }
             ],
-            background: "hobby_background.png",
-            label_icon: "hobby_icon.png"
+            background: "hobby_background.webp",
+            label_icon: "hobby_icon.webp"
         },
         User_Professions: {
             component: Json_Type,
@@ -142,8 +143,8 @@ let Account_Info_Data_Template = function(initial = {}){
                 { label: "Proficiency", data_name: "proficiency", data_type: "enum", choices: ["beginner", "intermediate", "advanced", "expert"] },
                 { label: "Privacy", data_name: "privacy", data_type: "enum", choices: ["private", "public", "mutual"]  }
             ],
-            background: "profession_background.png",
-            label_icon: "profession_icon.png"
+            background: "profession_background.webp",
+            label_icon: "profession_icon.webp"
         },
         User_Schools: {
             component: Json_Type,
@@ -159,16 +160,16 @@ let Account_Info_Data_Template = function(initial = {}){
                 { label: "Type of School", data_name: "school_type", data_type: "enum", choices: ["elementary", "middle", "high", "college"]},
                 { label: "Privacy", data_name: "privacy", data_type: "enum", choices: ["private", "public", "mutual"]  }
             ],
-            background: "school_background.png",
-            label_icon: "school_icon.png"
+            background: "school_background.webp",
+            label_icon: "school_icon.webp"
         },
         personal_traits: {
             component: Json_Text_Type,
             label: "Personal Traits",
             value: "",
             options: [],
-            background: "personal_trait_background.png",
-            label_icon: "trait_icon.png"
+            background: "personal_trait_background.webp",
+            label_icon: "trait_icon.webp"
         }
     };
 
@@ -204,36 +205,36 @@ let Post_Data_Template = function(initial){
 };
 
 let Mood_Options = {
-    "Angry": "angry_2.png",
-    "Sad": "sad_2.png",
-    "Happy": "happy.png",
-    "Excited": "excited.png",
-    "Depressed": "depressed.png",
-    "Confused": "confused.png",
-    "Heartbroken": "heartbroken.png",
-    "Shocked": "shocked.png",
-    "Anxious": "anxious.png",
-    "Worry": "worry.png",
-    "Overwhelmed": "overwhelmed.png",
-    "Annoyed": "annoyed.png",
-    "Surprised": "surprised_2.png",
-    "Sympathetic": "sympathetic_2.png",
-    "Silly": "silly.png",
-    "Loved": "loved.png",
-    "Tired": "tired.png",
-    "Confident": "confident.png",
-    "Lonely": "lonely.png",
-    "Emotionless": "emotionless.png",
-    "Scared": "scared.png",
-    "Disgusted": "digusted.png",
-    "Homesick": "homesick.png",
-    "Energetic": "energetic.png",
-    "Important": "important.png",
-    "Bored": "bored.png",
-    "Flattered": "flattered.png",
-    "Humble": "humble.png",
-    "Impatient": "impatient.png",
-    "Calm": "calm.png"
+    "Angry": "angry_2.webp",
+    "Sad": "sad_2.webp",
+    "Happy": "happy.webp",
+    "Excited": "excited.webp",
+    "Depressed": "depressed.webp",
+    "Confused": "confused.webp",
+    "Heartbroken": "heartbroken.webp",
+    "Shocked": "shocked.webp",
+    "Anxious": "anxious.webp",
+    "Worry": "worry.webp",
+    "Overwhelmed": "overwhelmed.webp",
+    "Annoyed": "annoyed.webp",
+    "Surprised": "surprised_2.webp",
+    "Sympathetic": "sympathetic_2.webp",
+    "Silly": "silly.webp",
+    "Loved": "loved.webp",
+    "Tired": "tired.webp",
+    "Confident": "confident.webp",
+    "Lonely": "lonely.webp",
+    "Emotionless": "emotionless.webp",
+    "Scared": "scared.webp",
+    "Disgusted": "digusted.webp",
+    "Homesick": "homesick.webp",
+    "Energetic": "energetic.webp",
+    "Important": "important.webp",
+    "Bored": "bored.webp",
+    "Flattered": "flattered.webp",
+    "Humble": "humble.webp",
+    "Impatient": "impatient.webp",
+    "Calm": "calm.webp"
 };
 
 export default {

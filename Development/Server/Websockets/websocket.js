@@ -7,12 +7,22 @@ let websocket = async (server) => {
                                     cors: 
                                             {
                                                 origin: '*'
-                                            }
+                                            },
+                                    methods: ["GET", "POST"],
+                                    pingInterval: 25000,
+                                    pingTimeout: 60000
                                 }
                         );
     
     //Gather all the namespaces
     let namespaces = await Gather_Namespaces(io);
+
+    io.engine.on("connection_error", (err) => {
+        console.log("engine connection error:");
+        console.log("code:", err.code);
+        console.log("message:", err.message);
+        console.log("context:", err.context);
+    });
     
     
     const photo_comments_namespace = io.of('/photo_comments');

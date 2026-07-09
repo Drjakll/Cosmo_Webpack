@@ -6,7 +6,7 @@ class Buttons extends Component {
     constructor(props){
         
         super(props);
-
+        
     }
     
     ChangeScreen = (screen)=>{
@@ -29,7 +29,7 @@ class Buttons extends Component {
                     </div>
                     
                     <div id="restore-button" className="button" onClick={(e)=>{this.ChangeScreen("Restore")}}>
-                        Restore
+                        Recover Account
                     </div>     
                     
                 </div>

@@ -29,9 +29,6 @@ class Profile_Info_Data extends Component {
 
         let info_templates = await Account_Info_Data_Template();
 
-        delete info_templates["email"];
-        delete info_templates["password"];
-
         this.setState({info_templates});
         
     }
@@ -60,7 +57,7 @@ class Profile_Info_Data extends Component {
         let utc_today = new Date().toISOString().split("T")[0];
 
         if(!last_mood_updated || utc_today !== last_mood_updated){
-            return <div id="current-mood"><img src={`./static/dunno.png`}/> No Update </div>;
+            return <div id="current-mood"><img src={`./static/dunno.webp`}/> No Update </div>;
         }
 
         return <div id="current-mood"><img src={`./static/${Mood_Options[mood_today]}`}/> {mood_today}</div>;
@@ -104,7 +101,7 @@ class Profile_Info_Data extends Component {
 
                     <div id="detail-label">
 
-                        <img src={'./static/personal_details_icon.png'}/>
+                        <img src={'./static/personal_details_icon.webp'}/>
 
                         <label>Details</label>
 

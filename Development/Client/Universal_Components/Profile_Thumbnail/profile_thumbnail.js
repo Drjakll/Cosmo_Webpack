@@ -66,7 +66,7 @@ class Profile_Thumbnail extends Component {
 
         let full_pp_link = `${aws_s3_url}${profile_picture_link}`;
 
-        let placeholder = `./static/pp_placeholder.png`;
+        let placeholder = `./static/pp_placeholder.webp`;
 
         return <div className="profile-thumbnail-wrapper">
 

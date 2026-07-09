@@ -1,4 +1,4 @@
-let request = function(){
+let request = function(sql, s3, PutObjectCommand){
 
     this.req_path = "/get_feeds";
     this.req_type = "post";
@@ -30,7 +30,7 @@ let request = function(){
                     left join 
                         Photo_Links as pl
                     on
-                        pl.target_id = ua.id and pl.target_type = "profile" and pl.is_a_cover = 1
+                        pl.profile_id = ua.id and pl.is_a_cover = 1
 
                     where 
                         f.user_id in (?) and f.created_on < ?

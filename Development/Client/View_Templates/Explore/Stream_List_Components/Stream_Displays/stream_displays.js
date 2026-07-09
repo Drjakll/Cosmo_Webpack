@@ -52,7 +52,7 @@ class Stream_Displays extends Component {
                     <div id="refresh-button-wrapper">
 
                         <div id="refresh-button" 
-                            style={{backgroundImage: `url(./static/refresh_icon.png)`}}
+                            style={{backgroundImage: `url(./static/refresh_icon.webp)`}}
                             onClick={this.Trigger_Search_Streams}
                         ></div>
 

@@ -1,4 +1,4 @@
-let request = function() {
+let request = function(sql, s3, PutObjectCommand) {
     
     this.req_path = "/update_comment";
     this.req_type = "patch";
@@ -6,16 +6,16 @@ let request = function() {
     
     this.req = async (req, res) => { 
         
-        let {comment, id, target_type, target_id, user_id} = req.body;
+        let {comment, id, target_id_type, target_id, user_id} = req.body;
 
         let data = { comment, last_updated: Date.now()};
  
-        let query = `update Comments set ? where id = ? and target_type = ? and target_id = ? and user_id = ?`;
+        let query = `update Comments set ? where id = ? and ${target_id_type} = ? and user_id = ?`;
 
 
         try {
 
-            await this.sql.query(query, [data, id, target_type, target_id, user_id] );
+            await this.sql.query(query, [data, id, target_id, user_id] );
 
             res.json({message: "Successfully updated the comment", failed: false});
 

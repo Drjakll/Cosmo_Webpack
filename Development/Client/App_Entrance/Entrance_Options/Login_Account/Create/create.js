@@ -81,12 +81,6 @@ class Create extends Component {
         return (
                 <div id="create">
 
-                    <div className="back-button-wrapper">
-
-                        <label onClick={(e)=>{ this.ChangeScreen("Buttons"); }}>Back</label>
-
-                    </div>
-
                     <div className="screen-title-wrapper">
                         
                         <label>Create Account</label>

@@ -1,4 +1,4 @@
-let request = function () {
+let request = function (sql, s3, PutObjectCommand) {
 
     this.req_path = "/update_profile_table_data";
     this.req_type = "patch";

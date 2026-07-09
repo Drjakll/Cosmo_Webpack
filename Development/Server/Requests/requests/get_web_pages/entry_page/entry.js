@@ -2,7 +2,7 @@ import fs from 'fs';
 
 
 
-function request() {
+function request(sql, s3, PutObjectCommand) {
 
     this.req_path = "/";
     this.req_type = "get";

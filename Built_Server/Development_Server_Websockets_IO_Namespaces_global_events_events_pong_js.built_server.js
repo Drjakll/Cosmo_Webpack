@@ -11,15 +11,15 @@ exports.id = "Development_Server_Websockets_IO_Namespaces_global_events_events_p
 exports.ids = ["Development_Server_Websockets_IO_Namespaces_global_events_events_pong_js"];
 exports.modules = {
 
-/***/ "./Development/Server/Websockets/IO_Namespaces/global_events/events/pong.js":
+/***/ "./Development/Server/Websockets/IO_Namespaces/global_events/events/pong.js"
 /*!**********************************************************************************!*\
   !*** ./Development/Server/Websockets/IO_Namespaces/global_events/events/pong.js ***!
   \**********************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
-eval("{__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\nlet Wrapper = function () {\n  this.users_heart_beat = {};\n  this.event = ({}) => {};\n};\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Wrapper);\n\n//# sourceURL=webpack://cosmo_webpack/./Development/Server/Websockets/IO_Namespaces/global_events/events/pong.js?\n}");
+eval("{__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\nlet Wrapper = function () {\n  this.event = () => {\n    this.socket?.emit('pong', {});\n  };\n};\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Wrapper);\n\n//# sourceURL=webpack://cosmo_webpack/./Development/Server/Websockets/IO_Namespaces/global_events/events/pong.js?\n}");
 
-/***/ })
+/***/ }
 
 };
 ;

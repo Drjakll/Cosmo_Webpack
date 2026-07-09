@@ -2,7 +2,7 @@ import React, { Component, createRef } from 'react';
 import Comments_Container from '@comments_container/comments_container.js';
 import General_Reactions_Container from '@universal_components/General_Reactions_Container/general_reactions_container.js';
 import Context from '@context/context.js';
-import { io } from 'socket.io-client';
+import init_websocket from '@root/Utilities/init_websocket.js';
 import './single_post.less';
 
 class Single_Post extends Component {
@@ -51,21 +51,27 @@ class Single_Post extends Component {
 
     }
 
+    componentWillUnmount() {
+
+        this.socket?.disconnect();
+        
+    }
+
     Init_Socket = ()=>{
 
-        this.socket = io('/reaction_room');
+        this.socket = init_websocket('/reaction_room', this.Init_Socket);
 
-        this.socket.on('connect', ()=>{
+        this.socket?.on('connect', ()=>{
 
             let {id} = this.state.post;
 
             let room_name = `post_${id}`;
 
-            this.socket.emit('join_reaction_room', {room_name});
+            this.socket?.emit('join_reaction_room', {room_name});
 
         });
 
-        this.socket.on('refresh_reactions', this.Refresh_Reactions);        
+        this.socket?.on('refresh_reactions', this.Refresh_Reactions);        
 
     }
 
@@ -73,7 +79,7 @@ class Single_Post extends Component {
 
         let {id} = this.state.post;
 
-        this.socket.emit('signal_all_refresh_reactions', {room_name: `post_${id}`});
+        this.socket?.emit('signal_all_refresh_reactions', {room_name: `post_${id}`});
     }
 
     Refresh_Reactions = async ()=>{
@@ -99,7 +105,7 @@ class Single_Post extends Component {
 
         let post = posts.length ? posts[0] : {};
 
-        post.reactions = reactions
+        post.reactions = reactions;
 
         this.setState({post});
 
@@ -160,7 +166,7 @@ class Single_Post extends Component {
                 <Comments_Holder
                     reply_to_id={null}
                     target_id={post.id}
-                    target_type={"post"}
+                    target_id_type={"post_id"}
                     visitor_user_account={visitor_user_account}
                     owner_user_account={owner_user_account}
                     parent_room_name={null}
@@ -202,7 +208,7 @@ class Single_Post extends Component {
                             visitor_user_account={visitor_user_account}
                             owner_user_account={owner_user_account}
                             target_id={id}
-                            target_type={"post"}
+                            target_id_type={"post_id"}
                             refresh_parent={this.Signal_All_Refresh_Reactions}
                             reactions={post.reactions}
                         />

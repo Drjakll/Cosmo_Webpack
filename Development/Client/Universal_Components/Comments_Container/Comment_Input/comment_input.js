@@ -14,7 +14,7 @@ class Comment_Input extends Component {
 
         let { 
             target_id,
-            target_type,
+            target_id_type,
             reply_to_id,
             owner_user_account,
             visitor_user_account
@@ -22,7 +22,7 @@ class Comment_Input extends Component {
 
         this.state = {
             target_id,
-            target_type,
+            target_id_type,
             reply_to_id : reply_to_id || null,
             owner_user_account,
             visitor_user_account
@@ -48,9 +48,9 @@ class Comment_Input extends Component {
 
         let {Signal_To_Refresh_For_New_Comments} = this.props;
 
-        let {visitor_user_account, target_id, target_type, reply_to_id} = this.state;
+        let {visitor_user_account, target_id, target_id_type, reply_to_id} = this.state;
 
-        if(!target_type || !target_id){
+        if(!target_id_type || !target_id){
             alert("Target ID and Target Type not found");
             return;
         }
@@ -58,7 +58,7 @@ class Comment_Input extends Component {
         let body = {
             user_id: visitor_user_account.id,
             target_id,
-            target_type,
+            target_id_type,
             reply_to_id,
             comment: this.textRef.current.value 
         };

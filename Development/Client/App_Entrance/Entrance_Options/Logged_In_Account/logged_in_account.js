@@ -2,18 +2,18 @@ import React, {Component} from 'react';
 import Screen from './Screen/screen.js';
 import Upper_Bar from './Upper_Bar/upper_bar.js';
 import Context from '@context/context.js';
-import { io } from 'socket.io-client';
+import init_websocket from '@root/Utilities/init_websocket.js';
 import './logged_in_account.less';
 
 
 class Logged_In_Account extends Component {
     
     Button_Data = [
-        {label: "Profile", icon: "profile_button.png"},
-        {label: "Livestream", icon: "livestream_button.png"},
-        {label: "Feeds", icon: "feeds_button.png"},
-        {label: "Chat", icon: "chat_button.png"},
-        {label: "Search", icon: "search_button.png"}
+        {label: "Profile", icon: "profile_button.webp"},
+        {label: "Livestream", icon: "livestream_button.webp"},
+        {label: "Feeds", icon: "feeds_button.webp"},
+        {label: "Chat", icon: "chat_button.webp"},
+        {label: "Search", icon: "search_button.webp"}
     ];
 
     //Fixed index of screens
@@ -29,7 +29,7 @@ class Logged_In_Account extends Component {
         
         super(props);
 
-        window.global_connection_socket = io("/connections");
+        this.Init_Global_Socket_IO();
 
         Logged_In_Account.contextType = Context;
 
@@ -47,24 +47,35 @@ class Logged_In_Account extends Component {
         };
     }
 
+    Init_Global_Socket_IO = () => {
+
+        window.global_connection_socket = init_websocket("/connections", this.Init_Global_Socket_IO);
+
+    }
+
+    componentWillUnmount() {
+
+        global_connection_socket?.disconnect();
+
+    }
+
     async componentDidMount() {
     
-
         //Delete the user key from the websocket backend before exiting
         window.addEventListener("beforeunload", (e)=>{
 
-            global_connection_socket.emit("logging_off", {email: this.state.owner_user_account.email});
+            global_connection_socket?.emit("logging_off", {email: this.state.owner_user_account.email});
 
         });
 
-        global_connection_socket.on("connect", async ()=>{
+        global_connection_socket?.on("connect", async ()=>{
 
             //Signal to create the user key at the websocket backend
-            global_connection_socket.emit("newly_logged_in", {email: this.state.owner_user_account.email});
+            global_connection_socket?.emit("newly_logged_in", {email: this.state.owner_user_account.email});
 
         });
 
-        global_connection_socket.on("refresh_account", ({})=>{
+        global_connection_socket?.on("refresh_account", ({})=>{
 
             window.LoginAttempt();
 
@@ -144,7 +155,6 @@ class Logged_In_Account extends Component {
                             //this.RotateScreen(index);
                             this.Change_View(index);
                         }}>
-
 
                         <img src={`./static/${icon}`} />
 

@@ -4,7 +4,7 @@ import Users from './Users/users.js';
 import Channel_Selections from './Channel_Selections/channel_selections.js';
 import {Get_Follows, Refresh, Queue_Set_State} from '@universal_components/Account_Functions/get_follows.js';
 import Context from '@context/context.js';
-import { io } from 'socket.io-client';
+import init_websocket from '@root/Utilities/init_websocket.js';
 import './messaging.less';
 
 class Messaging extends Component {
@@ -61,7 +61,7 @@ class Messaging extends Component {
         this.Join_Favorite_Public_Channels();
         
         //Send a ping to the websocket every 10 seconds to ensure that this user is online
-        setInterval(()=>{
+        /*setInterval(()=>{
 
             let now = Date.now();
 
@@ -72,7 +72,7 @@ class Messaging extends Component {
 
             this.msg_socket?.emit('ping', {user_account: this.state.owner_user_account});
 
-        }, 10000);
+        }, 10000);*/
 
     }
 
@@ -191,7 +191,7 @@ class Messaging extends Component {
 
     Init_IO = ()=>{
 
-        this.msg_socket = io('/messaging');
+        this.msg_socket = init_websocket('/messaging', this.Init_IO);
 
         this.msg_socket?.on('connect', ()=>{
 

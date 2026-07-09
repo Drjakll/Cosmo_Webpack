@@ -63,6 +63,23 @@ let Wrapper = function (){
             events[i].public_channel_list = this.public_channel_list;
         }
 
+        //console.log("connected: messagings", socket.id);
+
+        socket.on("disconnect", (reason) => {
+            //console.log("disconnected: messaging", socket.id, reason);
+        });
+
+        socket.on("error", (err) => {
+            //console.log("socket error: messaging", err);
+        });
+
+        for(let key in events){
+
+            socket.on(key, events[key].event);
+
+        }
+
+        /*
         socket.on('report_presence', events.report_presence.event);
         socket.on('join_private_channels', events.join_private_channels.event);
         socket.on('join_single_private_channel', events.join_single_private_channel.event);
@@ -71,15 +88,17 @@ let Wrapper = function (){
         socket.on('leave_private_conversation', events.leave_private_conversation.event);
         socket.on('update_seen_by', events.update_seen_by.event);
         socket.on('clear_seen_by', events.clear_seen_by.event);
-        socket.on('ping', events.ping.event);
+        socket.on('ping', events.pong.event);
         socket.on('send_report_online', events.send_report_online.event);
         socket.on('send_report_offline', events.send_report_offline.event);
         socket.on('join_public_channels', events.join_public_channels.event);
         socket.on('search_public_chats', events.search_public_chats.event);
         socket.on('leave_public_channel', events.leave_public_channel.event);
+        socket.on('disconnect', events.send_report_offline_dc.event)
+        */
 
         //Checking every 10 seconds if any socket has not been pinged for over 11 seconds
-        setInterval(async ()=>{
+        /*setInterval(async ()=>{
 
             let user_socket = this.user_socket;
             let public_channel_list = this.public_channel_list;
@@ -114,7 +133,7 @@ let Wrapper = function (){
             }
 
 
-        }, 10000);
+        }, 10000);*/
 
     };
 };

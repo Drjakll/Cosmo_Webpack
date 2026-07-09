@@ -1,7 +1,7 @@
 import React from 'react';
 import './profile_data_editor.less';
 import Context from '@context/context.js';
-import Cookie_Tools from '@root/Utilities/cookie.js';
+import Popup_Message from '@popup_template/Popup_Message/popup_message.js';
 import {Profile_Info_Data} from '@profile_template/profile_template.js';
 import Account_Data from '@data_templates/account_data.js';
 import Text_Type_Editor from './Text_Editor/text_editor.js';
@@ -9,6 +9,7 @@ import Date_Type_Editor from './Date_Editor/date_editor.js';
 import Json_Type_Editor from './Json_Editor/json_editor.js';
 import Choice_Type_Editor from './Choice_Editor/choice_editor.js';
 import Json_Text_Editor from './Json_Text_Editor/json_text_editor.js';
+import Login_Account from '@universal_components/Account_Functions/login_account.js';
 
 let {Mood_Options} = Account_Data;
 
@@ -199,77 +200,107 @@ class Profile_Data_Editor extends Profile_Info_Data {
         </div>
     }
 
-    Create_Account = async () => {
-        
-        let {email, password, first_name, last_name, date_of_birth, gender, marital_status} = this.Account_Changes;
-        
-        const {Account_Data_Templates, Request_URLs, Configurations} = this.context;
-        
-        //Verify email
-        if(!Configurations.Verify_Email(email)){
-            alert("Please Enter a valid email");
-            return;
+    Send_Verification_Code = async (e) => {
+
+        let {owner_user_account} = this.state;
+
+        let {id, email} = owner_user_account;
+
+        let {send_verification_code} = this.context.Request_URLs;
+
+        let body = {
+            id,
+            email
         }
-        
-        //Verify password
-        if(!Configurations.Verify_Password(password)){
-            alert("Does not satisfy password requirements");
-            return;
-        }
-        
-        //Create a json data template to hold account information
-        let account_data = Account_Data_Templates.Account_Data_Template({
-            email, password, first_name, last_name, date_of_birth, gender, marital_status
-        });
-        
-        let jsonData = JSON.stringify(account_data);
-        
-        let res = await fetch(Request_URLs.create_account, {
+
+        let response = await (await fetch(send_verification_code, {
             method: "POST",
-            body: jsonData,
+            body: JSON.stringify(body),
             headers: {
-                'Content-Type': "application/json"
+                'Content-Type': 'application/json'
             }
-        });
-        
-        let resJson = await res.json();
-        
-        let {success, message, acc_info: account} = resJson;
-        
-        alert(message);
-        
-        if(!success){
-            return;
+        })).json();
+
+        let {message, failed} = response;
+
+        let result = {input: ""};
+
+        await Popup_Message("input", message + "\nPlease enter the verification code:", result);
+
+        this.Verify_Account(email, result.input);
+
+    }
+
+    Verify_Account = async (email, code) => {
+
+        let {verify_account} = this.context.Request_URLs;
+
+        let req_path = `${verify_account}/${email}/${code}`;
+
+        let response = await (await fetch(req_path, {
+            method: "GET"
+        })).json();
+
+        let {message, failed} = response;
+
+        await Popup_Message("message", message);
+
+        if(!failed){
+
+            this.setState({owner_user_account: await Login_Account(document)});
+
+        }
+    }
+
+    Generate_Verification_Button = () => {
+
+        let open_warning_popup = async () => {
+
+            let {created_on} = this.state.owner_user_account;
+
+            let now = Date.now();
+
+            let three_days = 3 * 24 * 3600000;
+
+            let msg = "";
+
+            let interval = three_days - (now - created_on);
+
+            let days = Math.floor(interval / (24 * 3600000));
+
+            let hours = Math.floor((interval % (24 * 3600000)) / 3600000);
+
+            let minutes = Math.floor((interval % 3600000) / 60000);
+
+            if (interval <= 0) {
+                msg = `Your account is at risk of \nbeing erased, please verify your email \nto avoid being erased.`;
+            } else {
+                msg = `Please verify your email within \n ${days} days, ${hours} hours, ${minutes} minutes, \nto avoid this account being erased.`;
+            }
+
+            await Popup_Message("message", msg);
         }
 
-        if(account){
+        return <div id="verification-area-wrapper">
 
-            let date = new Date();
+            <button onClick={this.Send_Verification_Code}>Verify Email</button>
 
-            //Setting the expiration date that's set on the configurations
-            date.setTime(date.getTime() + Configurations.Cookie_Expire_Days * 24 * 60 * 60 * 1000);
-
-            //saving only the email and password
-            let acc_info_auth = {email: account.email, password: account.password, id: account.id};
-
-            //Convert the account_data_copy into cookie strings
-            const cookieStrs = Cookie_Tools.cookie_converter(acc_info_auth, {"expires": date.toUTCString(), "path": "/"});
-
-            //Store the cookie strings into cookie
-            for(let cookieStr of cookieStrs){
-                document.cookie = cookieStr;
-            }
-            
-        } 
+            <div id="verification-message" onClick={open_warning_popup}>
         
-        this.setState({owner_user_account: account});
+                <img src="./static/warning_icon.webp"/>
+
+                <label>Warning</label>
+
+            </div>
+
+        </div>
     }
 
     render(){
 
         let {owner_user_account} = this.state;
 
-        let create_account = isNaN(parseInt(owner_user_account.id));
+        let email_verified = owner_user_account?.email_verified;
 
         return (
             <div id="profile-data-editor">
@@ -282,8 +313,9 @@ class Profile_Data_Editor extends Profile_Info_Data {
 
                 <div id="save-button-wrapper">
 
-                    {create_account ? <button onClick={this.Create_Account}>Create_Account</button> 
-                                    : <button onClick={this.Save_Changes}>Save</button>}
+                    <button onClick={this.Save_Changes}>Save</button>
+                    
+                    {!email_verified ? this.Generate_Verification_Button() : ""}
                     
                 </div>   
 

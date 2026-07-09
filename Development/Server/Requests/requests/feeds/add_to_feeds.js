@@ -1,4 +1,4 @@
-let request = function(){
+let request = function(sql, s3, PutObjectCommand){
 
     this.req_path = "/add_to_feeds";
     this.req_type = "post";
@@ -6,16 +6,18 @@ let request = function(){
 
     this.req = async (req, res)=>{
 
-        let {user_id, target_id, target_type, created_on, result} = req.body;
+        let {user_id, target_id, target_id_type, created_on, result} = req.body;
 
+        
         let values = [
             user_id,
             target_id,
-            target_type,
+            target_id_type,
+            target_id,
             created_on
         ];
 
-        let query = `insert into Feeds(user_id, target_id, target_type, created_on) values(?,?,?,?)`;
+        let query = `insert into Feeds(user_id, ${target_id_type}, target_id_type, target_id, created_on) values(?,?,?,?,?)`;
 
         try {
 

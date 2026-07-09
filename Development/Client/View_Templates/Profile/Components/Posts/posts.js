@@ -121,8 +121,11 @@ class Posts extends Component {
         
         let {get_posts} = Request_URLs;
 
+        let end_year = month === 12 ? year + 1 : year;
+        let end_month = month === 12 ? 1 : month + 1;
+
         let start = new Date(`${year}-${month}-1`).getTime();
-        let end = new Date(`${year}-${month}-${last_day_of_month}`).getTime();
+        let end = new Date(`${end_year}-${end_month}-1`).getTime();
         
         let body ={
             user_id: id,
@@ -181,10 +184,10 @@ class Posts extends Component {
 
         for(let reaction of reactions){
 
-            let {target_id} = reaction;
+            let {post_id} = reaction;
 
             //Push in each reaction to each object by mapping to the key
-            dictionary[target_id].reactions.push(reaction);
+            dictionary[post_id].reactions.push(reaction);
 
         }
 
@@ -264,7 +267,7 @@ class Posts extends Component {
                 
                 <div id="post-label">
 
-                    <img src="./static/post_icon.png"/>
+                    <img src="./static/post_icon.webp"/>
 
                     <label>Posts</label>
                     

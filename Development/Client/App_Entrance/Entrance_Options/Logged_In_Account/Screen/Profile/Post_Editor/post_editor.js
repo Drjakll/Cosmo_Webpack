@@ -113,7 +113,7 @@ class Post_Editor extends Posts {
 
             let seconds_left = Math.floor((24 * 60 * 60 * 1000 - time_diff) % (60 * 1000) / 1000);
 
-            await Popup_Msg('message',`You can create your next post in ${hours_left} hours, ${minutes_left} minutes, and ${seconds_left} seconds.`);
+            await Popup_Msg('message',`You can create your next post in \n${hours_left} hours, ${minutes_left} minutes, and ${seconds_left} seconds.`);
             
             return;
         }
@@ -139,7 +139,7 @@ class Post_Editor extends Posts {
                     id="create-new-post-button" 
                     onClick={this.Go_To_Create_Post}>
 
-                    <div id="new-post-icon" className="post-icon" style={{backgroundImage: `url(./static/add_post_icon.png)`}}></div>
+                    <div id="new-post-icon" className="post-icon" style={{backgroundImage: `url(./static/add_post_icon.webp)`}}></div>
 
                     <label>New Post</label>
 
@@ -147,7 +147,7 @@ class Post_Editor extends Posts {
 
                 <div className="post-button" id="edit-post-button" onClick={this.Go_To_Editor}>
 
-                    <div id="edit-post-icon" className="post-icon" style={{backgroundImage: `url(./static/edit_post_icon.png)`}}></div>
+                    <div id="edit-post-icon" className="post-icon" style={{backgroundImage: `url(./static/edit_post_icon.webp)`}}></div>
 
                     Edit Post
 

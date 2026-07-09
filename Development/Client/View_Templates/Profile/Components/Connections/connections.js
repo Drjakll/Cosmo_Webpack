@@ -3,7 +3,7 @@ import Context  from '@context/context.js';
 import Follow_List from './Follow_List/follow_list.js';
 import Popup_Msg from '@popup_template/Popup_Message/popup_message.js';
 import {Get_Follows, Queue_Set_State, Refresh} from '@universal_components/Account_Functions/get_follows.js';
-import { io } from 'socket.io-client';
+import init_websocket from '@root/Utilities/init_websocket.js';
 import './connections.less';
 
 class Connections extends Component {
@@ -27,6 +27,11 @@ class Connections extends Component {
             followers: [],
             follow_req_status: null
         };
+    }
+
+    componentWillUnmount(){
+        
+        this.socket?.disconnect();
     }
 
     async componentDidMount(){
@@ -59,7 +64,7 @@ class Connections extends Component {
 
     Setup_Socket = () =>{
 
-        this.socket = io('/global_events');
+        this.socket = init_websocket('/global_events', this.Setup_Socket);
 
     }
 
@@ -106,10 +111,10 @@ class Connections extends Component {
         await this.Refresh_List(false, owner_user_account.id !== visitor_user_account.id);
 
         //Refresh the following account's followers list
-        this.socket.emit("report_update_followers", {following_acc: owner_user_account});
+        this.socket?.emit("report_update_followers", {following_acc: owner_user_account});
 
         //Update the follower's account on following list
-        this.socket.emit("report_update_followings", {follower_acc: visitor_user_account});
+        this.socket?.emit("report_update_followings", {follower_acc: visitor_user_account});
 
         await this.Update_Follow_Request_Status();
         
@@ -195,7 +200,7 @@ class Connections extends Component {
                     }}
                 > 
                 
-                    <div id="follow-icon" style={{backgroundImage: `url(./static/followers_icon.png)`}}></div>
+                    <div id="follow-icon" style={{backgroundImage: `url(./static/followers_icon.webp)`}}></div>
 
                     <label>{followers?.length} Followers</label>
 
@@ -210,7 +215,7 @@ class Connections extends Component {
                     }}
                 >
                         
-                    <div id="follow-icon" style={{backgroundImage: `url(./static/following_icon.png)`}}></div>
+                    <div id="follow-icon" style={{backgroundImage: `url(./static/following_icon.webp)`}}></div>
 
                     <label>{followings?.length} Following</label>
                         

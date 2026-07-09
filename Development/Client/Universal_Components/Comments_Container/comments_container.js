@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import Context from '@context/context.js';
 import Comment_Input  from './Comment_Input/comment_input.js';
 import Comment_Container from './Comment_Container/comment_container.js';
-import { io } from 'socket.io-client';
+import init_websocket from '@root/Utilities/init_websocket.js';
 import './comments_container.less';
 
 class Comments_Container extends Component {
@@ -48,6 +48,8 @@ class Comments_Container extends Component {
 
     componentWillUnmount(){
 
+        this.socket?.disconnect();
+
     }
 
     async componentDidMount(){
@@ -73,21 +75,21 @@ class Comments_Container extends Component {
 
     Connect_IO = ()=>{
 
-        this.socket = io('/comment_room');
+        this.socket = init_websocket('/comment_room', this.Connect_IO);
 
-        this.socket.on('connect', ()=>{
+        this.socket?.on('connect', ()=>{
 
-            let {target_id, target_type, reply_to_id} = this.props;
+            let {target_id, target_id_type, reply_to_id} = this.props;
 
-            let room_name = `${target_type}_${target_id}_${reply_to_id ?? 0}`;
+            let room_name = `${target_id_type}_${target_id}_${reply_to_id ?? 0}`;
 
-            this.socket.emit('join_comment_room', {room_name});
+            this.socket?.emit('join_comment_room', {room_name});
 
         });
 
-        this.socket.on('reload_a_new_comment', this.Refresh_For_A_New_Comment);
-        this.socket.on('reload_all_comments_from_child', this.Refresh_Current_Comments);
-        this.socket.on('reload_all_comments_from_self', this.Refresh_Current_Comments);
+        this.socket?.on('reload_a_new_comment', this.Refresh_For_A_New_Comment);
+        this.socket?.on('reload_all_comments_from_child', this.Refresh_Current_Comments);
+        this.socket?.on('reload_all_comments_from_self', this.Refresh_Current_Comments);
     }
 
     Refresh_For_A_New_Comment = async () => {
@@ -153,9 +155,9 @@ class Comments_Container extends Component {
 
         for(let emo of emojis){
 
-            let {target_id} = emo;
+            let {comment_id} = emo;
 
-            comments_dictionary[target_id].reactions.push(emo);
+            comments_dictionary[comment_id].reactions.push(emo);
 
         }
 
@@ -186,13 +188,13 @@ class Comments_Container extends Component {
 
         }, 1000)
         
-        let {target_id, target_type, reply_to_id} = this.props;
+        let {target_id, target_id_type, reply_to_id} = this.props;
 
         let {get_comments} = this.context.Request_URLs;
 
         let body = {
             target_id,
-            target_type,
+            target_id_type,
             offset_timestamp,
             greater_or_less,
             asc_desc,
@@ -242,11 +244,11 @@ class Comments_Container extends Component {
 
     Signal_To_Refresh_For_New_Comments = ()=>{
 
-        let {target_id, target_type, reply_to_id} = this.props;
+        let {target_id, target_id_type, reply_to_id} = this.props;
 
-        let room_name = `${target_type}_${target_id}_${reply_to_id ?? 0}`;
+        let room_name = `${target_id_type}_${target_id}_${reply_to_id ?? 0}`;
 
-        this.socket.emit('signal_reload_get_new_comment', {room_name});
+        this.socket?.emit('signal_reload_get_new_comment', {room_name});
 
         this.Signal_Refresh_Parent_Comments();
 
@@ -254,11 +256,11 @@ class Comments_Container extends Component {
 
     Signal_Refresh_This_Section_Comments = () => {
 
-        let {target_id, target_type, reply_to_id} = this.props;
+        let {target_id, target_id_type, reply_to_id} = this.props;
 
-        let room_name = `${target_type}_${target_id}_${reply_to_id ?? 0}`;
+        let room_name = `${target_id_type}_${target_id}_${reply_to_id ?? 0}`;
 
-        this.socket.emit('signal_reload_self_comments', {room_name});
+        this.socket?.emit('signal_reload_self_comments', {room_name});
 
     }
 
@@ -270,7 +272,7 @@ class Comments_Container extends Component {
             return;
         }
 
-        this.socket.emit('signal_reload_parent_comments', {parent_room_name});
+        this.socket?.emit('signal_reload_parent_comments', {parent_room_name});
 
     }
 
@@ -360,7 +362,7 @@ class Comments_Container extends Component {
 
         let {comments, visitor_user_account, owner_user_account, selected_comments} = this.state;
 
-        let {back_previous, show_replies, target_id, target_type, reply_to_id, comments_count} = this.props;
+        let {back_previous, show_replies, target_id, target_id_type, reply_to_id, comments_count} = this.props;
 
         //Make sure the children uses the first comment_container.js back_revious and show_replies
         back_previous = back_previous || this.Back_Previous;
@@ -391,7 +393,7 @@ class Comments_Container extends Component {
                                 back_previous={back_previous} 
                                 show_replies={show_replies}
                                 target_id={target_id}
-                                target_type={target_type}
+                                target_id_type={target_id_type}
                                 reply_to_id={reply_to_id}
                                 signal_refresh_this_section_comments={this.Signal_Refresh_This_Section_Comments}
                                 signal_refresh_parent_comments={this.Signal_Refresh_Parent_Comments}
@@ -414,7 +416,7 @@ class Comments_Container extends Component {
                     visitor_user_account={visitor_user_account}
                     Signal_To_Refresh_For_New_Comments={this.Signal_To_Refresh_For_New_Comments}
                     target_id={target_id}
-                    target_type={target_type}
+                    target_id_type={target_id_type}
                     reply_to_id={reply_to_id}
                 />
 

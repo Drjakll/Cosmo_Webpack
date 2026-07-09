@@ -1,4 +1,4 @@
-let request = function(){
+let request = function(sql, s3, PutObjectCommand){
     
     this.req_path = "/get_user_account_data/:id";
     this.req_type = "get";
@@ -22,9 +22,9 @@ let request = function(){
                             pl.link as profile_picture_link,
                             pl.id as profile_picture_id,
 
-                            json_array()  as User_Hobbies,
-                            json_array()  as User_Locations,
-                            json_array()  as User_Professions,
+                            json_array() as User_Hobbies,
+                            json_array() as User_Locations,
+                            json_array() as User_Professions,
                             json_array() as User_Schools
 
                         from 
@@ -33,7 +33,7 @@ let request = function(){
                         left join
                             Photo_Links as pl
                         on
-                            pl.target_id = ac.id and is_a_cover = true and pl.target_type = 'profile'
+                            pl.profile_id = ac.id and is_a_cover = true
 
                         where 
                             ac.id = ?

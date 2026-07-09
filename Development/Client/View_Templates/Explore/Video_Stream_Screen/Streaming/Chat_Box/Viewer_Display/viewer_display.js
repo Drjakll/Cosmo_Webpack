@@ -4,6 +4,8 @@ import './viewer_display.less';
 
 class Viewer_Display extends Component {
 
+    Finished_Setup_Socket = false;
+
     constructor(props){
 
         super(props);
@@ -14,8 +16,8 @@ class Viewer_Display extends Component {
 
         this.state = {
             my_account_data,
-            my_room_tag: my_room_tag,
-            socket: socket,
+            my_room_tag,
+            socket,
             participants: {}
         };
     }
@@ -27,15 +29,15 @@ class Viewer_Display extends Component {
         this.Setup_Socket_Event(socket);
     }
 
-    componentDidUpdate(prevProps, prevState){
+    async componentDidUpdate(prevProps, prevState){
 
         if(this.props === prevProps){
             return;
         }
 
-        this.setState(this.props);
+        let {my_account_data, my_room_tag, socket} = this.props;
 
-        let {my_account_data, my_room_tag} = this.props;
+        !this.state.socket && this.Setup_Socket_Event(socket);
 
         let {participants} = this.state;
 
@@ -45,13 +47,18 @@ class Viewer_Display extends Component {
 
         participants[my_room_tag.id] = {account_data: my_account_data, room_tag: my_room_tag};
 
-        this.setState({participants: participants});
+        await this.setState({participants, socket, my_room_tag, my_account_data});
     }
 
     Setup_Socket_Event = (socket)=>{
 
+        if(this.Finished_Setup_Socket === true || !socket){
+            return;
+        }
 
-        socket?.on('new_viewer_enter_chat', ({account_data, room_tag})=>{
+        this.Finished_Setup_Socket = true;
+
+        socket?.on('signal_everyone_new_viewer', ({account_data, room_tag})=>{
 
             let {participants, my_room_tag, my_account_data} = this.state;
 
@@ -59,7 +66,8 @@ class Viewer_Display extends Component {
 
             this.setState({participants: participants});
 
-            socket.emit('acknowledge_new_viewer', {to_room_tag: room_tag, 
+            socket.emit('acknowledge_new_viewer', {
+                to_room_tag: room_tag, 
                 from_tag: my_room_tag, 
                 from_account: my_account_data
             });
@@ -115,6 +123,10 @@ class Viewer_Display extends Component {
             this.setState({participants: participants});
 
         });
+
+        let {my_account_data: account_data, my_room_tag: room_tag} = this.props;
+
+        socket?.emit('signal_new_viewer_join_chat', {account_data, room_tag});
     }
 
     Request_To_Go_Live_Answered = (tag) => {

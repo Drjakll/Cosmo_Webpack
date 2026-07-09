@@ -74,7 +74,7 @@ class Albums extends Component {
 
         let body = {
             target_id: id,
-            target_type: "album"
+            target_id_type: "album_id"
         }
         
         let res = await fetch(get_photo_links, {
@@ -118,10 +118,10 @@ class Albums extends Component {
 
         for(let reaction of reactions){
 
-            let {target_id} = reaction;
+            let {photo_id} = reaction;
 
-            //Add each reaction according mapped to the target_id
-            dictionary[target_id].reactions.push(reaction);
+            //Add each reaction according mapped to the photo_id
+            dictionary[photo_id].reactions.push(reaction);
 
         }
 
@@ -172,7 +172,7 @@ class Albums extends Component {
 
                     <div id="albums-label">
 
-                        <img src="./static/album_icon.png"/>
+                        <img src="./static/album_icon.webp"/>
                         
                         <label>Albums</label>
 

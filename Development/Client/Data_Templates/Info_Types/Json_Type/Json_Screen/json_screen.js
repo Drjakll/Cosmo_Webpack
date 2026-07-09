@@ -1,5 +1,8 @@
 import React, {Component} from 'react';
 import Context from '@context/context.js';
+import Text from '@data_templates/Info_Types/Text_Type/text_type.js';
+import Date from '@data_templates/Info_Types/Date_Type/date_type.js';
+import Choice from '@data_templates/Info_Types/Choice_Type/choice_type.js';
 import './json_screen.less';
 
 class Json_Popup extends Component {
@@ -13,10 +16,7 @@ class Json_Popup extends Component {
 
     Editor = null
 
-    Input_Data_Types = {}
-
     Update_Items = null
-
 
     constructor(props){
 
@@ -34,9 +34,47 @@ class Json_Popup extends Component {
             owner_user_account,
             options,
             popup: false,
-            background,
-            json_obj: {} //This will be used for adding item using the editor
+            background
         };
+    }
+
+    Input_Data_Types = {
+        "string": ({data_name, label, value})=>{
+
+            let {owner_user_account} = this.state;
+
+            return <Text
+                        value={value} 
+                        owner_user_account={owner_user_account} 
+                        column_name={data_name} 
+                        label={label} 
+                    />
+
+        },
+        "date": ({data_name, label, value}) => {
+
+            let {owner_user_account} = this.state;
+
+            return <Date
+                        value={value} 
+                        owner_user_account={owner_user_account} 
+                        column_name={data_name} 
+                        label={label} 
+                    />
+
+        },
+        "enum": ({data_name, label, choices, value}) => {
+
+            let {owner_user_account} = this.state;
+
+            return <Choice
+                        value={value} 
+                        owner_user_account={owner_user_account} 
+                        column_name={data_name} 
+                        label={label} 
+                        options={choices} 
+                    />
+        }
     }
 
     async componentDidMount(){

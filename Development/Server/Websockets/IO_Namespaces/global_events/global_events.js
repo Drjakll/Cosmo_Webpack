@@ -2,7 +2,8 @@ import fs from 'fs';
 
 let Wrapper = function (){
 
-    this.online_users = {};
+    this.online_users = {}; //User's id mapped to their account
+    this.online_users_socket = {}; //User's socket id mapped to their account
     
     (async () => {
         
@@ -39,17 +40,25 @@ let Wrapper = function (){
         
         for(let i in this.events){
             events[i] = new this.events[i]();
-        
+
             events[i].socket = socket;
             events[i].root_io = this.root_io;
             events[i].online_users = this.online_users;
+            events[i].online_users_socket = this.online_users_socket;
         }
-        
-        socket.on('report_online', events.report_online.event);
-        socket.on('who_is_online', events.who_is_online.event);
-        socket.on('report_offline', events.report_offline.event);
-        socket.on('report_update_followers', events.report_update_followers.event);
-        socket.on('report_update_followings', events.report_update_followings.event);
+
+        //console.log("connected: global_events", socket.id);
+
+        socket.on("error", (err) => {
+            //console.log("socket error: global_events", err);
+        });
+
+        for(let key in events){
+
+            socket.on(key, events[key].event);
+
+        }
+
     };
 };
 

@@ -94,7 +94,7 @@ class User_Thumbnail extends Component {
 
         let {aws_s3_url} = this.context.Request_URLs;
 
-        let url = profile_picture_link ? `${aws_s3_url}${profile_picture_link}` : './static/pp_placeholder.png';
+        let url = profile_picture_link ? `${aws_s3_url}${profile_picture_link}` : './static/pp_placeholder.webp';
 
         return (
                 <div id="user-thumbnail">

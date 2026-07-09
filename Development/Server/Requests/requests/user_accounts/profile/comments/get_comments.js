@@ -1,4 +1,4 @@
-let request = function() {
+let request = function(sql, s3, PutObjectCommand) {
 
     this.req_path = "/get_comments";
     this.req_type = "post";
@@ -10,18 +10,16 @@ let request = function() {
     
     this.req = async (req, res, next) => { 
         
-        let {target_id, target_type, offset_timestamp, limit, greater_or_less, asc_desc, reply_to_ids, emojis, comments} = req.body;
+        let {target_id, target_id_type, offset_timestamp, limit, greater_or_less, asc_desc, reply_to_ids, emojis, comments} = req.body;
 
         let data = [
             target_id,
-            target_type,
             offset_timestamp
         ];
 
         if(reply_to_ids){
             //The reason why it's getting reply_to_ids is because we need to find out how many replies each comment has.
             //It should be the second time the request has called this function.
-            reply_to_ids = reply_to_ids.split(","); 
             data.push(reply_to_ids);
         }
 
@@ -45,11 +43,10 @@ let request = function() {
                     left join
                         Photo_Links as pl
                     on
-                        pl.target_id = ua.id and pl.target_type = 'profile' and pl.is_a_cover = 1
+                        pl.profile_id = ua.id and pl.is_a_cover = 1
 
                     where 
-                        c.target_id = ? and
-                        c.target_type = ? and
+                        c.${target_id_type} = ? and
                         c.time_stamp ${greater_or_less} ?
                         ${reply_to_ids ? "and c.reply_to_id  in (?)" : "and c.reply_to_id is null"}
                     order by time_stamp ${asc_desc}

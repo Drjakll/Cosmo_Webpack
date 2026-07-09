@@ -1,12 +1,8 @@
-function request() {
+function request(sql, s3, PutObjectCommand) {
 
     this.req_path = "/login";
     this.req_type = "post";
-    this.callbacks = ["login",
-                        "get_user_table_data", 
-                        "get_user_table_data", 
-                        "get_user_table_data", 
-                        "get_user_table_data"]
+    this.callbacks = ["login"];
     
     this.req = async (req, res, next) => {
         
@@ -28,11 +24,10 @@ function request() {
                         ua.mood_today,
                         ua.last_mood_updated,
                         ua.personal_traits,
+                        ua.email_verified,
+                        ua.verification_code,
                         coalesce(pl.link, '')  as profile_picture_link,
                         pl.id as profile_picture_id,
-
-                        coalesce(fc.following_ids, json_array()) as following_ids,
-                        coalesce(frc.follower_ids, json_array()) as follower_ids,
 
                         json_array() as User_Hobbies,
                         json_array() as User_Locations,
@@ -45,35 +40,7 @@ function request() {
                     left join 
                         Photo_Links as pl
                     on 
-                        pl.target_id = ua.id and pl.target_type = 'profile' and pl.is_a_cover = 1
-
-                    left join
-                        (select
-                            follower_id,
-                            json_arrayagg(followed_id) as following_ids
-                        from
-                            Connections
-                        where
-                            status = 'accepted'
-                        group by
-                            follower_id
-                        ) as fc
-                    on
-                        fc.follower_id = ua.id
-
-                    left join
-                        (select
-                            followed_id,
-                            json_arrayagg(follower_id) as follower_ids
-                        from
-                            Connections
-                        where
-                            status = 'accepted'
-                        group by
-                            followed_id
-                        ) as frc
-                    on
-                        frc.followed_id = ua.id
+                        pl.profile_id = ua.id and pl.is_a_cover = 1
 
                     where 
                         ua.email = ? and ua.password = ?
@@ -84,9 +51,11 @@ function request() {
 
             if(!result.length){
                 return res.json({message: "No account matches with the email and password", acc_info: null, status: 0b10});
+            } else {
+                return res.json({message: "Successfully retrieved account information", acc_info: result[0], status: 0b11})
             }
 
-
+            /*
             req.body.acc_info = result[0];
             req.body.table_names = ["User_Hobbies", "User_Locations", "User_Schools", "User_Professions"];
             req.body.at_index = 0;
@@ -94,7 +63,7 @@ function request() {
             req.body.user_id = result[0].id;
 
             //next should be get_user_data_table.js
-            next();
+            next();*/
 
         } catch(err){
 

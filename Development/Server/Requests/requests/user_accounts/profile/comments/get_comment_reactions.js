@@ -1,4 +1,4 @@
-let request = function() {
+let request = function(sql, s3, PutObjectCommand) {
 
     this.req_path = "/get_comment_reactions";
     this.req_type = "post";
@@ -20,37 +20,39 @@ let request = function() {
         if(!data.length){
             req.body.emojis = [];
             req.body.reply_to_ids = "";
+
+            //Will call get_comments.js
             next();
             return;
         }
 
         let query = `select 
-                        cr.*,
+                        r.*,
                         ua.first_name as first_name,
                         ua.last_name as last_name,
                         coalesce(pl.link, "") as profile_picture_link
                     from 
-                        Comment_Reactions as cr
+                        Reactions as r
 
                     join
                         User_Accounts as ua
                     on
-                        cr.user_id = ua.id
+                        r.user_id = ua.id
 
                     left join
                         Photo_Links as pl
                     on
-                        pl.target_id = ua.id and pl.target_type = 'profile' and pl.is_a_cover = 1
+                        pl.profile_id = ua.id and pl.is_a_cover = 1
 
                     where 
-                        cr.target_id in (?)
+                        r.comment_id in (?)
                     `;
         try {
 
             let [results] = await this.sql.query(query, [data]);
 
             req.body.emojis = results;
-            req.body.reply_to_ids = data.join(",");
+            req.body.reply_to_ids = data;
 
             //Next move onto getting replies, which will call get_comments.js again
             next();

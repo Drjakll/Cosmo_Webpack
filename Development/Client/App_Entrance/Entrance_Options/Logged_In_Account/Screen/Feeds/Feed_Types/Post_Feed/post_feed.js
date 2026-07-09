@@ -84,10 +84,10 @@ class Post_News extends Component {
 
         for(let reaction of reactions){
 
-            let {target_id} = reaction;
+            let {post_id} = reaction;
 
             //Push in each reaction to each object by mapping to the key
-            dictionary[target_id].reactions.push(reaction);
+            dictionary[post_id].reactions.push(reaction);
 
         }
 
@@ -99,12 +99,14 @@ class Post_News extends Component {
 
         let {Single_Post} = this.context;
 
-        let {change_display} = this.props;
+        let {change_display, header} = this.props;
 
         let {visitor_user_account, from_account, post} = this.state;
 
         return (
-            <div id="post-feed">
+            <div id="post-feed" className="general-feed">
+
+                {header}
 
                 <div id="the-post-contents">
 

@@ -13,7 +13,7 @@ class Choice_Type extends Component {
         this.Update_Value = this.Update_Value || update_callback;
         
         this.state = {
-            value,
+            value : value ?? "",
             label,
             column_name,
             owner_user_account
@@ -26,7 +26,9 @@ class Choice_Type extends Component {
             return;
         }
         
-        //this.setState(this.props);
+        let {value, label, column_name, owner_user_account} = this.props;
+
+        this.setState({ value, label, column_name, owner_user_account });
     }
 
     Generate_Options = null
@@ -44,7 +46,7 @@ class Choice_Type extends Component {
 
                     <div id="value">
 
-                        {value !== "" ? value : `Select ${label}`}
+                        {value ? value : `Select ${label}`}
 
                     </div>
 

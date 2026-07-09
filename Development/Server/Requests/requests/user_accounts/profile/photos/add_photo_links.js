@@ -1,4 +1,4 @@
-let request = function() {
+let request = function(sql, s3, PutObjectCommand) {
     
     this.req_path = "/add_photo_links";
     this.req_type = "post";

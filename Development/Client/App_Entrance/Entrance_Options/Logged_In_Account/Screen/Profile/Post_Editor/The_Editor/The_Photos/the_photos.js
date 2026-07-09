@@ -4,7 +4,9 @@ import './the_photos.less';
 
 class The_Photos extends Component {
 
-    fileRef = createRef()
+    fileRef = createRef();
+
+    upload_in_progress = false; 
 
     constructor(props) {
 
@@ -40,6 +42,11 @@ class The_Photos extends Component {
 
     Upload_Photos = async (e) => {
 
+        if(this.upload_in_progress){
+            Popup_Msg("message","Upload in progress, \nplease wait for it to finish \nbefore uploading more photos.");
+            return;
+        }
+
         let files = this.fileRef.current.files;
 
         if (files.length === 0) {
@@ -61,9 +68,13 @@ class The_Photos extends Component {
 
         let album_name = post_info.created_on;
 
-        await Upload_Files_To_S3(upload_photos, files, { user_id: id, target_type: "post", target_id, album_name });
+        this.upload_in_progress = true;
+
+        await Upload_Files_To_S3(upload_photos, files, { user_id: id, target_id_type: "post_id", target_id, album_name });
 
         this.Get_Post_Photos();
+        
+        this.upload_in_progress = false;
     }
 
     Get_Post_Photos = async () => {
@@ -76,7 +87,7 @@ class The_Photos extends Component {
 
         let body ={
             target_id: post_info.id,
-            target_type: "post"
+            target_id_type: "post_id"
         }
 
         let { get_photo_links } = this.context.Request_URLs;

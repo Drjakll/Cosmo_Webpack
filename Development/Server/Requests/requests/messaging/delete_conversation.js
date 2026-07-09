@@ -1,4 +1,4 @@
-function request() {
+function request(sql, s3, PutObjectCommand) {
 
     this.req_path = "/delete_conversation";
     this.req_type = "post";

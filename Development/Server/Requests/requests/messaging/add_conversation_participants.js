@@ -1,4 +1,4 @@
-function request() {
+function request(sql, s3, PutObjectCommand) {
 
     this.req_path = "/add_conversation_participants";
     this.req_type = "post";

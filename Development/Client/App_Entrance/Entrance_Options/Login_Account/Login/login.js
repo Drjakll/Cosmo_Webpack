@@ -1,4 +1,5 @@
 import React, {Component, createRef} from 'react';
+import Context from '@context/context.js';
 
 
 class Login extends Component {
@@ -10,7 +11,7 @@ class Login extends Component {
         
         super(props);
         
-        Login.contextType = window.Context;
+        Login.contextType = Context;
     }
     
     ChangeScreen = (screen) => {
@@ -75,12 +76,6 @@ class Login extends Component {
         
         return (
                 <div id="login">
-        
-                    <div className="back-button-wrapper">
-
-                        <label onClick={(e)=>{ this.ChangeScreen("Buttons"); }}>Back</label>
-
-                    </div>
 
                     <div className="screen-title-wrapper">
                         

@@ -1,4 +1,4 @@
-let request = function () {
+let request = function (sql, s3, PutObjectCommand) {
 
     this.req_path = "/get_request_status/:from_id/:to_id";
     this.req_type = "get";

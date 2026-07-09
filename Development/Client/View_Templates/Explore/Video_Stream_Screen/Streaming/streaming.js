@@ -2,7 +2,7 @@ import React, {Component, createRef} from 'react';
 import Main_Video from './Main_Video/main_video.js';
 import Sub_Video from './Sub_Video/sub_video.js';
 import Chat_Box from './Chat_Box/chat_box.js';
-import { io } from 'socket.io-client';
+import init_websocket from '@root/Utilities/init_websocket.js';
 import './streaming.less';
 
 class Streaming extends Component {
@@ -40,7 +40,6 @@ class Streaming extends Component {
         this.participants = {};
         this.the_host = null;
         this.my_media_source = null;
-        this.socket = io('/video_streams'); //this.props.stream_socket;
 
         let {owner_user_account, is_host, stream_id} = props;
         
@@ -68,8 +67,8 @@ class Streaming extends Component {
     componentWillUnmount() {
 
         this.Shut_Off_Camera();
-        this.socket.emit('leave_stream', this.my_room_tag);
-        this.socket.disconnect();
+        this.socket?.emit('leave_stream', this.my_room_tag);
+        this.socket?.disconnect();
     }
     
     componentDidUpdate(prevProps, prevState){
@@ -100,6 +99,8 @@ class Streaming extends Component {
 
     Init_Streaming = async ()=>{
 
+        this.socket = init_websocket('/video_streams'); 
+
         this.socket?.on('connect', async ()=>{
 
             if(this.socket?.id){
@@ -124,18 +125,18 @@ class Streaming extends Component {
                     });
                     
 
-                    this.socket.emit('create_stream', this.my_room_tag);
+                    this.socket?.emit('create_stream', this.my_room_tag);
                     
                 } else {
 
-                    this.my_room_tag = this.Create_Room_Tag(this.socket.id, this.state.stream_id);
+                    this.my_room_tag = this.Create_Room_Tag(this.socket?.id, this.state.stream_id);
 
                     this.setState({
                         my_room_tag: this.my_room_tag,
                         socket: this.socket
                     });
                     
-                    this.socket.emit('join_stream', {room_tag: this.my_room_tag, account_data: owner_user_account});
+                    this.socket?.emit('join_stream', {room_tag: this.my_room_tag, account_data: owner_user_account});
                     
                 }
                 
@@ -147,7 +148,7 @@ class Streaming extends Component {
         
         this.Init_Streaming();
         
-        this.socket.on('new_viewer_joined', async (new_viewer_tag) => {
+        this.socket?.on('new_viewer_joined', async (new_viewer_tag) => {
 
             let { id } = new_viewer_tag;
             
@@ -161,7 +162,7 @@ class Streaming extends Component {
             this.New_Offer(this.participants[id]);
         });
 
-        this.socket.on('video_stream_from_user', ({user_room_tag})=>{
+        this.socket?.on('video_stream_from_user', ({user_room_tag})=>{
 
             let {id} = user_room_tag;
 
@@ -174,7 +175,7 @@ class Streaming extends Component {
             this.New_Offer(this.participants[id]);
         });
 
-        this.socket.on('receive_offer', async ({ from, remote_offer }) => {
+        this.socket?.on('receive_offer', async ({ from, remote_offer }) => {
 
             let { id } = from;
 
@@ -193,18 +194,18 @@ class Streaming extends Component {
 
             await peer?.setLocalDescription(answer);
 
-            this.socket.emit('answer_to_offer', { from: this.my_room_tag, to: from, answer: answer });
+            this.socket?.emit('answer_to_offer', { from: this.my_room_tag, to: from, answer: answer });
 
         });
 
-        this.socket.on('stream_full', async({})=>{
+        this.socket?.on('stream_full', async({})=>{
 
             alert("Sorry, this stream is full. The maximum number of viewers has been reached.");
 
             this.props.set_main_screen("Stream_List_Components");
         });
 
-        this.socket.on('receive_answer', async ({ from, answer }) => {
+        this.socket?.on('receive_answer', async ({ from, answer }) => {
 
             let { peer } = this.participants[from.id];
 
@@ -212,7 +213,7 @@ class Streaming extends Component {
 
         });
 
-        this.socket.on('receive_candidate', async ({ from, candidate }) => {
+        this.socket?.on('receive_candidate', async ({ from, candidate }) => {
 
             let { peer } = this.participants[from.id];
 
@@ -220,7 +221,7 @@ class Streaming extends Component {
 
         });
         
-        this.socket.on('receive_answer_to_go_live', async ({answer})=>{
+        this.socket?.on('receive_answer_to_go_live', async ({answer})=>{
             
             if(answer){
                 
@@ -236,7 +237,7 @@ class Streaming extends Component {
 
         });
 
-        this.socket.on('leave_room', ({ tag }) => {
+        this.socket?.on('leave_room', ({ tag }) => {
 
             let { streamer_small_screens } = this.state;
 
@@ -246,7 +247,7 @@ class Streaming extends Component {
 
         });
 
-        this.socket.on('disband_room', ({ msg }) => {
+        this.socket?.on('disband_room', ({ msg }) => {
 
             alert("The host has closed the stream");
 
@@ -256,7 +257,7 @@ class Streaming extends Component {
 
         });
 
-        this.socket.on('stop_streaming', ({from})=>{
+        this.socket?.on('stop_streaming', ({from})=>{
 
             let { streamer_small_screens, my_room_tag} = this.state;
 
@@ -313,7 +314,7 @@ class Streaming extends Component {
         peer.onicecandidate = (event) => {
 
             if (event.candidate) {
-                this.socket.emit('send_candidate', {
+                this.socket?.emit('send_candidate', {
                     to: tag,
                     from: this.my_room_tag,
                     candidate: event.candidate
@@ -384,7 +385,7 @@ class Streaming extends Component {
         await peer.setLocalDescription(offer);
 
 
-        this.socket.emit('offer', {to: tag, from: this.my_room_tag, local_offer: offer});
+        this.socket?.emit('offer', {to: tag, from: this.my_room_tag, local_offer: offer});
             
     }
     
@@ -417,7 +418,7 @@ class Streaming extends Component {
 
     Go_Live_To_All = async () => {
 
-        this.socket.emit('stream_to_all', { user_room_tag: this.my_room_tag});
+        this.socket?.emit('stream_to_all', { user_room_tag: this.my_room_tag});
 
 
         //for (let i in this.participants) {

@@ -125,7 +125,7 @@ class Feeds extends Component {
 
         offset = feeds[feeds.length - 1]?.created_on;
 
-        feeds.push({target_type: "suggestions"});
+        feeds.push({target_id_type: "suggestions"});
 
         await this.setState({feeds, offset});
 
@@ -181,16 +181,14 @@ class Feeds extends Component {
 
                 {feeds?.map((data, index)=>{
 
-                    let {target_type, target_id, created_on, user_id, gender, first_name, last_name, profile_picture_link} = data;
+                    let {target_id_type, target_id, created_on, user_id, gender, first_name, last_name, profile_picture_link} = data;
 
                     let from_account = {first_name, last_name, gender, profile_picture_link, id: user_id};
 
-                    let key = `${target_type}${target_id}`;
+                    let key = `${target_id_type}${target_id}`;
 
-                    return (<div className="feeds-update-section" key={index}>
-
-                        {/*The reason that user_id is undefined is because it's a suggestions feed*/}
-                        {user_id !== undefined ? <div id="feed-account-information">
+                    //The reason that user_id is undefined is because it's a suggestions feed
+                    let header = user_id !== undefined ? <div id="feed-account-information">
 
                             <div id="profile-thumbnail">
 
@@ -210,13 +208,12 @@ class Feeds extends Component {
                                 <div id="time-created">{new Date(created_on).toLocaleString()}</div>
 
                             </div>
-                        </div> : ""}
 
-                        <div id="feed-update-information" key={index}>
+                        </div> : "";
 
-                            {this.Feed_Types[target_type]({feed_id: target_id, from_account})}
+                    return (<div className="feeds-update-section" key={index}>
 
-                        </div>
+                        {this.Feed_Types[target_id_type]({feed_id: target_id, from_account, header})}
 
                     </div>);
 
@@ -270,7 +267,7 @@ class Feeds extends Component {
     }
 
     Feed_Types = {
-        "post": ({feed_id, from_account})=>{
+        "post_id": ({feed_id, from_account, header})=>{
 
             let {owner_user_account} = this.state;
 
@@ -279,9 +276,10 @@ class Feeds extends Component {
                 feed_id={feed_id}
                 change_display={this.Change_Display}
                 from_account={from_account}
+                header={header}
             />;
         },
-        "album_updates": ({feed_id, from_account})=>{
+        "album_updates_id": ({feed_id, from_account, header})=>{
             
             let {owner_user_account} = this.state;
 
@@ -290,6 +288,7 @@ class Feeds extends Component {
                 feed_id={feed_id}
                 change_display={this.Change_Display}
                 from_account={from_account}
+                header={header}
             />;
         },
         "suggestions": ({})=>{

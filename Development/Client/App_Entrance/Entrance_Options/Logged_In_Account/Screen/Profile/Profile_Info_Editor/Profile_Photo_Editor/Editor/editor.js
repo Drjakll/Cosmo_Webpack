@@ -1,7 +1,10 @@
 import React, {Component, createRef} from 'react';
+import Popup_Msg from '@popup_template/Popup_Message/popup_message.js';
 import './editor.less';
 
 class Editor extends Component {
+
+    upload_in_progress = false;
     
     constructor(props){
         
@@ -40,11 +43,11 @@ class Editor extends Component {
         
         let {id: target_id} = this.state.owner_user_account;
 
-        let target_type = "profile";
+        let target_id_type = "profile_id";
         
         let data = await (await fetch(get_photo_links, {
             method: "POST",
-            body: JSON.stringify({target_id, target_type}),
+            body: JSON.stringify({target_id, target_id_type}),
             headers: {
                 'Content-Type': 'application/json'
             }
@@ -94,7 +97,7 @@ class Editor extends Component {
             user_id: id,
             target_id: id,
             album_name: "Profile_Picture",
-            target_type: "profile"
+            target_id_type: "profile_id"
         }
 
         await Upload_Files_To_S3(upload_photos, files, body);
@@ -173,9 +176,18 @@ class Editor extends Component {
 
                         <button onClick={async (e) => {
 
+                            if(this.upload_in_progress){
+                                Popup_Msg("message","Upload in progress, \nplease wait for it to finish \nbefore uploading more photos.");
+                                return;
+                            }
+
+                            this.upload_in_progress = true;
+
                             await this.Upload_Profile_Pictures(fileRef.current.files);
 
                             fileRef.current.value = "";
+
+                            this.upload_in_progress = false;
 
                         }}>Upload</button>
 

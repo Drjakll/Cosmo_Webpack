@@ -47,6 +47,7 @@ class Album_Cover extends Component {
 
         let { album_cover_link } = album_info ?? {};
 
+        album_cover_link = album_cover_link?.replace(/\?/g, "%3F")
         
         //Make sure that it doesn't unneccessary make request to aws s3 if cover_image_link isn't available
         aws_s3_url = album_cover_link ? aws_s3_url : "";
@@ -81,11 +82,11 @@ class Album_Cover extends Component {
                         
                     </div>
                     
-                    <div id="album-title-wrapper" >   
+                    <pre id="album-title-wrapper" >   
                     
-                        ({album_info?.photo_count}) {album_info?.title} 
+                        <b>{album_info?.title}</b> [{album_info?.photo_count}]
                     
-                    </div>
+                    </pre>
                     
                 </div>
             );

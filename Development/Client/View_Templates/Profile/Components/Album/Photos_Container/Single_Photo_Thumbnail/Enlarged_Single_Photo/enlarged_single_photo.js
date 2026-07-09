@@ -3,7 +3,6 @@ import Comments_Container from '@comments_container/comments_container.js';
 import Context from '@context/context.js';
 import General_Reaction_Container from '@universal_components/General_Reactions_Container/general_reactions_container.js';
 import './enlarged_single_photo.less';
-import { io } from 'socket.io-client';
 
 class Enlarged_Single_Photo extends Component {
 
@@ -28,30 +27,11 @@ class Enlarged_Single_Photo extends Component {
         };
     }
 
-    componentDidMount(){
+    async componentDidMount(){
 
-        this.socket = io('/reaction_room');
-
-        this.socket.on('connect', ()=>{
-
-            let {id} = this.state.photo_info;
-
-            let room_name = `photo_${id}`;
-
-            this.socket.emit('join_reaction_room', {room_name});
-
-        });
-
-        this.socket.on('refresh_reactions', this.Refresh_Reactions);
+        await this.Refresh_Reactions();
 
     }    
-    
-    Signal_All_Refresh_Reactions = ()=>{
-
-        let {id} = this.state.photo_info;
-
-        this.socket.emit('signal_all_refresh_reactions', {room_name: `photo_${id}`});
-    }
     
     componentDidUpdate(prevProps, prevState){
         
@@ -60,6 +40,7 @@ class Enlarged_Single_Photo extends Component {
         }
         
         this.setState(this.props);
+        
     }
 
     Refresh_Reactions = async ()=>{
@@ -93,7 +74,7 @@ class Enlarged_Single_Photo extends Component {
 
         let {photo_info, visitor_user_account, owner_user_account} = this.state;
 
-        let {Comments, Signal_All_Refresh_Reactions} = this;
+        let {Comments} = this;
         
         return <div id="enlarged-single-photo-wrapper">
 
@@ -105,7 +86,7 @@ class Enlarged_Single_Photo extends Component {
 
                     <div id="enlarged-photo"
                         style={{
-                            backgroundImage: `url('${this.state.aws_s3_url}${photo_info.link}')`
+                            backgroundImage: `url('${this.state.aws_s3_url}${photo_info.link.replace(/\?/g, "%3F")}')`
                         }}
                     >
 
@@ -118,8 +99,8 @@ class Enlarged_Single_Photo extends Component {
                             owner_user_account={owner_user_account} 
                             reactions={photo_info.reactions} 
                             target_id={photo_info.id}
-                            target_type={"photo"}
-                            refresh_parent={Signal_All_Refresh_Reactions}
+                            target_id_type={"photo_id"}
+                            refresh_parent={null}
                         />
 
                     </div>
@@ -131,7 +112,7 @@ class Enlarged_Single_Photo extends Component {
                     <Comments
                         reply_to_id={null}
                         target_id={photo_info.id}
-                        target_type={"photo"}
+                        target_id_type={"photo_id"}
                         visitor_user_account={this.state.visitor_user_account}
                         owner_user_account={this.state.owner_user_account}
                         parent_room_name={null}

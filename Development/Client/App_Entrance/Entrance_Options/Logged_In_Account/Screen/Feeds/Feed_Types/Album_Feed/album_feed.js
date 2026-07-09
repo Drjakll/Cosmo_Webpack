@@ -79,7 +79,7 @@ class Album_Feed extends Component {
 
         let body = {
             target_id: id,
-            target_type: "album"
+            target_id_type: "album_id"
         }
         
         let res = await fetch(get_photo_links, {
@@ -123,10 +123,10 @@ class Album_Feed extends Component {
 
         for(let reaction of reactions){
 
-            let {target_id} = reaction;
+            let {photo_id} = reaction;
 
             //Add each reaction according mapped to the target_id
-            dictionary[target_id].reactions.push(reaction);
+            dictionary[photo_id].reactions.push(reaction);
 
         }
 
@@ -227,13 +227,18 @@ class Album_Feed extends Component {
 
     render(){
 
+        let {header} = this.props;
+
         let {from_account, new_photos_added, album_info} = this.state;
 
         let {title} = album_info;
 
         let {first_name, last_name, gender} = from_account;
 
-        return (<div id="album-feed">
+        //If no user deleted all new photos added, then display nothing
+        return (!new_photos_added.length ? <></> : <div id="album-feed" className="general-feed">
+
+                {header}
 
                 <div id="album-feed-detail-description">
 

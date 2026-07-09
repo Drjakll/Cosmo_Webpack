@@ -9,6 +9,8 @@ import './json_popup_editor.less';
 
 class Json_Popup_Editor extends Json_Screen {
 
+    changes = {}; //This will be used to store the changes made by the user, which will be sent to the server when the user clicks the save button
+
     constructor(props) {
 
         super(props);
@@ -22,11 +24,8 @@ class Json_Popup_Editor extends Json_Screen {
 
             let onChange = ({column_name, value})=>{
 
-                let {json_obj} = this.state;
+                this.changes[column_name] = value;
 
-                json_obj[column_name] = value;
-
-                this.setState({json_obj});
             };
 
             let {owner_user_account} = this.state;
@@ -48,11 +47,7 @@ class Json_Popup_Editor extends Json_Screen {
 
                 let date_str = `${selected_year}-${selected_month}-${date}`;
 
-                let {json_obj} = this.state;
-
-                json_obj[column_name] = date_str;
-
-                this.setState({json_obj});
+                this.changes[column_name] = date_str;
 
             };
 
@@ -71,11 +66,8 @@ class Json_Popup_Editor extends Json_Screen {
 
             let onChange = ({column_name, value})=>{
 
-                let {json_obj} = this.state;
+                this.changes[column_name] = value;
 
-                json_obj[column_name] = value;
-
-                this.setState({json_obj});  
             };
 
             let {owner_user_account} = this.state;
@@ -123,14 +115,14 @@ class Json_Popup_Editor extends Json_Screen {
 
     Add_New_Item = async ()=>{
         
-        let {json_obj, owner_user_account, table_name, value} = this.state;
+        let {owner_user_account, table_name, value} = this.state;
 
-        json_obj.user_id = owner_user_account.id;
+        this.changes.user_id = owner_user_account.id;
        
         let {add_item_to_profile_table} = this.context.Request_URLs;
 
         let body = {
-            to_insert: json_obj,
+            to_insert: this.changes,
             table_name
         };
 
@@ -145,11 +137,11 @@ class Json_Popup_Editor extends Json_Screen {
             }
         );
 
-        value.push(json_obj);
+        value.push(this.changes);
 
-        this.setState({value, json_obj});
+        this.setState({value});
 
-        json_obj = {};
+        this.changes = {}; //Reset the changes after adding a new item
 
         this.Retrieve_Data();
     }
@@ -157,10 +149,10 @@ class Json_Popup_Editor extends Json_Screen {
     Update_Items = async ({id})=>{
 
         let {update_profile_table_data} = this.context.Request_URLs;
-        let {table_name, json_obj, value} = this.state;
+        let {table_name, value} = this.state;
 
         let body = {
-            to_update: json_obj,
+            to_update: this.changes,
             id,
             table_name
         };
@@ -180,8 +172,8 @@ class Json_Popup_Editor extends Json_Screen {
         value = value.map((e, i)=>{
 
             if(e.id === id){
-                for(let i in json_obj){
-                    e[i] = json_obj[i];
+                for(let i in this.changes){
+                    e[i] = this.changes[i];
                 }
             }
 
@@ -189,7 +181,7 @@ class Json_Popup_Editor extends Json_Screen {
         });
 
         //Update value so that other array element will return to its original value
-        this.setState({json_obj: {}, value});
+        this.setState({value});
 
         this.Retrieve_Data();
     }

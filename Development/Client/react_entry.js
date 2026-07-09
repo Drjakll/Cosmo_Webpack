@@ -30,8 +30,7 @@ class Entry extends Component {
         super(props);
     }
     
-    componentDidMount(){
-        
+    async componentDidMount(){
         
     } 
     

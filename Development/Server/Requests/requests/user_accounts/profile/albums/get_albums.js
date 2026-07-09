@@ -1,4 +1,4 @@
-let request = function() {
+let request = function(sql, s3, PutObjectCommand) {
     
     this.req_path = "/get_albums/:id";
     this.req_type = "get";
@@ -14,28 +14,21 @@ let request = function() {
                         pa.*,
                         coalesce(pl.link, '') as album_cover_link,
                         coalesce(pl.id, '') as album_cover_id,
-                        coalesce(pc.photo_count, 0) as photo_count
+                        (
+                            select 
+                                count(*)
+                            from
+                                Photo_Links p
+                            where 
+                                p.album_id = pa.id
+                        ) as photo_count
                     from 
                         Photo_Albums as pa 
 
                     left join
                         Photo_Links as pl
                     on
-                        pl.target_id = pa.id and target_type = 'album' and is_a_cover = true
-                    
-                    left join
-                        (select 
-                            target_id,
-                            count(target_id) as photo_count
-                        from
-                            Photo_Links
-                        where 
-                            target_type = 'album'
-                        group by
-                            target_id
-                        ) as pc
-                    on
-                        pc.target_id = pa.id
+                        pl.album_id = pa.id and is_a_cover = 1
                     
                     where 
                         pa.user_id = ? order by created_on desc`;

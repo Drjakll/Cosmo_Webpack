@@ -1,6 +1,6 @@
 //A dummy middleware that just returns the results passed to it
 
-function request() {
+function request(sql, s3, PutObjectCommand) {
 
     this.req_path = "/dummy_middleware";
     this.req_type = "post";

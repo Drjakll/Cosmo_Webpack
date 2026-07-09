@@ -11,7 +11,7 @@ import multer from 'multer';
 import 'dotenv/config';
 
 const uploads = multer({
-    dest: './uploads'
+    storage: multer.memoryStorage()
 });
 
 //let domain = '10.0.0.70';
@@ -33,16 +33,34 @@ let server = http.createServer(app);
 
 websocket(server);
 
-app.use('/static', express.static(path.join(__dirname, '..', 'Built_Client')));
+app.use('/static', 
+    express.static(path.join(__dirname, '..', 'Built_Client')));
 app.use(cookieparser());
 app.use(body.json({ limit: "1000mb" }));
 app.use(body.urlencoded({ extended: true }));
+
+/*
+app.use((req, res, next) => {
+
+    let start = Date.now();
+    
+    res.on('finish', ()=>{
+
+        console.log(`${req.method}, \nRoute: ${req.originalUrl} \nStatusCode: ${res.statusCode} \nTime: ${Date.now() - start}ms \n\n`);
+
+    });
+
+    next();
+});*/
+
+
 
 app.set('trust proxy', true);
 
 import requests from './Development/Server/Requests/requests.js';
 
 let route_obj = {uploads: {req: uploads.array('files', 100)}};
+let route_urls = {}; //This is a list of request url strings for frontend
 
 //Round up all the requests
 let recursion = (obj) => {
@@ -93,16 +111,41 @@ let apply_paths = () => {
             callbacks.push(route_obj[label].req);
         }
 
+        //This is a list of request url strings for front end
+        route_urls[callback_labels[0]] = "/" + req_path.split("/")[1];
+
         //Call the express app with the request path, type, and callbacks
         app[req_type](req_path, callbacks);
     }
+
+    //It needs this for accessing aws s3 photos
+    route_urls['aws_s3_url'] = 'https://cosmo-social-app.s3.us-west-1.amazonaws.com/';
     
 };
+
+app.get('/request_routes', (req, res)=>{
+
+    res.json({route_urls});
+});
 
 let starter = async () => {
 
     recursion(requests);
     apply_paths();
+
+    let x_days = 3; //Number of days to check for unverified accounts
+
+    setInterval(async ()=>{
+        
+        let results = await route_obj.daily_account_check.erase_unverified_accounts(x_days);
+
+        for(let r of results){
+
+            console.log(new Date(parseInt(r.created_on)));
+
+        }
+
+    }, 24 * 60 * 60000); //Scan for unverified accounts every 24 hours
 
 };
 

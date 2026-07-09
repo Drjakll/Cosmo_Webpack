@@ -1,17 +1,21 @@
 import React, {Component} from 'react';
 import Context from '@context/context.js';
 import Profile_Thumbnail from '@universal_components/Profile_Thumbnail/profile_thumbnail.js';
+import init_websocket from '@root/Utilities/init_websocket.js';
 import './general_reactions_container.less';
 
 class General_Reactions_Container extends Component {
 
-    static contextType = Context
+    static contextType = Context;
+
+    //A flag to confirm that joined the websocket's room, so that it only join the room once
+    room_joined = false;
 
     constructor(props){
 
         super(props);
 
-        let {reactions, visitor_user_account, owner_user_account, target_type, target_id} = props;
+        let {reactions, visitor_user_account, owner_user_account, target_id_type, target_id} = props;
 
         let {like, dislike, users_that_given_reaction} = this.Separate_Reactions(reactions);
 
@@ -21,13 +25,35 @@ class General_Reactions_Container extends Component {
             users_that_given_reaction,
             owner_user_account,
             visitor_user_account,
-            target_type,
+            target_id_type,
             target_id
         };
     }
 
+    componentWillUnmount(){
+
+        this.socket?.disconnect();
+        
+    }
+
     componentDidMount(){
 
+        this.Init_Socket();
+
+    }
+
+    Init_Socket = ()=>{
+
+        this.socket = init_websocket('/reaction_room', this.Init_Socket);
+
+        this.socket?.on('connect', ()=>{
+
+
+        });
+
+        this.socket?.on('refresh_reactions', this.Refresh_Reactions);
+
+        this.socket?.on('confirm_joined_room', this.Confirmed_Joined_Room);
     }
 
     componentDidUpdate(prevProps, prevState){
@@ -36,7 +62,7 @@ class General_Reactions_Container extends Component {
             return;
         }
 
-        let {target_type, target_id, reactions} = this.props;
+        let {target_id_type, target_id, reactions} = this.props;
 
         let {like, dislike, users_that_given_reaction} = this.Separate_Reactions(reactions);
 
@@ -44,9 +70,52 @@ class General_Reactions_Container extends Component {
             like,
             dislike, 
             users_that_given_reaction, 
-            target_type, 
+            target_id_type, 
             target_id
         });
+
+        //Skip this step of it has already joined the room
+        if(this.room_joined){
+            return;
+        }
+
+        let room_name = `${target_id_type}_${target_id}`;
+
+        this.socket?.emit('join_reaction_room', {room_name});
+    }
+
+    Confirmed_Joined_Room = () => {
+
+        if(!this.state.target_id){
+            return;
+        }
+
+        this.room_joined = true;
+    }
+
+    Refresh_Reactions = async ()=>{
+
+        let {get_one_set_reactions} = this.context.Request_URLs;
+
+        let {target_id, target_id_type} = this.state;
+
+        let data = await( await fetch(
+            `${get_one_set_reactions}/${target_id}/${target_id_type}`,
+            {
+                method: "GET"
+            }
+        )).json();
+
+        let {results : reactions} = data;
+
+        let {like, dislike, users_that_given_reaction} = this.Separate_Reactions(reactions);
+        
+        this.setState({
+            like,
+            dislike, 
+            users_that_given_reaction
+        });
+
     }
 
     Separate_Reactions = (reactions)=>{
@@ -74,7 +143,7 @@ class General_Reactions_Container extends Component {
 
         let {submit_reaction} = this.context.Request_URLs;
 
-        let {target_id, target_type, visitor_user_account} = this.state;
+        let {target_id, target_id_type, visitor_user_account} = this.state;
 
         let {id: user_id} = visitor_user_account;
         
@@ -83,7 +152,7 @@ class General_Reactions_Container extends Component {
             user_id,
             emoji,
             reaction,
-            target_type
+            target_id_type
         };
 
         await fetch(submit_reaction,
@@ -96,7 +165,11 @@ class General_Reactions_Container extends Component {
             }
         );
 
-        this.props.refresh_parent();
+        let {refresh_parent} = this.props;
+
+        refresh_parent && refresh_parent();
+
+        this.Refresh_Reactions();
 
     }
 
@@ -133,7 +206,7 @@ class General_Reactions_Container extends Component {
 
                             <div id="reaction-label">
 
-                                <img src={`./static/${thumbnail_name}.png`} onClick={(e)=>{
+                                <img src={`./static/${thumbnail_name}.webp`} onClick={(e)=>{
 
                                     this.Capture_Reaction(key, "");
 
@@ -169,7 +242,7 @@ class General_Reactions_Container extends Component {
 
                                                     return <div className="emoji-thumbnail" key={i}>
 
-                                                            <img src={`./static/${v}.png`} />
+                                                            <img src={`./static/${v}.webp`} />
 
                                                         </div>;
 
@@ -211,7 +284,7 @@ class General_Reactions_Container extends Component {
 
                                 return <div className={`emoji-icon-wrapper`} key={i}>
 
-                                        <img src={`./static/${name}.png`} 
+                                        <img src={`./static/${name}.webp`} 
                                             className={`${users_that_given_reaction[id]?.emojis?.includes(name) && "selected-emoji"}`} 
                                             onClick={(e)=>{ 
                                                 this.Capture_Reaction(null, name);

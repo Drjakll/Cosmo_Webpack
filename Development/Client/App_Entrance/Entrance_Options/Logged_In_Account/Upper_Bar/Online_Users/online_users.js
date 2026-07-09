@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import './online_users.less';
 import { Queue_Set_State, Refresh} from '@universal_components/Account_Functions/get_follows.js';
 import Profile_Thumbnail from '@universal_components/Profile_Thumbnail/profile_thumbnail.js';
-import { io } from 'socket.io-client';
+import init_websocket from '@root/Utilities/init_websocket.js';
 
 class Online_Users extends Component {
 
@@ -12,32 +12,61 @@ class Online_Users extends Component {
 
         let {owner_user_account} = this.props;
 
-        this.Setup_Socket();
-
         this.state = {
             followers: [],
             followings: [],
             online_followings: {},
             owner_user_account
         };
-    }
-
-    componentWillUnmount(){
-
-        let {owner_user_account, followers} = this.state;
-
-        this.socket.emit("report_offline", {user_account: owner_user_account, followers});
-        
-    }
-
-    componentDidMount() {
-
-        let {owner_user_account} = this.state;
 
         //Add this setState function to let the Refresh callback to update whenever a new followers/followings is added or removed
         Queue_Set_State(this.setState.bind(this), owner_user_account, "get_followers", "Online_Users");
         Queue_Set_State(this.setState.bind(this), owner_user_account, "get_followings", "Online_Users");
+    }
 
+    componentWillUnmount(){
+        
+        this.Handle_Offline();
+    }
+
+    Handle_Offline = (e)=>{
+
+        let {owner_user_account: user_account, followers} = this.state;
+
+        this.socket?.emit('report_offline', {user_account, followers});
+        this.socket?.disconnect();
+
+    }
+
+    componentDidMount() {
+
+        window.addEventListener('visibilitychange', (e)=>{
+
+            let {visibilityState} = document;
+
+            let {owner_user_account: user_account, followers} = this.state;
+
+            switch(visibilityState){
+                case 'visible': 
+                    this.Setup_Socket();
+                    this.Report_Online();
+                    break;
+                case 'hidden':
+                    this.socket?.emit('report_offline', {user_account, followers})
+                    this.socket?.disconnect();
+                    break;
+            }
+
+        });
+
+        window.addEventListener('pageshow', (e)=>{
+            this.Setup_Socket();
+            this.Report_Online();
+        });
+
+        window.addEventListener('pagehide', this.Handle_Offline);
+
+        this.Setup_Socket();
 
     }
 
@@ -47,13 +76,7 @@ class Online_Users extends Component {
             return;
         }
 
-        let {owner_user_account, followers, followings} = this.state;
-
-        //Report to followers that you are online
-        this.socket.emit("report_online", {user_account: owner_user_account, followers});
-
-        //Check all the followings to see who is online
-        this.socket.emit("who_is_online", {user_account: owner_user_account, followings});
+        this.Report_Online();
 
         if(this.props === prevProps){
             return;
@@ -63,9 +86,9 @@ class Online_Users extends Component {
 
     Setup_Socket = () => {
 
-        this.socket = io("/global_events");
+        this.socket = init_websocket("/global_events", this.Setup_Socket, this.Handle_Offline);
 
-        this.socket.on("add_online_user", ({online_user}) => {
+        this.socket?.on("add_online_user", ({online_user}) => {
 
             let {online_followings } = this.state;
 
@@ -77,7 +100,7 @@ class Online_Users extends Component {
 
         });
 
-        this.socket.on("remove_offline_user", ({offline_user})=>{
+        this.socket?.on("remove_offline_user", ({offline_user})=>{
 
             let {online_followings} = this.state;
 
@@ -89,26 +112,29 @@ class Online_Users extends Component {
 
         });
 
-        this.socket.on("followers_update", ()=>{
+        this.socket?.on("followers_update", ()=>{
 
             Refresh(true);
 
         });
 
-        this.socket.on("followings_update", async ()=>{
+        this.socket?.on("followings_update", async ()=>{
 
             await Refresh(false);
 
         });
 
-        window.addEventListener("beforeunload", () => {
+    }
 
-            let {owner_user_account, followers} = this.state;
+    Report_Online = () => {
+        
+        let {owner_user_account, followers, followings} = this.state;
 
-            this.socket.emit("report_offline", {user_account: owner_user_account, followers});
+        //Report to followers that you are online
+        this.socket?.emit("report_online", {user_account: owner_user_account, followers});
 
-        });
-
+        //Check all the followings to see who is online
+        this.socket?.emit("who_is_online", {user_account: owner_user_account, followings});
     }
 
     render() {

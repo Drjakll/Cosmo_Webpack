@@ -5,6 +5,8 @@ let Wrapper = function(){
         if(!user_id){
             return;
         }
+
+        this.socket.user_id = user_id;
         
         //Assign the socket to the key email for accessing the socket with the given email
         this.user_socket[user_id] = this.socket;

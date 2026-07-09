@@ -13,7 +13,6 @@ class New_Item extends Component {
         let {owner_user_account, options, table_name} = props;
 
         this.state = {
-            json_obj: {},
             owner_user_account,
             options,
             table_name

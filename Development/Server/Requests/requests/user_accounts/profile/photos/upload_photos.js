@@ -1,7 +1,7 @@
 import fs from 'fs';
 
 
-let request = function(){
+let request = function(sql, s3, PutObjectCommand){
 
     this.req_path = "/upload_photos";
     this.req_type = "post";
@@ -46,9 +46,7 @@ let request = function(){
             var file_data = fs.createReadStream(tempPath);
             const s3_bucket_path = `users/${user_id}/${target_type}/${album_name}/${file.originalname}`;
             
-            const { BucketName } = this.global_data;
-            
-            let upload = await upload_file(s3_bucket_path, file_data, BucketName);
+            let upload = await upload_file(s3_bucket_path, file_data, process.env.BUCKET_NAME);
             
             //Check the progress of the upload
             upload.on("httpUploadProgress", (progress) => {

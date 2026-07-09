@@ -1,24 +1,24 @@
-let request = function() {
+let request = function(sql, s3, PutObjectCommand) {
     
     
     this.req_path = "/update_album";
-    this.req_type = "post";
+    this.req_type = "patch";
     this.callbacks = ["update_album"];
 
     this.req = async (req, res) => { 
         
-        let {id, user_id, album_info} = req.body;
+        let {id, album_info} = req.body;
         
-        if(!id || !user_id){
+        if(!id){
             res.json({message: "Invalid id or user id", failed: true});
             return;
         }
         
-        let query = `update Photo_Albums set ? where user_id = ? and id = ?`
+        let query = `update Photo_Albums set ? where id = ?`
         
         try {
 
-            await this.sql.query(query, [album_info, user_id, id]);
+            await this.sql.query(query, [album_info, id]);
 
             res.json({message: "Successfully updated Photo Album", failed: false});
 

@@ -1,4 +1,4 @@
-let request = function () {
+let request = function (sql, s3, PutObjectCommand) {
 
     this.req_path = "/find_connections";
     this.req_type = "post";
@@ -146,7 +146,7 @@ let request = function () {
                     left join 
                         Photo_Links as pl
                     on
-                        pl.target_id = ac.id and pl.target_type = 'profile' and pl.is_a_cover = 1
+                        pl.profile_id = ac.id and pl.is_a_cover = 1
 
                     ${sub_query}
                     `;

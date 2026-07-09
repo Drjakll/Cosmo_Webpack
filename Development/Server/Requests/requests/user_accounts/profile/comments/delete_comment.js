@@ -1,22 +1,20 @@
-let request = function() {
+let request = function(sql, s3, PutObjectCommand) {
     
     this.req_path = "/delete_comment";
     this.req_type = "post";
     this.callbacks = ["delete_comment"];
     
-    this.req = async (req, res, next) => { 
+    this.req = async (req, res) => { 
         
-        let {id, target_id, target_type} = req.body;
+        let {id} = req.body;
  
-        let requirements = [id, target_id, target_type]
+        let requirements = [id]
 
-        let query = `delete from Comments where id = ? and target_id = ? and target_type = ?`;
+        let query = `delete from Comments where id = ?`;
         
         try {
 
             await this.sql.query(query, requirements);
-
-            req.body.requirements = [[id], ["comment"]];
 
             res.json({message: "Successfully deleted the comment", failed: false});
 

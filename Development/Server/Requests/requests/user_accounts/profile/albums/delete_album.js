@@ -1,36 +1,34 @@
-let request = function() {
+let request = function(sql, s3, PutObjectCommand) {
     
     this.req_path = "/delete_album";
     this.req_type = "post";
     this.callbacks = ["delete_album",
-        "get_photo_links",
-        "delete_photo_links",
-        "delete_general_reactions",
-        "delete_comments_from_targets",
         "delete_photo_files"
     ];
     
     this.req = async (req, res, next) => { 
         
-        let {id, user_id} = req.body;
+        let {id} = req.body;
         
-        if(!id || !user_id){
-            console.log("id or user_id is invalid");
+        if(!id){
+            console.log("Album id is null or invalid");
             res.end();
             return;
         }
 
-        let requirements = [id, user_id];
-        
-        let query = `delete from Photo_Albums where id = ? and user_id = ?`;
+        let query = `select * from Photo_Links where album_id = ?`
         
         try {
 
-            await this.sql.query(query, requirements);
+            let [photos] = await sql.query(query, [id]);
 
-            req.body.target_id = id;
-            req.body.target_type = "album";
+            query = `delete from Photo_Albums where id = ?`;
 
+            await this.sql.query(query, [id]);
+
+            req.body.photos = photos;
+
+            //delete_photo_links.js
             next();
 
         } catch(err){

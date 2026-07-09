@@ -41,14 +41,14 @@ class Profile_Template extends Component {
                     props: {}, 
                     classname: "connections-wrapper"
                 },
+                "Posts": {component: this.Generate_Posts, 
+                    props: {}, 
+                    classname: "posts-wrapper"
+                },
                 "Albums": {
                     component: this.Generate_Albums, 
                     props: {}, 
                     classname: "albums-wrapper"
-                }, 
-                "Posts": {component: this.Generate_Posts, 
-                    props: {}, 
-                    classname: "posts-wrapper"
                 }
             }
         };

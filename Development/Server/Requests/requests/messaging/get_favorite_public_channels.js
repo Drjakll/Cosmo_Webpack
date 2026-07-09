@@ -1,4 +1,4 @@
-function request() {
+function request(sql, s3, PutObjectCommand) {
     
     this.req_path = "/get_favorite_public_channels";
     this.req_type = "post";

@@ -72,7 +72,9 @@ class Single_Photo extends Component {
 
         let {photo_info} = this.state;
         
-        const {link: thumbnail_pic_link, comments_count} = photo_info;
+        let {link: thumbnail_pic_link, comments_count} = photo_info;
+
+        thumbnail_pic_link = thumbnail_pic_link.replace(/\?/g, "%3F")
         
         //To avoid unecessary request to the aws s3 if there is no photo link available
         aws_s3_url = thumbnail_pic_link ? aws_s3_url : "";

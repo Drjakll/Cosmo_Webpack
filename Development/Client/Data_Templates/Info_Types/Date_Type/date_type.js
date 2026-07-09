@@ -16,7 +16,7 @@ class Date_Type extends Component {
 
         this.state = {
             label,
-            value,
+            value: value ?? "",
             data_name,
             column_name,
             owner_user_account
@@ -50,7 +50,10 @@ class Date_Type extends Component {
         if(this.props === prevProps){
             return;
         }
+
+        let {value, label, data_name, column_name, owner_user_account} = this.props;
         
+        this.setState({ value, label, data_name, column_name, owner_user_account });
     }
 
     render() {
@@ -64,7 +67,7 @@ class Date_Type extends Component {
 
                     <div id="value">
 
-                        {value !== "" ? this.ParseDate(value) : "Select a Date"}
+                        {value ? this.ParseDate(value) : "Select a Date"}
 
                     </div>
 

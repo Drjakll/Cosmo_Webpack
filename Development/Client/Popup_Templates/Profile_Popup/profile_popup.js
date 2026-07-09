@@ -87,7 +87,7 @@ class Profile_Popup extends Component {
                 </div>
 
                 <label>
-                    drag
+                    Drag
                 </label>
             </div>
 

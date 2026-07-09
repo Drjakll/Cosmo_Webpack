@@ -1,4 +1,4 @@
-let request = function(){
+let request = function(sql, s3, PutObjectCommand){
 
     this.req_path = "/delete_photo_files";
     this.req_type = "post";
@@ -26,7 +26,7 @@ let request = function(){
         let target_type = "";
         let album_id = "";
         
-        let { BucketName } = this.global_data;
+        let BucketName = process.env.BUCKET_NAME;
        
         for(let i in photos){
             

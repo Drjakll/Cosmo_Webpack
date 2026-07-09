@@ -1,7 +1,7 @@
 import React, {Component, createRef} from 'react';
 import Context from '@context/context.js';
 import Comments_Container from '@comments_container/comments_container.js';
-import Reaction_Container from '@comments_container/Reaction_Container/reaction_container.js';
+import Reaction_Container from '@universal_components/General_Reactions_Container/general_reactions_container.js';
 import Profile_Thumbnail from '@universal_components/Profile_Thumbnail/profile_thumbnail.js';
 import Popup_Msg from '@popup_template/Popup_Message/popup_message.js';
 import './comment_container.less';
@@ -42,7 +42,7 @@ class Comment_Container extends Component {
 
     Show_Replies = ()=>{
 
-        let {back_previous, show_replies, target_id, target_type, reply_to_id, refresh_current_comments} = this.props;
+        let {back_previous, show_replies, target_id, target_id_type, reply_to_id, refresh_current_comments} = this.props;
 
         let {Comments} = this;
 
@@ -50,7 +50,7 @@ class Comment_Container extends Component {
 
             let {comment_info, owner_user_account, visitor_user_account} = this.state;
 
-            let parent_room_name = `${target_type}_${target_id}_${reply_to_id ?? 0}`
+            let parent_room_name = `${target_id_type}_${target_id}_${reply_to_id ?? 0}`
 
             let {id} = comment_info;
 
@@ -78,7 +78,7 @@ class Comment_Container extends Component {
                         show_replies={show_replies} 
                         reply_to_id={id}
                         target_id={target_id}
-                        target_type={target_type}
+                        target_id_type={target_id_type}
                         owner_user_account={owner_user_account}
                         visitor_user_account={visitor_user_account}
                         parent_room_name={parent_room_name}
@@ -108,14 +108,14 @@ class Comment_Container extends Component {
 
             let {delete_comment} = this.context.Request_URLs;
 
-            let {id, target_id, target_type} = this.state.comment_info;
+            let {id, target_id, target_id_type} = this.state.comment_info;
 
             let {signal_refresh_this_section_comments, signal_refresh_parent_comments} = this.props;
 
             let body = {
                 id,
                 target_id,
-                target_type
+                target_id_type
             };
 
             await fetch(delete_comment,
@@ -146,7 +146,7 @@ class Comment_Container extends Component {
 
             let {id: user_id} = visitor_user_account;
 
-            let {id, target_type, target_id} = comment_info;
+            let {id, target_id_type, target_id} = comment_info;
 
             let {signal_refresh_this_section_comments} = this.props;
 
@@ -156,7 +156,7 @@ class Comment_Container extends Component {
                 comment,
                 user_id,
                 id, 
-                target_type,
+                target_id_type,
                 target_id
             };
 
@@ -267,9 +267,9 @@ class Comment_Container extends Component {
                             owner_user_account={owner_user_account}
                             visitor_user_account={visitor_user_account}
                             target_id={id}
-                            target_type={null}
+                            target_id_type={"comment_id"}
                             reactions={reactions}
-                            signal_refresh_this_section_comments={signal_refresh_this_section_comments}
+                            refresh_parent={signal_refresh_this_section_comments}
                         />
                     }
 

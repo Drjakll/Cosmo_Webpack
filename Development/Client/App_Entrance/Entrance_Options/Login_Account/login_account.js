@@ -38,6 +38,8 @@ class Login_Account extends Component {
         const {Logo} = this.context;
         
         const Selected_Screen = this.Selections[this.state.selected];
+
+        let {selected} = this.state;
         
         return (
                 <div id="login-account">
@@ -48,13 +50,19 @@ class Login_Account extends Component {
 
                         <div id="slogan">
 
-                            Unite our differences through understanding - Cosmopolitanism
+                            Uniting our differences through understanding - Cosmopolitan
                             
                         </div>
 
                     </div>
 
                      <div id="account-buttons-wrapper">
+
+                        {selected === "Buttons" ? "" : <div className="back-button-wrapper">
+
+                            <label onClick={(e)=>{ this.ChangeScreen("Buttons"); }}>Back</label>
+
+                        </div>}
 
                         <Selected_Screen ChangeScreen={this.ChangeScreen} />
 

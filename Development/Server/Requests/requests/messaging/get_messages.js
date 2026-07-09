@@ -1,4 +1,4 @@
-function request() {
+function request(sql, s3, PutObjectCommand) {
 
     this.req_path = "/get_messages";
     this.req_type = "post";
@@ -25,7 +25,7 @@ function request() {
             left join
                 Photo_Links as pl
             on
-                pl.target_id = ua.id and pl.target_type = 'profile' and pl.is_a_cover = 1
+                pl.profile_id = ua.id and pl.is_a_cover = 1
             
             where
                 pm.conversation_id = ? and

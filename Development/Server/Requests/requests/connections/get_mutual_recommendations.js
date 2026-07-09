@@ -1,4 +1,4 @@
-let request = function () {
+let request = function (sql, s3, PutObjectCommand) {
 
     this.req_path = "/get_mutual_recommendations/:id/:offset_id";
     this.req_type = "get";
@@ -33,9 +33,10 @@ let request = function () {
                 on ua.id = b.followed_id
 
             left join Photo_Links as pl
-                on pl.target_type = 'profile'
-                and pl.target_id = ua.id
-                and pl.is_a_cover = 1
+                on 
+                    pl.profile_id = ua.id
+                and 
+                    pl.is_a_cover = 1
 
             where 
                 c.follower_id = ?

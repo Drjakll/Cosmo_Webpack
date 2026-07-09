@@ -1,4 +1,4 @@
-let request = function() {
+let request = function(sql, s3, PutObjectCommand) {
 
     this.req_path = "/get_single_album";
     this.req_type = "post";
@@ -13,24 +13,24 @@ let request = function() {
         let query = `select 
                         pa.*,
                         pl.link as album_cover_link,
-                        count(pl2.target_id) as photo_count
+                        count(pl2.id) as photo_count
                     from 
                         Photo_Albums as pa 
 
                     left join
                         Photo_Links as pl
                     on
-                        pl.target_id = pa.id and pl.target_type = 'album' and is_a_cover = true
+                        pl.album_id = pa.id and is_a_cover = true
 
                     left join
                         Photo_Links as pl2
                     on
-                        pl2.target_id = pa.id and pl2.target_type = 'album'
+                        pl2.album_id = pa.id
                 
                     where 
                         pa.id = ?
                     group by
-                        pl2.target_id
+                        pl2.album_id
                     `;
                 
 
@@ -45,7 +45,7 @@ let request = function() {
 
             req.body.album_info = result[0];
             req.body.target_id = album_id;
-            req.body.target_type = "album";
+            req.body.target_id_type = "album_id";
 
             //Next should be get_photo_links.js
             next();

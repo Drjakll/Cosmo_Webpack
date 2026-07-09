@@ -164,7 +164,7 @@ class Conversation_Texts extends Component {
 
                     let {first_name, last_name, id} = user;
                     
-                    return <pre className="seen-by-name" key={id}>
+                    return <pre className="seen-by-name" key={ind}>
                         
                         {` ${first_name || ""} ${last_name || ""} ${ind === seen_by.length - 1 ? "" : ", "}`}
 

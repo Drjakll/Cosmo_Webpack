@@ -7,6 +7,7 @@ let Connect_Pool = () => {
         user: process.env.DB_USER,
         password: process.env.DB_PASS,
         database: process.env.DB_NAME,
+        port: 3306,
         timezone: 'Z', // UTC
         waitForConnections: true,
         connectionLimit: 10,
@@ -23,6 +24,8 @@ let sql;
 
 function Reconnect() {
 
+  let old_sql = sql;
+
   sql = Connect_Pool();
 
   sql.on('connection', conn => {
@@ -31,7 +34,7 @@ function Reconnect() {
 
       conn.on('error', err => {
 
-        if (err.code === 'PROTOCOL_CONNECTION_LOST' || err.code === 'ECONNRESET'){
+        if (query_wrapper.isConnectionError(err)) {
           
           console.warn('MySQL connection dropped, pool will recover');
 
@@ -44,9 +47,24 @@ function Reconnect() {
       });
   });
 
+  if (old_sql) {
+
+    old_sql.end().then(() => {
+
+      console.log('Old MySQL pool closed');
+
+    }).catch(err => {
+
+      console.error('Error closing old MySQL pool:', err);
+
+    });
+
+  }
+
 }
 
 Reconnect();
+
 
 let count = 0;
 
@@ -56,23 +74,31 @@ setInterval(async ()=>{
     await sql.query('select 1');
     //console.log(++count);
   } catch(err){
-    console.error('Failed ping', err);
+
+    console.error("Failed MySQL ping:", err.code);
+
+    Reconnect();
+
   }
 
-}, 30000)
+}, 30000);
 
 let query_wrapper = {
   query: async function(q, data = null, tries = 3){
 
     try {
 
-      let result = data === null ? await sql.query(q) : await sql.query(q, data);
+      let result = data === null ? await sql.query({sql: q, timeout: 10000}) : await sql.query({sql: q, timeout: 10000}, data);
 
       return result;
 
     } catch(err){
 
       if(tries > 0 && this.isConnectionError(err)){
+
+        console.warn("Retrying MySQL query after:", err.code);
+
+        Reconnect();
 
         return await this.query(q, data, tries - 1);
 
@@ -89,13 +115,17 @@ let query_wrapper = {
 
       try {
 
-        let result = data === null ? await sql.execute(q) : await sql.execute(q, data);
+        let result = data === null ? await sql.execute({sql: q, timeout: 10000}) : await sql.execute({sql: q, timeout: 10000}, data);
 
         return result;
 
     } catch(err){
 
       if(tries > 0 && this.isConnectionError(err)){
+
+        console.warn("Retrying MySQL execute after:", err.code);
+
+        Reconnect();
 
         return await this.execute(q, data, tries - 1);
 
@@ -109,37 +139,17 @@ let query_wrapper = {
 
   },
   isConnectionError: function(err) {
+
     return [
       'PROTOCOL_CONNECTION_LOST',
       'ECONNRESET',
       'ECONNREFUSED',
-      'ETIMEDOUT'
+      'ETIMEDOUT',
+      'EADDRNOTAVAIL',
+      'ENOTFOUND'
     ].includes(err.code);
-  }
-}
-
-let SQL_Middleware = {
-  connect: async () => {
-
-    return await mysql.createConnection({
-      host: process.env.DB_HOST,
-      user: process.env.DB_USER,
-      password: process.env.DB_PASS,
-      database: process.env.DB_NAME,
-      timezone: 'Z', // UTC
-    })
-  },
-  query: async function(q, data = null){
-
-      let sql_con = await this.connect();
-      
-      let result = data === null ? await sql_con.query(q) : await sql_con.query(q, data);
-
-      await sql_con.end();
-
-      return result;
 
   }
 };
 
-export { sql, SQL_Middleware, query_wrapper };
+export { sql, query_wrapper };

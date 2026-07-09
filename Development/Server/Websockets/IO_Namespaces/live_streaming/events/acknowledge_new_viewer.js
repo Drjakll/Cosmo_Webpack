@@ -8,7 +8,7 @@ let Wrapper = function(){
 
         let {id} = to_room_tag;
         
-        this.io.to(id).emit('received_knowledgement', {from_account: from_account, from_tag: from_tag});
+        this.io.to(id).emit('received_knowledgement', {from_account: from_account, from_tag});
     };
     
 };

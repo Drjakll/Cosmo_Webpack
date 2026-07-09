@@ -59,7 +59,7 @@ class Suggestions extends Component {
 
         let {suggestions, visitor_user_account} = this.state;
 
-        let has_suggestions = <div id="suggestions-wrapper">
+        let has_suggestions = <div id="suggestions-wrapper" className="general-feed">
 
             <div id="suggestions-header">
 
@@ -98,7 +98,7 @@ class Suggestions extends Component {
 
         </div>;
 
-        let has_no_suggestions = <></>;
+        let has_no_suggestions = "";
 
         return suggestions.length ? has_suggestions : has_no_suggestions;
     }

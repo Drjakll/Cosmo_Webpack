@@ -1,4 +1,4 @@
-let request = function () {
+let request = function (sql, s3, PutObjectCommand) {
 
     this.req_path = "/get_all_followings";
     this.req_type = "post";
@@ -39,7 +39,7 @@ let request = function () {
             left join
                 Photo_Links as pl
             on
-                pl.target_type = 'profile' and pl.target_id = ac.id and pl.is_a_cover = 1
+                pl.profile_id = ac.id and pl.is_a_cover = 1
 
             where 
                 c.follower_id = ? and status = 'accepted'

@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import Stream_List_Components from './Stream_List_Components/stream_list_components.js';
 import Video_Stream_Screen from './Video_Stream_Screen/video_stream_screen.js';
-import { io } from 'socket.io-client';
+import init_websocket from '@root/Utilities/init_websocket.js';
 import './explore_template.less';
 
 class Explore_Template extends Component {
@@ -32,7 +32,7 @@ class Explore_Template extends Component {
     }
 
     componentWillUnmount(){
-        this.socket.disconnect();
+        this.socket?.disconnect();
     }
     
     componentDidUpdate(prevProps, prevState){
@@ -53,7 +53,7 @@ class Explore_Template extends Component {
     //Intended to be called before the component is mounted
     Init_Socket = () => {
         
-        this.socket = io('/video_streams');
+        this.socket = init_websocket('/video_streams', this.Init_Socket);
 
         this.socket?.on('connect', () => {
 
@@ -75,7 +75,7 @@ class Explore_Template extends Component {
         
         this.socket?.on('update_stream_list', ({ streams })=>{
             
-            this.socket.emit("request_streams", this.state.search_criteria);
+            this.socket?.emit("request_streams", this.state.search_criteria);
             
         });
 

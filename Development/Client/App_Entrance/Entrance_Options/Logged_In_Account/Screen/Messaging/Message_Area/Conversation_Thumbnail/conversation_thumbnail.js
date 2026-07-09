@@ -96,7 +96,7 @@ class Conversation_Thumbnail extends Component {
 
         let {profile_picture_link, first_name, last_name, seen_last} = user_info;
 
-        let profile_photo = profile_picture_link ? `${aws_s3_url}${profile_picture_link}` : './static/pp_placeholder.png';
+        let profile_photo = profile_picture_link ? `${aws_s3_url}${profile_picture_link}` : './static/pp_placeholder.webp';
 
         return <div className="user-info-small-icon" key={index}>
 
@@ -148,7 +148,7 @@ class Conversation_Thumbnail extends Component {
 
                     <div id="edit-name-icon" onClick={this.Edit_Conversation_name}>
 
-                        <img src="./static/edit_text_icon.png"/>
+                        <img src="./static/edit_text_icon.webp"/>
 
                     </div>
 

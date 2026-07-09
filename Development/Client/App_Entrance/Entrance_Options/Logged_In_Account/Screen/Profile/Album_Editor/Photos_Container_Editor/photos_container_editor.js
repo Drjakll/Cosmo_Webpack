@@ -100,7 +100,14 @@ class Photos_Container_Editor extends Photos_Container {
 
     Add_Photos_Button = () => {
 
+        let upload_in_progress = false;
+
         let Upload = async (e) => {
+
+            if(upload_in_progress){
+                Popup_Msg("message","Upload in progress, \nplease wait for it to finish \nbefore uploading more photos.");
+                return;
+            }
 
             let { Request_URLs, Upload_Files_To_S3 } = this.context;
 
@@ -112,10 +119,13 @@ class Photos_Container_Editor extends Photos_Container {
 
             let {id} = owner_user_account;
 
-            let jsonBody = { target_id: parseInt(album_info.id), target_type: "album", user_id: id, album_name: title };
+            let jsonBody = { target_id: parseInt(album_info.id), target_id_type: "album_id", user_id: id, album_name: title };
 
+            upload_in_progress = true;
 
             await Upload_Files_To_S3(upload_photos, selected_files, jsonBody);
+
+            upload_in_progress = false;
 
             let photo_links = await this.props.refresh_photo_links(album_info);
 
@@ -184,7 +194,7 @@ class Photos_Container_Editor extends Photos_Container {
 
             let photo_links = await this.props.refresh_photo_links(this.state.album_info);
 
-            this.setState({Photos_To_Be_Deleted: {}, photo_links})
+            this.setState({photos_to_be_deleted: {}, photo_links})
         };
 
         return <div id="delete-photo-button">
@@ -253,6 +263,8 @@ class Photos_Container_Editor extends Photos_Container {
             if(!input.submit){
                 return;
             }
+
+            let new_description = input.input;
 
             let {album_info, owner_user_account} = this.state;
 

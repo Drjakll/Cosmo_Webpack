@@ -1,4 +1,4 @@
-let request = function() {
+let request = function(sql, s3, PutObjectCommand) {
 
     this.req_path = "/add_album_update_log";
     this.req_type = "post";
@@ -15,13 +15,13 @@ let request = function() {
             user_id
         ];
 
-        let query = `insert into Photo_Album_Update_Logs(album_id, time_occurred, user_id) values(?,?,?);`;
+        let query = `insert into Photo_Album_Update_Logs(album_id, time_occured, user_id) values(?,?,?);`;
         
         try {
 
             let [result] = await this.sql.query(query, data);
 
-            req.body.target_type = "album_updates";
+            req.body.target_id_type = "album_updates_id";
             req.body.target_id = result.insertId;
             req.body.created_on = time_occurred;
 

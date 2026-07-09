@@ -42,9 +42,22 @@ let Wrapper = function (){
             events[i].root_io = this.root_io;
             events[i].io = this.io;
         }
-        
+
+        //console.log("connected: reactions", socket.id);
+
+        socket.on("error", (err) => {
+            //console.log("socket error: reactions", err);
+        });
+
+        for(let key in events){
+
+            socket.on(key, events[key].event);
+
+        }
+        /*
+        socket.on('ping', events.pong.event);
         socket.on('join_reaction_room', events.join_reaction_room.event);
-        socket.on('signal_all_refresh_reactions', events.signal_all_refresh_reactions.event);
+        socket.on('signal_all_refresh_reactions', events.signal_all_refresh_reactions.event);*/
 
     };
 };

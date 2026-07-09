@@ -88,23 +88,19 @@ let Wrapper = function (){
             events[i].all_sockets = this.all_sockets;
             events[i].MAX_PERSONS_IN_STREAM = 10;
         }
+
+        //console.log("connected: live_streaming", socket.id);
+
+        socket.on("error", (err) => {
+            //console.log("socket error: live_streaming", err);
+        });
+
+        for(let key in events){
+
+            socket.on(key, events[key].event);
+
+        }
         
-        socket.on('create_stream', events.create_stream.event);
-        socket.on('join_stream', events.join_stream.event);
-        socket.on('request_streams', events.request_streams.event);
-        socket.on('disconnect', events.disconnect_stream.event);
-        socket.on('leave_stream', events.leave_stream.event);
-        socket.on('to_new_viewer', events.to_new_viewer.event);
-        socket.on('offer', events.offer.event);
-        socket.on('answer_to_offer', events.answer_to_offer.event);
-        socket.on('send_candidate', events.send_candidate.event);
-        socket.on('send_text', events.send_text.event);
-        socket.on('acknowledge_new_viewer', events.acknowledge_new_viewer.event);
-        socket.on('request_to_go_live', events.request_to_go_live.event);
-        socket.on('answer_to_request_live', events.answer_to_request_live.event);
-        socket.on('pull_request_to_live', events.pull_request_to_live.event);
-        socket.on('stop_streaming', events.stop_streaming.event);
-        socket.on('stream_to_all', events.stream_to_all.event);
     };
 };
 

@@ -1,11 +1,8 @@
-let request = function() {
+let request = function(sql, s3, PutObjectCommand) {
 
     this.req_path = "/delete_post";
     this.req_type = "post";
     this.callbacks = ["delete_post",
-                        "delete_general_reactions",
-                        "delete_comments_from_targets",
-                        "delete_photo_links",
                         "delete_photo_files"
                     ];
     
@@ -14,28 +11,20 @@ let request = function() {
         //created_on parameter isn't needed here but will need it when deleting the feed
         let {id, user_id, created_on} = req.body;
         
-        let query = `delete from Post_Data where id = ? and user_id = ?`;
+        //Query to select all the photo links belong to the post before it gets automatically deleted
+        let query = `select * from Photo_Links where post_id = ?`; 
         
         try {
 
-            await this.sql.query(query, [id, user_id]);
+            const [photos] = await this.sql.query(query, [id, user_id]);
 
-            //Query to select all the photo links belong to the post
-            query = `select * from Photo_Links where target_id = ? and target_type = ?`;
+            query = `delete from Post_Data where id = ? and user_id = ?`;
 
-            const [rows] = await this.sql.query(query, [id, "post"]);
+            await this.sql.query(query, [id]);
 
-            req.body.photos = rows;
+            req.body.photos = photos;
 
-            //These are parameters for deleting the feed
-            req.body.target_type = "post";
-            req.body.target_id = id;
-            
-
-            //For deleting comments within the post
-            req.body.requirements = [[id], ["post"]];
-
-            //On to erasing the post photo links, photo files, comments, reactions and feeds from the data base
+            //On to deleting the files with delete_photo_files.js
             next();
 
         } catch(err){

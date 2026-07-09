@@ -1,8 +1,8 @@
-let request = function() {
+let request = function(sql, s3, PutObjectCommand) {
 
     this.req_path = "/get_posts";
     this.req_type = "post";
-    this.callbacks = ["get_posts", "get_general_reactions"];
+    this.callbacks = ["get_posts", "get_reactions"];
     
     this.req = async (req, res, next) => { 
         
@@ -10,30 +10,17 @@ let request = function() {
 
         //If id exists, that means just find one post, else search the posts within the date range
         let data = id ? [user_id, id] : [user_id, start, end];
-        
+
         let query = `select 
                         pd.*,
-                        coalesce(c.cc, 0) as comments_count
+                        (select count(*) from Comments where post_id = pd.id) as comments_count
                     from
                         Post_Data as pd
-                    left join 
-                        (select
-                            target_id,
-                            count(*) as cc
-                        from
-                            Comments
-                        where 
-                            target_type = 'post'
-                        group by
-                            target_id
-                        ) as c
-                    on
-                        c.target_id = pd.id
 
                     where pd.user_id = ?
                     ${
                         id ?
-                        `and id = ? `
+                        `and pd.id = ? `
                         :
                         `
                         and pd.created_on >= ?
@@ -46,9 +33,9 @@ let request = function() {
             let [results] = await this.sql.query(query, data);
             
             req.body.targets = results;
-            req.body.target_type = 'post'
+            req.body.target_id_type = 'post_id'
 
-            //Next should be getting the general reactions
+            //Next should be getting the reactions
             next();
 
         } catch(err){

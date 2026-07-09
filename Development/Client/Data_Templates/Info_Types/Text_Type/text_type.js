@@ -12,7 +12,7 @@ class Text_Type extends Component {
         this.Update_Value = this.Update_Value || update_callback;
 
         this.state = {
-            value,
+            value : value ?? "",
             owner_user_account,
             column_name, 
             label
@@ -32,8 +32,10 @@ class Text_Type extends Component {
         if(this.props === prevProps){
             return;
         }
+
+        let {value, owner_user_account, column_name, label} = this.props;
         
-        //this.setState(this.props);
+        this.setState({ value, owner_user_account, column_name, label });
     }
     
     render() {

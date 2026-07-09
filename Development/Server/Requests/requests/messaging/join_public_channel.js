@@ -1,4 +1,4 @@
-function request() {
+function request(sql, s3, PutObjectCommand) {
     
     this.req_path = "/join_public_channel";
     this.req_type = "post";

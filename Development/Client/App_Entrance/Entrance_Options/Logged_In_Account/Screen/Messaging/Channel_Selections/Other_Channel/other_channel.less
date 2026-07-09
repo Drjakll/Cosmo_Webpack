@@ -8,8 +8,12 @@
     background: rgba(0,0,0,0);
 
     &:hover {
-        background-color: rgba(0,0,0,0.1) !important;
+        background-color: rgba(0,0,0,0.85) !important;
         cursor: pointer;
+
+        label {
+            color: rgba(225,225,225,0.85) !important;
+        }
     }
 
     label {
@@ -19,7 +23,7 @@
         align-items: center;
         font-size: 16px;
         font-weight: 500;
-        color: rgba(225,225,225,1);
+        color: rgba(0,0,0,0.85);
         user-select: none;
 
         &:hover {
@@ -29,7 +33,11 @@
 }
 
 #other-channel.selected-channel {
-    background-color: rgba(0,0,0,0.2);
+    background-color: rgba(0,0,0,0.85);
+
+    label {
+        color: rgba(225,225,225,0.85) !important;
+    }
 }
 
 @media only screen and (max-width: 1000px){

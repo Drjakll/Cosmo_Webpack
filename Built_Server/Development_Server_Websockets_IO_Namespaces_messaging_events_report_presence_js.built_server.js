@@ -17,7 +17,7 @@ exports.modules = {
   \*****************************************************************************************/
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
-eval("{__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\nlet Wrapper = function () {\n  this.event = ({\n    user_id\n  }) => {\n    if (!user_id) {\n      return;\n    }\n\n    //Assign the socket to the key email for accessing the socket with the given email\n    this.user_socket[user_id] = this.socket;\n    this.user_socket[user_id].last_pinged = Date.now();\n  };\n};\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Wrapper);\n\n//# sourceURL=webpack://cosmo_webpack/./Development/Server/Websockets/IO_Namespaces/messaging/events/report_presence.js?\n}");
+eval("{__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\nlet Wrapper = function () {\n  this.event = ({\n    user_id\n  }) => {\n    if (!user_id) {\n      return;\n    }\n    this.socket.user_id = user_id;\n\n    //Assign the socket to the key email for accessing the socket with the given email\n    this.user_socket[user_id] = this.socket;\n    this.user_socket[user_id].last_pinged = Date.now();\n  };\n};\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Wrapper);\n\n//# sourceURL=webpack://cosmo_webpack/./Development/Server/Websockets/IO_Namespaces/messaging/events/report_presence.js?\n}");
 
 /***/ }
 

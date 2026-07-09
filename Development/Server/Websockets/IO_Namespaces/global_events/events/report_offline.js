@@ -1,10 +1,14 @@
 let Wrapper = function(){
     
     this.event = ({user_account, followers}) => {
+
+        if(!user_account){
+            return;
+        }
         
         let {id} = user_account;
 
-        delete this.online_users[id]
+        delete this.online_users[id];
 
         //Report to the user's followers that the user is online
         for(let i in followers){

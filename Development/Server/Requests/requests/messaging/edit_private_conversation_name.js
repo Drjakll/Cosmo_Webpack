@@ -1,4 +1,4 @@
-function request() {
+function request(sql, s3, PutObjectCommand) {
 
     this.req_path = "/edit_private_conversation_name";
     this.req_type = "patch";

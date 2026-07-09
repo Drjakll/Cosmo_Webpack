@@ -14,7 +14,7 @@ let Login = async (document) =>{
         let id = cookie_data?.id;
         
         if(!id ||!email || !password){
-            return Account_Data_Template();
+            return null; //Account_Data_Template();
         }
         
         let acc_credentials = {email: email, password: password};

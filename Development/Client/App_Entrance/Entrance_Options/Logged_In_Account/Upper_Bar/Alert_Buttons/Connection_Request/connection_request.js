@@ -93,7 +93,7 @@ class Connection_Request extends Component {
         global_connection_socket?.emit("refresh_connection_list", {request_to_email: account_data.email}); 
 
         //Refresh the other party's connection list
-        global_connection_socket.emit("refresh_connection_list", {request_to_email: request_user_data.email});
+        global_connection_socket?.emit("refresh_connection_list", {request_to_email: request_user_data.email});
     }
 
     Decline_Connection_Request = async (e)=>{

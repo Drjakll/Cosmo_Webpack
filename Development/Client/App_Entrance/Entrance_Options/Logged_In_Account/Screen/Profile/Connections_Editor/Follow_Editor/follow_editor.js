@@ -2,7 +2,7 @@ import React from 'react';
 import Context from '@context/context.js';
 import Follow_List from '@profile_template/Components/Connections/Follow_List/follow_list.js';
 import Popup_Msg from '@popup_template/Popup_Message/popup_message.js';
-import { io } from 'socket.io-client';
+import init_websocket from '@root/Utilities/init_websocket.js';
 import './follow_editor.less';
 
 class Follow_Editor extends Follow_List {
@@ -17,9 +17,13 @@ class Follow_Editor extends Follow_List {
 
     }
 
+    componentWillUnmount(){
+        this.socket?.disconnect();
+    }
+
     Init_Socket = ()=>{
 
-        this.socket = io('/global_events');
+        this.socket = init_websocket('/global_events', this.Init_Socket);
 
     }
 
@@ -51,10 +55,10 @@ class Follow_Editor extends Follow_List {
         });
 
         //Update the removed follower's followings list
-        this.socket.emit('report_update_followings', {follower_acc: {id: follower_id}});
+        this.socket?.emit('report_update_followings', {follower_acc: {id: follower_id}});
 
         //Update this account's followers list
-        this.socket.emit('report_update_followers', {following_acc: {id}, follower_acc: {id: follower_id}});
+        this.socket?.emit('report_update_followers', {following_acc: {id}, follower_acc: {id: follower_id}});
 
     }
 
@@ -86,10 +90,10 @@ class Follow_Editor extends Follow_List {
         });
 
         //Update the unfollowed user's followers list
-        this.socket.emit('report_update_followers', {following_acc: {id: following_id}, follower_acc: {id}});
+        this.socket?.emit('report_update_followers', {following_acc: {id: following_id}, follower_acc: {id}});
 
         //Update this acccount's followings list
-        this.socket.emit('report_update_followings', {follower_acc: {id}});
+        this.socket?.emit('report_update_followings', {follower_acc: {id}});
 
     }
     

@@ -1,6 +1,6 @@
 
 
-function request() {
+function request(sql, s3, PutObjectCommand) {
 
     const Verify_Email = function(email){
     

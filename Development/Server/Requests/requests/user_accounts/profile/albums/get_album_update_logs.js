@@ -1,10 +1,11 @@
-let request = function() {
+let request = function(sql, s3, PutObjectCommand) {
 
     this.req_path = "/get_album_update_logs";
     this.req_type = "post";
     this.callbacks = ["get_album_update_logs",
         "get_single_album",
-        "get_photo_links"
+        "get_photo_links",
+        "delete_album_update_log" //This will be called only if all the updated photos are deleted
     ];
     
     this.req = async (req, res, next) => { 
@@ -22,15 +23,15 @@ let request = function() {
             let [result] = await this.sql.query(query, data);
 
             if(result.length === 0){
-                res.json({message: "Photo album log doesn't exist"});
+                res.json({message: "Photo album log doesn't exist", photos: [], album_info: {}});
                 return;
             }
 
             //Preparing to call get_photo_links.js
-            let {album_id, time_occurred} = result[0];
+            let {album_id, time_occured} = result[0];
 
             req.body.album_id = album_id;
-            req.body.time_uploaded = time_occurred;
+            req.body.time_uploaded = time_occured; //Getting the specific update according to the time stamp
 
             //Should be get_single_album.js
             next();
