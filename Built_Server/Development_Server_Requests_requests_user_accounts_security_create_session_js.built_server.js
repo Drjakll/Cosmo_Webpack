@@ -1,0 +1,25 @@
+"use strict";
+/*
+ * ATTENTION: The "eval" devtool has been used (maybe by default in mode: "development").
+ * This devtool is neither made for production nor for readable output files.
+ * It uses "eval()" calls to create a separate source file in the browser devtools.
+ * If you are trying to read the output file, select a different devtool (https://webpack.js.org/configuration/devtool/)
+ * or disable the default devtool with "devtool: false".
+ * If you are looking for production-ready output files, see mode: "production" (https://webpack.js.org/configuration/mode/).
+ */
+exports.id = "Development_Server_Requests_requests_user_accounts_security_create_session_js";
+exports.ids = ["Development_Server_Requests_requests_user_accounts_security_create_session_js"];
+exports.modules = {
+
+/***/ "./Development/Server/Requests/requests/user_accounts/security/create_session.js"
+/*!***************************************************************************************!*\
+  !*** ./Development/Server/Requests/requests/user_accounts/security/create_session.js ***!
+  \***************************************************************************************/
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+eval("{__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\n/* harmony import */ var crypto__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! crypto */ \"crypto\");\n/* harmony import */ var crypto__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(crypto__WEBPACK_IMPORTED_MODULE_0__);\n\nfunction request({\n  sql\n}) {\n  //This route should not be accessible by the frontend directly\n  this.req_path = '/rfasdfavzvcsfzdvzxcvcvrfasdf12312334sdfa234sdfqwerasdfcvzxcvzvzxcv';\n  this.req_type = 'post';\n  this.callbacks = ['create_session', 'login_with_session'];\n  const session_expire_days = 30;\n  const session_expire_ms = session_expire_days * 24 * 60 * 60 * 1000;\n\n  //This gets called only considered the user provided a correct account password or has a session_id\n  this.req = async (req, res, next) => {\n    let {\n      acc_info,\n      server_password,\n      session_id\n    } = req.body;\n\n    //The password is on the .env file, nothing shall comes through other than from another middleware\n    if (server_password !== process.env.SERVER_PASSWORD) {\n      res.json({\n        message: \"brick wall\"\n      });\n      return;\n    }\n\n    //If session_id exists, then proceed to login_with_session\n    if (session_id) {\n      next();\n      return;\n    }\n\n    //If session_id doesn't exist, then proceed to creating a new one\n\n    session_id = crypto__WEBPACK_IMPORTED_MODULE_0___default().randomBytes(32).toString(\"hex\");\n    const {\n      id: user_id\n    } = acc_info;\n    const userAgent = req.headers[\"user-agent\"];\n    let created_on = Date.now();\n    let expires_on = created_on + session_expire_ms;\n    let last_seen = created_on;\n    const ip_address = req.ip;\n    let data = [user_id, session_id, userAgent, created_on, expires_on, last_seen, ip_address];\n    let query = `insert into User_Sessions(\n                                    user_id,\n                                    session_id,\n                                    user_agent,\n                                    created_on,\n                                    expires_on,\n                                    last_seen,\n                                    ip_address\n                                ) values (?,?,?,?,?,?,?) \n                                as new\n                                on duplicate key update \n                                    session_id = new.session_id,\n                                    user_agent = new.user_agent,\n                                    created_on = new.created_on,\n                                    expires_on = new.expires_on,\n                                    last_seen = new.last_seen,\n                                    ip_address = new.ip_address\n                                `;\n    try {\n      await sql.query(query, data);\n      acc_info.session_id = session_id;\n      return res.json({\n        message: \"Successfully logged in\",\n        acc_info,\n        status: 0b100\n      });\n    } catch (err) {\n      console.log(err);\n      return res.json({\n        message: \"Error creating a session\",\n        acc_info: null,\n        status: 0b001\n      });\n    }\n  };\n}\n;\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (request);\n\n//# sourceURL=webpack://cosmo_webpack/./Development/Server/Requests/requests/user_accounts/security/create_session.js?\n}");
+
+/***/ }
+
+};
+;

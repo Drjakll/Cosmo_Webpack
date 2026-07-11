@@ -111,8 +111,10 @@ let apply_paths = () => {
             callbacks.push(route_obj[label].req);
         }
 
+        let route_key = req_path.split("/")[1];
+
         //This is a list of request url strings for front end
-        route_urls[callback_labels[0]] = "/" + req_path.split("/")[1];
+        route_urls[route_key] = "/" + route_key ;
 
         //Call the express app with the request path, type, and callbacks
         app[req_type](req_path, callbacks);
