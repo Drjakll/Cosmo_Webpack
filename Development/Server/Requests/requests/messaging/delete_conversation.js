@@ -1,4 +1,4 @@
-function request(sql, s3, PutObjectCommand) {
+function request({sql}) {
 
     this.req_path = "/delete_conversation";
     this.req_type = "post";
@@ -12,7 +12,7 @@ function request(sql, s3, PutObjectCommand) {
 
         try {
             
-            await this.sql.query(query, [conversation_id]);
+            await sql.query(query, [conversation_id]);
 
             res.json({message: "Successfully deleted the conversation"});
 

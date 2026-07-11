@@ -1,4 +1,4 @@
-function request(sql, s3, PutObjectCommand) {
+function request({sql}) {
 
     this.req_path = "/add_conversation_participants";
     this.req_type = "post";
@@ -22,7 +22,7 @@ function request(sql, s3, PutObjectCommand) {
         try {
 
 
-            await this.sql.query(query, [values]);
+            await sql.query(query, [values]);
 
             res.json({message: "Successfully joined the conversation!", success: true});
             

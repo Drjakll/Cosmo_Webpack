@@ -1,4 +1,4 @@
-let request = function(sql, s3, PutObjectCommand) {
+let request = function({sql}) {
 
     this.req_path = "/update_post";
     this.req_type = "post";
@@ -13,7 +13,7 @@ let request = function(sql, s3, PutObjectCommand) {
         let data = [title, body, id, user_id];
         
         try {
-            let [result] = await this.sql.query(query, data);
+            let [result] = await sql.query(query, data);
 
             if(result.affectedRows === 0){
                 res.json({message: "No post found"});

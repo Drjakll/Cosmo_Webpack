@@ -1,7 +1,28 @@
 import fs from 'fs';
 import { query_wrapper } from './configurations/sql_connect.js';
+import {verify_encrypted_password, generate_encrypted_password} from './utilities/password_maintenance.js';
 import { S3ClientInstance, PutObjectCommand, DeleteObjectsCommand } from './configurations/aws_s3_config.js';
 import { request } from 'http';
+
+const GenerateEncryptedPasswords = async () => {
+
+    let sql = query_wrapper;
+
+    let query = `select * from User_Accounts`;
+
+    let [results] = await sql.query(query);
+
+    for(let result of results){
+
+        let encrypted_password = await generate_encrypted_password(result.password);
+
+        let re_query = `update User_Accounts set password = ? where id = ?`;
+
+        await sql.query(re_query, [encrypted_password, result.id]);
+
+    }
+
+};
 
 //Traverse through the "/requests/" directory to import all request functions
 
@@ -46,7 +67,14 @@ const GatherRequests = async (rootPath) => {
 
                 requests[key].prototype.DeleteObjectsCommand = DeleteObjectsCommand;
 
-                requests[key] = new requests[key](query_wrapper, S3ClientInstance, PutObjectCommand, DeleteObjectsCommand);
+                requests[key] = new requests[key]({
+                    sql: query_wrapper, 
+                    s3: S3ClientInstance, 
+                    PutObjectCommand, 
+                    DeleteObjectsCommand, 
+                    verify_encrypted_password,
+                    generate_encrypted_password
+                });
 
             } catch(e) {
                 

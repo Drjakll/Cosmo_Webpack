@@ -1,4 +1,4 @@
-let request = function (sql, s3, PutObjectCommand) {
+let request = function ({sql}) {
 
     this.req_path = "/remove_item_from_profile_table";
     this.req_type = "delete";
@@ -13,7 +13,7 @@ let request = function (sql, s3, PutObjectCommand) {
         
         try {
 
-            await this.sql.query(query, [id]);
+            await sql.query(query, [id]);
 
             res.json({message: "Successfully removed entry", success: 1});
 

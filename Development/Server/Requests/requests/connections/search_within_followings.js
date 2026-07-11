@@ -1,4 +1,4 @@
-let request = function (sql, s3, PutObjectCommand) {
+let request = function ({sql}) {
 
     this.req_path = "/search_within_followings";
     this.req_type = "post";
@@ -150,7 +150,7 @@ let request = function (sql, s3, PutObjectCommand) {
 
         try {
 
-            let [results] = await this.sql.query(query, data);
+            let [results] = await sql.query(query, data);
 
             res.json({message: `Found ${results.length} results`, results});
 

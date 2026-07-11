@@ -1,4 +1,4 @@
-function request(sql, s3, PutObjectCommand) {
+function request({sql}) {
 
     this.req_path = '/send_verification_code';
     this.req_type = 'post';

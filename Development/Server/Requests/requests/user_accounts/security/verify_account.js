@@ -1,4 +1,4 @@
-function request(sql, s3, PutObjectCommand) {
+function request({sql}) {
 
     this.req_path = '/verify_account/:email/:code';
     this.req_type = 'get';

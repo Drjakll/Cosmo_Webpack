@@ -1,4 +1,4 @@
-let request = function(sql, s3, PutObjectCommand) {
+let request = function({sql}) {
 
     this.req_path = "/get_photo_links";
     this.req_type = "post";
@@ -36,7 +36,7 @@ let request = function(sql, s3, PutObjectCommand) {
         
         try {
 
-            let [results] = await this.sql.query(query, requirements);
+            let [results] = await sql.query(query, requirements);
             
 
             if(time_uploaded){

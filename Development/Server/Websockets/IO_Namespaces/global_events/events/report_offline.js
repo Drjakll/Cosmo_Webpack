@@ -5,23 +5,24 @@ let Wrapper = function(){
         if(!user_account){
             return;
         }
-        
+
         let {id} = user_account;
 
-        delete this.online_users[id];
+        if(this.online_users[id]){
+            this.online_users[id].hidden = true;
+        }
 
-        //Report to the user's followers that the user is online
+        //Report to the user's followers that the user is offline
         for(let i in followers){
 
             let {id: follower_id} = followers[i];
 
-            let follower_socket = this.online_users[follower_id]?.socket;
+            let follower_sockets = this.online_users[follower_id];
 
-            if(!follower_socket){
-                continue;
+            for(let s_id in follower_sockets){
+
+                follower_sockets[s_id].socket?.emit("remove_offline_user", {offline_user: user_account});
             }
-
-            follower_socket?.emit("remove_offline_user", {offline_user: user_account});
 
         }
     };

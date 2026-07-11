@@ -1,4 +1,4 @@
-let request = function(sql, s3, PutObjectCommand) {
+let request = function({sql}) {
 
     this.req_path = "/get_comments";
     this.req_type = "post";
@@ -54,7 +54,7 @@ let request = function(sql, s3, PutObjectCommand) {
                     `;
         try {
 
-            let [results] = await this.sql.query(query, data);
+            let [results] = await sql.query(query, data);
 
             //If these 3 items exists, that means this function was previously called and now it comes back with retrieving only the replies. Now we can return all the items
             if(reply_to_ids && emojis && comments){

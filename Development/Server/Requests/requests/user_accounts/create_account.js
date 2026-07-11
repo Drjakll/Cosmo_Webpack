@@ -1,6 +1,6 @@
 
 
-function request(sql, s3, PutObjectCommand) {
+function request({sql, generate_encrypted_password}) {
 
     const Verify_Email = function(email){
     
@@ -24,14 +24,15 @@ function request(sql, s3, PutObjectCommand) {
             return;
         }
 
+        password = await generate_encrypted_password(password);
+
         let created_on = Date.now();
 
         let query = `insert into User_Accounts(email, password, first_name, last_name, date_of_birth, gender, marital_status, created_on) values(?,?,?,?,?,?,?,?);`;
-
         
         try {
 
-            let [result] = await this.sql.query(query, [email, password, first_name, last_name, date_of_birth, gender, marital_status, created_on]);
+            let [result] = await sql.query(query, [email, password, first_name, last_name, date_of_birth, gender, marital_status, created_on]);
 
             acc_details.id = result.insertId;
 

@@ -1,4 +1,4 @@
-function request(sql, s3, PutObjectCommand) {
+function request({sql}) {
 
     this.req_path = "/user_seen_last_msg";
     this.req_type = "post";
@@ -12,7 +12,7 @@ function request(sql, s3, PutObjectCommand) {
         
         try {
 
-            await this.sql.query(query, [conversation_id, user_id]);
+            await sql.query(query, [conversation_id, user_id]);
 
             res.json({message: "Successfully updated seen last"});
 

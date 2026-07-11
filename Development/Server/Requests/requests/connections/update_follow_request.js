@@ -1,4 +1,4 @@
-let request = function (sql, s3, PutObjectCommand) {
+let request = function ({sql}) {
 
     this.req_path = "/update_follow_request";
     this.req_type = "patch";
@@ -22,7 +22,7 @@ let request = function (sql, s3, PutObjectCommand) {
 
         try {
 
-            await this.sql.query(query, data);
+            await sql.query(query, data);
 
             res.json({message: "Successfully updated connection request!"});
 

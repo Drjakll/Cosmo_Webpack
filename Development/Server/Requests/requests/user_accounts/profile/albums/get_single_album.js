@@ -1,4 +1,4 @@
-let request = function(sql, s3, PutObjectCommand) {
+let request = function({sql}) {
 
     this.req_path = "/get_single_album";
     this.req_type = "post";
@@ -36,7 +36,7 @@ let request = function(sql, s3, PutObjectCommand) {
 
         try {
 
-            let [result] = await this.sql.query(query, requirements);
+            let [result] = await sql.query(query, requirements);
 
             if(result.length === 0){
                 res.json({message: "No such album exists", photos: [], album_info: {}});

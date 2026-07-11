@@ -1,4 +1,4 @@
-function request(sql, s3, PutObjectCommand) {
+function request({sql}) {
     
     this.req_path = "/join_public_channel";
     this.req_type = "post";
@@ -20,7 +20,7 @@ function request(sql, s3, PutObjectCommand) {
 
         try {
 
-            await this.sql.query(query, data);
+            await sql.query(query, data);
 
             res.json({message: "Successfully joined the channel"});
 

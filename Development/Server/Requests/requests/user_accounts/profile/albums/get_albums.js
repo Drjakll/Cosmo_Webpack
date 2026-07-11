@@ -1,4 +1,4 @@
-let request = function(sql, s3, PutObjectCommand) {
+let request = function({sql}) {
     
     this.req_path = "/get_albums/:id";
     this.req_type = "get";
@@ -35,7 +35,7 @@ let request = function(sql, s3, PutObjectCommand) {
 
         try {
 
-            let [results] = await this.sql.query(query, requirements);
+            let [results] = await sql.query(query, requirements);
 
             res.json({results, message: `Successfully retrieved ${results.length} albums`});
 

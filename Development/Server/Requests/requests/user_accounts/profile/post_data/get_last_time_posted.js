@@ -1,4 +1,4 @@
-let request = function(sql, s3, PutObjectCommand) {
+let request = function({sql}) {
 
     this.req_path = "/get_last_time_posted";
     this.req_type = "post";
@@ -14,7 +14,7 @@ let request = function(sql, s3, PutObjectCommand) {
         
         try {
 
-            let [results] = await this.sql.query(query, [user_id]);
+            let [results] = await sql.query(query, [user_id]);
             let last_posted = results.length === 0 ? 0 : results[0].created_on;
 
             res.json({last_time_posted: last_posted});

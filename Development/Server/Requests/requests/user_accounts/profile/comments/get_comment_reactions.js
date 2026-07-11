@@ -1,4 +1,4 @@
-let request = function(sql, s3, PutObjectCommand) {
+let request = function({sql}) {
 
     this.req_path = "/get_comment_reactions";
     this.req_type = "post";
@@ -49,7 +49,7 @@ let request = function(sql, s3, PutObjectCommand) {
                     `;
         try {
 
-            let [results] = await this.sql.query(query, [data]);
+            let [results] = await sql.query(query, [data]);
 
             req.body.emojis = results;
             req.body.reply_to_ids = data;

@@ -1,4 +1,4 @@
-let request = function(sql, s3, PutObjectCommand){
+let request = function({sql}){
 
     this.req_path = "/get_feeds";
     this.req_type = "post";
@@ -39,7 +39,7 @@ let request = function(sql, s3, PutObjectCommand){
 
         try {
 
-            let [results] = await this.sql.query(query, [user_ids, parseInt(offset)]);
+            let [results] = await sql.query(query, [user_ids, parseInt(offset)]);
 
 
             ///Return the feeds to the front end and they will retrieve each feed as they scroll down

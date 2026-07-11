@@ -1,4 +1,4 @@
-let request = function (sql, s3, PutObjectCommand) {
+let request = function ({sql}) {
     
     this.req_path = "/add_item_to_profile_table";
     this.req_type = "post";
@@ -13,7 +13,7 @@ let request = function (sql, s3, PutObjectCommand) {
         
         try {
 
-            let [result] = await this.sql.query(query, [to_insert]);
+            let [result] = await sql.query(query, [to_insert]);
 
             res.json({message: "Successfully added item to the profile table!", failed: 0, id: result.insertId });
 

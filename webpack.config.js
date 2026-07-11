@@ -24,32 +24,7 @@ var serverConfig = {
                 test: /\.worker\.js$/,
                 use: [{ loader: 'worker-loader' }],
                 exclude: /node_modules/,
-            },
-            /*{
-                test: /\.less$/,
-                use: [
-                    {
-                        loader: 'style-loader',
-                        options: {
-                            esModule: false,
-                            injectType: 'styleTag',
-                            insert: 'body'
-                        }
-                    },
-                    {
-                        loader: "css-loader",
-                        options: {
-                            sourceMap: true
-                        }
-                    },
-                    {
-                        loader: "less-loader",
-                        options: {
-                            sourceMap: true
-                        }
-                    }
-                ]
-            }*/
+            }
         ]
     },
     resolve: {
@@ -68,10 +43,12 @@ var serverConfig = {
     },
     watch: true,
     target: 'node',
+    externals: [externals()],
+    /*
     externals: {
         react: "React",
         "react-dom": "ReactDOM",
-    },
+    },*/
     node: {
         __dirname: false,
     }

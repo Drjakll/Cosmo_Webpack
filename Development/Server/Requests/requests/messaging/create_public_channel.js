@@ -1,4 +1,4 @@
-function request(sql, s3, PutObjectCommand) {
+function request({sql}) {
     
     this.req_path = "/create_public_channel";
     this.req_type = "post";
@@ -22,7 +22,7 @@ function request(sql, s3, PutObjectCommand) {
         
         try {
 
-            let [result] = await this.sql.query(query, data);
+            let [result] = await sql.query(query, data);
 
             req.body.public_channel_id = result.insertId;
 

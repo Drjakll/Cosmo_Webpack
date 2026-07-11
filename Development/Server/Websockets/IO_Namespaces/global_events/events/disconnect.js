@@ -12,23 +12,25 @@ let Wrapper = function(){
 
         let {user_account, followers} = user_object;
 
+        //Report to other users that this user is offline
         for(let i in followers){
 
             let {id: follower_id} = followers[i];
 
-            let follower_socket = this.online_users[follower_id]?.socket;
+            let follower_sockets = this.online_users[follower_id];
 
-            if(!follower_socket){
-                continue;
+            //The followers may have multiple sessions open
+            for(let s_id in follower_sockets){
+
+                follower_sockets[s_id].socket?.emit("remove_offline_user", {offline_user: user_account});
             }
 
-            follower_socket?.emit("remove_offline_user", {offline_user: user_account});
-            
         }
-      
-        delete this.online_users[user_account.id];        
-        delete this.online_users_socket[socket_id];
 
+        let {id, session_id} = user_account;
+      
+        delete this.online_users[id][session_id];        
+        delete this.online_users_socket[socket_id];
     };
     
 };

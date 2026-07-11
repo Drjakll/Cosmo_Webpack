@@ -1,4 +1,4 @@
-function request(sql, s3, PutObjectCommand) {
+function request({sql}) {
 
     this.req_path = "/edit_private_conversation_name";
     this.req_type = "patch";
@@ -12,7 +12,7 @@ function request(sql, s3, PutObjectCommand) {
 
         try {
 
-            await this.sql.query(query, [conversation_name, user_id, conversation_id]);
+            await sql.query(query, [conversation_name, user_id, conversation_id]);
 
             res.json({message: "Successfully updated the conversation name."});
             

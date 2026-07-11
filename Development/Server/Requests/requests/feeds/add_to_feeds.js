@@ -1,4 +1,4 @@
-let request = function(sql, s3, PutObjectCommand){
+let request = function({sql}){
 
     this.req_path = "/add_to_feeds";
     this.req_type = "post";
@@ -21,7 +21,7 @@ let request = function(sql, s3, PutObjectCommand){
 
         try {
 
-            await this.sql.query(query, values);
+            await sql.query(query, values);
 
             res.json({message: "Successfully added to feeds", result: result ?? null});
 

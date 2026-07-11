@@ -1,4 +1,4 @@
-let request = function (sql, s3, PutObjectCommand) {
+let request = function ({sql}) {
 
     this.req_path = "/send_follow_request";
     this.req_type = "post";
@@ -95,7 +95,7 @@ let request = function (sql, s3, PutObjectCommand) {
 
         try {
 
-            await this.sql.query(query, data); 
+            await sql.query(query, data); 
 
             switch(status){
 

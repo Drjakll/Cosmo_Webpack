@@ -1,4 +1,4 @@
-let request = function(sql, s3, PutObjectCommand) {
+let request = function({sql}) {
     
     
     this.req_path = "/update_album";
@@ -18,7 +18,7 @@ let request = function(sql, s3, PutObjectCommand) {
         
         try {
 
-            await this.sql.query(query, [album_info, id]);
+            await sql.query(query, [album_info, id]);
 
             res.json({message: "Successfully updated Photo Album", failed: false});
 

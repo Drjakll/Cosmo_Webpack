@@ -1,4 +1,4 @@
-function request(sql, s3, PutObjectCommand) {
+function request({sql}) {
     
     this.req_path = "/get_favorite_public_channels";
     this.req_type = "post";
@@ -28,7 +28,7 @@ function request(sql, s3, PutObjectCommand) {
 
         try {
 
-            let [results] = await this.sql.query(query, data);
+            let [results] = await sql.query(query, data);
 
             res.json({message: "Successfully retrieved favorite public channels", channels: results});
 

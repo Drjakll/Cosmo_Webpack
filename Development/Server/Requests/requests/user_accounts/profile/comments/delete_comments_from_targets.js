@@ -1,4 +1,4 @@
-let request = function(sql, s3, PutObjectCommand) {
+let request = function({sql}) {
     
     this.req_path = "/delete_comments_from_targets";
     this.req_type = "post";
@@ -13,7 +13,7 @@ let request = function(sql, s3, PutObjectCommand) {
         
         try {
 
-            await this.sql.query(query, [target_ids]);
+            await sql.query(query, [target_ids]);
 
             res.json({message: "Successfully deleted comments", failed: false});
 

@@ -1,4 +1,4 @@
-function request(sql, s3, PutObjectCommand) {
+function request({sql}) {
 
     this.req_path = "/insert_message";
     this.req_type = "post";
@@ -16,7 +16,7 @@ function request(sql, s3, PutObjectCommand) {
 
         try {
 
-            await this.sql.query(query, [conversation_id, text, sender_id, created_on]);
+            await sql.query(query, [conversation_id, text, sender_id, created_on]);
 
             res.json({message: "Successfully inserted the message"});
 

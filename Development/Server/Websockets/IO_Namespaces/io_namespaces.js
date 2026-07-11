@@ -100,6 +100,17 @@ let create_letter_array = ()=>{
     return letter_array;
 };
 
+/*
+    Example of store_obj : 
+
+    store_obj = {
+        "some_key": letter_array,
+        "another_key": letter_array,
+        "key_number_3": letter_array
+    }
+
+*/
+
 let Storage = function(store_obj){
 
     this.store_obj = store_obj;
@@ -110,6 +121,8 @@ let Storage = function(store_obj){
             return;
         }
 
+        //Check to see if it's a string or a number. If a string, then lower all the characters and then split it  
+        //and if it's a number, then convert it into a string and then split it
         let vSplit = value?.toLowerCase ? value?.toLowerCase().split("") : value.toString().split("");
 
         //This is the key for identifying the entry, must be manually added to the entry object
@@ -187,34 +200,34 @@ let Storage = function(store_obj){
     //The store_info object must have a "key" field as a string for identifying the entry
     this.Store = (store_info)=>{
 
-        for(let key in store_info){
+        for(let i in store_info){
 
-            if(this.store_obj[key] === undefined){
+            if(this.store_obj[i] === undefined){
                 continue;
             }
 
             try {
 
-                let json_obj = JSON.parse(store_info[key]);
+                let json_obj = JSON.parse(store_info[i]);
 
-                Store_JSON(store_info, json_obj, this.store_obj[key]);
+                Store_JSON(store_info, json_obj, this.store_obj[i]);
 
             } catch(e){
 
-                switch(typeof store_info[key]){
+                switch(typeof store_info[i]){
                     case 'object': 
 
-                        Store_JSON(store_info, store_info[key], this.store_obj[key]);
+                        Store_JSON(store_info, store_info[i], this.store_obj[i]);
 
                         break;
 
                     default: 
 
-                        if(this.store_obj[key] === null){
-                            this.store_obj[key] = create_letter_array();
+                        if(this.store_obj[i] === null){
+                            this.store_obj[i] = create_letter_array();
                         }
 
-                        Insert_Entry(store_info, store_info[key], this.store_obj[key]);
+                        Insert_Entry(store_info, store_info[i], this.store_obj[i]);
 
                         break;
 

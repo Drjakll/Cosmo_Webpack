@@ -1,4 +1,4 @@
-let request = function(sql, s3, PutObjectCommand){
+let request = function({sql}){
     
     this.req_path = "/get_user_account_data/:id";
     this.req_type = "get";
@@ -41,7 +41,7 @@ let request = function(sql, s3, PutObjectCommand){
 
         try {
 
-            let [result] = await this.sql.query(query, [id]);
+            let [result] = await sql.query(query, [id]);
 
             if(result.length === 0){
 

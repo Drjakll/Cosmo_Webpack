@@ -1,4 +1,4 @@
-function request(sql, s3, PutObjectCommand) {
+function request({sql}) {
 
     this.req_path = "/create_conversation";
     this.req_type = "post";
@@ -14,7 +14,7 @@ function request(sql, s3, PutObjectCommand) {
 
         try {
             
-            let [result] = await this.sql.query(query, ['group', now]);
+            let [result] = await sql.query(query, ['group', now]);
 
             let {insertId} = result;
 

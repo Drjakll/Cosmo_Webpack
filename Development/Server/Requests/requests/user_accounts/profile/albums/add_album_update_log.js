@@ -1,4 +1,4 @@
-let request = function(sql, s3, PutObjectCommand) {
+let request = function({sql}) {
 
     this.req_path = "/add_album_update_log";
     this.req_type = "post";
@@ -19,7 +19,7 @@ let request = function(sql, s3, PutObjectCommand) {
         
         try {
 
-            let [result] = await this.sql.query(query, data);
+            let [result] = await sql.query(query, data);
 
             req.body.target_id_type = "album_updates_id";
             req.body.target_id = result.insertId;

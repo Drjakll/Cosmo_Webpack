@@ -1,4 +1,4 @@
-let request = function (sql, s3, PutObjectCommand) {
+let request = function ({sql}) {
 
     this.req_path = "/remove_follower";
     this.req_type = "post";
@@ -18,7 +18,7 @@ let request = function (sql, s3, PutObjectCommand) {
 
         try {
 
-            this.sql.query(query, data);
+            sql.query(query, data);
 
             res.json({message:"Successfully removed follower"});
 

@@ -1,4 +1,4 @@
-let request = function(sql, s3, PutObjectCommand) {
+let request = function({sql}) {
 
     this.req_path = "/set_photo_as_cover";
     this.req_type = "post";
@@ -31,7 +31,7 @@ let request = function(sql, s3, PutObjectCommand) {
         
         try {
 
-            await this.sql.query(query, data);
+            await sql.query(query, data);
 
             res.json({message: "Successfully updated cover photo"});
 

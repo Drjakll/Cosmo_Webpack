@@ -48,12 +48,10 @@ class Online_Users extends Component {
 
             switch(visibilityState){
                 case 'visible': 
-                    this.Setup_Socket();
                     this.Report_Online();
                     break;
                 case 'hidden':
                     this.socket?.emit('report_offline', {user_account, followers})
-                    this.socket?.disconnect();
                     break;
             }
 
@@ -123,6 +121,8 @@ class Online_Users extends Component {
             await Refresh(false);
 
         });
+
+        window.global_user_socket = this.socket;
 
     }
 

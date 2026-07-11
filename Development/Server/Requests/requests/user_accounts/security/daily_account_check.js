@@ -1,7 +1,7 @@
 
 //This object is to check whether there are any unverified accounts
 //If any unverified accounts older than X days, it will get deleted from the database and their photos will be deleted from S3
-function request (sql, s3, PutObjectCommand, DeleteObjectsCommand) {
+function request ({sql, s3, DeleteObjectsCommand}) {
 
     this.req_path = '/daily_account_check';
     this.req_type = 'post';
@@ -120,7 +120,7 @@ function request (sql, s3, PutObjectCommand, DeleteObjectsCommand) {
 
     };
 
-    //Main function to erase unverified accounts that are older than X days
+    //Main function to erase unverified accounts that are older than x_days
     this.erase_unverified_accounts = async (x_days) => {
 
         let results = await get_accounts(x_days);

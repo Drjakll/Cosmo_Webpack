@@ -1,6 +1,6 @@
 import nodemailer from 'nodemailer';
 
-function request (sql, s3, PutObjectCommand) {
+function request ({sql}) {
 
     this.req_path = '/send_email';
     this.req_type = 'post';

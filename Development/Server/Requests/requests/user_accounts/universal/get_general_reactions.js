@@ -1,4 +1,4 @@
-let request = function(sql, s3, PutObjectCommand) {
+let request = function({sql}) {
 
     this.req_path = "/get_general_reactions";
     this.req_type = "post";
@@ -47,7 +47,7 @@ let request = function(sql, s3, PutObjectCommand) {
                     `;
         try {
 
-            let [results] = await this.sql.query(query, [data, target_type]);
+            let [results] = await sql.query(query, [data, target_type]);
 
             let final_results = {
                 reactions: results,

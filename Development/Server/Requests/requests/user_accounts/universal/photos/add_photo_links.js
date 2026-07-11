@@ -1,4 +1,4 @@
-let request = function(sql, s3, PutObjectCommand) {
+let request = function({sql}) {
     
     this.req_path = "/add_photo_links";
     this.req_type = "post";
@@ -39,7 +39,7 @@ let request = function(sql, s3, PutObjectCommand) {
 
         try {
 
-            await this.sql.query(query, [to_be_inserted]);
+            await sql.query(query, [to_be_inserted]);
 
             //If adding it to the album, then log the change
             if(target_id_type === "album_id"){

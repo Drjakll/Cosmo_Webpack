@@ -19,7 +19,17 @@ class Account_Buttons extends Component {
         };
     }
 
-    Logout = (e) => {
+    componentDidMount(){
+
+        window.global_user_socket.on('log_self_off', ({})=>{
+
+            this.Logout();
+
+        });
+
+    }
+
+    Logout = () => {
 
         let { Cookie_Tools, Account_Data_Templates } = this.context;
         let { Account_Data_Template } = Account_Data_Templates;

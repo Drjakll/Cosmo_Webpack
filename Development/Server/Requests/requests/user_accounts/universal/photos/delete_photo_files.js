@@ -1,4 +1,4 @@
-let request = function(sql, s3, PutObjectCommand, DeleteObjectsCommand) {
+let request = function({s3, DeleteObjectsCommand}) {
 
     this.req_path = "/delete_photo_files";
     this.req_type = "post";

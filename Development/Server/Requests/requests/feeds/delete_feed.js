@@ -1,4 +1,4 @@
-let request = function(sql, s3, PutObjectCommand){
+let request = function({sql}){
 
     this.req_path = "/delete_feed";
     this.req_type = "post";
@@ -18,7 +18,7 @@ let request = function(sql, s3, PutObjectCommand){
 
         try {
 
-            let result = await this.sql.query(query, values);
+            let result = await sql.query(query, values);
 
             res.json({message: `Successfully deleted ${result.affectedRows} feeds`});
 

@@ -1,4 +1,4 @@
-let request = function(sql, s3, PutObjectCommand) {
+let request = function({sql}) {
     
     this.req_path = "/delete_album";
     this.req_type = "post";
@@ -24,7 +24,7 @@ let request = function(sql, s3, PutObjectCommand) {
 
             query = `delete from Photo_Albums where id = ?`;
 
-            await this.sql.query(query, [id]);
+            await sql.query(query, [id]);
 
             req.body.photos = photos;
 

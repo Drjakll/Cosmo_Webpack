@@ -1,4 +1,4 @@
-let request = function (sql, s3, PutObjectCommand) {
+let request = function ({sql}) {
 
     this.req_path = "/update_profile";
     this.req_type = "patch";
@@ -19,7 +19,7 @@ let request = function (sql, s3, PutObjectCommand) {
                                                 
         try {
 
-            await this.sql.query(query, [to_update, password, id]);
+            await sql.query(query, [to_update, password, id]);
             res.json({message: "Successfully updated the account", success: 1});
             
         }catch(err){

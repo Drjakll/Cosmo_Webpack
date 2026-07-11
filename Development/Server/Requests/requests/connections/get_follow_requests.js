@@ -1,4 +1,4 @@
-let request = function (sql, s3, PutObjectCommand) {
+let request = function ({sql}) {
 
     this.req_path = "/get_follow_requests";
     this.req_type = "get";
@@ -36,7 +36,7 @@ let request = function (sql, s3, PutObjectCommand) {
         `;
         
         try {
-            let [results] = this.sql.query(query, data);
+            let [results] = sql.query(query, data);
 
             res.json({message: `Succesfully retrieved ${results.length} requests`, results});
 

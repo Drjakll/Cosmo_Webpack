@@ -1,4 +1,4 @@
-let request = function(sql, s3, PutObjectCommand) {
+let request = function({sql}) {
 
     this.req_path = "/get_posts";
     this.req_type = "post";
@@ -30,7 +30,7 @@ let request = function(sql, s3, PutObjectCommand) {
                     order by pd.created_on asc`;
         
         try{
-            let [results] = await this.sql.query(query, data);
+            let [results] = await sql.query(query, data);
             
             req.body.targets = results;
             req.body.target_id_type = 'post_id'

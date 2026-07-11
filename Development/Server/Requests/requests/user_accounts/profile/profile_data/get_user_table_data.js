@@ -1,4 +1,4 @@
-let request = function (sql, s3, PutObjectCommand) {
+let request = function ({sql}) {
 
     this.req_path = "/get_user_table_data";
     this.req_type = "post";
@@ -18,7 +18,7 @@ let request = function (sql, s3, PutObjectCommand) {
                                                 
         try {
 
-            let [results] = await this.sql.query(query, [user_id]);
+            let [results] = await sql.query(query, [user_id]);
 
 
             //If anyone of these doesn't exist, then the request must be coming from need only one table

@@ -2,7 +2,7 @@ import fs from 'fs';
 import { Upload } from "@aws-sdk/lib-storage";
 
 
-let request = function(sql, s3, PutObjectCommand){
+let request = function({s3}){
 
     this.req_path = "/upload_photos";
     this.req_type = "post";
@@ -15,12 +15,6 @@ let request = function(sql, s3, PutObjectCommand){
     
     var upload_file = async (path_name, file, bucket_name) => {
 
-        let input = {
-            "Body": file.buffer,
-            "Bucket": bucket_name,
-            "Key": path_name
-        };
-
         return new Upload({
                 client: s3,
                 params: {
@@ -31,13 +25,11 @@ let request = function(sql, s3, PutObjectCommand){
                 },
         });
 
-        //return this.s3.upload(input)
     };
 
     let target_id_options = ['album_id','post_id','profile_id'];
     
     this.req = async (req, res, next)=>{
-        
         
         const uploadedFiles = req.files;
         const {user_id, target_id_type, target_id, album_name} = JSON.parse(req.body.metadata);

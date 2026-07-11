@@ -1,4 +1,4 @@
-let request = function(sql, s3, PutObjectCommand) {
+let request = function({sql}) {
 
     this.req_path = "/delete_album_update_log";
     this.req_type = "post";
@@ -16,7 +16,7 @@ let request = function(sql, s3, PutObjectCommand) {
         
         try {
 
-            let [result] = await this.sql.query(query, data);
+            let [result] = await sql.query(query, data);
 
             res.json({message: `All photos on this update has been erased`, photos: [], album_info});
 

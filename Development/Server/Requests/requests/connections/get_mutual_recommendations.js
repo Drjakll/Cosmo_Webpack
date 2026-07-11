@@ -1,4 +1,4 @@
-let request = function (sql, s3, PutObjectCommand) {
+let request = function ({sql}) {
 
     this.req_path = "/get_mutual_recommendations/:id/:offset_id";
     this.req_type = "get";
@@ -59,7 +59,7 @@ let request = function (sql, s3, PutObjectCommand) {
 
         try {
 
-            let [results] = await this.sql.query(query, data);
+            let [results] = await sql.query(query, data);
             
             res.json({message: `Found ${results.length} recommendations`, results});
 

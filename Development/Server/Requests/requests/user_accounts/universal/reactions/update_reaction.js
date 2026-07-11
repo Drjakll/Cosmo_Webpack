@@ -1,4 +1,4 @@
-let request = function(sql, s3, PutObjectCommand) {
+let request = function({sql}) {
     
 
     this.req_path = "/update_reaction";
@@ -23,7 +23,7 @@ let request = function(sql, s3, PutObjectCommand) {
         
         try {
 
-            await this.sql.query(query, [data]);
+            await sql.query(query, [data]);
 
             res.json({message: "Successfully submitted a reaction", failed: false});
 

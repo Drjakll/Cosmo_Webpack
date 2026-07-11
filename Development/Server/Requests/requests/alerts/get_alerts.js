@@ -1,4 +1,4 @@
-let request = function (sql, s3, PutObjectCommand) {
+let request = function ({sql}) {
 
     this.req_path = "/get_alerts";
     this.req_type = "post";
@@ -48,7 +48,7 @@ let request = function (sql, s3, PutObjectCommand) {
         
         try {
 
-            await  this.sql.query(query, data);
+            await  sql.query(query, data);
 
         } catch(err){
 

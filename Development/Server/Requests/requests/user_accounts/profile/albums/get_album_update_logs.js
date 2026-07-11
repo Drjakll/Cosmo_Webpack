@@ -1,4 +1,4 @@
-let request = function(sql, s3, PutObjectCommand) {
+let request = function({sql}) {
 
     this.req_path = "/get_album_update_logs";
     this.req_type = "post";
@@ -20,7 +20,7 @@ let request = function(sql, s3, PutObjectCommand) {
         
         try {
 
-            let [result] = await this.sql.query(query, data);
+            let [result] = await sql.query(query, data);
 
             if(result.length === 0){
                 res.json({message: "Photo album log doesn't exist", photos: [], album_info: {}});

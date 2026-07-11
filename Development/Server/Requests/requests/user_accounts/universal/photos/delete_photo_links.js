@@ -1,4 +1,4 @@
-let request = function(sql, s3, PutObjectCommand) {
+let request = function({sql}) {
 
     this.req_path = "/delete_photos";
     this.req_type = "post";
@@ -33,7 +33,7 @@ let request = function(sql, s3, PutObjectCommand) {
         
         try {
 
-            await this.sql.query(query, [ids]);
+            await sql.query(query, [ids]);
             
             //Should call delete_photo_files.js
             next();

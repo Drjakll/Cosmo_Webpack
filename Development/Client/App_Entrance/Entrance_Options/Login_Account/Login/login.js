@@ -1,4 +1,5 @@
 import React, {Component, createRef} from 'react';
+import login_account from '@universal_components/Account_Functions/login_account.js';
 import Context from '@context/context.js';
 
 
@@ -25,48 +26,7 @@ class Login extends Component {
         let email = this.emailRef?.current.value;
         let password = this.passwordRef?.current.value;
         
-        const {Account_Data_Templates, Request_URLs, Cookie_Tools, Configurations} = this.context;
-        
-        //Verify email
-        if(!Configurations.Verify_Email(email)){
-            alert("Please Enter a valid email");
-            return;
-        }
-        
-        //Create a json data template to hold account information
-        let account_data = Account_Data_Templates.Account_Data_Template({email, password});
-        
-        let jsonData = JSON.stringify(account_data);
-        
-        let res = await fetch(Request_URLs.login, {
-           method: "POST",
-           body: jsonData,
-           headers: {
-               'Content-Type': "application/json"
-           }
-        });
-        
-        let resJson = await res.json();
-        
-        let {acc_info, message} = resJson;
-        
-        if(!acc_info){
-            alert(message);
-            return;
-        }
-        
-        let date = new Date();
-        
-        //Setting the expiration date that's set on the configurations
-        date.setTime(date.getTime() + Configurations.Cookie_Expire_Days * 24 * 60 * 60 * 1000);
-        
-        //Convert the account data into cookie strings
-        const cookieStrs = Cookie_Tools.cookie_converter(acc_info, { "expires": date.toUTCString(), "path": "/" });
-        
-        //Store the cookie strings into cookie
-        for(let cookieStr of cookieStrs){
-            document.cookie = cookieStr;
-        }
+        await login_account(document, email, password);
         
         window.location.reload();
 

@@ -1,4 +1,4 @@
-let request = function(sql, s3, PutObjectCommand) {
+let request = function({sql}) {
 
     this.req_path = "/get_one_set_reactions/:target_id/:target_id_type";
     this.req_type = "get";

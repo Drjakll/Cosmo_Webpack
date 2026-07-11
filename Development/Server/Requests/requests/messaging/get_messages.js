@@ -1,4 +1,4 @@
-function request(sql, s3, PutObjectCommand) {
+function request({sql}) {
 
     this.req_path = "/get_messages";
     this.req_type = "post";
@@ -38,7 +38,7 @@ function request(sql, s3, PutObjectCommand) {
         
         try {
 
-            let [results] = await this.sql.query(query, [conversation_id, off_time_set, user_time_joined]);
+            let [results] = await sql.query(query, [conversation_id, off_time_set, user_time_joined]);
 
             res.json({message: `Successfully retrieved ${results.length} messages`, results})
 
