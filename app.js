@@ -94,6 +94,11 @@ let apply_paths = () => {
 
         let {req_path, req_type, callbacks: callback_labels} = route_obj[key];
 
+        //If no req_type, that means it's just use for middleware
+        if(!req_type){
+            continue;
+        }
+
         if(!valid_req_types.includes(req_type)){
 
             throw new Error(`Invalid request type '${req_type}' for route '${req_path}'`);
@@ -110,6 +115,13 @@ let apply_paths = () => {
 
             callbacks.push(route_obj[label].req);
         }
+
+        //If no req_path, that means the function is just used as a middleware only.
+        if(!req_path){
+
+            continue;
+        }
+
 
         let route_key = req_path.split("/")[1];
 

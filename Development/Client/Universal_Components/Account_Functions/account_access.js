@@ -1,4 +1,5 @@
 import Request_URLs from '@root/API_Requests/request_urls.js';
+import Account_Data from '@data_templates/account_data.js';
 
 
 const Login = async (input_email, input_password) =>{
@@ -18,7 +19,10 @@ const Login = async (input_email, input_password) =>{
                                         })
                                     ).json();
 
-        return account;
+        
+        const {Account_Data_Template} = Account_Data;
+
+        return account ? Account_Data_Template(account) : null;
 };
 
 const Logout = async ()=>{

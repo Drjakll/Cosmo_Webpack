@@ -20,7 +20,6 @@ let Account_Data_Template = function(initial){
     let template = {
         id: null,
         email: "",
-        password: "",
         first_name: "",
         last_name: "",
         date_of_birth: "",
@@ -32,7 +31,6 @@ let Account_Data_Template = function(initial){
         last_mood_updated: null,
         verification_code: null,
         email_verified: false,
-        session_id: null,
         privacy: null,
         profile_picture_link: null,
         profile_picture_id: null,

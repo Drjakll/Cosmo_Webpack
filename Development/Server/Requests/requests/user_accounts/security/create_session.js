@@ -3,8 +3,8 @@ import crypto from 'crypto';
 function request({sql}) {
 
     //This route should not be accessible by the frontend directly
-    this.req_path = '/rfasdfavzvcsfzdvzxcvcvrfasdf12312334sdfa234sdfqwerasdfcvzxcvzvzxcv';
-    this.req_type = 'post';
+    this.req_path = null;
+    this.req_type = null;
     this.callbacks = ['create_session', 'login_with_session'];
 
     const session_expire_days = 30;
@@ -74,7 +74,8 @@ function request({sql}) {
                 httpOnly: true,
                 secure: process.env.NODE_ENV === "production",
                 sameSite: "lax",
-                maxAge: 30 * 24 * 60 * 60 * 1000
+                maxAge: 30 * 24 * 60 * 60 * 1000,
+                path: "/"
             });
 
             req.cookies.session_id = session_id;

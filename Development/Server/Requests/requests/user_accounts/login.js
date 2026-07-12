@@ -18,44 +18,53 @@ function request({sql, verify_encrypted_password}) {
 
         let {session_id, id} = req.cookies;
 
-        let data = [email, id];
+        if(!session_id && !password){
+            return res.json({message: "No credentials found", acc_info: null, status: 0b010})
+        }
 
-        let query = `select 
-                        ua.id,
-                        ua.first_name,
-                        ua.last_name,
-                        ua.password,
-                        ua.marital_status,
-                        ua.gender,
-                        ua.date_of_birth,
-                        ua.email,
-                        ua.created_on,
-                        ua.password,
-                        ua.privacy,
-                        ua.mood_today,
-                        ua.last_mood_updated,
-                        ua.personal_traits,
-                        ua.email_verified,
-                        coalesce(pl.link, '')  as profile_picture_link,
-                        pl.id as profile_picture_id,
+        let data = !password ? [id] : [email];
 
-                        json_array() as User_Hobbies,
-                        json_array() as User_Locations,
-                        json_array() as User_Schools,
-                        json_array() as User_Professions
-                    
-                    from 
-                        User_Accounts as ua
+        let query = !password ? `
+            select 
+                ua.*,
+                coalesce(pl.link, '')  as profile_picture_link,
+                pl.id as profile_picture_id,
 
-                    left join 
-                        Photo_Links as pl
-                    on 
-                        pl.profile_id = ua.id and pl.is_a_cover = 1
+                json_array() as User_Hobbies,
+                json_array() as User_Locations,
+                json_array() as User_Schools,
+                json_array() as User_Professions
+            
+            from 
+                User_Accounts as ua
 
-                    where 
-                        ua.email = ?
-                        or 
-                        ua.id = ?
+            left join 
+                Photo_Links as pl
+            on 
+                pl.profile_id = ua.id and pl.is_a_cover = 1
+
+            where 
+                ua.id = ?
+        ` : `select 
+                ua.*,
+                coalesce(pl.link, '')  as profile_picture_link,
+                pl.id as profile_picture_id,
+
+                json_array() as User_Hobbies,
+                json_array() as User_Locations,
+                json_array() as User_Schools,
+                json_array() as User_Professions
+            
+            from 
+                User_Accounts as ua
+
+            left join 
+                Photo_Links as pl
+            on 
+                pl.profile_id = ua.id and pl.is_a_cover = 1
+
+            where 
+                ua.email = ?
         `;
 
 
@@ -65,7 +74,7 @@ function request({sql, verify_encrypted_password}) {
 
             if(!result.length){
 
-                return res.json({message: "No account matches with the email and/or password", acc_info: null, status: 0b10});
+                return res.json({message: "No account matches with the email and/or password", acc_info: null, status: 0b010});
 
             }
 

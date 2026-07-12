@@ -1,8 +1,8 @@
 function request({sql}) {
 
     //This route should not be accessible by the frontend directly
-    this.req_path = '/rfasdfavzvcsfzdvzxcvcvrfasdfwqerqwerqwerasdfcvzxcvzvzxcv123234234sdfasdf';
-    this.req_type = 'post';
+    this.req_path = null;
+    this.req_type = null;
     this.callbacks = ['login_with_session'];
 
     this.req = async (req, res, next)=>{
@@ -38,10 +38,6 @@ function request({sql}) {
                             user_id = ?
                         and
                             expires_on > ?
-                        and
-                            user_agent = ?
-                        and
-                            ip_address = ?
                     `;
         try {
 

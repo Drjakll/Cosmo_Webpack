@@ -14,7 +14,7 @@ const GenerateEncryptedPasswords = async () => {
 
     for(let result of results){
 
-        let encrypted_password = await generate_encrypted_password(result.password);
+        let encrypted_password = await generate_encrypted_password("123");
 
         let re_query = `update User_Accounts set password = ? where id = ?`;
 
