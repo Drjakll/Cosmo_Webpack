@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import Login from '@root/Universal_Components/Account_Functions/login_account.js';
+import {Login} from '@root/Universal_Components/Account_Functions/account_access.js';
 import Context from '@context/context.js';
 import './entrance_options.less';
 import Login_Account from './Login_Account/login_account.js';
@@ -37,7 +37,7 @@ class Entrance_Options extends Component {
     
     Refresh_Login = async () => {
         
-        let account = await Login(document);
+        let account = await Login();
         
         if(account){
 

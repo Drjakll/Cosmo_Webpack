@@ -3,7 +3,7 @@ import fs from 'fs';
 let Wrapper = function (){
 
     this.online_users = {}; //User's id mapped to their account
-    this.online_users_socket = {}; //User's socket id mapped to their account
+    this.online_user_sockets = {}; //User's socket id mapped to their account
     
     (async () => {
         
@@ -44,7 +44,7 @@ let Wrapper = function (){
             events[i].socket = socket;
             events[i].root_io = this.root_io;
             events[i].online_users = this.online_users;
-            events[i].online_users_socket = this.online_users_socket;
+            events[i].online_user_sockets = this.online_user_sockets;
         }
 
         //console.log("connected: global_events", socket.id);

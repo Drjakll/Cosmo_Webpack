@@ -21,7 +21,9 @@ let Wrapper = function(){
 
             for(let s_id in follower_sockets){
 
-                follower_sockets[s_id].socket?.emit("remove_offline_user", {offline_user: user_account});
+                let follower_socket = follower_sockets[s_id].socket;
+
+                follower_socket?.emit("remove_offline_user", {offline_user: user_account});
             }
 
         }

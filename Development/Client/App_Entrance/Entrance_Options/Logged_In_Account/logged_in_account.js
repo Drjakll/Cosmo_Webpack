@@ -77,7 +77,7 @@ class Logged_In_Account extends Component {
 
         global_connection_socket?.on("refresh_account", ({})=>{
 
-            window.LoginAttempt();
+            
 
         });
 

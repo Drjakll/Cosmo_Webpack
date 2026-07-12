@@ -7,8 +7,8 @@ function request({sql}) {
 
     this.req = async (req, res, next)=>{
 
-
-        let {acc_info, session_id, server_password} = req.body;
+        const {acc_info, server_password} = req.body;
+        const {session_id} = req.cookies;
 
         //The password is on the .env file
         if(server_password !== process.env.SERVER_PASSWORD){
@@ -43,7 +43,6 @@ function request({sql}) {
                         and
                             ip_address = ?
                     `;
-
         try {
 
             let [result] = await sql.query(query, data);
@@ -54,7 +53,23 @@ function request({sql}) {
 
             } else {
 
-                acc_info.session_id = session_id;
+                let to_add_to_cookie = {id: String(user_id)};
+
+                const maxAge = 30 * 24 * 60 * 60 * 1000;
+
+                for(let key in to_add_to_cookie){
+
+                    res.cookie(key, to_add_to_cookie[key], {
+                        httpOnly: true,
+                        secure: process.env.NODE_ENV === "production",
+                        sameSite: "lax",
+                        maxAge,
+                        path: "/"
+                    });
+
+                }
+
+                delete acc_info.password;
 
                 return res.json({message: "Successfully logged in", acc_info, status: 0b100})
 

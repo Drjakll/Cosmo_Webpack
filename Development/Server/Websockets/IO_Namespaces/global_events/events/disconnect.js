@@ -4,7 +4,7 @@ let Wrapper = function(){
 
         let {id: socket_id} = this.socket;
 
-        let user_object = this.online_users_socket[socket_id];
+        let user_object = this.online_user_sockets[socket_id];
 
         if(!user_object){
             return;
@@ -19,18 +19,20 @@ let Wrapper = function(){
 
             let follower_sockets = this.online_users[follower_id];
 
-            //The followers may have multiple sessions open
             for(let s_id in follower_sockets){
 
-                follower_sockets[s_id].socket?.emit("remove_offline_user", {offline_user: user_account});
+                let follower_socket = follower_sockets[s_id].socket;
+
+                follower_socket?.emit("remove_offline_user", {offline_user: user_account});
             }
 
         }
 
-        let {id, session_id} = user_account;
+        let {id} = user_account;
       
-        delete this.online_users[id][session_id];        
-        delete this.online_users_socket[socket_id];
+        this.online_users[id] && (this.online_users[id].hidden = true);
+        delete this.online_users[id][socket_id];        
+        delete this.online_user_sockets[socket_id];
     };
     
 };

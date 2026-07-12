@@ -14,7 +14,8 @@ function request({sql}) {
     //This gets called only considered the user provided a correct account password or has a session_id
     this.req = async (req, res, next)=>{
 
-        let {acc_info, server_password, session_id} = req.body;
+        let {acc_info, server_password} = req.body;
+        let {session_id} = req.cookies;
 
         //The password is on the .env file, nothing shall comes through other than from another middleware
         if(server_password !== process.env.SERVER_PASSWORD){
@@ -65,14 +66,20 @@ function request({sql}) {
                                     ip_address = new.ip_address
                                 `;
         
-
         try {
 
             await sql.query(query, data);
 
-            acc_info.session_id = session_id;
+            res.cookie("session_id", session_id, {
+                httpOnly: true,
+                secure: process.env.NODE_ENV === "production",
+                sameSite: "lax",
+                maxAge: 30 * 24 * 60 * 60 * 1000
+            });
 
-            return res.json({message: "Successfully logged in", acc_info, status: 0b100});
+            req.cookies.session_id = session_id;
+
+            next();
 
         } catch(err){
 

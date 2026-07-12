@@ -1,18 +1,19 @@
 import React, {Component, createRef} from 'react';
-import login_account from '@universal_components/Account_Functions/login_account.js';
+import {Login} from '@universal_components/Account_Functions/account_access.js';
 import Context from '@context/context.js';
 
 
-class Login extends Component {
+class Login_Account extends Component {
     
     emailRef = createRef();
     passwordRef = createRef();
+
+    static contextType = Context;
     
     constructor(props){
         
         super(props);
         
-        Login.contextType = Context;
     }
     
     ChangeScreen = (screen) => {
@@ -26,7 +27,7 @@ class Login extends Component {
         let email = this.emailRef?.current.value;
         let password = this.passwordRef?.current.value;
         
-        await login_account(document, email, password);
+        await Login(email, password);
         
         window.location.reload();
 
@@ -74,4 +75,4 @@ class Login extends Component {
     }
 }
 
-export default Login;
+export default Login_Account;

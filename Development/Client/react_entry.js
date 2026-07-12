@@ -21,7 +21,6 @@ import Profile_Popup from './Popup_Templates/Profile_Popup/profile_popup.js';
 import Search_Parameters from './Data_Templates/Search_Parameters/search_parameters.js';
 import Single_Post from './Universal_Components/Posts/Single_Post/single_post.js';
 import Profile_Thumbnail from './Universal_Components/Profile_Thumbnail/profile_thumbnail.js';
-import Login from './Universal_Components/Account_Functions/login_account.js';
 import './react_entry.less';
 
 class Entry extends Component {
@@ -31,7 +30,7 @@ class Entry extends Component {
     }
     
     async componentDidMount(){
-        
+
     } 
     
     render(){
@@ -60,8 +59,7 @@ class Entry extends Component {
                 Upload_Files_To_S3, //Use for uploading files to aws s3
                 Search_Parameters,
                 Single_Post, 
-                Profile_Thumbnail,
-                Login
+                Profile_Thumbnail
             }}
         >
             

@@ -9,7 +9,7 @@ import Date_Type_Editor from './Date_Editor/date_editor.js';
 import Json_Type_Editor from './Json_Editor/json_editor.js';
 import Choice_Type_Editor from './Choice_Editor/choice_editor.js';
 import Json_Text_Editor from './Json_Text_Editor/json_text_editor.js';
-import Login_Account from '@universal_components/Account_Functions/login_account.js';
+import {Login} from '@universal_components/Account_Functions/account_access.js';
 
 let {Mood_Options} = Account_Data;
 
@@ -247,7 +247,7 @@ class Profile_Data_Editor extends Profile_Info_Data {
 
         if(!failed){
 
-            this.setState({owner_user_account: await Login_Account(document)});
+            this.setState({owner_user_account: await Login()});
 
         }
     }

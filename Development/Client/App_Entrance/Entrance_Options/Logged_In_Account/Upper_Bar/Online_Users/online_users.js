@@ -42,6 +42,7 @@ class Online_Users extends Component {
 
         window.addEventListener('visibilitychange', (e)=>{
 
+
             let {visibilityState} = document;
 
             let {owner_user_account: user_account, followers} = this.state;
@@ -58,6 +59,7 @@ class Online_Users extends Component {
         });
 
         window.addEventListener('pageshow', (e)=>{
+            
             this.Setup_Socket();
             this.Report_Online();
         });

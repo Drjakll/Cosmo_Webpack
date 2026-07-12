@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Context from '@context/context.js';
+import {Logout} from '@universal_components/Account_Functions/account_access.js';
 import './account_buttons.less';
 
 class Account_Buttons extends Component {
@@ -21,29 +22,17 @@ class Account_Buttons extends Component {
 
     componentDidMount(){
 
-        window.global_user_socket.on('log_self_off', ({})=>{
+        window.global_user_socket.on('log_self_off', async ({})=>{
 
-            this.Logout();
+            await this.Logout();
 
         });
 
     }
 
-    Logout = () => {
+    Logout = async () => {
 
-        let { Cookie_Tools, Account_Data_Templates } = this.context;
-        let { Account_Data_Template } = Account_Data_Templates;
-        let { cookie_converter } = Cookie_Tools;
-
-        let account_data = Account_Data_Template({});
-
-        let date = new Date();
-
-        let cookieStrs = cookie_converter(account_data, { "expires": date.toUTCString(), "path": "/" });
-
-        for (let cStr of cookieStrs) {
-            document.cookie = cStr;
-        }
+        await Logout();
 
         this.props.Change_Screen("Login Account");
     }

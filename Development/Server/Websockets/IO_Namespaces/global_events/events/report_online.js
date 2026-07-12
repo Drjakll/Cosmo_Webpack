@@ -1,22 +1,23 @@
 let Wrapper = function(){
 
     //To log off other sessions of the same account except for the current session
-    let log_off_self = (online_users, this_session_id)=>{
+    let log_off_self = (all_self_acc)=>{
 
-        for(let s_id in online_users){
+        for(let s_id in all_self_acc){
 
-            if(s_id === this_session_id){
+            if(s_id === String(this.socket.id)){
                 continue;
             }
 
-            const other_socket = online_users[s_id].socket;
+            const other_socket = all_self_acc[s_id].socket;
 
             other_socket?.emit('log_self_off', {});
 
-            delete this.online_users_socket[other_socket?.id]
+            delete all_self_acc[s_id];
 
+            delete this.online_user_sockets[other_socket?.id];
+            
         }
-
     };
     
     this.event = ({user_account, followers}) => {
@@ -25,27 +26,28 @@ let Wrapper = function(){
             return;
         }
             
-        let {id, session_id} = user_account;
+        let {id} = user_account;
 
 
         //Log off self account from other sessions
         if(id && this.online_users[id]){
 
-            log_off_self(this.online_users[id], session_id);
+            log_off_self(this.online_users[id]);
+
         }
 
-        //I setup the this.online_users["user_id"]["session_id"] = {"user_account": some_user_account, socket: this.socket}
-        //Because they maybe using the same account with different session, so log off the one that isn't the current session
         if(!this.online_users[id]){
             this.online_users[id] = {};
         }
-            
-        this.online_users[id].hidden = false; //Hidden is different from completely offline. Socket is still active
-        this.online_users[id][session_id] = {user_account, socket: this.socket};
+
+        //Hidden is different from completely offline. Socket is still active
+        this.online_users[id][this.socket.id] = {user_account, socket: this.socket, hidden: false};
         
 
         //I made this so that it's easier to access user_account when disconnect event triggers
-        this.online_users_socket[this.socket.id] = {user_account, socket: this.socket, followers};
+        this.online_user_sockets[this.socket.id] = {user_account, socket: this.socket, followers};
+
+        this.socket.emit('log_self_back_in', {});
         
         //Report to the user's followers that the user is online
         for(let i in followers){
@@ -54,10 +56,11 @@ let Wrapper = function(){
 
             let follower_sockets = this.online_users[follower_id];
 
-            //The followers may have multiple sessions open
             for(let s_id in follower_sockets){
 
-                follower_sockets[s_id].socket?.emit("add_online_user", {online_user: user_account});
+                let follower_socket = follower_sockets[s_id].socket;
+
+                follower_socket?.emit("add_online_user", {online_user: user_account});
             }
 
         }
