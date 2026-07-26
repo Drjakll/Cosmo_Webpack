@@ -1,16 +1,14 @@
 import React, {Component, createRef} from 'react';
-import Context from '@context/context.js';
-import Comments_Container from '@comments_container/comments_container.js';
-import Reaction_Container from '@universal_components/General_Reactions_Container/general_reactions_container.js';
-import Profile_Thumbnail from '@universal_components/Profile_Thumbnail/profile_thumbnail.js';
-import Popup_Msg from '@popup_template/Popup_Message/popup_message.js';
+import Comments_Container from '@comments_container';
+import Reaction_Container from '@general_reactions_container';
+import Profile_Thumbnail from '@profile_thumbnail';
+import Request_URLs from '@request_urls';
+import Popup_Msg from '@popup_message';
 import './comment_container.less';
 
 class Comment_Container extends Component {
 
     Comments = Comments_Container
-
-    static contextType = Context;
 
     commentRef = createRef()
 
@@ -106,7 +104,7 @@ class Comment_Container extends Component {
                 return;
             }
 
-            let {delete_comment} = this.context.Request_URLs;
+            let {delete_comment} = Request_URLs;
 
             let {id, target_id, target_id_type} = this.state.comment_info;
 
@@ -140,7 +138,7 @@ class Comment_Container extends Component {
 
         let Save_Comment = async (e)=>{
 
-            let {update_comment} = this.context.Request_URLs;
+            let {update_comment} = Request_URLs;
 
             let {visitor_user_account, comment_info} = this.state;
 
@@ -197,7 +195,7 @@ class Comment_Container extends Component {
 
     Show_This_Comment = (is_reply = false)=>{
 
-        let {signal_refresh_this_section_comments} = this.props;
+        let {signal_refresh_this_section_comments, additional_comment_options} = this.props;
 
         let {comment_info, owner_user_account, visitor_user_account, editable} = this.state
 
@@ -229,6 +227,7 @@ class Comment_Container extends Component {
                         visitor_user_account={visitor_user_account}
                         owner_user_account={owner_user_account}
                         profile={{profile_picture_link, id: user_id}}
+                        additional_options={additional_comment_options}
                     />
 
                 </div>

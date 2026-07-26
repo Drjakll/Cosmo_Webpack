@@ -2,7 +2,7 @@ let request = function({sql}) {
 
     this.req_path = "/set_photo_as_cover";
     this.req_type = "post";
-    this.callbacks = ["set_photo_as_cover"];    
+    this.callbacks = ["central_auth","set_photo_as_cover"];    
     
     this.req = async (req, res) => { 
         

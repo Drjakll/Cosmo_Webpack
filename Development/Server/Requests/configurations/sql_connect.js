@@ -14,7 +14,8 @@ let Connect_Pool = () => {
         queueLimit: 0,
         connectTimeout: 10000, 
         keepAliveInitialDelay: 0,
-        enableKeepAlive: true
+        enableKeepAlive: true,
+        multipleStatements: true
     });
     
     return SQL;
@@ -84,12 +85,12 @@ setInterval(async ()=>{
 }, 30000);
 
 let query_wrapper = {
-  query: async function(q, data = null, tries = 3){
+  query: async function(q, data = [], tries = 3){
 
     try {
 
-      let result = data === null ? await sql.query({sql: q, timeout: 10000}) : await sql.query({sql: q, timeout: 10000}, data);
-
+      let result = await sql.query({sql: q, timeout: 10000}, data);
+ 
       return result;
 
     } catch(err){
@@ -111,11 +112,11 @@ let query_wrapper = {
     }
 
   },
-  execute: async function(q, data = null, tries = 3){
+  execute: async function(q, data = [], tries = 3){
 
       try {
 
-        let result = data === null ? await sql.execute({sql: q, timeout: 10000}) : await sql.execute({sql: q, timeout: 10000}, data);
+        let result = await sql.execute({sql: q, timeout: 10000}, data);
 
         return result;
 

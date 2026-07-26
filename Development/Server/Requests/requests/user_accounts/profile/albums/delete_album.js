@@ -2,7 +2,9 @@ let request = function({sql}) {
     
     this.req_path = "/delete_album";
     this.req_type = "post";
-    this.callbacks = ["delete_album",
+    this.callbacks = [
+        "central_auth",
+        "delete_album",
         "delete_photo_files"
     ];
     

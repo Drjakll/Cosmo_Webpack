@@ -1,6 +1,5 @@
 import React, {Component, createRef} from 'react';
-import {Login} from '@universal_components/Account_Functions/account_access.js';
-import Context from '@context/context.js';
+import {Login} from '@account_access';
 
 
 class Login_Account extends Component {
@@ -8,7 +7,6 @@ class Login_Account extends Component {
     emailRef = createRef();
     passwordRef = createRef();
 
-    static contextType = Context;
     
     constructor(props){
         

@@ -1,4 +1,4 @@
-import Search_Parameters from '@data_templates/Search_Parameters/search_parameters.js';
+import Search_Parameters from '@search_parameters';
 
 let Search_Data_Template = function(initial = Search_Parameters){
 

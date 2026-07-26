@@ -6,7 +6,9 @@ let request = function({s3}){
 
     this.req_path = "/upload_photos";
     this.req_type = "post";
-    this.callbacks = ["uploads",
+    this.callbacks = [
+        "uploads",
+        "central_auth",
         "upload_photos",
         "add_photo_links",
         "add_album_update_log",

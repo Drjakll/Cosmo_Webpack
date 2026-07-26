@@ -1,14 +1,12 @@
 import React , {Component} from 'react';
-import Context from '@context/context.js';
-import Search_Parameters from '@data_templates/Search_Parameters/search_parameters.js';
-import Search_Data from '@data_templates/search_data.js';
+import Search_Parameters from '@search_parameters';
+import Search_Data from '@search_data';
 import './search_criteria_box.less';
 
 let {Search_Data_Template} = Search_Data;
 
 class Criteria_Box extends Component {
 
-    static contextType = Context
 
     search_criteria = {}
     

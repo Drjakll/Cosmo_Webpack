@@ -2,7 +2,7 @@ function request({sql}) {
 
     this.req_path = "/leave_public_channel";
     this.req_type = "post";
-    this.callbacks = ["leave_public_channel"];
+    this.callbacks = ["central_auth","leave_public_channel"];
     
     this.req = async (req, res) => {
         

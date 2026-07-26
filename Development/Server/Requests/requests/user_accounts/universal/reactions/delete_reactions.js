@@ -2,7 +2,7 @@ let request = function({sql}) {
     
     this.req_path = "/delete_reactions";
     this.req_type = "post";
-    this.callbacks = ["delete_reactions"];
+    this.callbacks = ["central_auth","delete_reactions"];
     
     this.req = async (req, res, next) => { 
         

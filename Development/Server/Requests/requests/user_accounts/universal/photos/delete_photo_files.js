@@ -2,7 +2,7 @@ let request = function({s3, DeleteObjectsCommand}) {
 
     this.req_path = "/delete_photo_files";
     this.req_type = "post";
-    this.callbacks = ["delete_photo_files"];
+    this.callbacks = ["central_auth","delete_photo_files"];
     
     var delete_files = async (photos, bucket_name) => {
 

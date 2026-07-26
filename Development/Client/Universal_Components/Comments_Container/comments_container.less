@@ -16,7 +16,7 @@
 
         #comment-header {
             width: 100%;
-            height: 50px;
+            height: 35px;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -31,18 +31,19 @@
 
         #comment-values-wrapper {
             width: 100%;
-            height: calc(100% - 150px);
+            height: calc(100% - 135px);
             display: block;
-            overflow-y: auto;
+            overflow: auto;
+            position: relative;
             scrollbar-width: none;
 
             .single-comment-entry {
                 width: 85%;
                 position: relative;
-                border: rgba(0,0,0,0.75) solid 0.5px;
+                border: rgba(0,0,0,0.25) solid 0.5px;
                 left: 7.5%;
                 margin-bottom: 25px;
-                border-radius: 5px;
+                border-radius: 10px;
                 background-color: rgba(235,235,235,0.75);
                 position: relative;
                 z-index: 9;
@@ -50,19 +51,16 @@
                 &:hover {
                     z-index: 999 !important;
                 }
-
-                &:last-child {
-                    margin-bottom: 200px;
-                }
             }
         }
 
         #comment-input-wrapper {
             width: 100%;
-            height: 75px;
+            height: 100px;
             display: flex;
             justify-content: center;
             align-items: center;
+            position: relative;
         }
     }
 

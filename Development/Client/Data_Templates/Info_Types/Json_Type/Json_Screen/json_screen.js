@@ -1,13 +1,11 @@
 import React, {Component} from 'react';
-import Context from '@context/context.js';
-import Text from '@data_templates/Info_Types/Text_Type/text_type.js';
-import Date from '@data_templates/Info_Types/Date_Type/date_type.js';
-import Choice from '@data_templates/Info_Types/Choice_Type/choice_type.js';
+import Text from '@text_type';
+import Date from '@date_type';
+import Choice from '@choice_type';
+import Request_URLs from '@request_urls';
 import './json_screen.less';
 
 class Json_Popup extends Component {
-
-    static contextType = Context;
 
     Name_Map = {};
     
@@ -125,7 +123,7 @@ class Json_Popup extends Component {
 
         let {id} = this.state.owner_user_account;
 
-        let {get_user_table_data} = this.context.Request_URLs;
+        let {get_user_table_data} = Request_URLs;
 
         let body ={
             user_id: id,

@@ -1,0 +1,72 @@
+let request = function({sql}){
+    
+    //The difference between view_user_account_data.js vs get_user_account_data is that it needs to be checked account auth and 
+    //if the viewer is blocked
+
+    this.req_path = "/view_user_account_data";
+    this.req_type = "post";
+    this.callbacks = ["central_auth","is_user_blocked","view_user_account_data"];
+
+    this.req = async (req, res)=>{
+        
+        let {id} = req.body;
+        
+        let query = `select ac.id,
+                            ac.first_name,
+                            ac.last_name,
+                            ac.gender,
+                            ac.marital_status,
+                            ac.date_of_birth,
+                            ac.email,
+                            ac.privacy,
+                            ac.mood_today,
+                            ac.last_mood_updated,
+                            ac.personal_traits,
+                            pl.link as profile_picture_link,
+                            pl.id as profile_picture_id,
+
+                            json_array() as User_Hobbies,
+                            json_array() as User_Locations,
+                            json_array() as User_Professions,
+                            json_array() as User_Schools
+
+                        from 
+                            User_Accounts as ac
+
+                        left join
+                            Photo_Links as pl
+                        on
+                            pl.profile_id = ac.id and is_a_cover = true
+
+                        where 
+                            ac.id = ?
+                    `;
+
+        try {
+
+            let [result] = await sql.query(query, [id]);
+
+            if(result.length === 0){
+
+                res.json({message: "Account not found!", result: null});
+
+            } else {
+
+                res.json({message: "Account found!", result: result[0]});
+
+            }
+
+        }catch(err){
+
+            console.log(query,err);
+
+            res.json({message: "Error looking up account", result: null});
+        }
+    
+    };
+    
+};
+
+export default request;
+
+

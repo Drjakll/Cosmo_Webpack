@@ -2,7 +2,7 @@ let request = function ({sql}) {
 
     this.req_path = "/update_profile_table_data";
     this.req_type = "patch";
-    this.callbacks = ["update_profile_table_data"];
+    this.callbacks = ["central_auth","update_profile_table_data"];
     
     this.req = async (req, res) => { 
         

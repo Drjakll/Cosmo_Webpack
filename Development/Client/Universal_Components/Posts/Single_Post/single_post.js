@@ -1,8 +1,9 @@
 import React, { Component, createRef } from 'react';
-import Comments_Container from '@comments_container/comments_container.js';
-import General_Reactions_Container from '@universal_components/General_Reactions_Container/general_reactions_container.js';
-import Context from '@context/context.js';
-import init_websocket from '@root/Utilities/init_websocket.js';
+import Post_Photo_Viewer from './Post_Photo_Viewer/post_photo_viewer.js';
+import Comments_Container from '@comments_container';
+import General_Reactions_Container from '@general_reactions_container';
+import init_websocket from '@init_websocket';
+import Request_URLs from '@request_urls';
 import './single_post.less';
 
 class Single_Post extends Component {
@@ -33,7 +34,6 @@ class Single_Post extends Component {
         
         let { post, owner_user_account, visitor_user_account, for_commenting } = this.props;
 
-        Single_Post.contextType = Context;
 
         this.state = {
             owner_user_account,
@@ -57,7 +57,11 @@ class Single_Post extends Component {
         
     }
 
-    Init_Socket = ()=>{
+    Init_Socket = async  ()=>{
+
+        if(this.socket !== undefined){
+            await this.socket.disconnect();
+        }
 
         this.socket = init_websocket('/reaction_room', this.Init_Socket);
 
@@ -84,7 +88,7 @@ class Single_Post extends Component {
 
     Refresh_Reactions = async ()=>{
 
-        let {get_posts} = this.context.Request_URLs;
+        let {get_posts} = Request_URLs;
 
         let {id: user_id} = this.state.owner_user_account;
 
@@ -112,14 +116,19 @@ class Single_Post extends Component {
     }
     
     async componentDidUpdate(prevProps, prevState){
+
+        let {post, for_commenting} = this.props;
         
-        if(this.props === prevProps){
+        if(post?.id === prevProps.post?.id){
             return;
         }
-        
-        await this.setState(this.props);
 
-        this.bodyRef.current?.innerHTML = this.state.post?.body;
+        await this.setState({post, for_commenting});
+
+        if(this.bodyRef.current){
+
+            this.bodyRef.current.innerHTML = post?.body;
+        }
 
         this.Init_Socket();
 
@@ -191,6 +200,12 @@ class Single_Post extends Component {
             </div>
             
             <div id="body">
+
+                <div id="post-photo-viewer">
+
+                    <Post_Photo_Viewer post={post} />
+
+                </div>
 
                 <pre ref={this.bodyRef}>
                     

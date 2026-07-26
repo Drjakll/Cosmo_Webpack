@@ -1,0 +1,281 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/ClientSide/style.less to edit this template
+*/
+/*
+    Created on : Apr 4, 2025, 10:09:52 PM
+    Author     : justinzhu
+*/
+
+@keyframes fadein {
+    from {opacity: 0}
+    to {opacity: 1}
+}
+
+#profile-info-data {
+    width: 100%;
+    height: 100%;
+    display: block;
+    overflow: visible;
+    position: relative;
+    background: linear-gradient(to bottom, lightgray, whitesmoke );
+
+    &:hover {
+        z-index: 9999999;
+    }
+    
+    #profile-data-label-wrapper {
+        width: 100%;
+        height: 10%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        //background: linear-gradient(to bottom, lightgray, whitesmoke );
+        //border-bottom: rgba(0,0,0,1) solid 1px;
+
+        #today-mood-wrapper {
+            width: 50%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            color: rgba(0,0,0,0.65);
+            position: relative;
+            font-family: sans-serif;
+
+            #mood-label, #the-mood {
+                width: 100%;
+                height: 50%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                position: relative;
+            }
+
+            #mood-label {
+                color: rgba(0,0,0,0.75);
+                font-weight: 500;
+                font-size: 16px;
+                text-align: center;
+                //text-decoration: underline;
+            }
+
+            #the-mood {
+                width: 90% !important;
+
+                #current-mood {
+                    width: 100%;
+                    height: 100%;
+                    display: flex;
+                    justify-content: space-evenly;
+                    align-items: center;
+                    font-size: 14px;
+                    color: rgba(0,0,0,1);
+                    text-align: center;
+                    font-weight: 600;
+
+                    img {
+                        height: 40px;
+                        width: 40px;
+                        object-fit: contain;
+                        object-position: center;
+                    }
+                }
+            }
+
+            .mood-selectable {
+                transition: 0.5s;
+                border-radius: 10px;
+
+                &:hover {
+                    cursor: pointer;
+                    //background-color: rgba(0,0,0,0.1);
+
+                    #mood-selection-wrapper {
+                        display: flex;
+                        opacity: 1;
+                    }
+                }
+                
+                #mood-selection-wrapper {
+                    width: 270px;
+                    display: none;
+                    justify-content: center;
+                    align-items: center;
+                    position: absolute;
+                    top: 100%;
+                    left: 0px;
+                    opacity: 0;
+                    transition: 1s;
+                    animation-name: fadein;
+                    animation-duration: 1s;
+                }
+            }
+        }
+
+        #detail-label {
+            width: 50%;
+            height: 100%;
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            
+            img {
+                width: 100px;
+                height: 100%;
+                margin-right: 5px;
+                object-fit: contain;
+                object-position: center;
+            }
+
+            label {
+                //text-decoration: underline;
+                //font-weight: bold;
+                font-size: 18px;
+                font-family: sans-serif;
+                font-weight: 500;
+                color: rgba(25, 25, 25, 0.8);
+                user-select: none;
+                height: 100%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+        }
+    }
+    
+    .unselectable-text {
+        user-select: none;
+        
+        * {
+            pointer-events: none;
+        }
+    }
+    
+    #info-wrapper {
+        width: 100%;
+        height: 90%;
+        overflow: visible;
+        display: block;
+        scrollbar-width: none;
+        
+        &::-webkit-scrollbar {
+            display: none;
+        }
+
+        &:hover {
+            z-index: 9999999;
+        }
+           
+        
+        .individual-info-wrapper {
+            width: 90%;
+            height: 50px;
+            border-bottom: rgba(0,0,0,0.4) solid 1px;
+            margin-left: 5%;
+            margin-right: 5%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            &:hover {
+                z-index: 9999999;
+            }
+
+            &:last-child {
+                border-bottom: none;
+            }
+            
+            #info-label {
+                width: 50%;
+                display: flex;
+                justify-content: flex-start;
+                align-items: center;
+
+                label {
+                    padding: 0px 10px 0px 10px;
+                    color: rgba(0,0,0,1);
+                    font-size: 16px;
+                    font-weight: 500;
+                }
+
+                #label-icon {
+                    background-position: center;
+                    background-size: contain;
+                    background-repeat: no-repeat;
+                    width: 40px;
+                    height: 40px;
+                }
+            }
+            
+            #info-value {
+                width: 50%;
+                height: 100%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                font-size: 16px;
+                //background: linear-gradient(to right, whitesmoke 0%, lightgray 50%, whitesmoke 100%);
+
+                &:hover {
+                    z-index: 9999999;
+                }
+            }
+
+        }
+    }
+}
+
+@media only screen and (max-width: 1000px) {
+
+    #profile-info-data {
+
+        #profile-data-label-wrapper {
+            z-index: 99999;
+
+            #today-mood-wrapper {
+                flex-direction: row;
+                z-index: 9999;
+
+                #mood-label {
+                    font-size: 13px;
+                }
+            }
+
+            #detail-label {
+
+                label {
+                    font-size: 13px;
+                }
+            }
+        }
+
+        #info-wrapper {
+            z-index: 99;
+            overflow: auto;
+
+            &:hover {
+                z-index: 99;
+            }
+
+            .individual-info-wrapper {
+
+                &:hover {
+                    z-index: 999;
+                }
+
+                #info-label {
+                    
+                    label {
+                        font-size: 12px;
+                    }
+                }
+
+                #info-value {
+                    font-size: 16px;
+                }
+            }
+        }
+    }
+}

@@ -1,13 +1,13 @@
 import React, {Component} from 'react';
-import Context from '@context/context.js';
 import Comment_Input  from './Comment_Input/comment_input.js';
 import Comment_Container from './Comment_Container/comment_container.js';
-import init_websocket from '@root/Utilities/init_websocket.js';
+import init_websocket from '@init_websocket';
+import Request_URLs from '@request_urls';
 import './comments_container.less';
 
-class Comments_Container extends Component {
 
-    static contextType = Context
+//Props required: target_id, target_id_type, reply_to_id
+class Comments_Container extends Component {
 
     Select_Comment = null //Should be replaced by the child, which should be an editor and this should be a lambda
     Unselect_Comment = null //Should be replaced by the child, which should be an editor and this should be a lambda
@@ -98,7 +98,6 @@ class Comments_Container extends Component {
 
         comments = (await this.Get_Comments(Date.now(), 1, "<=", "desc")).concat(comments);
 
-        console.log(comments)
 
         this.setState({comments});
 
@@ -190,7 +189,7 @@ class Comments_Container extends Component {
         
         let {target_id, target_id_type, reply_to_id} = this.props;
 
-        let {get_comments} = this.context.Request_URLs;
+        let {get_comments} = Request_URLs;
 
         let body = {
             target_id,
@@ -362,7 +361,7 @@ class Comments_Container extends Component {
 
         let {comments, visitor_user_account, owner_user_account, selected_comments} = this.state;
 
-        let {back_previous, show_replies, target_id, target_id_type, reply_to_id, comments_count} = this.props;
+        let {back_previous, show_replies, target_id, target_id_type, reply_to_id, additional_comment_options} = this.props;
 
         //Make sure the children uses the first comment_container.js back_revious and show_replies
         back_previous = back_previous || this.Back_Previous;
@@ -400,6 +399,7 @@ class Comments_Container extends Component {
                                 select_comment={this.Select_Comment}   
                                 unselect_comment={this.Unselect_Comment}
                                 selected={selected_comments && selected_comments[value.id] ? true : false}
+                                additional_comment_options={additional_comment_options}
                             />
 
                         </div>;

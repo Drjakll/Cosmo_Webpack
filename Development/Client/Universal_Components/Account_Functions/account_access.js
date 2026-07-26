@@ -1,5 +1,5 @@
-import Request_URLs from '@root/API_Requests/request_urls.js';
-import Account_Data from '@data_templates/account_data.js';
+import Request_URLs from '@request_urls';
+import Account_Data from '@account_data';
 
 
 const Login = async (input_email, input_password) =>{
@@ -31,3 +31,4 @@ const Logout = async ()=>{
 };
 
 export {Login, Logout};
+export default {Login, Logout};

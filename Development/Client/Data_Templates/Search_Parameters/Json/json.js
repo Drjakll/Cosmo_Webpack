@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import Context from '@context/context.js';
 import Text from '../Text/text.js';
 import Date from '../Date/date.js';
 import Choice from '../Choice/choice.js';
@@ -16,8 +15,7 @@ class Json extends Component {
         this.state = {
             
         };
-
-        Json.contextType = Context;
+        
     }
 
     Input_Data_Types = {

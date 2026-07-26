@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import Configurations from '@configurations';
 import './date_type.less';
 
 class Date_Type extends Component {    
@@ -7,8 +8,6 @@ class Date_Type extends Component {
     constructor(props){
         
         super(props);
-
-        Date_Type.contextType = window.Context;
 
         let {value, label, data_name, owner_user_account, update_callback, column_name} = props;
 
@@ -32,8 +31,6 @@ class Date_Type extends Component {
         if(!dateStr){
             return "Continue";
         }
-
-        const {Configurations} = this.context;
         
         const {Months} = Configurations;
         

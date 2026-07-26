@@ -2,7 +2,7 @@ function request({sql}) {
     
     this.req_path = "/join_public_channel";
     this.req_type = "post";
-    this.callbacks = ["join_public_channel"];
+    this.callbacks = ["central_auth","join_public_channel"];
 
     this.req = async (req, res) => {
         

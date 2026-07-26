@@ -2,10 +2,11 @@ function request({sql}) {
 
     this.req_path = "/create_conversation";
     this.req_type = "post";
-    this.callbacks = ["create_conversation"];
+    this.callbacks = ["central_auth","is_user_blocked","create_conversation","add_conversation_participants"];
 
     this.req = async (req,res, next)=>{
 
+        
         let {from_id, oppose_id} = req.body;
 
         let now = Date.now(); 

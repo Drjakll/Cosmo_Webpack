@@ -2,7 +2,7 @@ function request({sql}) {
 
     this.req_path = "/edit_private_conversation_name";
     this.req_type = "patch";
-    this.callbacks = ["edit_private_conversation_name"];
+    this.callbacks = ["central_auth","edit_private_conversation_name"];
 
     this.req = async (req, res) => {
         

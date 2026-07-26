@@ -27,7 +27,7 @@ class Calendar extends Component {
             callback_left: callback_left,
             callback_right: callback_right,
             date_properties: date_properties ? date_properties : [],
-            capture_date: capture_date
+            capture_date
         };
     }
 

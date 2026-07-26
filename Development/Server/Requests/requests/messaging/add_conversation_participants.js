@@ -2,9 +2,11 @@ function request({sql}) {
 
     this.req_path = "/add_conversation_participants";
     this.req_type = "post";
-    this.callbacks = ["add_conversation_participants"];
+    this.callbacks = ["central_auth","add_conversation_participants"];
 
     this.req = async (req, res) => {
+
+        console.log("hi?");
         
         let {new_users, conversation_id} = req.body;
 
@@ -18,6 +20,8 @@ function request({sql}) {
 
             values.push([conversation_id, now, user_id, 0]);
         }
+
+        console.log(values);
 
         try {
 

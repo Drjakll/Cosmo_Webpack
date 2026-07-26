@@ -8,11 +8,32 @@ function request({sql}) {
         
         let {conversation_id, user_id} = req.body;
         
-        let query = `delete from Users_In_Private_Conversations where conversation_id = ? and user_id = ?`;
+        let query = `delete 
+                        from
+                             Users_In_Private_Conversations 
+                        where 
+                            conversation_id = ? 
+                        and 
+                            user_id = ?;
+
+                    delete 
+                        from 
+                            Private_Conversations 
+                        where 
+                            id = ? 
+                        and 
+                            not exists 
+                                (
+                                    select 1 
+                                        from 
+                                            Users_In_Private_Conversations 
+                                        where 
+                                        conversation_id = ?
+                    )`;
         
         try {
 
-            await sql.query(query, [conversation_id, user_id]);
+            await sql.query(query, [conversation_id, user_id, conversation_id, conversation_id]);
 
             res.json({message: "You have left the conversation!"});
 

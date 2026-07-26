@@ -5,6 +5,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "webpack",
+    "prebuild": "node generate_dependency_routes.js ",
     "start": "webpack serve",
     "watch": "webpack --watch",
     "serve": "nodemon Built_Server/built_server.js"
@@ -58,7 +59,6 @@
     "socket.io-client": "^4.8.3",
     "stream-http": "^3.2.0",
     "style-loader": "^4.0.0",
-    "ts-loader": "^9.5.4",
     "utf-8-validate": "^6.0.6",
     "webpack-node-externals": "^3.0.0",
     "webrtc": "^1.14.1"

@@ -2,6 +2,7 @@
     width: 100%;
     height: 100%;
     display: block;
+    position: relative;
     transition: 1s;
 
     #profile-thumbnail-image-wrapper {
@@ -14,7 +15,7 @@
         #profile-thumbnail-image {
             width: 100%;
             height: 100%;
-            border-radius: 15px;
+            border-radius: 5px;
             object-fit: cover;
             object-position: center;
             border: rgba(0,0,0,0.5) solid 0.5px;
@@ -34,12 +35,71 @@
         }
     }
 
-    #connection-options-wrapper {
-        width: 100%;
-        height: 10%;
-        display: flex;
-        justify-content: space-evenly;
-        align-items: center;
+    #option-wrapper {
+        width: 40px;
+        height: 25px;
+        position: absolute;
+        display: block;
+        right: 0px;
+        top: 0px;
+        background-color: rgba(0,0,0,0.0);
+        border-radius: 50px;
+        transition: 0.5s;
+
+        &:hover {
+            cursor: pointer;
+            background-color: rgba(0,0,0,0.5);
+
+            #profile-thumbnail-options-wrapper {
+                display: block;
+            }
+        }
+
+        label {
+            height: 75%;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            position: relative;
+            transition: 1s;
+
+
+            &:hover {
+                cursor: pointer;
+            }
+        }
+
+        #profile-thumbnail-options-wrapper {
+            width: 100px;
+            position: absolute;
+            top: 100%;
+            left: -35px;
+            display: none;
+            background-color: rgba(0,0,0,0.1);
+            transition: 1s;
+            overflow: hidden;
+            border-radius: 5px;
+
+            .profile-thumbnail-option-selection {
+                width: 100%;
+                height: 25px;
+                position: relative;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                background-color: rgba(200,200,200,0.75);
+                color: rgba(50,50,50,1);
+                font-size: 14px;
+                transition: 0.5s;
+
+                &:hover {
+                    cursor: pointer;
+                    background-color: white;
+                }
+            }
+        }
     }
 }
 

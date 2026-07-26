@@ -13,6 +13,7 @@ let request = function({sql}) {
 
         let query = `select 
                         pd.*,
+                        (select count(*) from Photo_Links where post_id = pd.id) as photos_count,
                         (select count(*) from Comments where post_id = pd.id) as comments_count
                     from
                         Post_Data as pd

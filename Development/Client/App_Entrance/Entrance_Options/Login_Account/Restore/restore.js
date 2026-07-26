@@ -1,10 +1,9 @@
 import React, {Component, createRef} from 'react';
-import popup_msg from '@popup_template/Popup_Message/popup_message.js';
-import Context from '@context/context.js';
+import popup_msg from '@popup_message';
+import Request_URLs from '@request_urls';
 
 class Restore extends Component {
 
-    static contextType = Context;
 
 
     
@@ -25,7 +24,7 @@ class Restore extends Component {
             return;
         }
 
-        let {recover_account} = this.context.Request_URLs;  
+        let {recover_account} = Request_URLs;  
 
         let response = await fetch(recover_account, {
             method: "POST",

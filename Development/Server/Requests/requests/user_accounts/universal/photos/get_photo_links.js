@@ -33,6 +33,7 @@ let request = function({sql}) {
                         ${where_query}
                     group by 
                         pl.id`;
+
         
         try {
 
@@ -50,7 +51,7 @@ let request = function({sql}) {
                     :
                     //If all photos on the feed update is erased, then go to delete_album_update_log.js
                     next();
-                ;
+                
                 
             }
             

@@ -1,158 +1,372 @@
+import React, {Component} from 'react';
+import {createRoot} from 'react-dom/client';
+import Portal from '@portal';
 import './popup_message.less';
 
-let Create_Popup = async function(type = "message", msg = "", result = null){
+class Basic extends Component {
 
-    let create_basics = ()=>{
+    constructor(props){
+
+        super(props);
+
+    }
+
+    Message_Component = ()=>{
+
+        let {message} = this.props;
+
+        return <div id="the-msg-label">
+
+            {message}
+
+        </div>;
+    }
+
+    Destroy = ()=>{
+
+        this.props.destroy();
+    }
+
+    Input_Type = ()=>{
+
+        return <div id="input-wrapper">
+
+            <div id="the-input-submit-wrapper">
+            
+                <button className="button ok" onClick={this.Destroy}>Ok</button>
+
+            </div>
+
+        </div>;
+
+    }
+
+    render(){
+
+        return <div id="popup-base-wrapper">
+
+            {this.Message_Component()}
+
+            {this.Input_Type()}
+
+        </div>;
+    }
+}
+
+
+
+
+
+class Input_Basic extends Basic {
+
+    input = "";
+
+    constructor(props){
+
+        super(props);
+
+    }
+    
+    The_Input = ()=>{
+
+        let {maxLength} = this.props;
+
+        return <div id="the-input-content-wrapper">
+
+            <input type="text" onChange={(e)=>{ this.input = e.target.value}} maxLength={maxLength ?? 20}/>
+
+        </div>;
+    }
+
+    The_Submit = ()=>{
+
+        return <div id="the-input-submit-wrapper">
+
+            <button className="button ok" onClick={this.Submit_Input}>Ok</button>
+
+            <button className="button cancel" onClick={this.Cancel_Input}>Cancel</button>
+
+        </div>;
+
+    }
+
+    Submit_Input = ()=>{
+
+        let {input_obj} = this.props;
+
+        input_obj.input = this.input;
+
+        this.Destroy();
+    }
+
+    Cancel_Input = ()=>{
+
+        let {input_obj} = this.props;
+
+        input_obj.input = null;
+
+        this.Destroy();
+    }
+
+    Input_Type = ()=>{
+
+        return <div id="input-wrapper">
+
+            {this.The_Input()}
+
+            {this.The_Submit()}
+
+        </div>;
+
+    }
+}
+
+
+
+
+
+class Confirm extends Basic {
+
+    constructor(props){
+
+        super(props);
+
+
+    }
+
+    Confirm = (answer)=>{
+
+        let {input_obj} = this.props;
+
+        input_obj.agree = answer;
+
+        this.Destroy();
+    }
+
+    Input_Type = ()=>{
+
+        return <div id="input-wrapper">
+
+            <div id="the-input-submit-wrapper">
+
+                <button className="button" onClick={(e)=>{ this.Confirm(true); }}>Confirm</button>
+
+                <button className="button" onClick={(e)=>{ this.Confirm(false); }}>Cancel</button>
+
+            </div>
+
+        </div>;
+    }
+}
+
+
+
+
+
+class Selections extends Input_Basic {
+
+    constructor(props){
+
+        super(props);
+
+        let {options} = props;
+
+        let selected = {};
+
+        for(let o of options){
+
+            let {value, selected: is_selected} = o;
+
+            if(is_selected){
+                selected[value] = true;
+            }
+        }
+
+        this.state = {
+            selected
+        };
+    }
+
+    The_Input = ()=>{
+
+        let Select = (value)=>{
+
+            let {selected} = this.state;
+
+            if(selected[value]){
+
+                delete selected[value];
+
+            } else {
+
+                selected[value] = true;
+
+            }
+
+            this.setState({
+                selected
+            });
+
+        }
+
+        const {options} = this.props;
+        let {selected} = this.state;
+
+        let check = <div>
+            &#10004;
+        </div>
+
+        return <div id="the-input-wrapper">
+
+            <div id="the-input-content-wrapper">
+
+                {options.map((option, index)=>{
+
+                    const {label, value} = option;
+
+                    return <pre className={`input-option-selection ${selected[value] ? "selected" : ""}`}
+                                key={index}
+                                onClick={(e)=>{Select(value); }}>
+
+                            {label} {selected[value] ? check : ""}
+
+                        </pre>;
+
+                })}
+
+            </div>
+
+        </div>;
         
-        let popup_box_wrapper = document.createElement("div");
+    }
 
-        let the_message_wrapper = document.createElement("div");
+    Submit_Input = ()=>{
 
-        let the_buttons_wrapper = document.createElement("div");
+        let {input_obj} = this.props;
 
-        popup_box_wrapper.id = "popup-box-wrapper";
-        the_message_wrapper.id = "the-message-wrapper";
-        the_buttons_wrapper.id = "the-buttons-wrapper";
+        const keys = Object.keys(this.state.selected);
 
-        popup_box_wrapper.appendChild(the_message_wrapper);
-        popup_box_wrapper.appendChild(the_buttons_wrapper);
+        input_obj.input = keys.join(',');
 
-        return [popup_box_wrapper, the_message_wrapper, the_buttons_wrapper];
+        this.Destroy();
 
+    }
+}
+
+
+
+
+
+class Popup_Box_Wrapper extends Component {
+
+    constructor(props){
+
+        super(props);
+
+        let {type} = props;
+
+        this.state = {
+            selected_input_type: this.Input_Types[type]
+        };
+    }
+
+    Create_Basic = () =>{
+
+        return <Basic {...this.props} />
+
+    }
+
+    Create_Input_Basic = ()=>{
+
+        return <Input_Basic {...this.props} />
+    }
+
+    Create_Confirmation = ()=>{
+
+        return <Confirm {...this.props}/>
+    }
+
+    Create_Selections = () =>{
+
+        return <Selections {...this.props}/>
+    }
+
+    Input_Types = {
+        "message": this.Create_Basic,
+        "confirm": this.Create_Confirmation,
+        "input": this.Create_Input_Basic,
+        "selections": this.Create_Selections
     };
 
-    let create_message = ()=>{
+    render(){
 
-        let the_msg_label = document.createElement("pre");
+        let {selected_input_type} = this.state;
 
-        the_msg_label.textContent = msg;
+        return <div id="popup-box-wrapper">
 
-        the_msg_label.id = "the-msg-label";
+            {selected_input_type()}
 
-        return the_msg_label;
+        </div>;
+    }
+}
 
-    };
 
-    let create_buttons = (resolve) => {
 
-        let destroy_big_sheet = (e)=>{
 
-            let big_sheet = document.getElementById("big-msg-sheet-cover");
 
-            document.body.removeChild(big_sheet);
+class Big_Cover extends Component {
+
+    constructor(props){
+
+        super(props)
+
+    }
+
+    render(){
+
+        return <div id="big-msg-sheet-cover">
+
+            <Popup_Box_Wrapper {...this.props} />
+
+        </div>;
+    }
+}
+
+
+
+
+let Create_Popup = async function(type = "message", msg= "", result = null, selections = []){
+
+    let only_types = ["message", "confirm", "input", "selections"];
+
+    if(!only_types.includes(type)){
+
+        alert("Invalid input type");
+
+        return;
+    }
+
+    
+    let container = document.createElement("div");
+
+    document.body.appendChild(container);
+
+    let new_root = createRoot(container);
+
+    return new Promise((resolve)=>{ 
+
+        const Destroy = ()=>{
+
+            document.body.removeChild(container);
 
             resolve(true);
 
         }
+        
+        new_root.render(<Big_Cover message={msg} type={type} input_obj={result} destroy={Destroy} options={selections}/>);
 
-        let ok_button = document.createElement("button");
-        ok_button.className = "button ok";
-        ok_button.textContent = "Ok";
+    })
 
-        ok_button.addEventListener("click", destroy_big_sheet);
-
-        let yes_button = document.createElement("button");
-        yes_button.className = "button yes";
-        yes_button.textContent = "Yes";
-
-        yes_button.addEventListener("click", (e)=>{
-
-            result?.agree = true;  
-
-            destroy_big_sheet(e);
-        });
-
-        let no_button = document.createElement("button");
-        no_button.className = "button no";
-        no_button.textContent = "No";
-
-        no_button.addEventListener("click", (e)=>{
-
-            result?.agree = false;
-
-            destroy_big_sheet(e);
-        });
-
-        let input_wrapper = document.createElement("div");
-        input_wrapper.id = "input-wrapper";
-
-        let input = document.createElement("input");
-        input.type = "text";
-        input.className = "input text";
-        input.maxLength = result?.maxLength ?? 20;
-
-        input.addEventListener("change", (e)=>{
-            result?.input = e.target.value; 
-        });
-
-        input_wrapper.appendChild(input);
-
-        let submit = document.createElement("button");
-        submit.className = "button submit";
-        submit.textContent = "Submit";
-
-        submit.addEventListener("click", (e)=>{
-
-            result?.submit = true;
-
-            destroy_big_sheet(e);
-        });
-
-        let cancel = document.createElement("button");
-        cancel.className = "button cancel";
-        cancel.textContent = "Cancel";
-
-        cancel.addEventListener("click", (e)=>{
-
-            result?.submit = false;
-
-            destroy_big_sheet(e);
-        })
-
-        let buttons_wrapper = document.createElement("div");
-        buttons_wrapper.id = "submit-buttons-wrapper";
-
-        buttons_wrapper.appendChild(submit);
-        buttons_wrapper.appendChild(cancel);
-
-        input_wrapper.appendChild(buttons_wrapper);
-
-        switch(type){
-            case "confirm": 
-                return [yes_button, no_button];
-            case "message":
-                return [ok_button];
-            case "input":
-                return [input_wrapper];
-            default:
-                return [ok_button];
-        }
-    };
-
-    let create_big_sheet = ()=>{
-
-        let big_sheet = document.createElement("div");
-
-        big_sheet.id = "big-msg-sheet-cover";
-
-        document.body.append(big_sheet);
-
-        return big_sheet;
-    };
-
-    return new Promise((resolve)=>{
-        let big_sheet = create_big_sheet();
-        let [box_wrapper, msg_wrapper, buttons_wrapper] = create_basics();
-        let msg_label = create_message();
-        let buttons = create_buttons(resolve);
-
-        for(let button of buttons){
-            buttons_wrapper.appendChild(button);
-        }
-
-        big_sheet.appendChild(box_wrapper);
-        msg_wrapper.appendChild(msg_label);
-    });
 }
 
 export default Create_Popup;

@@ -2,7 +2,7 @@ let request = function({sql}) {
     
     this.req_path = "/submit_reaction";
     this.req_type = "post";
-    this.callbacks = ["submit_reaction"];
+    this.callbacks = ["central_auth","submit_reaction"];
     
     this.req = async (req, res) => { 
 

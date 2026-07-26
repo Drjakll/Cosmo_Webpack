@@ -1,0 +1,103 @@
+#post-editor {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+
+
+    #buttons-wrapper {
+        width: 100%;
+        height: 25px;
+        display: flex;
+        justify-content: space-evenly;
+        align-items: center;
+
+        .post-button {
+            font-size: 16px;
+            padding:  1px 15px 1px 15px;
+            border-radius: 50px;
+            //border: rgba(0,0,0,0.5) solid 0.5px;
+            //background-color: darkorange;
+            color: rgba(75,75,75,1);
+            //box-shadow: 0px 0px 10px rgba(0,0,0,0.5);
+            transition: 1s;
+            display: flex;
+            justify-content: space-evenly;
+            align-items: center;
+            font-weight: bold;
+
+            &:hover {
+                background-color: rgba(19, 57, 106, 0.599);
+                color: rgba(241, 241, 241, 0.935);
+                cursor: pointer;
+
+                .post-icon {
+                    opacity: 1;
+                }
+            }
+
+            label {
+
+                &:hover {
+                    cursor: pointer;
+                }
+            }
+
+            .post-icon {
+                height: 40px;
+                width: 40px;
+                background-size: contain;
+                background-repeat: no-repeat;
+                background-position: center;
+                opacity: 0.5;
+            }
+        }
+
+        .disabled {
+            //background-color: rgba(0,0,0,0.5) !important;
+            color: rgba(0,0,0,0.75);
+
+            &:hover {
+                //background-color: rgba(0,0,0,0.5) !important;
+                cursor: not-allowed;
+                color: white;
+            }
+
+            label {
+
+                &:hover {
+                    cursor: not-allowed;
+                }
+            }
+        }
+    }
+
+    #post-display-wrapper {
+        width: 100%;
+        height: calc(100% - 50px);
+    }
+}
+
+#the-editor-wrapper {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+@media only screen and (max-width: 1000px){
+    
+    #post-editor {
+
+        #buttons-wrapper {
+
+            .post-button {
+                font-size: calc(14px);
+                min-width: 50px;
+                padding: 1px 10px 1px 10px;
+            }
+        }
+    }
+}

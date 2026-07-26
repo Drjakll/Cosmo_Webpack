@@ -2,14 +2,14 @@ let request = function({sql}) {
 
     this.req_path = "/submit_comment";
     this.req_type = "post";
-    this.callbacks = ["submit_comment"];
+    this.callbacks = ["central_auth","is_user_blocked","submit_comment"];
     
     
     this.req = async (req, res) => { 
         
-        let {target_id, target_id_type, comment, user_id, reply_to_id} = req.body;
+        let {target_id, target_id_type, comment, commenter_user_id, reply_to_id} = req.body;
 
-        if(isNaN(parseInt(user_id)) || !target_id || !target_id_type || !comment){
+        if(isNaN(parseInt(commenter_user_id)) || !target_id || !target_id_type || !comment){
             res.json({message: "Missing required fields!", failed: true});
             return;
         }   
@@ -18,7 +18,7 @@ let request = function({sql}) {
  
         let data = {
             comment, 
-            user_id, 
+            user_id: commenter_user_id, 
             time_stamp: now, 
             last_updated: now, 
             reply_to_id: reply_to_id ?? null

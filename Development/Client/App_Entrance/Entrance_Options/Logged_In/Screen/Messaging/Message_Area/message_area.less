@@ -1,0 +1,188 @@
+#message-area {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+
+    #left-message-area {
+        width: calc(70% - 0.5px);
+        height: 100%;
+        display: block;
+        border-right: rgba(75,75,75,1) solid 0.5px;
+        z-index: 9999;
+        background-color: lightgrey;
+
+        #top-left-message-area {
+            width: 100%;
+            height: calc(4% - 0.5px);
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            background-color: rgba(50,50,50,1);
+
+            .msg-type-button {
+                width: calc(50% - 0.25px);
+                height: 100%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                transition: 1s;
+                color: rgb(200,200,200);
+                background-color: rgba(0,0,0,1);
+                font-size: 14px;
+                user-select: none;
+                border-top-left-radius: 10px;
+                border-top-right-radius: 10px;
+                border: rgba(0,0,0,0.5) solid 0.5px;
+                border-bottom: none;
+
+                &:hover {
+                    //cursor: pointer;
+                    //background-color: rgba(0,0,0,0.75) !important;
+                    //color: rgb(225,225,225);
+                }
+            }
+
+            .msg-type-button.selected {
+                background-color: rgba(225, 225, 225,1) !important;
+                color: black;
+
+                &:hover {
+                    //color: white;
+                }
+            }
+
+            #public-messages-button {
+                border-right: rgba(75,75,75,1) solid 0.5px;
+            }
+        }
+
+        #bottom-left-message-area {
+            width: 100%;
+            height: 96%;
+            display: block;
+
+            #conversation-texts-wrapper {
+                width: 100%;
+                height: calc(100% - 75.5px);
+                border-bottom: rgba(75,75,75,1) solid 0.5px;
+            }
+
+            #conversation-input-wrapper {
+                width: 100%;
+                height: 75px;
+
+            }
+        }
+    }
+
+    #right-message-area {
+        width: 30%;
+        height: 100%;
+        display: block;
+        z-index: 9999999;
+
+        #mobile-show-conversations-button {
+            display: none;
+        }
+
+        #top-right-message-area {
+            width: 100%;
+            height: calc(7.5% - 0.5px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-bottom: rgba(75,75,75,1) solid 0.5px;
+            color: rgba(200,200,200,0.85);
+            background-color: rgba(0,0,0,0.5);
+            font-size: 14px;
+            user-select: none;
+        }
+
+        #bottom-right-message-area {
+            width: 100%;
+            height: 92.5%;
+            display: block;
+
+            #list-of-conversations {
+                width: 100%;
+                height: 100%;
+                display: block;
+                overflow-y: scroll;
+                overflow-x: auto;
+                scrollbar-width: none;
+
+                .conversation-thumbnail-wrapper {
+                    width: 100%;
+                    height: 50px;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    position: relative;
+
+                    &:hover {
+                        z-index: 9999999;
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media only screen and (max-width: 1000px){
+    
+    #message-area {
+        flex-direction: column;
+        position: relative;
+
+        #left-message-area {
+            width: 100%;
+        }
+
+        #right-message-area {
+
+            #mobile-show-conversations-button {
+                right: 100%;
+                top: calc(50% - 12.5px);
+                position: absolute;
+                width: 25px;
+                height: 25px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                background-color: rgba(0,0,0,0.5);
+                color: rgb(200,200,200);
+                font-size: 14px;
+                user-select: none;
+                transition: 0.5s;
+                z-index: 9999999;
+                border-radius: 50px;
+
+                &:hover {
+                    cursor: pointer;
+                    background-color: rgba(0,0,0,0.75) !important;
+                    color: rgb(225,225,225);
+                }
+            }
+        }
+
+        .mobile-screen {
+            position: absolute;
+            width: 55% !important;
+            height: 100%;
+            transition: 0.5s;
+            z-index: 9999999;
+            background-color: rgba(200,200,200,1);
+            border-left: rgba(0,0,0,0.5) solid 0.5px;
+        }
+
+        .no-show {
+            left: 100%;
+        }
+
+        .show {
+            left: 45%;
+        }
+    }
+}

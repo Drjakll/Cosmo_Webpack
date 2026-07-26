@@ -4,26 +4,26 @@ function init_websocket(namespace, reinit_callback = null, offline_callback = nu
 
 
     let socket = io(namespace, {
+                    transports: ["websocket"],
                     reconnection: true,
                     reconnectionAttempts: 5,
                     reconnectionDelay: 2000,
                     reconnectionDelayMax: 10000,
-                    timeout: 10000,
-                    transports: ["websocket"]
+                    timeout: 10000
                 });;
 
-    let interval_id = null;
-
+    let destroyed = false;
 
     //Cleaning up after socket get disconnected
     function cleanup(e) {
-
-        offline_callback && offline_callback(e);
-
-        if (interval_id) {
-            clearInterval(interval_id);
-            interval_id = null;
+        
+        if(destroyed){
+            return;
         }
+
+        destroyed = true;
+
+        window.removeEventListener("beforeunload", cleanup);
 
         if (socket) {
             socket.removeAllListeners();
@@ -32,42 +32,35 @@ function init_websocket(namespace, reinit_callback = null, offline_callback = nu
         }
     }
 
+    socket.on("connect_error", error => {
+        console.error(
+            namespace,
+            "connect_error:",
+            error.message
+        );
+    });
+
     socket.on("disconnect", reason => {
-        cleanup();
+        //console.log(namespace, " socket disconnected ",reason);
+    });
+
+    socket.io.on("reconnect_attempt", attempt => {
+        //console.log( namespace, "reconnect attempt:", attempt);
+    });
+
+    socket.io.on("reconnect", attempt => {
+        //console.log(namespace,"reconnected after attempt:",attempt);
     });
 
     socket.on("connect_error", err => {
-        console.log("connect_error:", err.message);
+        //console.log("connect_error:", err.message);
     });
 
+    socket.io.on("reconnect_failed", () => {
 
-    //Setting up for the heart beat
-    let pong = false;
+        console.error(namespace, "reconnection failed");
 
-    interval_id = setInterval(()=>{
-
-        socket?.emit('ping', {});
-
-        //Wait for 1 second for the pong to hit back from the backend, else reinitialize the socket
-        setTimeout(()=>{
-
-            if(!pong){
-
-                //If reinit is given
-                reinit_callback && reinit_callback(true);
-            }
-
-            pong = false;
-
-        }, 1000);
-
-    }, 30000);
-
-
-    //Listening for pong after ping was sent
-    socket.on('pong', ()=>{
-
-        pong = true;
+        reinit_callback?.(true);
 
     });
 

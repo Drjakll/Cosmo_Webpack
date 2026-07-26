@@ -4,12 +4,10 @@ import Buttons from './Buttons/buttons.js';
 import Create from './Create/create.js';
 import Login from './Login/login.js';
 import Restore from './Restore/restore.js';
-import Context from '@context/context.js';
+import Logo from '@logo';
 
 
 class Login_Account extends Component {
-
-    static contextType = Context;
     
     Selections = {
         "Create": Create,
@@ -35,7 +33,6 @@ class Login_Account extends Component {
     
     render(){
         
-        const {Logo} = this.context;
         
         const Selected_Screen = this.Selections[this.state.selected];
 
@@ -50,7 +47,7 @@ class Login_Account extends Component {
 
                         <div id="slogan">
 
-                            Uniting our differences through understanding - Cosmopolitan
+                            Uniting our differences through understanding
                             
                         </div>
 

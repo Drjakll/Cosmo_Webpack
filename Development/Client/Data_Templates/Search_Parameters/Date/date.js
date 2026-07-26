@@ -1,4 +1,6 @@
 import React, {Component} from 'react';
+import Configurations from '@configurations';
+import Calendar from '@calendar';
 import './date.less';
 
 class DateSearch extends Component {
@@ -6,8 +8,6 @@ class DateSearch extends Component {
     constructor(props){
 
         super(props);
-
-        DateSearch.contextType = window.Context;
 
         let today = new Date();
 
@@ -17,8 +17,6 @@ class DateSearch extends Component {
     }
 
     ParseDate = (dateStr) => {
-        
-        const {Configurations} = this.context;
         
         const {Months} = Configurations;
         
@@ -31,8 +29,6 @@ class DateSearch extends Component {
     }
 
     Generate_Calendar = () => {
-
-        const { Calendar } = this.context;
 
         let { value } = this.state;
 

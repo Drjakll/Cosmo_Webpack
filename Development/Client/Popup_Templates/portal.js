@@ -9,6 +9,10 @@ class Popup_Portal extends Component {
         // Create a DOM node for the portal
         this.el = document.createElement('div');
         this.el.zIndex = 1;
+
+        this.state = {
+
+        }
     } 
 
     componentDidMount() {

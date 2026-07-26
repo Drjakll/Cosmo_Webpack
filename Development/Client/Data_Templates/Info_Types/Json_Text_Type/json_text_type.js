@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import Json_Text_Screen from './Json_Text_Screen/json_text_screen.js';
+import Json_Text_Screen from './Json_Text/json_text.js';
 import './json_text_type.less';
 
 class Json_Text_Type extends Component {

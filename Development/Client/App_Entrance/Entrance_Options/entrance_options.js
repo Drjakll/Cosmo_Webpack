@@ -1,10 +1,8 @@
 import React, {Component} from 'react';
-import {Login} from '@root/Universal_Components/Account_Functions/account_access.js';
-import Context from '@context/context.js';
+import {Login} from '@account_access';
 import './entrance_options.less';
 import Login_Account from './Login_Account/login_account.js';
-import Logged_In_Account from './Logged_In_Account/logged_in_account.js';
-
+import Logged_In_Account from './Logged_In/logged_in.js';
 
 class Entrance_Options extends Component {
     
@@ -19,8 +17,6 @@ class Entrance_Options extends Component {
         super(props);
 
         window.Refresh_Login = this.Refresh_Login;
-        
-        Entrance_Options.contextType = Context;
 
         this.state = {
             selected_screen: "Login Account",

@@ -1,12 +1,10 @@
 import React, {Component} from 'react';
-import Context from '@context/context.js';
-import Profile_Thumbnail from '@universal_components/Profile_Thumbnail/profile_thumbnail.js';
-import init_websocket from '@root/Utilities/init_websocket.js';
+import Profile_Thumbnail from '@profile_thumbnail';
+import init_websocket from '@init_websocket';
+import Request_URLs from '@request_urls';
 import './general_reactions_container.less';
 
 class General_Reactions_Container extends Component {
-
-    static contextType = Context;
 
     //A flag to confirm that joined the websocket's room, so that it only join the room once
     room_joined = false;
@@ -95,7 +93,7 @@ class General_Reactions_Container extends Component {
 
     Refresh_Reactions = async ()=>{
 
-        let {get_one_set_reactions} = this.context.Request_URLs;
+        let {get_one_set_reactions} = Request_URLs;
 
         let {target_id, target_id_type} = this.state;
 
@@ -141,7 +139,7 @@ class General_Reactions_Container extends Component {
 
     Capture_Reaction = async (reaction = null, emoji = "")=>{
 
-        let {submit_reaction} = this.context.Request_URLs;
+        let {submit_reaction} = Request_URLs;
 
         let {target_id, target_id_type, visitor_user_account} = this.state;
 
@@ -230,6 +228,7 @@ class General_Reactions_Container extends Component {
                                                     visitor_user_account={visitor_user_account}
                                                     owner_user_account={owner_user_account}
                                                     profile={{profile_picture_link, id: user_id}}
+                                                    generate_options_disabled={true}
                                                 />
 
                                                 <label id="hidden-name">{first_name} {last_name}</label>

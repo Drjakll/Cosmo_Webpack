@@ -29,7 +29,6 @@ let Account_Data_Template = function(initial){
         mood_today: "",
         personal_traits: {},
         last_mood_updated: null,
-        verification_code: null,
         email_verified: false,
         privacy: null,
         profile_picture_link: null,

@@ -2,7 +2,7 @@ function request({sql}) {
 
     this.req_path = "/insert_message";
     this.req_type = "post";
-    this.callbacks = ["insert_message"];
+    this.callbacks = ["central_auth","insert_message"];
     
     this.req = async (req, res) => {
         

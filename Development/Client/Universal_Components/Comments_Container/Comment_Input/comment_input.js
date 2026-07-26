@@ -1,10 +1,9 @@
 import React, {Component, createRef} from 'react';
-import Context from '@context/context.js';
+import Request_URLs from '@request_urls';
+import popup_message from '@popup_message';
 import './comment_input.less';
 
 class Comment_Input extends Component {
-
-    static contextType = Context;
 
     textRef = createRef()
 
@@ -40,23 +39,24 @@ class Comment_Input extends Component {
     Submit_Message = async ()=>{
 
         if(this.textRef.current.value.replace(/ /g, "") === ""){
-            alert("Message cannot be empty!");
+            await popup_message("message","Message cannot be empty!");
             return;
         }
 
-        let { submit_comment } = this.context.Request_URLs;
+        let { submit_comment } = Request_URLs;
 
         let {Signal_To_Refresh_For_New_Comments} = this.props;
 
-        let {visitor_user_account, target_id, target_id_type, reply_to_id} = this.state;
+        let {visitor_user_account, owner_user_account, target_id, target_id_type, reply_to_id} = this.state;
 
         if(!target_id_type || !target_id){
-            alert("Target ID and Target Type not found");
+            await popup_message("message","Target ID and Target Type not found");
             return;
         }
 
         let body = {
-            user_id: visitor_user_account.id,
+            owner_user_id: owner_user_account.id,
+            commenter_user_id: visitor_user_account.id,
             target_id,
             target_id_type,
             reply_to_id,
@@ -65,7 +65,7 @@ class Comment_Input extends Component {
 
         
 
-        await fetch(submit_comment,
+        let data = await (await fetch(submit_comment,
             {
                 method: "POST",
                 body: JSON.stringify(body),
@@ -73,11 +73,22 @@ class Comment_Input extends Component {
                     'Content-Type': 'application/json'
                 }
             }
-        );
+        )).json();
 
         this.textRef.current.value = "";
 
-        Signal_To_Refresh_For_New_Comments();
+        if(!data){
+
+            await popup_message("message", "Error submitting request");
+
+        } else if(data.blocked){
+            
+            await popup_message("message", data.message);
+
+        } else {
+
+            Signal_To_Refresh_For_New_Comments();
+        }
 
     }
 

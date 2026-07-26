@@ -2,6 +2,8 @@ let Wrapper = function(){
     
     this.event = ({user_account, followings}) => {
 
+        let online_users = [];
+
         for(let following of followings){
 
             let {id} = following;
@@ -10,9 +12,11 @@ let Wrapper = function(){
                 continue;
             }
 
-            this.socket.emit("add_online_user", {online_user: following});
+            online_users.push(following);
 
         }
+
+        this.socket.emit("who_is_online", {online_users});
 
     };
     

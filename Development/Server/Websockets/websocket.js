@@ -10,7 +10,7 @@ let websocket = async (server) => {
                                             },
                                     methods: ["GET", "POST"],
                                     pingInterval: 25000,
-                                    pingTimeout: 60000
+                                    pingTimeout: 20000
                                 }
                         );
     

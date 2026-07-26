@@ -1,4 +1,4 @@
-import Request_URLs from '@root/API_Requests/request_urls.js';
+import Request_URLs from '@request_urls';
 
 //A hold of all the function pointers that will be used to update their component after the follow/unfollow action is made
 let set_state_ptrs = {
@@ -46,6 +46,7 @@ let Refresh = async (refresh_followers = true, is_visiting = false) => {
 
             let setState = get_followers[comp_label];
 
+
             setState && setState({
                 followers: list
             });
@@ -90,3 +91,4 @@ let Get_Follows = async (account, get_followers = true)=>{
 };
 
 export {Queue_Set_State, Refresh, Get_Follows};
+export default {Queue_Set_State, Refresh, Get_Follows};

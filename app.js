@@ -17,19 +17,19 @@ const uploads = multer({
 //let domain = '10.0.0.70';
 //let domain = '192.168.7.108';
 
-const keyPath = './my-key.pem'; // Replace with your actual key file
-const certPath = './my-cert.pem';    // Replace with your actual cert file
+//const keyPath = './my-key.pem'; 
+//const certPath = './my-cert.pem';    
 
 const keyPath2 = './localhost+2-key.pem';
 const certPath2 = './localhost+2.pem';
 
-//const privateKey = fs.readFileSync(keyPath2, 'utf8');
-//const certificate = fs.readFileSync(certPath2, 'utf8');
+const privateKey = fs.readFileSync(keyPath2, 'utf8');
+const certificate = fs.readFileSync(certPath2, 'utf8');
 
 let app = express();
 
-//let server = https.createServer({ key: privateKey, cert: certificate },app);
-let server = http.createServer(app);
+let server = https.createServer({ key: privateKey, cert: certificate },app);
+//let server = http.createServer(app);
 
 websocket(server);
 
@@ -165,7 +165,7 @@ let starter = async () => {
 
 starter();
 
-server.listen(8080, "127.0.0.1", () => {
+server.listen(8080, "0.0.0.0", () => {
    
     console.log("Listening to localhost port 8080");
 
