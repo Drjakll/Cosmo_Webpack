@@ -10,8 +10,14 @@ let request = function({sql}) {
     
     this.req = async (req, res, next) => { 
         
-        //created_on parameter isn't needed here but will need it when deleting the feed
-        let {id, created_on} = req.body;
+        let {id} = req.body;
+
+        id = parseInt(id, 10);
+
+        if(isNaN(id) || id <= 0){
+            res.json({message: "Post id is invalid"});
+            return;
+        }
 
         const {user_id} = req.auth;
 
@@ -26,7 +32,7 @@ let request = function({sql}) {
             const [result] = await con.query(query, [id, user_id]);
 
             if(result.length === 0){
-                con.rollback();
+                await con.rollback();
 
                 res.json({message: "Post not found or you are not the owner of this post"});
                 return;

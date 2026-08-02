@@ -8,6 +8,18 @@ function request({sql}) {
         
         let {conversation_id, text} = req.body;
 
+        conversation_id = parseInt(conversation_id, 10);
+
+        if(!conversation_id || isNaN(conversation_id)|| conversation_id <= 0 || !text){
+            res.json({message: "Invalid required fields"});
+            return;
+        }
+
+        if(text.length > 1000){
+            res.json({message: "Message text is too long"});
+            return;
+        }
+
         const {user_id} = req.auth;
 
         let created_on = Date.now();
