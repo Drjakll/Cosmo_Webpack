@@ -6,9 +6,11 @@ function request({sql}) {
     
     this.req = async (req, res) => {
         
-        let {conversation_id, text, created_on} = req.body;
+        let {conversation_id, text} = req.body;
 
         const {user_id} = req.auth;
+
+        let created_on = Date.now();
 
 
         let query = `

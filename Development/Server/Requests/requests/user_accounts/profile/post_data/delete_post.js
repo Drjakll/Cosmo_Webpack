@@ -26,6 +26,8 @@ let request = function({sql}) {
             const [result] = await con.query(query, [id, user_id]);
 
             if(result.length === 0){
+                con.rollback();
+
                 res.json({message: "Post not found or you are not the owner of this post"});
                 return;
             }

@@ -24,7 +24,12 @@ let request = function ({sql}) {
 
         try {
 
-            sql.query(query, data);
+            let [result] = await sql.query(query, data);
+
+            if(result.affectedRows === 0){
+                res.json({message: "Follow request not found"});
+                return;
+            }
 
             res.json({message:"Successfully removed follow request"});
 

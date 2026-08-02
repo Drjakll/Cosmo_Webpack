@@ -27,7 +27,12 @@ let request = function({sql}) {
 
             query = `delete from Photo_Albums where id = ? and user_id = ?`;
 
-            await sql.query(query, [id, user_id]);
+            let [result] = await sql.query(query, [id, user_id]);
+
+            if(result.affectedRows === 0){
+                res.json({message: "Album not found or you are not the owner of this album"});
+                return;
+            }
 
             req.body.photos = photos;
 
