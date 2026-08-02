@@ -12,10 +12,11 @@ function request({sql}){
 
     this.req = async (req, res, next) => {
 
-        const {commenter_user_id, owner_user_id, target_id_type, from_id, oppose_id, target_id, viewer_id} = req.body;
+        const {user_id, commenter_user_id, owner_user_id, target_id_type, from_id, oppose_id, target_id, viewer_id} = req.body;
         
 
-        if((!commenter_user_id && !from_id && !target_id) || (!owner_user_id && !oppose_id && !viewer_id)){
+        if((!commenter_user_id && !from_id && !target_id) || 
+            (!owner_user_id && !oppose_id && !viewer_id)){
             return res.json({message: "Invalid user id and/or target user id", blocked: true});
         }
 

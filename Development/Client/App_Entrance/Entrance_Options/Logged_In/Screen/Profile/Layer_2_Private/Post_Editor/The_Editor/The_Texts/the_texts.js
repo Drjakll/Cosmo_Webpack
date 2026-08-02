@@ -86,7 +86,7 @@ class The_Texts extends Component {
 
         let {id, created_on} = this.state.post;
 
-        let {id: user_id} = this.state.user_account_data;
+        let {id: user_id} = this.state.owner_user_account;
 
         let res = await (await fetch(delete_post, {
             method: "POST",

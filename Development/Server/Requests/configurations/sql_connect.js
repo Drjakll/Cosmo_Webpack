@@ -85,6 +85,11 @@ setInterval(async ()=>{
 }, 30000);
 
 let query_wrapper = {
+  get_connection: async function(){
+    
+    return  await sql.getConnection();
+
+  },
   query: async function(q, data = [], tries = 3){
 
     try {

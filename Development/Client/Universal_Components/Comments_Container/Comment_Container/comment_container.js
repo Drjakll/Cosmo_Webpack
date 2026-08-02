@@ -16,9 +16,11 @@ class Comment_Container extends Component {
 
         super(props);
 
-        let {comment_info, owner_user_account, visitor_user_account, selected} = props;
+        let {comment_info, owner_user_account, visitor_user_account, selected, target_id_type, target_id} = props;
 
         this.state = {
+            target_id_type,
+            target_id,
             comment_info,
             owner_user_account,
             visitor_user_account,
@@ -140,11 +142,11 @@ class Comment_Container extends Component {
 
             let {update_comment} = Request_URLs;
 
-            let {visitor_user_account, comment_info} = this.state;
+            let {visitor_user_account, comment_info, target_id_type, target_id} = this.state;
 
             let {id: user_id} = visitor_user_account;
 
-            let {id, target_id_type, target_id} = comment_info;
+            let {id} = comment_info;
 
             let {signal_refresh_this_section_comments} = this.props;
 
@@ -158,15 +160,17 @@ class Comment_Container extends Component {
                 target_id
             };
 
-            await fetch(update_comment,
+            let res = await fetch(update_comment,
                 {
-                    method: "POST",
+                    method: "PATCH",
                     body: JSON.stringify(body),
                     headers: {
                         'Content-Type': 'application/json'
                     }
                 }
             );
+
+            let data = await res.json();
 
             this.setState({editable: false});
 

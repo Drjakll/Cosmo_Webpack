@@ -13,7 +13,7 @@ let request = function({sql}) {
         let {id} = req.body;
         const {user_id} = req.auth;
         
-        if(!id || user_id){
+        if(!id){
             console.log("Album id is null or invalid");
             res.end();
             return;

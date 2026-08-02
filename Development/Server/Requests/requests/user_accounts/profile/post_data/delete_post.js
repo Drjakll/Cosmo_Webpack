@@ -14,27 +14,51 @@ let request = function({sql}) {
         let {id, created_on} = req.body;
 
         const {user_id} = req.auth;
-        
-        //Query to select all the photo links belong to the post before it gets automatically deleted
-        let query = `select * from Photo_Links where post_id = ?`; 
+
+        let con = await sql.get_connection();
         
         try {
 
-            const [photos] = await sql.query(query, [id]);
+            await con.beginTransaction();
+
+            let query = `select id from Post_Data where id = ? and user_id = ? for update`; 
+
+            const [result] = await con.query(query, [id, user_id]);
+
+            if(result.length === 0){
+                res.json({message: "Post not found or you are not the owner of this post"});
+                return;
+            }
+
+
+            query = `select * from Photo_Links where post_id = ?`;
+
+            const [photos] = await con.query(query, [id]);
+
+
 
             query = `delete from Post_Data where id = ? and user_id = ?`;
 
-            await this.sql.query(query, [id, user_id]);
+            await con.query(query, [id, user_id]);
 
             req.body.photos = photos;
+
+            await con.commit();
 
             //On to deleting the files with delete_photo_files.js
             next();
 
         } catch(err){
 
+            await con.rollback();
+
             console.log(err, query);
             res.json({message: "Error deleting post..."});
+
+        } finally {
+
+            con.release();
+
         }
 
     };

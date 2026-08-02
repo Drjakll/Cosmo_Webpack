@@ -36,7 +36,7 @@ websocket(server);
 app.use('/static', 
     express.static(path.join(__dirname, '..', 'Built_Client')));
 app.use(cookieparser());
-app.use(body.json({ limit: "1000mb" }));
+app.use(body.json({ limit: "10mb" }));
 app.use(body.urlencoded({ extended: true }));
 
 /*

@@ -14,7 +14,7 @@ function request({sql}) {
             return res.json({message: "Authentication required!", results: []});
         }
 
-        if(!conversation_id || !off_time_set || !user_time_joined){
+        if(conversation_id === null || off_time_set === null || user_time_joined === null){
             return res.json({message: "Missing required fields!", results: []});
         }
 

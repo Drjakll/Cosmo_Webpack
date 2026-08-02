@@ -233,7 +233,7 @@ class Posts extends Component {
 
                 <label>{post.title}</label>
 
-                <label style={{color: "gold", margin: "5px"}}>({post.photos_count})</label>
+                <label style={{color: "gold", margin: "5px"}}>{post.photos_count} Images</label>
 
             </div>;
             

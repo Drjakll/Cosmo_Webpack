@@ -20,7 +20,8 @@ class Profile_Template extends Component {
         this.General_Props = { //This props will be passed to all the components
             owner_user_account, 
             visitor_user_account,
-            change_display: this.Change_Display
+            change_display: this.Change_Display,
+            return_previous_display: this.Return_Previous_Display
         };
 
         this.Render_List = {
@@ -67,7 +68,10 @@ class Profile_Template extends Component {
 
         let {visitor_user_account, owner_user_account} = this.props;
 
-        this.General_Props = {owner_user_account, visitor_user_account, change_display: this.Change_Display}
+        this.General_Props = {owner_user_account, 
+                                visitor_user_account, 
+                                change_display: this.Change_Display, 
+                                return_previous_display: this.Return_Previous_Display};
 
         this.setState({owner_user_account, visitor_user_account, general_props: this.General_Props});
         

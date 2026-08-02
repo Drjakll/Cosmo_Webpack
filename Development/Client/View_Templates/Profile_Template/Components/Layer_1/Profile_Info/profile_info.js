@@ -12,12 +12,13 @@ class Profile_Info extends Component {
         
         super(props);
 
-        let {owner_user_account, visitor_user_account, change_display} = props;
+        let {owner_user_account, visitor_user_account, change_display, return_previous_display} = props;
 
         this.state = {
             owner_user_account,
             visitor_user_account,
-            change_display
+            change_display,
+            return_previous_display
         };
         
     }
@@ -32,7 +33,7 @@ class Profile_Info extends Component {
             return;
         }
         
-        this.setState(this.props);
+        this.setState(this.props);  
         
     }
     
@@ -42,7 +43,7 @@ class Profile_Info extends Component {
 
         let {Profile_Picture, Profile_Info_Data } = this;
 
-        let { change_display } = this.props;
+        let { change_display, return_previous_display } = this.props;
         
         return (
                 <div id="profile-info">
@@ -53,6 +54,7 @@ class Profile_Info extends Component {
                             owner_user_account={owner_user_account} 
                             visitor_user_account={visitor_user_account} 
                             change_main_display={change_display}
+                            return_previous_display={return_previous_display}
                         />
                         
                     </div>
@@ -63,6 +65,7 @@ class Profile_Info extends Component {
                             owner_user_account={owner_user_account} 
                             visitor_user_account={visitor_user_account}
                             change_main_display={change_display}
+                            return_previous_display={return_previous_display}
                         />
                         
                     </div>
