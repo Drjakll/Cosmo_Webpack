@@ -8,17 +8,19 @@ let request = function({sql}) {
     this.req = async (req, res) => { 
         
         let {id, album_info} = req.body;
+
+        const {user_id} = req.auth;
         
-        if(!id){
+        if(!id || !user_id){
             res.json({message: "Invalid id or user id", failed: true});
             return;
         }
         
-        let query = `update Photo_Albums set ? where id = ?`
+        let query = `update Photo_Albums set ? where id = ? and user_id = ?`
         
         try {
 
-            await sql.query(query, [album_info, id]);
+            await sql.query(query, [album_info, id, user_id]);
 
             res.json({message: "Successfully updated Photo Album", failed: false});
 

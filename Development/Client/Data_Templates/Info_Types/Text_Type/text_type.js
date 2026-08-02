@@ -48,7 +48,7 @@ class Text_Type extends Component {
                 <div id="value-wrapper">
 
                     <input id="value"
-                        value={value} 
+                        defaultValue={value} 
                         placeholder={label}
                         onChange={(e)=>{this.setState({ value: e.target.value }); this.Update_Value && this.Update_Value({column_name, value: e.target.value}); }}
                         disabled={ !this.Update_Value ? true : false} />

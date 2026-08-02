@@ -81,14 +81,25 @@ class Single_Photo extends Component {
         return (
             <div id="single-photo-thumbnail">
 
+                <div id="enlarge-photo-button-wrapper">
+
+                    <div id="enlarge-photo-button" onClick={(e)=>{
+                        open_enlarged_photo_viewer(index);
+                    }}>
+                        <label>Enlarge Image</label>
+                    </div>
+
+                    <div id="enlarge-photo-with-comments-button" onClick={(e)=>{
+                        change_main_display(this.Show_Enlarged_Photo);
+                    }}>
+                        <label>View Comments</label>
+                    </div>
+
+                </div>
+
                 <div id="photo-thumbnail"
                     style={{
                         backgroundImage: `url('${aws_s3_url}${thumbnail_pic_link}')`
-                    }}
-                    onClick = {(e)=>{
-                            
-                        open_enlarged_photo_viewer(index);
-
                     }}
                 >
                     

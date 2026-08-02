@@ -29,22 +29,6 @@ class Live_Stream extends Component {
     
     componentDidMount(){
 
-        let x = 1000;
-
-        let streams = {};
-
-        
-
-        for(let i = 0; i < x; i++){
-
-            streams[i] = {
-                profile_picture_link: this.state.owner_user_account.profile_picture_link,
-                stream_id: i,
-                stream_title: "some title " + i
-            };
-        }
-
-        this.setState({active_streams: streams});
     }
 
     componentWillUnmount(){

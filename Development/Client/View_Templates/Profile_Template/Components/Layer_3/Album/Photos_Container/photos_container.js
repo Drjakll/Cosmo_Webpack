@@ -48,6 +48,7 @@ class Photos_Container extends Component {
         });
     }
 
+    //initial_photo_index is which photo gets to see first when the enlarged_photo_view opens
     Open_Enlarged_Photo_Viewer = (initial_photo_index) =>{
 
         this.setState({
@@ -93,6 +94,16 @@ class Photos_Container extends Component {
                         <div id="description-content">
                             {album_info.brief_description}
                         </div>
+
+                    </div>
+
+                    <div id="view-slide-show-label">
+
+                        <label onClick={(e)=>{
+
+                            this.Open_Enlarged_Photo_Viewer(0);
+
+                        }}>View in Slide Show</label>
 
                     </div>
                     

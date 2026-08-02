@@ -34,7 +34,8 @@ let request = function({s3}){
     this.req = async (req, res, next)=>{
         
         const uploadedFiles = req.files;
-        const {user_id, target_id_type, target_id, album_name} = JSON.parse(req.body.metadata);
+        const {target_id_type, target_id, album_name} = JSON.parse(req.body.metadata);
+        const {user_id} = req.auth;
 
         
         if (!uploadedFiles 

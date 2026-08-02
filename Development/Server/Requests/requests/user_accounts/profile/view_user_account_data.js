@@ -9,7 +9,7 @@ let request = function({sql}){
 
     this.req = async (req, res)=>{
         
-        let {id} = req.body;
+        let {target_id: id} = req.body;
         
         let query = `select ac.id,
                             ac.first_name,

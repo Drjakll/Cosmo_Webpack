@@ -8,7 +8,7 @@ let request = function({sql}) {
         
         let {id} = req.body;
  
-        let requirements = [id]
+        let requirements = [id];
 
         let query = `delete from Comments where id = ?`;
         

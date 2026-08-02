@@ -2,11 +2,13 @@ let request = function({sql}) {
     
     this.req_path = "/update_comment";
     this.req_type = "patch";
-    this.callbacks = ["central_auth","update_comment"];
+    this.callbacks = ["central_auth","is_user_blocked","update_comment"];
     
     this.req = async (req, res) => { 
         
-        let {comment, id, target_id_type, target_id, user_id} = req.body;
+        let {comment, id, target_id_type, target_id} = req.body;
+
+        const {user_id} = req.auth;
 
         let data = { comment, last_updated: Date.now()};
  

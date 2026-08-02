@@ -2,11 +2,13 @@ function request({sql}){
 
     this.req_path = "/get_blocked_users";
     this.req_type = "post";
-    this.callbacks = ['get_blocked_users'];
+    this.callbacks = ['central_auth','get_blocked_users'];
 
     this.req = async (req, res) => {
 
-        const {user_id, target_id} = req.body;
+        const {target_id} = req.body;
+
+        const {user_id} = req.auth;
 
         if(!user_id){
             return res.json({message: "Invalid user id", blocked_users: []});

@@ -15,14 +15,19 @@ function central_auth({sql}){
         }
 
         const [sessions] = await sql.query(
-            `SELECT user_id
-            FROM User_Sessions
-            WHERE session_id = ?
-            AND expires_on > ?`,
+            `SELECT 
+                user_id
+            FROM 
+                User_Sessions
+            WHERE 
+                session_id = ?
+            AND 
+                expires_on > ?`,
             [session_id, Date.now()]
         );
 
         if (!sessions.length) {
+            
             return res.status(401).json({
                 message: "Session expired"
             });

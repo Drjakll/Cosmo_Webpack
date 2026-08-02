@@ -8,6 +8,12 @@ function request({sql}) {
         
         let {conversation_id, text, sender_id, created_on} = req.body;
 
+        const {user_id} = req.auth;
+
+        if(sender_id !== user_id){
+            return res.json({message: "Authentication error"});
+        }
+
         let query = `
                 insert into
                     Private_Messages(conversation_id, text, sender_id, created_on)

@@ -155,14 +155,16 @@ class Albums extends Component {
         this.props.change_display(this.Open_Photo_Container);
 
     }
+
+    albumsWrapperRef = createRef();
     
     render(){
         
         let drag_scroll = new Drag_Scroll();
-        
-        let albumsWrapperRef = createRef();
 
         let {albums} = this.state;
+
+        let {albumsWrapperRef} = this;
         
         return (
              <div id="albums">

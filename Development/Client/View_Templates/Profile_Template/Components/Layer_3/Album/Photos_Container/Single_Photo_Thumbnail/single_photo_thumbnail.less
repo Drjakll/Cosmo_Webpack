@@ -10,16 +10,72 @@ Click nbfs://nbhost/SystemFileSystem/Templates/ClientSide/style.less to edit thi
 #single-photo-thumbnail {
     width: 100%;
     height: 100%;
-    display: block;
+    display: flex;
     position: relative;
+    justify-content: center;
+    align-items: center;
     flex-direction: column;
+
+    &:hover {
+        cursor: pointer;
+
+        #enlarge-photo-button-wrapper {
+            opacity: 1;
+            display: block;
+        }
+    }
+
+    #enlarge-photo-button-wrapper {
+        width: 90%;
+        height: 77.5%;
+        position: absolute;
+        opacity: 0;
+        transition: 0.5s;
+        display: none;
+        z-index: 999;
+        background-color: rgba(225,225,225,0.5);
+        top: 5%;
+        left: 10%;
+        border-radius: 5px;
+        overflow: hidden;
+
+        #enlarge-photo-button, #enlarge-photo-with-comments-button {
+            width: 100%;
+            height: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: rgba(25,25,25,1);
+            transition: 0.5s;
+            background-color: rgba(0,0,0,0);
+
+            &:hover {
+                cursor: pointer;
+                background-color: rgba(50,50,50,1);
+                color: rgba(250,250,250,1);
+            }
+
+            label {
+                width: 100%;
+                height: 100%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                font-size: 14px;
+
+                &:hover {
+                    cursor: pointer;
+                }
+            }
+        }
+    }
     
     #photo-thumbnail {
         width: 90%;
         height: 90%;
         top: 5%;
         left: 5%;
-        background-position: center 30%;
+        background-position: center;
         background-size: cover;
         background-repeat: no-repeat;
         border-radius: 5px;
@@ -27,6 +83,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/ClientSide/style.less to edit thi
         transition: 0.5s;
         position: relative;
         border: rgba(0,0,0,0.5) solid 0.5px;
+        z-index: 9;
         
         &:hover {
             cursor: pointer;

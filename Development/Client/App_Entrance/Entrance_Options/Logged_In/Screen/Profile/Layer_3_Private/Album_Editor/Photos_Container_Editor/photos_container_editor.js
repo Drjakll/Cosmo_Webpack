@@ -29,17 +29,6 @@ class Photos_Container_Editor extends Photos_Container {
         }
     }
 
-    componentDidMount() {
-
-        super.componentDidMount();
-    }
-
-    componentDidUpdate(prevProps, prevState) {
-
-        super.componentDidUpdate(prevProps, prevState);
-
-    }
-
     Insert_Photo_To_Delete = (photo_info) => {
 
         if (this.Photos_To_Be_Deleted[photo_info.id]) {
@@ -205,11 +194,13 @@ class Photos_Container_Editor extends Photos_Container {
 
         let Change_Title = async (e)=>{
 
-            let input = {input: "", submit: false};
+            let {title} = this.state.album_info;
+
+            let input = {input: title, maxLength: 32};
 
             await Popup_Msg("input", "Insert a new title", input);
 
-            if(!input.submit){
+            if(!input.input){
                 return;
             }
 
@@ -253,11 +244,13 @@ class Photos_Container_Editor extends Photos_Container {
 
         let Change_Description = async (e)=>{
 
-            let input = {input: "", submit: false, maxLength: 256};
+            let {brief_description} = this.state.album_info;
+
+            let input = {input: brief_description, maxLength: 256};
 
             await Popup_Msg("input", "Insert a new description", input);
 
-            if(!input.submit){
+            if(!input.input){
                 return;
             }
 

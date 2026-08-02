@@ -6,7 +6,17 @@ function request({sql}) {
 
     this.req = async (req, res) => {
         
-        let {public_channel_id, user_id} = req.body;
+        let {public_channel_id} = req.body;
+
+        const {user_id} = req.auth;
+
+        if(!user_id){
+            return res.json({message: "Authentication required!"});
+        }
+
+        if(!public_channel_id){
+            return res.json({message: "Missing public channel id"});
+        }
 
         let now = Date.now();
 

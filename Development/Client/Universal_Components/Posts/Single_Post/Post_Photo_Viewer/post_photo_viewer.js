@@ -1,7 +1,8 @@
-import React, {Component} from 'react';
+import React, {Component, createRef} from 'react';
 import Request_URLs from '@request_urls';
 import popup_message from '@popup_message';
 import Enlarged_Photo_Viewer from '@enlarged_photo_viewer';
+import Drag_Scroll from '@drag_scroll';
 import './post_photo_viewer.less';
 
 class Post_Photo_Viewer extends Component {
@@ -96,10 +97,16 @@ class Post_Photo_Viewer extends Component {
         })
     }
 
+
+
     render(){
 
         let {photo_links, enlarged_display, initial_photo_index} = this.state;
         const {aws_s3_url} = Request_URLs;
+
+        let drag_scroll = new Drag_Scroll();
+
+        let {init_drag, disable_drag, move_drag} = drag_scroll;
 
         return <div id="post-photo-viewer-wrapper">
 
@@ -109,7 +116,11 @@ class Post_Photo_Viewer extends Component {
                                     initial_photo_index={initial_photo_index}
                                 /> : ""}
 
-            <div id="post-photo-viewer-middle-wrapper">
+            <div id="post-photo-viewer-middle-wrapper"
+                    onMouseDown={(e)=>{ init_drag(e, e.currentTarget); }}
+                    onMouseMove={(e)=>{ move_drag(e, e.currentTarget); }} 
+                    onMouseUp={(e)=>{ disable_drag(e, e.currentTarget); }} 
+                    onMouseLeave={(e)=>{disable_drag(e, e.currentTarget); }}>
 
                 <div id="post-photo-viewer-inner-wrapper">
 
@@ -123,7 +134,7 @@ class Post_Photo_Viewer extends Component {
 
                                 <img src={`${aws_s3_url}${link}`} 
                                         id={img_id} 
-                                        onClick={(e)=>{ this.Turn_On_Enlarged_Photo_Display(index); }}/>
+                                        onClick={async (e)=>{ this.Turn_On_Enlarged_Photo_Display(index); }}/>
 
                             </div>;
                     })}

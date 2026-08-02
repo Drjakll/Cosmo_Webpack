@@ -1,6 +1,6 @@
 let request_urls = async () =>{
 
-    let response = await fetch('request_routes', {
+    let response = await fetch('/request_routes', {
         method: "GET"
     });
 

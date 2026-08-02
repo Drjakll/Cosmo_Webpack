@@ -1,8 +1,8 @@
 function request({sql}){
 
-    this.req_path = "/is_user_blocked";
-    this.req_type = "post";
-    this.callbacks = ['is_user_blocked'];
+    this.req_path = null;
+    this.req_type = null;
+    this.callbacks = [];
 
     let id_type_alias = {
         post_id: "posts",
@@ -50,21 +50,17 @@ function request({sql}){
 
                 res.json({message: msg, blocked: true});
                 return;
-                
-            } else if(blocked_feature_type === "profile_view"){
 
-                res.json({message: "", blocked: false});
-                return;
+            } 
 
-            }
-
+            //Possible routes: view_user_account_data.js, submit_comment.js, update_comment.js 
             next();
 
         }catch(err){
 
             console.log(err);
 
-            res.json({message: "Error checking to see if user is blocked"});
+            res.json({message: "Error checking to see if user is blocked", blocked: true});
 
         }
     };

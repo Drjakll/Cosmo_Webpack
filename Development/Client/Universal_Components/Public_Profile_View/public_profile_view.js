@@ -19,15 +19,15 @@ class Public_Profile_View extends Profile_Template {
         render_list["Layer_2"].component = Layer_2_Public;
         render_list["Layer_3"].component = Layer_3_Public;
 
-        this.state.view_blocked = true;
+        this.state.view_blocked = false;
 
     }
 
     async componentDidMount(){
 
-        let view_blocked = await this.Is_Visitor_Blocked();
+        //let view_blocked = await this.Is_Visitor_Blocked();
 
-        this.setState({view_blocked});
+        //this.setState({view_blocked});
     }
 
     Is_Visitor_Blocked = async ()=>{

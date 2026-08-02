@@ -1,14 +1,16 @@
 let request = function({sql}) {
     
-    this.req_path = "/add_photo_links";
-    this.req_type = "post";
-    this.callbacks = ["add_photo_links"];
+    this.req_path = null;
+    this.req_type = null;
+    this.callbacks = [];
 
     let target_id_types = ["album_id", "post_id", "profile_id"];
     
     this.req = async (req, res, next) => { 
         
-        let {links, target_id_type, target_id, user_id} = req.body;
+        let {links, target_id_type, target_id} = req.body;
+
+        const {user_id} = req.auth;
 
         if(!links || !target_id_type || !target_id || !user_id){
             res.json({message: "Missing required fields", failed: true});

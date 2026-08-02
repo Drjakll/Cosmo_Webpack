@@ -24,33 +24,31 @@ class Profile_Popup extends Component {
 
     async componentDidMount(){
 
-        const is_blocked = await this.Is_Visitor_Blocked();
-
-        if(is_blocked){
-
-            this.props.Exit();
-
-            return;
-        }
-
-        this.setState({is_blocked: false});
-
         this.Get_Profile_Account_Info();
 
     }
 
     Get_Profile_Account_Info = async ()=>{
 
-        let {this_profile_data} = this.state;
+        let {this_profile_data, visitor_user_account} = this.state;
 
         let {id} = this_profile_data;
 
-        let {get_user_account_data} = Request_URLs;
+        let {view_user_account_data} = Request_URLs;
+
+        let body ={
+            target_id: id,
+            viewer_id: visitor_user_account.id,
+        }
 
         let data = await(await fetch(
-            `${get_user_account_data}/${id}`,
+            `${view_user_account_data}`,
             {
-                method: "GET"
+                method: "POST",
+                body: JSON.stringify(body),
+                headers: {
+                    'Content-Type': "application/json"
+                }
             }
         )).json();
 
@@ -58,11 +56,18 @@ class Profile_Popup extends Component {
 
             popup_message("message","Error getting account information!");
 
-        } 
+        } else if (data.blocked) {
+
+            this.props.Exit();
+
+            popup_message("message", data.message);
+        
+        }
         else {
 
             this.setState({
-                this_profile_data: data.result
+                this_profile_data: data.result,
+                is_blocked: false
             });
 
         }
@@ -75,37 +80,6 @@ class Profile_Popup extends Component {
         }
 
         this.setState(this.props);
-
-    }
-
-    Is_Visitor_Blocked = async ()=>{
-
-        let {this_profile_data, visitor_user_account} = this.props;
-
-        let {id: viewer_id} =  visitor_user_account;
-        let {id: target_id} = this_profile_data;
-
-        let {is_user_blocked} = Request_URLs;
-
-        let body = {
-            viewer_id,
-            target_id
-        };
-
-        let data = await(await fetch(is_user_blocked, {
-            method: "POST",
-            body: JSON.stringify(body),
-            headers: {
-                'Content-Type': "application/json"
-            }
-        })).json();
-
-        if(data?.blocked === true){
-            await popup_message("message", data.message);
-            return true;
-        }
-
-        return false;
 
     }
 

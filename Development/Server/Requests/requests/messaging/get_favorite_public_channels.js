@@ -2,11 +2,15 @@ function request({sql}) {
     
     this.req_path = "/get_favorite_public_channels";
     this.req_type = "post";
-    this.callbacks = ["get_favorite_public_channels"];
+    this.callbacks = ["central_auth","get_favorite_public_channels"];
 
     this.req = async (req, res) => {
         
-        let {user_id} = req.body;
+        let {user_id} = req.auth;
+
+        if(!user_id){
+            return res.json({message: "Authentication required!", channels: []});
+        }
 
         let data = [user_id];
 
@@ -36,7 +40,7 @@ function request({sql}) {
 
             console.log(query, err);
 
-            res.json({message: "Failed to retrieve favorite public channels", channels: null});
+            res.json({message: "Failed to retrieve favorite public channels", channels: []});
         }
        
     };

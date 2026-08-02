@@ -6,7 +6,8 @@ function request({sql}){
 
     this.req = async (req, res, next) => {
 
-        const {user_id, target_id, blocked_features} = req.body;
+        const {target_id, blocked_features} = req.body;
+        const {user_id} = req.auth;
 
         if(!user_id || !target_id){
             return res.json({message: "Invalid user id and/or target id"});

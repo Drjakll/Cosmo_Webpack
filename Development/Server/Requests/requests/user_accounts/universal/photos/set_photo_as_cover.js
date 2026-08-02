@@ -9,8 +9,8 @@ let request = function({sql}) {
         //last_cover_id is the last photo_id that was used for cover
         let { last_cover_id, photo_cover_id} = req.body;
 
-        if(photo_cover_id <= 0 || photo_cover_id === last_cover_id){
-            res.json({message: null});
+        if(!photo_cover_id || photo_cover_id === last_cover_id){
+            res.json({message: "Profile picture did not change"});
             return;
         }
 

@@ -69,11 +69,11 @@ class Input_Basic extends Basic {
     
     The_Input = ()=>{
 
-        let {maxLength} = this.props;
+        let {maxLength, input_obj} = this.props;
 
         return <div id="the-input-content-wrapper">
 
-            <input type="text" onChange={(e)=>{ this.input = e.target.value}} maxLength={maxLength ?? 20}/>
+            <input type="text" defaultValue={input_obj.input} onChange={(e)=>{ this.input = e.target.value}} maxLength={maxLength ?? 20}/>
 
         </div>;
     }

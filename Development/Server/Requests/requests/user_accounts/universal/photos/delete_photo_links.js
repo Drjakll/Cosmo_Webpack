@@ -2,15 +2,18 @@ let request = function({sql}) {
 
     this.req_path = "/delete_photos";
     this.req_type = "post";
-    this.callbacks = ["delete_photo_links",
+    this.callbacks = [
+        "central_auth",
+        "delete_photo_links",
         "delete_photo_files"
     ];
     
     this.req = async (req, res, next) => { 
         
         let { photos } = req.body;
+        const {user_id} = req.auth;
 
-        if(Object.keys(photos || {}).length === 0){
+        if(Object.keys(photos || {}).length === 0 || !user_id){
             res.json({message: "No photos to delete"});
             return;
         }
@@ -29,11 +32,17 @@ let request = function({sql}) {
             return;
         }
      
-        let query = `delete from Photo_Links where id in (?)`;
+        let query = `delete from Photo_Links where user_id = ? and id in (?)`;
         
         try {
 
-            await sql.query(query, [ids]);
+            let [result] = await sql.query(query, [user_id, ids]);
+
+            if(!result.affectedRows){
+
+                return res.json({message: "Invalid credentials"});
+
+            }
             
             //Should call delete_photo_files.js
             next();

@@ -110,15 +110,15 @@ class Profile_Info_Data extends Component {
                     ref={infoWrapperRef}
 
                     onMouseDown={(e) => {
-                        drag_scroll.init_drag(e, infoWrapperRef.current);
+                        drag_scroll.init_drag(e, infoWrapperRef.current, false);
                     }}
 
                     onMouseLeave={(e) => {
-                        drag_scroll.disable_drag(e, infoWrapperRef.current);
+                        drag_scroll.disable_drag(e, infoWrapperRef.current, false);
                     }}
 
                     onMouseUp={(e) => {
-                        drag_scroll.disable_drag(e, infoWrapperRef.current);
+                        drag_scroll.disable_drag(e, infoWrapperRef.current, false);
                     }}
 
                     onMouseMove={(e) => {

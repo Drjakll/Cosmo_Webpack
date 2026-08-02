@@ -1,3 +1,5 @@
+//Use to drag elements around the screen
+
 let Drag = function () {
 
     Drag.mousedown = false;

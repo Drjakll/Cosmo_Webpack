@@ -1,5 +1,7 @@
+import './drag_scroll.less';
 
 
+//This is use to drag and scroll elements on the page.
 function Drag_Scroll() {
     this.mousedown = false;
     this.start_X = null;
@@ -16,10 +18,14 @@ function Drag_Scroll() {
         Drag_Scroll.pageY = e.pageY;
     };
 
-    this.init_drag = (event, element)=>{
+    this.init_drag = (event, element, preventDefault = true)=>{
         
         if(event.button !== 0)
             return;
+
+        if(preventDefault){
+            event.preventDefault();
+        }
         
         this.mousedown = true;
         this.start_X = Drag_Scroll.pageX - element.offsetLeft;
@@ -32,11 +38,15 @@ function Drag_Scroll() {
 
     };
     
-    this.disable_drag = (event, element)=>{
+    this.disable_drag = (event, element, preventDefault = true)=>{
         
         if(event.button !== 0)
             return;
         
+        if(preventDefault){
+            event.preventDefault();
+        }
+
         this.mousedown = false;
         
         element.style.cursor = "";
@@ -50,6 +60,8 @@ function Drag_Scroll() {
             return;
         }
 
+        event.preventDefault();
+
         let end_Y = Drag_Scroll.pageY - element.offsetTop;
         let end_X = Drag_Scroll.pageX - element.offsetLeft;
         let move_x = (end_X - this.start_X) * this.speed;
@@ -57,7 +69,8 @@ function Drag_Scroll() {
 
         element.scrollTop = this.scrollTop - move_y;        
         element.scrollLeft = this.scrollLeft - move_x;
-        
+    
+
         element.classList.add("unselectable-text");
 
     };

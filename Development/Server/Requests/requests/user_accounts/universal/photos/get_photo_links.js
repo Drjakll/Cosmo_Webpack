@@ -60,7 +60,7 @@ let request = function({sql}) {
             
             req.body.photos = results; //In case delete_photo_links is the next middleware
             
-            //Either go to delete_photo_links or get_reactions
+            //Either go to delete_photo_links or get_reactions or delete_album_update_log depending on the next middleware
             next();
 
         } catch(err){

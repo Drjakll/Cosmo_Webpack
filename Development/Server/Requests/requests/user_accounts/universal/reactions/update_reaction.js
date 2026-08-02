@@ -7,7 +7,9 @@ let request = function({sql}) {
 
     this.req = async (req, res) => { 
         
-        let {target_id, emojis, reaction, user_id, target_id_type} = req.body;
+        let {target_id, emojis, reaction, target_id_type} = req.body;
+
+        const {user_id} = req.auth;
  
 
         let data = 

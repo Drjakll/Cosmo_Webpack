@@ -6,7 +6,9 @@ let request = function({sql}) {
     
     this.req = async (req, res, next) => { 
         
-        let {user_id, body, title} = req.body;
+        let {body, title} = req.body;
+
+        const {user_id} = req.auth;
 
         if(isNaN(parseInt(user_id)) || !body || !title){
             res.json({ message: "Missing required fields", result: null });

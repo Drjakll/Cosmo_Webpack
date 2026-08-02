@@ -211,6 +211,7 @@ class Album_Feed extends Component {
                             album_info={album_info}
                             Get_Albums={null}
                             change_main_display={change_display}
+                            open_enlarged_photo_viewer={this.Open_Enlarged_Photo_Viewer}
                         />
 
                     </div>
@@ -225,12 +226,12 @@ class Album_Feed extends Component {
 
         let {from_account, new_photos_added, album_info} = this.state;
 
-        let {title} = album_info;
+        let {title} = album_info || {title: "Error"};
 
         let {first_name, last_name, gender} = from_account;
 
         //If no user deleted all new photos added, then display nothing
-        return (!new_photos_added.length ? <></> : <div id="album-feed" className="general-feed">
+        return (!new_photos_added?.length ? <></> : <div id="album-feed" className="general-feed">
 
                 {header}
 
@@ -238,7 +239,7 @@ class Album_Feed extends Component {
 
                     {this.Create_Album_Cover()} 
 
-                    <label>{first_name} {last_name} has added {new_photos_added.length} new photos to {gender === "Male" ? "his" : (gender === "Unspecified" ? "its" : "her")} album "{title}" </label>
+                    <label>{first_name} {last_name} has added {new_photos_added?.length} new photos to {gender === "Male" ? "his" : (gender === "Unspecified" ? "its" : "her")} album "{title}" </label>
 
                 </div>
 

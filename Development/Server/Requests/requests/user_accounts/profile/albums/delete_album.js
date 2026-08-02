@@ -11,26 +11,27 @@ let request = function({sql}) {
     this.req = async (req, res, next) => { 
         
         let {id} = req.body;
+        const {user_id} = req.auth;
         
-        if(!id){
+        if(!id || user_id){
             console.log("Album id is null or invalid");
             res.end();
             return;
         }
 
-        let query = `select * from Photo_Links where album_id = ?`
+        let query = `select * from Photo_Links where album_id = ? and user_id = ?`
         
         try {
 
-            let [photos] = await sql.query(query, [id]);
+            let [photos] = await sql.query(query, [id, user_id]);
 
-            query = `delete from Photo_Albums where id = ?`;
+            query = `delete from Photo_Albums where id = ? and user_id = ?`;
 
-            await sql.query(query, [id]);
+            await sql.query(query, [id, user_id]);
 
             req.body.photos = photos;
 
-            //delete_photo_links.js
+            //delete_photo_files.js
             next();
 
         } catch(err){

@@ -6,15 +6,30 @@ function request({sql}) {
     
     this.req = async (req, res) => {
         
-        let {public_channel_id, user_id} = req.body;
+        let {public_channel_id} = req.body;
 
-        let data = [user_id, public_channel_id];
+        const {user_id} = req.auth;
+
+        let data = [user_id, public_channel_id, public_channel_id, public_channel_id];
 
         let query = `delete from 
                         Users_In_Public_Channels
                     where 
                         user_id = ? and
                         public_channel_id = ?;
+
+                    delete from 
+                        Public_Channels
+                    where
+                        id = ? and
+                        not exists (
+                            select 
+                                1
+                            from 
+                                Users_In_Public_Channels
+                            where 
+                                public_channel_id = ?
+                        )
                     `;
 
         try {

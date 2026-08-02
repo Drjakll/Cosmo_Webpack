@@ -1,26 +1,29 @@
 let request = function({sql}) {
 
-    this.req_path = "/delete_album_update_log";
-    this.req_type = "post";
-    this.callbacks = [
-        "central_auth",
-        "delete_album_update_log"];
+    this.req_path = "";
+    this.req_type = null;
+    this.callbacks = [];
     
     this.req = async (req, res) => { 
         
-        let {time_uploaded, album_info} = req.body;
+        let {time_uploaded, album_info, user_id} = req.body;
+
+        if(!user_id){
+            return res.json({message: "Authentication error"});
+        }
 
         let data = [
-            time_uploaded
+            time_uploaded,
+            user_id
         ];
 
-        let query = `delete from Photo_Album_Update_Logs where time_occured = ?`;
+        let query = `delete from Photo_Album_Update_Logs where time_occured = ? and user_id = ?`;
         
         try {
 
             let [result] = await sql.query(query, data);
 
-            res.json({message: `All photos on this update has been erased`, photos: [], album_info});
+            res.json({message: `All photos on this update has been erased`, failed: false, photos: [], album_info});
 
         }catch(err){
 

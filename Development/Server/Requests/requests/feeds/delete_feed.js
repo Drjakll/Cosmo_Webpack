@@ -1,8 +1,8 @@
 let request = function({sql}){
 
-    this.req_path = "/delete_feed";
-    this.req_type = "post";
-    this.callbacks = ["delete_feed"];
+    this.req_path = null;
+    this.req_type = null;
+    this.callbacks = [];
 
     this.req = async (req, res)=>{
 

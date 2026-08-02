@@ -5,8 +5,8 @@ import './profile_info.less';
 
 class Profile_Info extends Component {
 
-    Profile_Picture = Profile_Picture //The reason why I put this here is because whatever inherits this class can replace this, else it will use the original component
-    Profile_Info_Data = Profile_Info_Data //The reason why I put this here is because whatever inherits this class can replace this, else it will use the original component
+    Profile_Picture = Profile_Picture //The reason why this here is because whatever inherits this class can replace this, else it will use the original component
+    Profile_Info_Data = Profile_Info_Data //The reason why this here is because whatever inherits this class can replace this, else it will use the original component
     
     constructor(props){
         

@@ -1,8 +1,8 @@
 let request = function({sql}){
 
-    this.req_path = "/add_to_feeds";
-    this.req_type = "post";
-    this.callbacks = ["add_to_feeds"];
+    this.req_path = null;
+    this.req_type = null;
+    this.callbacks = [];
 
     this.req = async (req, res)=>{
 

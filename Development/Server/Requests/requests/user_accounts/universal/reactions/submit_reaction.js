@@ -6,7 +6,9 @@ let request = function({sql}) {
     
     this.req = async (req, res) => { 
 
-        let {target_id, emoji, reaction, user_id, target_id_type} = req.body;
+        let {target_id, emoji, reaction, target_id_type} = req.body;
+
+        const {user_id} = req.auth;
 
         
         if(isNaN(parseInt(user_id)) || !target_id){

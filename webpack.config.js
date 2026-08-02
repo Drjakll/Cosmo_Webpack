@@ -43,7 +43,6 @@ var serverConfig = {
             'worker_threads': false // Prevent errors related to worker_threads
         }
     },
-    watch: true,
     target: 'node',
     externals: [externals()],
     /*

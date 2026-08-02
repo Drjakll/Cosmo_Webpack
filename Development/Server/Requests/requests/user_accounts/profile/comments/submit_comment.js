@@ -7,9 +7,10 @@ let request = function({sql}) {
     
     this.req = async (req, res) => { 
         
-        let {target_id, target_id_type, comment, commenter_user_id, reply_to_id} = req.body;
+        let {target_id, target_id_type, comment, reply_to_id} = req.body;
+        const {user_id} = req.auth;
 
-        if(isNaN(parseInt(commenter_user_id)) || !target_id || !target_id_type || !comment){
+        if(isNaN(parseInt(user_id)) || !target_id || !target_id_type || !comment){
             res.json({message: "Missing required fields!", failed: true});
             return;
         }   
@@ -18,7 +19,7 @@ let request = function({sql}) {
  
         let data = {
             comment, 
-            user_id: commenter_user_id, 
+            user_id, 
             time_stamp: now, 
             last_updated: now, 
             reply_to_id: reply_to_id ?? null

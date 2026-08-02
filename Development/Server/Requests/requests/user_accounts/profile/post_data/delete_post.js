@@ -11,18 +11,20 @@ let request = function({sql}) {
     this.req = async (req, res, next) => { 
         
         //created_on parameter isn't needed here but will need it when deleting the feed
-        let {id, user_id, created_on} = req.body;
+        let {id, created_on} = req.body;
+
+        const {user_id} = req.auth;
         
         //Query to select all the photo links belong to the post before it gets automatically deleted
         let query = `select * from Photo_Links where post_id = ?`; 
         
         try {
 
-            const [photos] = await sql.query(query, [id, user_id]);
+            const [photos] = await sql.query(query, [id]);
 
             query = `delete from Post_Data where id = ? and user_id = ?`;
 
-            await this.sql.query(query, [id]);
+            await this.sql.query(query, [id, user_id]);
 
             req.body.photos = photos;
 

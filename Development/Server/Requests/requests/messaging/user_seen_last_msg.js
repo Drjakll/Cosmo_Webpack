@@ -2,11 +2,21 @@ function request({sql}) {
 
     this.req_path = "/user_seen_last_msg";
     this.req_type = "post";
-    this.callbacks = ["user_seen_last_msg"];
+    this.callbacks = ["central_auth","user_seen_last_msg"];
     
     this.req = async (req, res) => {
         
-        let {conversation_id, user_id} = req.body;
+        let {conversation_id} = req.body;
+
+        const {user_id} = req.auth;
+
+        if(!user_id){
+            return res.json({message: "Authentication required!"});
+        }
+
+        if(!conversation_id){
+            return res.json({message: "Missing conversation id"});
+        }
 
         let query = `update Users_In_Private_Conversations set seen_last = true where conversation_id = ? and user_id = ?`;
         

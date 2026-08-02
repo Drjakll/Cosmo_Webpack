@@ -2,11 +2,28 @@ function request({sql}) {
 
     this.req_path = "/get_messages";
     this.req_type = "post";
-    this.callbacks = ["get_messages"];
+    this.callbacks = ["central_auth","get_messages"];
     
     this.req = async (req, res) => {
         
         let {conversation_id, off_time_set, user_time_joined} = req.body;
+
+        const {user_id} = req.auth;
+
+        if(!user_id){
+            return res.json({message: "Authentication required!", results: []});
+        }
+
+        if(!conversation_id || !off_time_set || !user_time_joined){
+            return res.json({message: "Missing required fields!", results: []});
+        }
+
+        off_time_set = parseInt(off_time_set);
+        user_time_joined = parseInt(user_time_joined);
+
+        if(isNaN(off_time_set) || isNaN(user_time_joined)){
+            return res.json({message: "Invalid time values!", results: []});
+        }
 
         let query = `
             select
@@ -30,7 +47,14 @@ function request({sql}) {
             where
                 pm.conversation_id = ? and
                 pm.created_on < ? and
-                pm.created_on >= ? 
+                pm.created_on >= ? and
+                exists (                                          
+                    select 1
+                    from Users_In_Private_Conversations as uipc
+                    where 
+                        uipc.user_id = ? and
+                        uipc.conversation_id = pm.conversation_id
+                )
                 order by pm.created_on 
                 desc
                 limit 25
@@ -38,7 +62,7 @@ function request({sql}) {
         
         try {
 
-            let [results] = await sql.query(query, [conversation_id, off_time_set, user_time_joined]);
+            let [results] = await sql.query(query, [conversation_id, off_time_set, user_time_joined, user_id]);
 
             res.json({message: `Successfully retrieved ${results.length} messages`, results})
 

@@ -2,15 +2,17 @@ function request({sql}) {
 
     this.req_path = "/get_conversations";
     this.req_type = "post";
-    this.callbacks = ["get_conversations"];
+    this.callbacks = ["central_auth","get_conversations"];
 
     this.req = async (req, res)=>{
 
-        let {user} = req.body; 
+        let {user_id} = req.auth;
 
-        let {id} = user;
+        if(!user_id){
+            return res.json({message: "Authentication error", results: []});
+        }
 
-        let data = [id];
+        let data = [user_id];
 
         
 

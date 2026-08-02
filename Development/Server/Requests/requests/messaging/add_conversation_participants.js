@@ -5,8 +5,6 @@ function request({sql}) {
     this.callbacks = ["central_auth","add_conversation_participants"];
 
     this.req = async (req, res) => {
-
-        console.log("hi?");
         
         let {new_users, conversation_id} = req.body;
 
@@ -20,8 +18,6 @@ function request({sql}) {
 
             values.push([conversation_id, now, user_id, 0]);
         }
-
-        console.log(values);
 
         try {
 

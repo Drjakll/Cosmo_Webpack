@@ -6,7 +6,12 @@ function request({sql}) {
 
     this.req = async (req, res) => {
         
-        let {user_id, conversation_id, conversation_name} = req.body;
+        let {conversation_id, conversation_name} = req.body;
+        const {user_id} = req.auth;
+
+        if(!user_id){
+            return res.json({message: "Authentication required!"});
+        }
 
         let query = `update Users_In_Private_Conversations set conversation_name = ? where user_id = ? and conversation_id = ?`;
 

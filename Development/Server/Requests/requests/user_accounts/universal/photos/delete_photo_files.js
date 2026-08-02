@@ -1,8 +1,8 @@
 let request = function({s3, DeleteObjectsCommand}) {
 
-    this.req_path = "/delete_photo_files";
-    this.req_type = "post";
-    this.callbacks = ["central_auth","delete_photo_files"];
+    this.req_path = null;
+    this.req_type = null;
+    this.callbacks = [];
     
     var delete_files = async (photos, bucket_name) => {
 
@@ -17,7 +17,7 @@ let request = function({s3, DeleteObjectsCommand}) {
         await s3.send(new DeleteObjectsCommand(input));
     };
     
-    this.req = async (req, res, next)=>{
+    this.req = async (req, res)=>{
         
         let { photos } = req.body;
         
