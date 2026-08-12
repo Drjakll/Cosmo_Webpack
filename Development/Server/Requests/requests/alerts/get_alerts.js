@@ -48,13 +48,13 @@ let request = function ({sql}) {
         
         try {
 
-            await  sql.query(query, data);
+            await sql.query(query, data);
 
         } catch(err){
 
             console.log(err);
 
-            res.json({message: "Error retrieving alerts", results: []});
+            res.status(500).json({message: "Error retrieving alerts", results: []});
 
         }
     };

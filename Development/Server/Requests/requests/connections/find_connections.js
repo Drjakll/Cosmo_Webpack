@@ -119,7 +119,7 @@ let request = function ({sql}) {
         let { requirements, self_account } = req.body;
 
         if(!self_account){
-            res.json({message: "Missing self account information", results: []});
+            res.status(400).json({message: "Missing self account information", results: []});
             return;
         }
 
@@ -155,13 +155,13 @@ let request = function ({sql}) {
 
             let [results] = await sql.query(query, data);
 
-            res.json({message: `Found ${results.length} results`, results});
+            res.status(200).json({message: `Found ${results.length} results`, results});
 
         } catch(err){
 
             console.log(err);
 
-            res.json({mnessage: "Error finding results", results: []});
+            res.status(500).json({mnessage: "Error finding results", results: []});
 
         }
     };

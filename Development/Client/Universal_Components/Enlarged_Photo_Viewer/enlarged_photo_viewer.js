@@ -68,7 +68,7 @@ class Photo_Viewer extends Component {
 
     render(){
 
-        const {photo_info_array} = this.state;
+        const {photo_info_array, currently_at_index} = this.state;
 
         const {aws_s3_url} = Request_URLs;
 
@@ -84,7 +84,6 @@ class Photo_Viewer extends Component {
                             className="enlarged-photo-viewer-navigation-button"
                             onClick={(e)=>{
                                 
-                                let {currently_at_index} = this.state;
                                 this.Navigate(currently_at_index - 1);
 
                             }}> 
@@ -116,7 +115,7 @@ class Photo_Viewer extends Component {
                     <div id="enlarged-photo-viewer-navigate-right" 
                             className="enlarged-photo-viewer-navigation-button" 
                             onClick={(e)=>{
-                                let {currently_at_index} = this.state;
+
                                 this.Navigate(currently_at_index + 1);
 
                             }}> 
@@ -124,6 +123,12 @@ class Photo_Viewer extends Component {
                         {">"}
 
                     </div>
+
+                </div>
+
+                <div id="number-out-of">
+
+                    {(currently_at_index+1) + "/" + photo_info_array.length}
 
                 </div>
 

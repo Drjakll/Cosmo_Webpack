@@ -47,7 +47,7 @@ let request = function({sql}) {
                 let {album_info} = req.body;
 
                 return results.length !== 0 ? 
-                    res.json({message: `Successfully retrieved ${results.length} photo links`, photos: results, album_info})
+                    res.status(200).json({message: `Successfully retrieved ${results.length} photo links`, photos: results, album_info})
                     :
                     //If all photos on the feed update is erased, then go to delete_album_update_log.js
                     next();
@@ -67,7 +67,7 @@ let request = function({sql}) {
 
             console.log(query, err);
 
-            res.json({result: [], message: "Error retrieving photo links"});
+            res.status(500).json({result: [], message: "Error retrieving photo links"});
 
         }
 

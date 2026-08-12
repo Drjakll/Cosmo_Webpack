@@ -38,13 +38,13 @@ let request = function ({sql}) {
         try {
             let [results] = sql.query(query, data);
 
-            res.json({message: `Succesfully retrieved ${results.length} requests`, results});
+            res.status(200).json({message: `Succesfully retrieved ${results.length} requests`, results});
 
         } catch(err){
 
             console.log(err);
 
-            res.json({message: "Error retrieving follow requests"});
+            res.status(500).json({message: "Error retrieving follow requests"});
         }
 
     };

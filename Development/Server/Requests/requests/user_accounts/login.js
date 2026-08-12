@@ -7,10 +7,47 @@ function request({sql, verify_encrypted_password}) {
 
     //User will try to login with an email, and then it will try to create a session, if an existing session
     //already exists, then it will login with the existing sessions, else it will continue creating a new session
-    this.callbacks = ["login",
+    this.callbacks = [
+        "login",
         "create_session",
         "login_with_session"
     ];
+
+    let Get_Table_Subquery = (item_names, table_name, alias)=>{
+
+        return `select json_arrayagg(
+            json_object(
+                ${item_names.map((name, i)=>{
+
+                    return `'${name}', ${alias}.${name}`
+
+                }).join(',')}
+            )
+        )
+        from 
+            ${table_name} as ${alias}
+        where
+            ${alias}.id = ua.id
+        `
+
+    }
+
+    let get_acc_data = [
+        "id",
+        "password",
+        "email",
+        "date_of_birth",
+        "first_name",
+        "last_name",
+        "marital_status",
+        "gender",
+        "mood_today",
+        "email_verified",
+        "personal_traits",
+        "privacy",
+        "created_on",
+        "last_mood_updated"
+    ]
     
     this.req = async (req, res, next) => {
         
@@ -22,18 +59,54 @@ function request({sql, verify_encrypted_password}) {
             return res.json({message: "No credentials found", acc_info: null, status: 0b010})
         }
 
-        let data = !password ? [id] : [email];
+        let data = password ? [email] : [id];
 
-        let query = !password ? `
+        let query = `
             select 
-                ua.*,
+                ua.${get_acc_data.join(", ua.")},
                 coalesce(pl.link, '')  as profile_picture_link,
                 pl.id as profile_picture_id,
 
-                json_array() as User_Hobbies,
-                json_array() as User_Locations,
-                json_array() as User_Schools,
-                json_array() as User_Professions
+                coalesce((${Get_Table_Subquery([
+                    "id",
+                    "hobby_name",
+                    "proficiency",
+                    "story",
+                    "start_date",
+                    "privacy"
+                ], "User_Hobbies", "uh")}
+                ), json_array()) as User_Hobbies,
+                coalesce((${Get_Table_Subquery([
+                    "id",
+                    "city",
+                    "state",
+                    "country",
+                    "start_date",
+                    "end_date",
+                    "location_type",
+                    "privacy"
+                ], "User_Locations", "ul")}
+                ), json_array()) as User_Locations,
+                coalesce((${Get_Table_Subquery([
+                    "id",
+                    "city",
+                    "state",
+                    "country",
+                    "start_date",
+                    "end_date",
+                    "school_name",
+                    "school_type",
+                    "privacy"
+                ], "User_Schools", "us")}
+                ), json_array()) as User_Schools,
+                coalesce((${Get_Table_Subquery([
+                    "id",
+                    "profession_name",
+                    "proficiency",
+                    "start_date",
+                    "privacy"
+                ], "User_Professions", "up")}
+                ), json_array()) as User_Professions
             
             from 
                 User_Accounts as ua
@@ -44,30 +117,8 @@ function request({sql, verify_encrypted_password}) {
                 pl.profile_id = ua.id and pl.is_a_cover = 1
 
             where 
-                ua.id = ?
-        ` : `select 
-                ua.*,
-                coalesce(pl.link, '')  as profile_picture_link,
-                pl.id as profile_picture_id,
-
-                json_array() as User_Hobbies,
-                json_array() as User_Locations,
-                json_array() as User_Schools,
-                json_array() as User_Professions
-            
-            from 
-                User_Accounts as ua
-
-            left join 
-                Photo_Links as pl
-            on 
-                pl.profile_id = ua.id and pl.is_a_cover = 1
-
-            where 
-                ua.email = ?
+                ${password ? "ua.email = ?" : "ua.id = ?"}
         `;
-
-
 
         try { 
             let [result] = await sql.query(query, data);
@@ -79,7 +130,6 @@ function request({sql, verify_encrypted_password}) {
             }
 
             req.body.acc_info = result[0];
-            req.body.server_password = process.env.SERVER_PASSWORD; //this is needed to grant access to the next middleware
 
             //If a session_id exists, then go ahead and proceed to create_session 
             //and create_session will see that it has a session_id and so it will log in with the session_id
@@ -123,7 +173,7 @@ function request({sql, verify_encrypted_password}) {
 
             console.log(query, err);
 
-            res.json({message: "Error retreiving user account", acc_info: null, status: 0b001});
+            res.status(404).json({message: "Error retreiving user account", acc_info: null, status: 0b001});
         }
     };
 };

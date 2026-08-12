@@ -33,7 +33,7 @@ function request({sql}) {
 
             console.log(query, err);
 
-            res.json({message: "Error creating channel"});
+            res.status(500).json({message: "Error creating channel"});
 
         }
     }

@@ -1,14 +1,14 @@
 import React, { Component, createRef } from 'react';
 import Photo_Thumbnail_Editor from './Photo_Thumbnail_Editor/photo_thumbnail_editor.js';
 import Popup_Msg from '@popup_message';
-import Photos_Container from '@photos_container';
+import Album_Photos_Container from '@photos_container';
 import Request_URLs from '@request_urls';
 import Upload_Files_To_S3 from '@upload_files_to_s3';
 import './photos_container_editor.less';
 
 
 
-class Photos_Container_Editor extends Photos_Container {
+class Photos_Container_Editor extends Album_Photos_Container {
 
     Thumbnail = Photo_Thumbnail_Editor;
 
@@ -26,6 +26,7 @@ class Photos_Container_Editor extends Photos_Container {
         for(let i in state){
 
             this.state[i] = state[i];
+
         }
     }
 
@@ -49,11 +50,11 @@ class Photos_Container_Editor extends Photos_Container {
 
             let { owner_user_account, album_info } = this.state;
 
-            let input = {input: "", submit: false};
+            let input = {input: ""};
 
             await Popup_Msg("input", "Enter the album's name to delete", input);
 
-            if(!input.submit){
+            if(!input.input){
                 return;
             }
 
@@ -86,6 +87,42 @@ class Photos_Container_Editor extends Photos_Container {
         </div>;
     }
 
+    upload_progress_added_keys = {};
+
+    Update_Upload_Progress = ({key, url, progress_completed, all_completed}) => {
+
+        if(all_completed){
+
+            this.upload_progress_added_keys = {};
+
+            return;
+        }
+
+        let {photo_links} = this.state;
+
+        if(!this.upload_progress_added_keys[key]){
+
+            this.upload_progress_added_keys[key] = true;
+
+            let to_add = {id: key, link: url, completed: progress_completed};
+
+            photo_links.push(to_add)
+        }
+
+        photo_links = photo_links.map((value, index)=>{
+
+            if(value.id === key){
+                value.completed = progress_completed;
+            }
+
+            return value;
+
+        });
+
+        this.setState({photo_links});
+
+    }
+
     Add_Photos_Button = () => {
 
         let upload_in_progress = false;
@@ -110,11 +147,13 @@ class Photos_Container_Editor extends Photos_Container {
 
             upload_in_progress = true;
 
-            await Upload_Files_To_S3(upload_photos, selected_files, jsonBody);
+            await Upload_Files_To_S3(upload_photos, selected_files, jsonBody, this.Update_Upload_Progress);
 
             upload_in_progress = false;
 
             let photo_links = await this.props.refresh_photo_links(album_info);
+
+            photo_links = this.Modify_Photo_Links(photo_links);
 
             this.setState({selected_files: [], photo_links});
 
@@ -179,6 +218,8 @@ class Photos_Container_Editor extends Photos_Container {
             this.Photos_To_Be_Deleted = {};
 
             let photo_links = await this.props.refresh_photo_links(this.state.album_info);
+
+            photo_links = this.Modify_Photo_Links(photo_links);
 
             this.setState({photos_to_be_deleted: {}, photo_links})
         };

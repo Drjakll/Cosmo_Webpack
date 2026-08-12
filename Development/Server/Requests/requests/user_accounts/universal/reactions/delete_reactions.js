@@ -21,7 +21,7 @@ let request = function({sql}) {
 
             console.log(err);
 
-            res.json({message: "Failed to delete the comment", failed: true});
+            res.status(500).json({message: "Failed to delete the comment", failed: true});
             
         }
     };

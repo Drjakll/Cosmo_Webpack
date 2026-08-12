@@ -11,7 +11,7 @@ let request = function ({sql}) {
         user_id = parseInt(user_id);
 
         if(isNaN(user_id)){
-            return res.json({message: "No user id is given", wall: null});
+            return res.status(400).json({message: "No user id is given", wall: null});
         }
 
         let data = [user_id]
@@ -23,16 +23,16 @@ let request = function ({sql}) {
             let [results] = await sql.query(query, data);
 
             if(!results.length){
-                return res.json({message: "No wall found", wall: null});
+                return res.status(404).json({message: "No wall found", wall: []});
             }
 
-            res.json({message: "Found the wall", wall: results[0]});
+            res.status(200).json({message: "Found the wall", wall: results[0]});
 
         }catch(err){
 
             console.log(err);
 
-            res.json({message: "Error while searching the wall", wall: null});
+            res.status(500).json({message: "Error while searching the wall", wall: null});
         }
 
 

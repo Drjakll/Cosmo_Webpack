@@ -10,19 +10,15 @@ function request({sql}) {
 
         const {user_id} = req.auth;
 
-        if(!user_id){
-            return res.json({message: "Authentication required!", results: []});
-        }
-
         if(conversation_id === null || off_time_set === null || user_time_joined === null){
-            return res.json({message: "Missing required fields!", results: []});
+            return res.status(400).json({message: "Missing required fields!", results: []});
         }
 
         off_time_set = parseInt(off_time_set);
         user_time_joined = parseInt(user_time_joined);
 
         if(isNaN(off_time_set) || isNaN(user_time_joined)){
-            return res.json({message: "Invalid time values!", results: []});
+            return res.status(400).json({message: "Invalid time values!", results: []});
         }
 
         let query = `
@@ -64,13 +60,13 @@ function request({sql}) {
 
             let [results] = await sql.query(query, [conversation_id, off_time_set, user_time_joined, user_id]);
 
-            res.json({message: `Successfully retrieved ${results.length} messages`, results})
+            res.status(200).json({message: `Successfully retrieved ${results.length} messages`, results})
 
         } catch(err){
 
             console.log(query, err);
 
-            res.json({message: "Error getting messages", results: []});
+            res.status(500).json({message: "Error getting messages", results: []});
         }
        
     };

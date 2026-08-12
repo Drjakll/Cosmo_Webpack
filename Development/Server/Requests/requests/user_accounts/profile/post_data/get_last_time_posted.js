@@ -17,13 +17,13 @@ let request = function({sql}) {
             let [results] = await sql.query(query, [user_id]);
             let last_posted = results.length === 0 ? 0 : results[0].created_on;
 
-            res.json({last_time_posted: last_posted});
+            res.status(200).json({last_time_posted: last_posted});
 
         } catch(err){
 
             console.log(err);
 
-            res.json({last_time_posted: null});
+            res.status(500).json({last_time_posted: null});
         }
 
     };

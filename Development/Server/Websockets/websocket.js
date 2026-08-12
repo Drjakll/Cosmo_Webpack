@@ -12,7 +12,7 @@ let websocket = async (server) => {
                                     pingInterval: 25000,
                                     pingTimeout: 20000
                                 }
-                        );
+                            );
     
     //Gather all the namespaces
     let namespaces = await Gather_Namespaces(io);
@@ -49,6 +49,8 @@ let websocket = async (server) => {
     comments_namespace.on('connection', namespaces.comments.namespace);
     reactions_namespace.on('connection', namespaces.reactions.namespace);
     global_events_namespace.on('connection', namespaces.global_events.namespace);
+
+    return io;
 };
 
 export default websocket;

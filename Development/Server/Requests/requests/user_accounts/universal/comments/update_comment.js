@@ -11,8 +11,10 @@ let request = function({sql}) {
         let {comment, id, target_id_type, target_id} = req.body;
 
         if(!available_target_id_types.includes(target_id_type)){
-            res.json({message: "Invalid target ID type", failed: true});
+
+            res.status(400).json({message: "Invalid target ID type", failed: true});
             return;
+            
         }
 
         const {user_id} = req.auth;
@@ -26,13 +28,13 @@ let request = function({sql}) {
 
             await sql.query(query, [data, id, target_id, user_id] );
 
-            res.json({message: "Successfully updated the comment", failed: false});
+            res.status(200).json({message: "Successfully updated the comment", failed: false});
 
         } catch(err){
 
             console.log(err);
 
-            res.json({message: "Error updating the comment", failed: true});
+            res.status(500).json({message: "Error updating the comment", failed: true});
 
         }        
     };

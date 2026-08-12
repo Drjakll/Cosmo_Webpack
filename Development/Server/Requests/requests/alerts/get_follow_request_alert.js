@@ -39,13 +39,13 @@ let request = function ({sql}) {
 
             let [results] = await sql.query(query, data);
 
-            res.json({message: "Successfully retrieved follow requests", results});
+            res.status(200).json({message: "Successfully retrieved follow requests", results});
 
         } catch(err){
 
             console.log(query, err);
 
-            res.json({message: "Error retrieving alerts", results: []});
+            res.status(500).json({message: "Error retrieving alerts", results: []});
 
         }
     };

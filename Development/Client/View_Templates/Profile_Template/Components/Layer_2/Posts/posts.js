@@ -272,7 +272,7 @@ class Posts extends Component {
 
                     <img src="./static/post_icon.webp"/>
 
-                    <label>Posts</label>
+                    <label>The Posts</label>
                     
                 </div>
 

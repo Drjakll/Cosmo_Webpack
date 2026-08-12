@@ -43,7 +43,7 @@ let request = function({sql}) {
 
             console.log(err);
 
-            res.json({message: "Error retrieving post(s)", posts: []});
+            res.status(500).json({message: "Error retrieving post(s)", posts: []});
         }
 
     };

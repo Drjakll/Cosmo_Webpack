@@ -8,10 +8,6 @@ function request({sql}) {
         
         let {user_id} = req.auth;
 
-        if(!user_id){
-            return res.json({message: "Authentication required!", channels: []});
-        }
-
         let data = [user_id];
 
         let query = `
@@ -34,13 +30,13 @@ function request({sql}) {
 
             let [results] = await sql.query(query, data);
 
-            res.json({message: "Successfully retrieved favorite public channels", channels: results});
+            res.status(200).json({message: "Successfully retrieved favorite public channels", channels: results});
 
         }catch(err){
 
             console.log(query, err);
 
-            res.json({message: "Failed to retrieve favorite public channels", channels: []});
+            res.status(500).json({message: "Failed to retrieve favorite public channels", channels: []});
         }
        
     };

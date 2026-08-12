@@ -29,8 +29,8 @@ class The_Texts extends Component {
             post,
             post_photos: post_photos,
             owner_user_account,
-            selected_photos: selected_photos,
-            connection_list: connection_list
+            selected_photos,
+            connection_list
         };
     }
 

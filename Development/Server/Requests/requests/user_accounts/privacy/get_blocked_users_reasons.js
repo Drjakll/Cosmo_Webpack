@@ -11,7 +11,7 @@ function request({sql}){
         const {user_id} = req.auth;
 
         if(!user_id){
-            return res.json({message: "Invalid user id"});
+            return res.status(400).json({message: "Invalid user id"});
         }
 
         let data = target_id ? [user_id, target_id] : [user_id];
@@ -49,13 +49,13 @@ function request({sql}){
                 }
             */
 
-            res.json({message: "Successfully retrieved blocked users", blocked_users});
+            res.status(200).json({message: "Successfully retrieved blocked users", blocked_users});
 
         }catch(err){
 
             console.log(err);
 
-            res.json({message: "Error while adding block user"});
+            res.status(500).json({message: "Error while adding block user"});
 
         }
     };

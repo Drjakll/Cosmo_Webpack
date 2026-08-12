@@ -21,7 +21,7 @@ function request({sql, verify_encrypted_password}) {
                     });
         }
 
-        res.end();
+        res.status(200).json({message: "Successfully logged out", acc_info: null, status: 0b000});
 
     };
 }

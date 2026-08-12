@@ -72,7 +72,7 @@ class Wall extends Component {
                 
                 <img src='./static/wall.webp'/>
 
-                <label>Wall</label>
+                <label>The Wall</label>
 
             </div>
 

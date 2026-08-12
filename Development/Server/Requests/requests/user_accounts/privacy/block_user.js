@@ -10,7 +10,7 @@ function request({sql}){
         const {user_id} = req.auth;
 
         if(!user_id || !target_id){
-            return res.json({message: "Invalid user id and/or target id"});
+            return res.status(400).json({message: "Invalid user id and/or target id"});
         }
 
         const query = `insert into Blocked_Users (user_id, target_id, blocked_features) values(?,?,?)
@@ -30,7 +30,7 @@ function request({sql}){
 
             console.log(err);
 
-            res.json({message: "Error while adding block user"});
+            res.status(500).json({message: "Error while adding block user"});
 
         }
     };

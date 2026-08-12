@@ -30,7 +30,7 @@ function request({sql}) {
 
             console.log(query, err);
 
-            res.json({message: "Error creating the conversation", success: false});
+            res.status(500).json({message: "Error creating the conversation", success: false});
         }
     }
 };

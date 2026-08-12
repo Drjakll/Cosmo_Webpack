@@ -5,7 +5,7 @@ function request({sql}) {
     //This route should not be accessible by the frontend directly
     this.req_path = null;
     this.req_type = null;
-    this.callbacks = ['create_session', 'login_with_session'];
+    this.callbacks = [];
 
     const session_expire_days = 30;
 
@@ -14,14 +14,8 @@ function request({sql}) {
     //This gets called only considered the user provided a correct account password or has a session_id
     this.req = async (req, res, next)=>{
 
-        let {acc_info, server_password} = req.body;
+        let {acc_info} = req.body;
         let {session_id} = req.cookies;
-
-        //The password is on the .env file, nothing shall comes through other than from another middleware
-        if(server_password !== process.env.SERVER_PASSWORD){
-            res.json({message: "brick wall"});
-            return;
-        }
 
         //If session_id exists, then proceed to login_with_session
         if(session_id){
@@ -86,7 +80,7 @@ function request({sql}) {
 
             console.log(err);
 
-            return res.json({message: "Error creating a session", acc_info: null, status: 0b001});
+            return res.status(500).json({message: "Error creating a session", acc_info: null, status: 0b001});
         }   
 
     };

@@ -8,6 +8,8 @@ let request = function ({sql}) {
         
         let { to_insert, table_name } = req.body;
 
+        to_insert.user_id = req.auth.user_id;
+
         let query = `insert into ${table_name} set ?`;
 
         
@@ -15,12 +17,13 @@ let request = function ({sql}) {
 
             let [result] = await sql.query(query, [to_insert]);
 
-            res.json({message: "Successfully added item to the profile table!", failed: 0, id: result.insertId });
+            res.status(200).json({message: "Successfully added item to the profile table!", failed: 0, id: result.insertId });
 
         } catch(err){
+
             console.log(query, err);
 
-            res.json({message: "Error while adding to profile table!", failed: 1, id: null});
+            res.status(500).json({message: "Error while adding to profile table!", failed: 1, id: null});
         }   
     };
 };

@@ -8,10 +8,6 @@ function request({sql}) {
 
         let {user_id} = req.auth;
 
-        if(!user_id){
-            return res.json({message: "Authentication error", results: []});
-        }
-
         let data = [user_id];
 
         
@@ -51,13 +47,13 @@ function request({sql}) {
 
             let [results] = await sql.query(query, data);
 
-            res.json({message: `Successfully found ${results.length} results`, results});
+            res.status(200).json({message: `Successfully found ${results.length} results`, results});
 
         }catch(err){
 
             console.log(query, err);
 
-            res.json({message: "Error fetching conversations", results: []});
+            res.status(500).json({message: "Error fetching conversations", results: []});
         } 
 
     };

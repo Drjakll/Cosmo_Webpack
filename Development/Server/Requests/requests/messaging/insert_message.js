@@ -10,13 +10,15 @@ function request({sql}) {
 
         conversation_id = parseInt(conversation_id, 10);
 
-        if(!conversation_id || isNaN(conversation_id)|| conversation_id <= 0 || !text){
-            res.json({message: "Invalid required fields"});
+        text = typeof text === "string" ? text.trim() : "";
+
+        if(!conversation_id || isNaN(conversation_id)|| conversation_id <= 0 || typeof text !== "string" || !text.length){
+            res.status(400).json({message: "Invalid required fields"});
             return;
         }
 
         if(text.length > 1000){
-            res.json({message: "Message text is too long"});
+            res.status(400).json({message: "Message text is too long"});
             return;
         }
 
@@ -44,17 +46,17 @@ function request({sql}) {
             let [result] = await sql.query(query, [conversation_id, text, user_id, created_on, conversation_id, user_id]);
 
             if(result.affectedRows === 0){
-                res.json({message: "You are not a participant of this conversation"});
+                res.status(401).json({message: "You are not a participant of this conversation"});
                 return;
             }
 
-            res.json({message: "Successfully inserted the message"});
+            res.status(200).json({message: "Successfully inserted the message"});
 
         } catch(err){
 
             console.log(query, err);
 
-            res.json({message: "An error occured while inserting the message"});
+            res.status(500).json({message: "An error occured while inserting the message"});
         }
     };
 };

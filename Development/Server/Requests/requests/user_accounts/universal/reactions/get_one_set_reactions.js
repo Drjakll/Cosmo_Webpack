@@ -4,10 +4,20 @@ let request = function({sql}) {
     this.req_type = "get";
     this.callbacks = ["get_one_set_reactions"];
     
-    
+    //If frontend needs only one set of reactions, i.e. A post's reactions
     this.req = async (req, res) => { 
         
         let {target_id, target_id_type} = req.params;
+
+        if(!target_id){
+
+            return res.status(400).json({message: "Missing target id", results: [], failed: true});
+        }
+
+        if(!target_id_type){
+
+            return res.status(400).json({message: "Missing target id type", results: [], failed: true});
+        }
 
         let query = `select 
                         r.*,
@@ -16,7 +26,7 @@ let request = function({sql}) {
                         pl.link as profile_picture_link
                     from 
                         Reactions as r
-
+                    
                     join
                         User_Accounts as ua
                     on
@@ -34,13 +44,13 @@ let request = function({sql}) {
 
             let [results] = await sql.query(query, [target_id]);
 
-            res.json({message: "Successfully rertrieved some reactions", results, failed: false});
+            res.status(200).json({message: "Successfully rertrieved some reactions", results, failed: false});
 
         } catch(err){
 
             console.log(query, err);
 
-            res.json({message: `Error retrieving reactions`, results: [], failed: true});
+            res.status(500).json({message: `Error retrieving reactions`, results: [], failed: true});
         }
                 
     };

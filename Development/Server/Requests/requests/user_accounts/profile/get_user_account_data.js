@@ -7,6 +7,11 @@ let request = function({sql}){
     this.req = async (req, res)=>{
         
         let {id} = req.params;
+
+        if(!id){
+            res.status(400).json({message: "Missing user id", result: null});
+            return;
+        }
         
         let query = `select ac.id,
                             ac.first_name,
@@ -45,11 +50,11 @@ let request = function({sql}){
 
             if(result.length === 0){
 
-                res.json({message: "Account not found!", result: null});
+                res.status(404).json({message: "Account not found!", result: null});
 
             } else {
 
-                res.json({message: "Account found!", result: result[0]});
+                res.status(200).json({message: "Account found!", result: result[0]});
 
             }
 
@@ -57,7 +62,7 @@ let request = function({sql}){
 
             console.log(query,err);
 
-            res.json({message: "Error looking up account", result: null});
+            res.status(500).json({message: "Error looking up account", result: null});
         }
     
     };

@@ -8,6 +8,11 @@ let request = function({sql}) {
         
         let {id:user_id} = req.params;
 
+        if(!user_id){
+            res.status(400).json({message: "Invalid user id", failed: true});
+            return;
+        }
+
         let requirements = [user_id];
         
         let query = `select 
@@ -37,13 +42,13 @@ let request = function({sql}) {
 
             let [results] = await sql.query(query, requirements);
 
-            res.json({results, message: `Successfully retrieved ${results.length} albums`});
+            res.status(200).json({results, message: `Successfully retrieved ${results.length} albums`});
 
         } catch(err){
 
             console.log(query, err);
 
-            res.json({results: null, message: "Error retrieving albums"});
+            res.status(500).json({results: null, message: "Error retrieving albums"});
         }
                 
     };

@@ -16,19 +16,19 @@ function request({sql}) {
 
             if(result.affectedRows === 0){
 
-                res.json({message: "Error verifying account", failed: true});
+                res.status(404).json({message: "Error verifying account", failed: true});
 
                 return;
 
             }
             
-            res.json({message: "Successfully verified account", failed: false});
+            res.status(200).json({message: "Successfully verified account", failed: false});
 
         } catch(err){
 
             console.log(err);
 
-            res.json({message: "Error verifying account", failed: true});
+            res.status(500).json({message: "Error verifying account", failed: true});
 
         }   
 

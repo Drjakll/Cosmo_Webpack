@@ -82,8 +82,6 @@ class Criteria_Box extends Component {
 
         return <div id="search-parameters-box-wrapper" >
 
-
-
             <div id="search-parameters-box-list">
 
                 {!keys.length ?  <div id="no-search-criteria">No search requirements</div>: keys.map((key_label, index)=>{
@@ -113,7 +111,9 @@ class Criteria_Box extends Component {
                                 this.setState({added_parameters});
 
                             }}>
+
                                 Remove
+
                             </button>  
 
                         </div>

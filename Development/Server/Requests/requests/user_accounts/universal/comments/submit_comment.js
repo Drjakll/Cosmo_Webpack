@@ -11,7 +11,7 @@ let request = function({sql}) {
         const {user_id} = req.auth;
 
         if(isNaN(parseInt(user_id)) || !target_id || !target_id_type || !comment){
-            res.json({message: "Missing required fields!", failed: true});
+            res.status(400).json({message: "Missing required fields!", failed: true});
             return;
         }   
 
@@ -31,15 +31,17 @@ let request = function({sql}) {
         
         try {
 
-            await sql.query(query, data);
+            let [result] = await sql.query(query, data);
 
-            res.json({message: "Successfully submitted a comment", failed: false});
+            let {insertId} = result;
+
+            res.status(200).json({message: "Successfully submitted a comment", failed: false, insertId });
 
         } catch(err){
 
             console.log(err);
 
-            res.json({message: "Error submitting a comment", failed: true});
+            res.status(500).json({message: "Error submitting a comment", failed: true, insertId: null});
 
         }
                 

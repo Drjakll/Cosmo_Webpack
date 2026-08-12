@@ -3,7 +3,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to c
 Click nbfs://nbhost/SystemFileSystem/Templates/ClientSide/style.less to edit this template
 */
 /*
-    Created on : Apr 7, 2025, 7:22:43 PM
+    Created on : Apr 7, 2025, 7:22:43PM
     Author     : justinzhu
 */
 
@@ -23,25 +23,30 @@ Click nbfs://nbhost/SystemFileSystem/Templates/ClientSide/style.less to edit thi
             opacity: 1;
             display: block;
         }
+
+        #photo-thumbnail {
+            cursor: pointer;
+            box-shadow: rgba(0,0,0,0.5) -5px 5px 10px;
+        }
     }
 
     #enlarge-photo-button-wrapper {
         width: 90%;
-        height: 77.5%;
+        height: calc(80% + 1px);
         position: absolute;
         opacity: 0;
         transition: 0.5s;
         display: none;
         z-index: 999;
-        background-color: rgba(225,225,225,0.5);
-        top: 5%;
-        left: 10%;
+        background-color: rgba(225,225,225,0.85);
+        top: 0.5px;
+        //left: 10%;
         border-radius: 5px;
         overflow: hidden;
 
         #enlarge-photo-button, #enlarge-photo-with-comments-button {
             width: 100%;
-            height: 50%;
+            height: calc(50% + 0.5px);
             display: flex;
             justify-content: center;
             align-items: center;
@@ -72,32 +77,27 @@ Click nbfs://nbhost/SystemFileSystem/Templates/ClientSide/style.less to edit thi
     
     #photo-thumbnail {
         width: 90%;
-        height: 90%;
-        top: 5%;
-        left: 5%;
+        height: 80%;
+        //top: 5%;
+        //left: 5%;
         background-position: center;
         background-size: cover;
         background-repeat: no-repeat;
         border-radius: 5px;
-        box-shadow: rgba(0,0,0,0.5) 0px 0px 2px;
+        box-shadow: rgba(0,0,0,0.75) -5px 5px 7.5px;
         transition: 0.5s;
         position: relative;
-        border: rgba(0,0,0,0.5) solid 0.5px;
+        border: rgba(50,50,50,1) solid 0.5px;
         z-index: 9;
-        
-        &:hover {
-            cursor: pointer;
-            box-shadow: rgba(0,0,0,0.5) -5px 5px 10px;
-            position: relative;
-        }
     }
 
     #comment-count-wrapper{
         width: 100%;
-        padding: 20px 0px 5px 0px;
+        height: 20%;
         font-size: 13px;
         display: flex;
         justify-content: center;
+        align-items: center;
         transition: 0.5s;
 
         &:hover {

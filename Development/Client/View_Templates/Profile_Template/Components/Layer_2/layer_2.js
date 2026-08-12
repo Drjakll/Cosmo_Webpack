@@ -19,12 +19,12 @@ class Layer_2 extends Component {
         };
  
         this.Render_List = {
-            "Wall": {
+            "The Wall": {
                 component: Wall,
                 props: {},
                 classname: "layer_2-wall-wrapper"
             },
-            "Posts": {
+            "The Posts": {
                 component: Posts,
                 props: {},
                 classname: "layer_2-post-wrapper"
@@ -36,7 +36,7 @@ class Layer_2 extends Component {
             visitor_user_account,
             general_props: this.General_Props,
             render_list: this.Render_List,
-            selected_tab: "Wall"
+            selected_tab: "The Wall"
         };
 
     }

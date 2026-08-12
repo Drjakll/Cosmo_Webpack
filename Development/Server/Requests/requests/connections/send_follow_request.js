@@ -101,22 +101,22 @@ let request = function ({sql}) {
 
                 case 'rejected':
 
-                    return res.json({message: "User set privacy to only mutual followers will be allow to request to follow. "});
+                    return res.status(401).json({message: "User set privacy to only mutual followers will be allow to request to follow. "});
 
                 case 'pending':
                 
-                    return res.json({message: "Follow request has been sent!"});
+                    return res.status(200).json({message: "Follow request has been sent!"});
 
                 case 'accepted':
 
-                    return res.json({message: "User has accepted your follow request!"});
+                    return res.status(200).json({message: "User has accepted your follow request!"});
             }
 
         } catch (err){
 
             console.log(err);
 
-            res.json({message: "Error sending follow request!"});
+            res.status(500).json({message: "Error sending follow request!"});
         }
     };
 };

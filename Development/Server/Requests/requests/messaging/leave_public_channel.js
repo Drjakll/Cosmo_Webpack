@@ -35,13 +35,13 @@ function request({sql}) {
         try {
             await sql.query(query, data);
 
-            res.json({message: "Successfully left the channel"});
+            res.status(200).json({message: "Successfully left the channel"});
 
         }catch(err){
 
             console.log(query, err);
 
-            res.json({message: "Error leaving the channel"});
+            res.status(500).json({message: "Error leaving the channel"});
         }   
        
     };

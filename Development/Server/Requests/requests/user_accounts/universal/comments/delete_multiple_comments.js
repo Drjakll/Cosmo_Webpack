@@ -9,7 +9,7 @@ let request = function({sql}) {
         let {comment_ids} = req.body;
 
         if(comment_ids.length === 0){
-            res.json({message:"No comments to delete", failed: true});
+            res.status(400).json({message:"No comments to delete", failed: true});
             return;
         }
 
@@ -19,13 +19,13 @@ let request = function({sql}) {
 
             await sql.query(query, comment_ids);
 
-            res.json({message: "Successfully deleted comments", failed: false});
+            res.status(200).json({message: "Successfully deleted comments", failed: false});
 
         } catch(err){
 
             console.log(err);
 
-            res.json({message: "Failed to delete the comment", failed: true});
+            res.status(500).json({message: "Failed to delete the comment", failed: true});
             
         }
     };

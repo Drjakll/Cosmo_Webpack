@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import Single_Photo_Thumbnail from './Single_Photo_Thumbnail/single_photo_thumbnail.js';
 import Enlarged_Photo_Viewer from '@enlarged_photo_viewer';
+import Image_Container from '@image_container';
 import './photos_container.less';
 
 class Photos_Container extends Component {
@@ -14,7 +15,9 @@ class Photos_Container extends Component {
         
         super(props);
 
-        let {owner_user_account, visitor_user_account, album_info, photo_links} = this.props
+        let {owner_user_account, visitor_user_account, album_info, photo_links} = this.props;
+
+        photo_links = this.Modify_Photo_Links(photo_links);
         
         this.state = {
             photo_links,
@@ -28,16 +31,34 @@ class Photos_Container extends Component {
     }
 
     componentDidMount(){
+
+        this.Modify_Photo_Links(this.state.photo_links);
         
     }
 
-    componentDidUpdate(prevProps, prevState) {
+    Modify_Photo_Links = (photo_links)=>{
 
-        if (this.props === prevProps) {
+        for(let i = 0; i < photo_links.length; i++){
+
+            photo_links[i].custom_frame = this.Regular_Image_Frame;
+
+        }
+
+        return photo_links
+    }
+
+    async componentDidUpdate(prevProps, prevState) {
+
+        let {photo_links, album_info} = this.props;
+
+        if (photo_links === prevProps.photo_links && album_info === prevProps.album_info) {
             return;
         }
 
-        this.setState(this.props);
+
+        photo_links = this.Modify_Photo_Links(photo_links);
+
+        await this.setState({album_info, photo_links});
     }
 
     Exit_Enlarge_Photo_Viewer = ()=>{
@@ -56,27 +77,51 @@ class Photos_Container extends Component {
             initial_photo_index
         });
     }
-    
-    render(){
 
-        let {Thumbnail, Insert_Photo_To_Delete} = this;
+    //To be replaced by the inheriter
+    Custom_Uploading_Progress_Frame = null;
+
+    Regular_Image_Frame = ({photo, index}) => {
+
+        const {Thumbnail, Insert_Photo_To_Delete} = this;
+
+        const {Get_Albums, change_main_display} = this.props;
 
         let {owner_user_account, 
                 visitor_user_account, 
                 photos_to_be_deleted, 
                 album_info, 
-                photo_links, 
-                enlarged_photo_view,
-                initial_photo_index
             } = this.state;
 
-        let {Get_Albums, change_main_display} = this.props;
+        return <div className="photo-thumbnail-wrapper" key={index}>
+
+            <Thumbnail
+                photo_info={photo}
+                owner_user_account={owner_user_account}
+                visitor_user_account={visitor_user_account}
+                photos_to_be_deleted={photos_to_be_deleted}
+                album_info={album_info}
+                Get_Albums={Get_Albums}
+                change_main_display={change_main_display}
+                insert_photo_to_delete={Insert_Photo_To_Delete}
+                open_enlarged_photo_viewer={this.Open_Enlarged_Photo_Viewer}
+                index={index}
+            />
+
+        </div>;
+    }
+    
+    render(){
+
+        let {Exit_Enlarge_Photo_Viewer} = this;
+
+        let { initial_photo_index, photo_links, enlarged_photo_view, album_info } = this.state;
         
         return (
             <div id="photos-container">
 
                 {enlarged_photo_view ? <Enlarged_Photo_Viewer 
-                                            exit={this.Exit_Enlarge_Photo_Viewer} 
+                                            exit={Exit_Enlarge_Photo_Viewer} 
                                             initial_photo_index={initial_photo_index}
                                             photo_info_array={photo_links}
                                         /> : ""}
@@ -109,28 +154,7 @@ class Photos_Container extends Component {
                     
                     <div id="photos">
                         
-                        {photo_links.map((photo_info, index)=>{
-
-                            let {id} = photo_info;
-
-                            return <div className="photo-thumbnail-wrapper" key={index}>
-
-                                <Thumbnail
-                                    photo_info={photo_info}
-                                    owner_user_account={owner_user_account}
-                                    visitor_user_account={visitor_user_account}
-                                    photos_to_be_deleted={photos_to_be_deleted}
-                                    album_info={album_info}
-                                    Get_Albums={Get_Albums}
-                                    change_main_display={change_main_display}
-                                    insert_photo_to_delete={Insert_Photo_To_Delete}
-                                    open_enlarged_photo_viewer={this.Open_Enlarged_Photo_Viewer}
-                                    index={index}
-                                />
-
-                            </div>;
-
-                        })}
+                        <Image_Container images={photo_links} />
                 
                     </div>
                                 

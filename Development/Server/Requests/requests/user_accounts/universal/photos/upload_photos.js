@@ -9,6 +9,7 @@ let request = function({s3}){
     this.callbacks = [
         "uploads",
         "central_auth",
+        "capture_io",
         "upload_photos",
         "add_photo_links",
         "add_album_update_log",
@@ -34,7 +35,10 @@ let request = function({s3}){
     this.req = async (req, res, next)=>{
         
         const uploadedFiles = req.files;
-        const {target_id_type, target_id, album_name} = JSON.parse(req.body.metadata);
+
+        const {socket, metadata} = req.body;
+
+        const {target_id_type, target_id, album_name} = JSON.parse(metadata);
         const {user_id} = req.auth;
 
         
@@ -51,11 +55,18 @@ let request = function({s3}){
         
         let photo_urls = [];
         let complete_upload = 0;
+        let photo_key_index = 0;
         
         //Go through each file
         await uploadedFiles.forEach(async (file) => {
 
             const s3_bucket_path = `users/${user_id}/${target_id_type}/${album_name}/${file.originalname}`;
+
+            const current_key = `upload_${photo_key_index}`;
+
+            photo_key_index++;
+
+            socket?.emit('init_upload', {key: current_key, url: s3_bucket_path});
             
             let upload = await upload_file(s3_bucket_path, file, process.env.BUCKET_NAME);
             
@@ -64,7 +75,7 @@ let request = function({s3}){
                 
                 const percentage = Math.floor((progress.loaded / progress.total) * 100);
                 
-                console.log(`${percentage}%`);
+                socket?.emit('track_upload_progress', {key: current_key, url: s3_bucket_path, progress_completed: percentage });
                 
             });
 
@@ -91,6 +102,8 @@ let request = function({s3}){
                 req.body.target_id_type = target_id_type;
 
                 req.body.user_id = parseInt(user_id);
+
+                socket?.emit("upload_completed", {});
 
                 //Move onto adding filepaths to the database (add_photo_links.js)
                 next();

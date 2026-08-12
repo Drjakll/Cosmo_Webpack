@@ -69,7 +69,8 @@ class Choice extends Component {
 
                 <div id="value">
 
-                    {this.state.value}
+                    <div>&#x25BC;</div>
+                    <label>{this.state.value}</label>
 
                 </div>
 

@@ -11,7 +11,7 @@ function request({sql}){
         const {user_id} = req.auth;
 
         if(!user_id || !target_id) {
-            return res.json({message: "Invalid user id and/or target id"});
+            return res.status(400).json({message: "Invalid user id and/or target id"});
         }
 
         let last_modified = Date.now();
@@ -19,7 +19,7 @@ function request({sql}){
         let features = blocked_features?.split(',') || [];
 
         if(!features.length){
-            return res.json({message: "No blocked features were given"});
+            return res.status(400).json({message: "No blocked features were given"});
         }
 
         let to_insert = [];
@@ -51,13 +51,13 @@ function request({sql}){
             
             await sql.query(query, to_insert);
 
-            res.json({message: "Successfully blocked user"});
+            res.status(200).json({message: "Successfully blocked user"});
 
         }catch(err){
 
             console.log(err);
 
-            res.json({message: "Error while adding block user reason"});
+            res.status(500).json({message: "Error while adding block user reason"});
 
         }
     };

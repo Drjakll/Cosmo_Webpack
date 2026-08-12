@@ -50,7 +50,9 @@ class Connection_List_Template extends Component {
 
                 {the_list.map((entry, key)=>{
 
-                    return <div className="connection-entry-wrapper" key={key}>
+                    let {id} = entry;
+
+                    return <div className="connection-entry-wrapper" key={id}>
 
                             <Connection_List_Entry 
                                 visitor_user_account={visitor_user_account}

@@ -15,12 +15,12 @@ let Search_Data_Template = function(initial = Search_Parameters){
             value: "",
             options: []
         },
-        date_of_birth: { 
+        /*date_of_birth: { 
             component: null,
             label: "Date of Birth", 
             value: "", 
             options: [] 
-        },
+        },*/
         gender: {
             component: null,
             label: "Gender",

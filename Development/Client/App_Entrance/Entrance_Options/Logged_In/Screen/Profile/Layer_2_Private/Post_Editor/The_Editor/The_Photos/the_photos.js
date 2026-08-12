@@ -1,12 +1,16 @@
 import React, { Component, createRef } from 'react';
 import Popup_Msg from '@popup_message';
 import Request_URLs from '@request_urls';
+import Image_Container from '@image_container';
 import Upload_Files_To_S3 from '@upload_files_to_s3';
 import './the_photos.less';
 
 class The_Photos extends Component {
 
     fileRef = createRef();
+
+    //Selected photos for deleting
+    selected_photos = {};
 
     upload_in_progress = false; 
 
@@ -20,8 +24,7 @@ class The_Photos extends Component {
         this.state = {
             photos: photos ? photos : [],
             owner_user_account,
-            post_info: post_info ? post_info : {},
-            selected_photos: {}
+            post_info: post_info ? post_info : {}
         };
     }
 
@@ -31,11 +34,23 @@ class The_Photos extends Component {
 
     }
 
+    Modify_Photos = (photos)=>{
+
+        for(let i = 0; i < photos.length; i++){
+
+            photos[i].custom_frame = this.Single_Photo_Display;
+
+        }
+
+        return photos;
+
+    }
+
     async componentDidUpdate(prevProps, prevState) {  
 
         if (this.props === prevProps) {
-            return;
 
+            return;
         }
 
         await this.setState(this.props);
@@ -54,7 +69,7 @@ class The_Photos extends Component {
             return;
         }
 
-        let { upload_photos, get_photo_links } = Request_URLs;
+        let { upload_photos } = Request_URLs;
 
         let { owner_user_account, post_info } = this.state;
         let { id } = owner_user_account;
@@ -70,11 +85,51 @@ class The_Photos extends Component {
 
         this.upload_in_progress = true;
 
-        await Upload_Files_To_S3(upload_photos, files, { user_id: id, target_id_type: "post_id", target_id, album_name });
-
+        await Upload_Files_To_S3(upload_photos, 
+                                files, 
+                                { user_id: id, target_id_type: "post_id", target_id, album_name },
+                                this.Update_Upload_Progress
+                            );
+        
         this.Get_Post_Photos();
         
         this.upload_in_progress = false;
+    }
+
+    upload_progress_added_keys = {};
+
+    Update_Upload_Progress = ({key, url, progress_completed, all_completed})=>{
+
+        if(all_completed){
+
+            this.upload_progress_added_keys = {};
+
+            return;
+        }
+
+        let {photos} = this.state;
+
+        //Check whether or not it's already pushed into the array
+        if(!this.upload_progress_added_keys[key]){
+
+            this.upload_progress_added_keys[key] = true;
+
+            let to_add = {id: key, link: url, completed: progress_completed};
+
+            photos.push(to_add)
+        }
+
+        photos = photos.map((value, index)=>{
+
+            if(value.id === key){
+                value.completed = progress_completed;
+            }
+
+            return value;
+
+        });
+
+        this.setState({photos});
     }
 
     Get_Post_Photos = async () => {
@@ -101,47 +156,51 @@ class The_Photos extends Component {
         })).json();
 
         let {targets: photos} = res?.results ?? {targets: []};
-        
-        if (photos.length > 0) {
 
-            this.setState({
-                photos: photos
-            });
+        photos = this.Modify_Photos(photos);
 
-            this.props.Set_Post_Photos(photos);
-        }
+        await this.setState({
+            photos
+        });
+
+        this.props.Set_Post_Photos(photos);
     }
 
-    Single_Photo_Display = (photo, key) => {
+
+    Single_Photo_Display = ({photo, index}) => {
 
         let { link, id } = photo;
         let { aws_s3_url } = Request_URLs;
 
-        let Select_Photo = (photo) => {
+        let {selected_photos} = this;
 
-            let { selected_photos } = this.state;
+        let Select_Photo = (e) => {
 
-            if (selected_photos[photo.id]) {
+            let {currentTarget} = e;
 
-                delete selected_photos[photo.id];
+            currentTarget.classList.toggle('selected-photo');
+
+            if(selected_photos[id]){
+
+                delete selected_photos[id];
 
             } else {
 
-                selected_photos[photo.id] = photo;
+                selected_photos[id] = photo;
+
             }
 
-            this.setState({ selected_photos: selected_photos });
-
             this.props.Set_Selected_Photos(selected_photos);
+
         }
 
-        return <div className="single-photo-wrapper" key={key}>
+        return <div className="single-photo-wrapper" key={index}>
 
             <img src={`${aws_s3_url}${link}`}
                 alt={`Post Photo ${id}`}
-                className={`single-photo ${this.state.selected_photos[photo.id] ? "selected-photo" : ""}`}
+                className={`single-photo`}
                 onClick={(e) => {
-                    Select_Photo(photo);
+                    Select_Photo(e);
                 }} />
                                                 
         </div>;
@@ -150,7 +209,8 @@ class The_Photos extends Component {
     Delete_Selected_Photos = async (e) => {
 
         let { delete_photos } = Request_URLs;
-        let { selected_photos, photos } = this.state; 
+        let { photos } = this.state; 
+        let {selected_photos } = this;
 
         let res = await (await fetch(delete_photos, {
             method: "POST",
@@ -160,21 +220,30 @@ class The_Photos extends Component {
             body: JSON.stringify({photos: selected_photos})
         })).json();
 
-        Popup_Msg("message", res?.message);
+        await Popup_Msg("message", res?.message);
 
         photos = photos.filter((p)=>{
+
             for(let i in selected_photos){
                 if(selected_photos[i].id === p.id){
                     return false;
                 }
             }
+
+            return true;
         });
 
-        this.setState({ selected_photos: {}, photos });
+        selected_photos = {};
+
+        this.setState({ photos });
+
+        this.props.Set_Selected_Photos(selected_photos);
  
     }
 
     render() {
+
+        let {photos} = this.state;
 
         return <div id="the-post-photos-holder">
 
@@ -196,11 +265,7 @@ class The_Photos extends Component {
 
                 <div id="photos-wrapper">
 
-                    {this.state.photos.map((photo_data, index) => {
-
-                        return this.Single_Photo_Display(photo_data, index);
-
-                    }) }
+                    <Image_Container images={photos} columns={4} />
 
                 </div>
 

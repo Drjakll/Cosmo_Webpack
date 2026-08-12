@@ -10,12 +10,12 @@ let request = function ({sql}) {
         const {user_id} = req.auth;
 
         if(!followed_id || !follower_id || isNaN(parseInt(followed_id)) || isNaN(parseInt(follower_id))){
-            res.json({message: "Missing required fields!"});
+            res.status(400).json({message: "Missing required fields!"});
             return;
         }
 
         if(user_id !== follower_id){
-            res.json({message: "You are not authorized to unfollow this user!"});
+            res.status(401).json({message: "You are not authorized to unfollow this user!"});
             return;
         }
 
@@ -31,13 +31,13 @@ let request = function ({sql}) {
 
             await sql.query(query, data);
 
-            res.json({message: "Successfully unfollowed user"});
+            res.status(200).json({message: "Successfully unfollowed user"});
 
         } catch(err){
 
             console.log(err);
 
-            res.json({message: "Error following user"});
+            res.status(500).json({message: "Error following user"});
 
         }
 

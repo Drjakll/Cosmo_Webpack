@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Enlarged_Single_Photo from '@enlarged_single_photo';
 import Comments_Container_Editor from '@comments_container_editor';
 import Request_URLs from '@request_urls';
+import Popup_Msg from '@popup_message';
 import './enlarged_photo_editor.less';
 
 
@@ -44,7 +45,7 @@ class Enlarged_Photo_Editor extends Enlarged_Single_Photo {
                 photo_cover_id
             }
 
-            let res = await (await fetch(
+            let data = await (await fetch(
                 set_photo_as_cover,
                 {
                     method: "POST",
@@ -55,8 +56,9 @@ class Enlarged_Photo_Editor extends Enlarged_Single_Photo {
                 }
             )).json();
 
-
             this.props.Get_Albums && this.props.Get_Albums();
+
+            Popup_Msg("message", data?.message);
 
         };
 

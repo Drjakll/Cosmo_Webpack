@@ -2,16 +2,24 @@ let request = function({sql}){
 
     this.req_path = "/get_feeds";
     this.req_type = "post";
-    this.callbacks = ["get_feeds"];
+    this.callbacks = ["central_auth","get_feeds"];
 
     this.req = async (req, res)=>{
 
         let {user_ids, offset} = req.body;
 
-        if(user_ids.length === 0){
-            res.json({message: "No results", results: []});
+        if(!Array.isArray(user_ids) || user_ids.length === 0){
+            res.status(400).json({message: "No results", results: []});
             return;
         }   
+
+        user_ids = user_ids.map(id => parseInt(id, 10))
+                            .filter(id => !isNaN(id) && id > 0);
+
+        if(user_ids.length === 0){
+            res.status(400).json({message: "No results", results: []});
+            return;
+        }
 
 
         let query = `select 
@@ -43,13 +51,13 @@ let request = function({sql}){
 
 
             ///Return the feeds to the front end and they will retrieve each feed as they scroll down
-            res.json({message: `Found ${results.length} feeds`, results});
+            res.status(200).json({message: `Found ${results.length} feeds`, results});
             
         } catch(err){
 
             console.log(query, err);
 
-            res.json({message: "Error while retrieving feeds", results: null});
+            res.status(500).json({message: "Error while retrieving feeds", results: null});
 
         }
 

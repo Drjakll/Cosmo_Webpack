@@ -12,8 +12,8 @@ class Layer_2_Private extends Layer_2 {
 
         let {render_list} = this.state;
 
-        render_list["Posts"].component = Post_Editor;
-        render_list["Wall"].component = Wall_Editor;
+        render_list["The Posts"].component = Post_Editor;
+        render_list["The Wall"].component = Wall_Editor;
     }
 
     render(){

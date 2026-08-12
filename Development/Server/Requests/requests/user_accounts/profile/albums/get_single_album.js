@@ -39,7 +39,7 @@ let request = function({sql}) {
             let [result] = await sql.query(query, requirements);
 
             if(result.length === 0){
-                res.json({message: "No such album exists", photos: [], album_info: {}});
+                res.status(404).json({message: "No such album exists", photos: [], album_info: {}});
                 return;
             }
 
@@ -54,7 +54,7 @@ let request = function({sql}) {
 
             console.log(query, err);
 
-            res.json({results: null, message: "Error retrieving albums"});
+            res.status(500).json({results: null, message: "Error retrieving albums"});
         }
                 
     };

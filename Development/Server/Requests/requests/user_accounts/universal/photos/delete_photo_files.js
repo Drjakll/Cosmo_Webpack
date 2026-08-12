@@ -22,7 +22,7 @@ let request = function({s3, DeleteObjectsCommand}) {
         let { photos } = req.body;
         
         if(Object.keys(photos || {}).length === 0){
-            res.json({message: "No files deleted"});
+            res.status(400).json({message: "No files deleted"});
             return;
         }
         
@@ -32,8 +32,7 @@ let request = function({s3, DeleteObjectsCommand}) {
         await delete_files(photos, BucketName);
 
         
-        res.json({message: `Successfully deleted ${Object.keys(photos).length} files`});
-        res.end();
+        res.status(200).json({message: `Successfully deleted ${Object.keys(photos).length} files`});
  
     };
     

@@ -2,6 +2,7 @@ import React from 'react';
 import Photos_Container_Editor from './Photos_Container_Editor/photos_container_editor.js';
 import Popup_Msg from '@popup_message';
 import Albums_Component from '@albums';
+import Request_URLs from '@request_urls';
 import Photo_Album_Data_Templates from '@photo_album_data';
 import './album_editor.less';
 
@@ -35,11 +36,16 @@ class Album_Editor extends Albums_Component {
 
     Add_Photo_Album = async (e) => {
 
-        let input = {input: "", submit: false};
+        let input = {input: ""};
 
         await Popup_Msg("input", "Please enter an album name", input);
 
-        if (!input.submit) {
+        if (input.input === null) {
+            return;
+        }
+
+        if(input.input.trim() === ''){
+            await Popup_Msg("message", "Album name cannot be empty");
             return;
         }
 

@@ -14,7 +14,7 @@ let request = function({sql}) {
         const {user_id} = req.auth;
 
         if(Object.keys(photos || {}).length === 0 || !user_id){
-            res.json({message: "No photos to delete"});
+            res.status(400).json({message: "No photos to delete"});
             return;
         }
 
@@ -28,7 +28,7 @@ let request = function({sql}) {
         }
         
         if(photos.length === 0){
-            res.json({message:"No photo data has been deleted"});
+            res.status(400).json({message:"No photo data has been deleted"});
             return;
         }
      
@@ -40,7 +40,7 @@ let request = function({sql}) {
 
             if(!result.affectedRows){
 
-                return res.json({message: "Invalid credentials"});
+                return res.status(400).json({message: "Invalid credentials"});
 
             }
             
@@ -50,6 +50,8 @@ let request = function({sql}) {
         } catch(err){
 
             console.log(query, err);
+
+            res.status(500).json({message: "Error deleting photos"});
         }
 
     };

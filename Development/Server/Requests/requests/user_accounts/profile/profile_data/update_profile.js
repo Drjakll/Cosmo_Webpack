@@ -11,7 +11,7 @@ let request = function ({sql}) {
         let {id} = credentials;
 
         if(Object.keys(to_update).length === 0 || isNaN(parseInt(id))){
-            res.json({message: "No information has changed", success: 0});
+            res.status(400).json({message: "No information has changed", success: 0});
             return;
         }
         
@@ -20,12 +20,12 @@ let request = function ({sql}) {
         try {
 
             await sql.query(query, [to_update, id]);
-            res.json({message: "Successfully updated the account", success: 1});
+            res.status(200).json({message: "Successfully updated the account", success: 1});
             
         }catch(err){
 
             console.log(query, err);
-            res.json({message: "Error while updating", success: 0});
+            res.status(500).json({message: "Error while updating", success: 0});
         }
 
     };

@@ -11,11 +11,11 @@ function request({sql}) {
         const {user_id} = req.auth;
 
         if(!user_id){
-            return res.json({message: "Authentication required!"});
+            return res.status(400).json({message: "Authentication required!"});
         }
 
         if(!public_channel_id){
-            return res.json({message: "Missing public channel id"});
+            return res.status(400).json({message: "Missing public channel id"});
         }
 
         let now = Date.now();
@@ -32,13 +32,13 @@ function request({sql}) {
 
             await sql.query(query, data);
 
-            res.json({message: "Successfully joined the channel"});
+            res.status(200).json({message: "Successfully joined the channel"});
 
         }catch(err){
 
             console.log(query, err);
 
-            res.json({message: "Error joining channel"});
+            res.status(500).json({message: "Error joining channel"});
         }
     }
 

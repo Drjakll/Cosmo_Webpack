@@ -24,13 +24,13 @@ let request = function ({sql}) {
 
             await sql.query(query, data);
 
-            res.json({message: "Successfully updated connection request!"});
+            res.status(200).json({message: "Successfully updated connection request!"});
 
         } catch(err){
 
             console.log(query, err);
 
-            res.json({message: "Error updating connection request!"});
+            res.status(500).json({message: "Error updating connection request!"});
 
         }
     };

@@ -9,12 +9,8 @@ function request({sql}) {
         let {conversation_id} = req.body;
         const {user_id} = req.auth;
 
-        if(!user_id){
-            return res.json({message: "Authentication required!"});
-        }
-
         if(!conversation_id){
-            return res.json({message: "Missing conversation id"});
+            return res.status(400).json({message: "Missing conversation id"});
         }
         
         let query = `delete 
@@ -44,13 +40,13 @@ function request({sql}) {
 
             await sql.query(query, [conversation_id, user_id, conversation_id, conversation_id]);
 
-            res.json({message: "You have left the conversation!"});
+            res.status(200).json({message: "You have left the conversation!"});
 
         } catch(err){
 
             console.log(query, err);
 
-            res.json({message: "Error leaving the conversation"});
+            res.status(500).json({message: "Error leaving the conversation"});
             
         }
     };

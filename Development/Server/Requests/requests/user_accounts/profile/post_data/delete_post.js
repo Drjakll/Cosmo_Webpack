@@ -15,7 +15,7 @@ let request = function({sql}) {
         id = parseInt(id, 10);
 
         if(isNaN(id) || id <= 0){
-            res.json({message: "Post id is invalid"});
+            res.status(400).json({message: "Post id is invalid"});
             return;
         }
 
@@ -34,7 +34,7 @@ let request = function({sql}) {
             if(result.length === 0){
                 await con.rollback();
 
-                res.json({message: "Post not found or you are not the owner of this post"});
+                res.status(404).json({message: "Post not found or you are not the owner of this post"});
                 return;
             }
 
@@ -61,7 +61,7 @@ let request = function({sql}) {
             await con.rollback();
 
             console.log(err, query);
-            res.json({message: "Error deleting post..."});
+            res.status(500).json({message: "Error deleting post..."});
 
         } finally {
 

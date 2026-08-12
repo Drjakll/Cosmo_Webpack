@@ -13,7 +13,7 @@ class Json extends Component {
         this.value = {};
 
         this.state = {
-            
+            collapsed: true
         };
         
     }
@@ -59,10 +59,14 @@ class Json extends Component {
     render(){
 
         let {options} = this.props;
+        let {collapsed} = this.state;
 
-        return <div id="search-json-input-wrapper">
+        return <div id="search-json-input-wrapper" 
+                    className={`${collapsed ? "collapsed" : ""}`}
+                >
 
-            <div id="json-label-wrapper">
+            <div id="json-label-wrapper" 
+                    onClick={(e)=>{ this.setState({collapsed: !collapsed})}}>
 
                 <label id="search-label">{this.props.label}</label>
 

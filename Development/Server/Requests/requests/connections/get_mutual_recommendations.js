@@ -61,13 +61,13 @@ let request = function ({sql}) {
 
             let [results] = await sql.query(query, data);
             
-            res.json({message: `Found ${results.length} recommendations`, results});
+            res.status(200).json({message: `Found ${results.length} recommendations`, results});
 
         } catch(err){
 
             console.log(query, err);
 
-            res.json({message: `Found error retrieving recommendations`, results: []});
+            res.status(500).json({message: `Found error retrieving recommendations`, results: []});
 
         }
     };

@@ -14,15 +14,16 @@ function request({sql}) {
             
             const entry_page = fs.readFileSync(`${__dirname}/entry.html`, 'utf8');
             
-            res.send(entry_page);
+            res.status(200).send(entry_page);
             
         }
         catch(err){
             
             console.log(err);
+
+            res.status(500).send("Server Error");
         }
-        
-        res.end();
+
     };
 };
 

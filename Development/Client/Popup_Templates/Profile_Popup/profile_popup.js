@@ -102,7 +102,7 @@ class Profile_Popup extends Component {
                     onMouseUp={(e) => { drag.disable_drag(e); }}
                 >
                     <div id="exit-button" onClick={(e) => { this.props.Exit(); } }>
-                        X
+                        &#10008;
                     </div>
 
                     <label>

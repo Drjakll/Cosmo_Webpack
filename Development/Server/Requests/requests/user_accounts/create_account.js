@@ -20,7 +20,7 @@ function request({sql, generate_encrypted_password}) {
         let {email, password, first_name, last_name, date_of_birth, gender, marital_status} = acc_details;
 
         if(!Verify_Email(email)){
-            res.json({message: "Invalid email format.", success: false, acc_info: null});
+            res.status(400).json({message: "Invalid email format.", success: false, acc_info: null});
             return;
         }
 
@@ -36,13 +36,13 @@ function request({sql, generate_encrypted_password}) {
 
             acc_details.id = result.insertId;
 
-            res.json({message: "Account successfully created.", success: true, acc_info: acc_details});
+            res.status(201).json({message: "Account successfully created.", success: true, acc_info: acc_details});
             
         } catch(err) {
 
             console.log(query, err.sqlMessage);
 
-            res.json({message: "Error creating the account.", success: false, acc_info: null});
+            res.status(400).json({message: "Error creating the account.", success: false, acc_info: null});
 
         }
     };

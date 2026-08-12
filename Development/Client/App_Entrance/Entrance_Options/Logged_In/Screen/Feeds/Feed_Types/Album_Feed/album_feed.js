@@ -4,6 +4,7 @@ import Photos_Container from '@photos_container';
 import Single_Photo_Thumbnail from '@single_photo_thumbnail';
 import Request_URLs from '@request_urls';
 import Drag_Scroll from '@drag_scroll';
+import Enlarged_Photo_Viewer from '@enlarged_photo_viewer';
 import './album_feed.less';
 
 class Album_Feed extends Component {
@@ -20,6 +21,8 @@ class Album_Feed extends Component {
             all_photo_links: [], //These are all the available photos in this album
             new_photos_added: [], //These are the photos that are recently added
             album_info: {},
+            enlarged_photo_view: false,
+            initial_photo_index: 0,
             from_account
         };
     }
@@ -182,6 +185,20 @@ class Album_Feed extends Component {
 
     }
 
+    Open_Enlarged_Photo_Viewer = (initial_photo_index) =>{
+
+        this.setState({
+            enlarged_photo_view: true,
+            initial_photo_index
+        });
+    }
+
+    Exit_Enlarge_Photo_Viewer = ()=>{
+        this.setState({
+            enlarged_photo_view: false
+        });
+    }
+
     Create_New_Photos_Added = ()=>{
 
         let {new_photos_added, from_account, album_info, visitor_user_account} = this.state; 
@@ -210,6 +227,7 @@ class Album_Feed extends Component {
                             visitor_user_account={visitor_user_account}
                             album_info={album_info}
                             Get_Albums={null}
+                            index={index}
                             change_main_display={change_display}
                             open_enlarged_photo_viewer={this.Open_Enlarged_Photo_Viewer}
                         />
@@ -224,7 +242,7 @@ class Album_Feed extends Component {
 
         let {header} = this.props;
 
-        let {from_account, new_photos_added, album_info} = this.state;
+        let {from_account, new_photos_added, album_info, enlarged_photo_view, initial_photo_index} = this.state;
 
         let {title} = album_info || {title: "Error"};
 
@@ -232,6 +250,12 @@ class Album_Feed extends Component {
 
         //If no user deleted all new photos added, then display nothing
         return (!new_photos_added?.length ? <></> : <div id="album-feed" className="general-feed">
+
+                {enlarged_photo_view ? <Enlarged_Photo_Viewer 
+                                            exit={this.Exit_Enlarge_Photo_Viewer} 
+                                            initial_photo_index={initial_photo_index}
+                                            photo_info_array={new_photos_added}
+                                        /> : ""}
 
                 {header}
 

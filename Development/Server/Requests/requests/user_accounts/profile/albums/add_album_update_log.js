@@ -1,13 +1,14 @@
 let request = function({sql}) {
 
-    this.req_path = "/add_album_update_log";
-    this.req_type = "post";
-    this.callbacks = ["add_album_update_log"];
+    this.req_path = null;
+    this.req_type = null;
+    this.callbacks = [];
     
     this.req = async (req, res, next) => { 
         
         //time_occured is strictly mapped to the time of the update
-        let {album_id, time_occurred, user_id} = req.body;
+        let {album_id, time_occurred, result} = req.body;
+        const {user_id} = req.auth;
 
         let data = [
             album_id,
@@ -32,7 +33,7 @@ let request = function({sql}) {
 
             console.log(query, err);
 
-            res.json({message: "Failed to log onto album update!", failed: true});
+            res.status(500).json({message: "Failed to log onto album update!", failed: true, result: null});
         }
     };
 };

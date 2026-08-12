@@ -1,8 +1,8 @@
 let request = function({sql}) {
 
-    this.req_path = "/get_comment_reactions";
-    this.req_type = "post";
-    this.callbacks = ["get_comment_reactions"];
+    this.req_path = null;
+    this.req_type = null;
+    this.callbacks = [""];
     
     this.req = async (req, res, next) => { 
         
@@ -61,7 +61,7 @@ let request = function({sql}) {
 
             console.log(query, err);
 
-            res.json({message: `Error retrieving comments`, results: [], failed: true});
+            res.status(500).json({message: `Error retrieving comments`, results: [], failed: true});
         }
                 
     };

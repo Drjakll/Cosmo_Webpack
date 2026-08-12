@@ -14,8 +14,7 @@ let request = function({sql}) {
         const {user_id} = req.auth;
         
         if(!id){
-            console.log("Album id is null or invalid");
-            res.end();
+            res.status(400).json({message: "Invalid album id"});
             return;
         }
 
@@ -30,7 +29,7 @@ let request = function({sql}) {
             let [result] = await sql.query(query, [id, user_id]);
 
             if(result.affectedRows === 0){
-                res.json({message: "Album not found or you are not the owner of this album"});
+                res.status(404).json({message: "Album not found or you are not the owner of this album"});
                 return;
             }
 
@@ -43,7 +42,7 @@ let request = function({sql}) {
 
             console.log(err, query);
 
-            res.json({message: "Album failed to delete!"});
+            res.status(500).json({message: "Album failed to delete!"});
 
         }
 

@@ -1,0 +1,69 @@
+#image-container-wrapper {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .image-wrapper {
+        height: 100%;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        #picture-wrapper {
+            width: 100%;
+            height: calc(90% - 20px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            position: relative;
+
+            #uploading-progress {
+                width: 90%;
+                height: 90%;
+                background-size: cover;
+                background-repeat: no-repeat;
+                background-position: center;
+                background-color: rgba(0,0,0,0.75);
+                box-shadow: 0px 0px 5px rgba(0,0,0,0.25);
+                border-radius: 10px;
+                border: rgba(0,0,0,0.5) solid 0px;
+                //transition: 0.5s;
+                position: relative;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+
+                &:hover {
+                    cursor: pointer;
+                    box-shadow: 0px 0px 0px rgba(0,0,0,0);
+                }
+
+                #progress-display {
+                    height: 50px;
+                    width: 100%;
+                    background-color: rgba(50,50,50,0.75);
+                    
+                    display: flex;
+                    justify-content: flex-start;
+                    align-items: center;
+
+                    #percentage {
+                        height: 100%;
+                        background-color: darkolivegreen;
+                        color: rgba(225,225,225,1);
+                        font-size: 14px;
+                        transition: 1s;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        border-radius: 5px;
+                    }
+                }
+            }
+        }
+    }
+}

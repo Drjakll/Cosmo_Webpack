@@ -11,7 +11,7 @@ let request = function({sql}) {
         const {user_id} = req.auth;
 
         if(isNaN(parseInt(user_id)) || !body || !title){
-            res.json({ message: "Missing required fields", result: null });
+            res.status(400).json({ message: "Missing required fields", result: null });
             return;
         }
 
@@ -39,7 +39,7 @@ let request = function({sql}) {
 
             console.log(err);
 
-            res.json({ message: "Error adding new post", result: null }); 
+            res.status(500).json({ message: "Error adding new post", result: null }); 
         }
 
     };

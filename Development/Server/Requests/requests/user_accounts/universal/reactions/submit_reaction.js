@@ -3,6 +3,9 @@ let request = function({sql}) {
     this.req_path = "/submit_reaction";
     this.req_type = "post";
     this.callbacks = ["central_auth","submit_reaction"];
+
+    const Possible_Emojis = ["sad","laugh","sympathetic","passionate","surprised","angry",""];
+    const Possible_Reactions = ["like","dislike","",null]; 
     
     this.req = async (req, res) => { 
 
@@ -10,13 +13,26 @@ let request = function({sql}) {
 
         const {user_id} = req.auth;
 
-        
-        if(isNaN(parseInt(user_id)) || !target_id){
-            res.json({message: "Missing required fields!", failed: true});
+        if(!Possible_Emojis.includes(emoji)){
+            res.status(400).json({message: "Missing emoji!", failed: true});
             return;
         }
 
-        //Differnt number of values for data depending on whether it's a comment type or some other types. Comment type would comes target_type as null
+        if(!Possible_Reactions.includes(reaction)){
+            res.status(400).json({message: "Missing reaction!", failed: true});
+            return;
+        }
+        
+        if(!target_id){
+            res.status(400).json({message: "Missing target_id!", failed: true});
+            return;
+        }
+
+        if(!target_id_type){
+            res.status(400).json({message: "Missing target_id_type!", failed: true});
+            return;
+        }
+        
         let data = [
             target_id,  
             user_id,
@@ -48,13 +64,13 @@ let request = function({sql}) {
 
             await sql.query(query, data);
 
-            res.json({message: "Successfully submitted a reaction", failed: false});
+            res.status(200).json({message: "Successfully submitted a reaction", failed: false});
 
         } catch(err){
 
             console.log(err);
 
-            res.json({message: "Error submitting a reaction", failed: true});
+            res.status(500).json({message: "Error submitting a reaction", failed: true});
 
         }
                 

@@ -12,7 +12,7 @@ let request = function({sql}) {
         const {user_id} = req.auth;
         
         if(!id || !user_id){
-            res.json({message: "Invalid id or user id", failed: true});
+            res.status(400).json({message: "Invalid id or user id", failed: true});
             return;
         }
         
@@ -22,13 +22,13 @@ let request = function({sql}) {
 
             await sql.query(query, [album_info, id, user_id]);
 
-            res.json({message: "Successfully updated Photo Album", failed: false});
+            res.status(200).json({message: "Successfully updated Photo Album", failed: false});
 
         }catch(err){
 
             console.log(err);
             
-            res.json({message: "Error updating Photo Album", failed: true});
+            res.status(500).json({message: "Error updating Photo Album", failed: true});
         }
         
     };

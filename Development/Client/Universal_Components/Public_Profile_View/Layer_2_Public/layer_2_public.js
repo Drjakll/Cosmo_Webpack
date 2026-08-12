@@ -11,7 +11,7 @@ class Layer_2_Public extends Layer_2 {
 
         let {render_list} = this.state;
 
-        render_list["Posts"].component = Posts_Public;
+        render_list["The Posts"].component = Posts_Public;
         
     }
 

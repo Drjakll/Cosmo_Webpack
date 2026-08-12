@@ -12,7 +12,7 @@ let request = function ({sql}) {
         to_id = parseInt(to_id);
 
         if(!to_id || isNaN(to_id)){
-            res.json({message: "Missing required fields!"});
+            res.status(404).json({message: "Missing required fields!"});
             return;
         }
 
@@ -27,7 +27,7 @@ let request = function ({sql}) {
             let [result] = await sql.query(query, data);
 
             if(result.affectedRows === 0){
-                res.json({message: "Follow request not found"});
+                res.status(404).json({message: "Follow request not found"});
                 return;
             }
 
@@ -37,7 +37,7 @@ let request = function ({sql}) {
 
             console.log(err);
 
-            res.json({message: "Error removing follow request"});
+            res.status(500).json({message: "Error removing follow request"});
         }
 
     };

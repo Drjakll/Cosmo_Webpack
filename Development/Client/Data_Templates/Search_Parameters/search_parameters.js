@@ -6,7 +6,7 @@ import Text from './Text/text.js';
 export default {
     first_name: {component: Text},
     last_name: {component: Text},
-    date_of_birth: {component: Date},
+    //date_of_birth: {component: Date},
     gender: {component: Choice},
     marital_status: {component: Choice},
     User_Locations: {component: Json},

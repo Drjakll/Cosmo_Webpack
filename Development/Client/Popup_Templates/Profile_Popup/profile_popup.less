@@ -4,9 +4,11 @@
     width: calc(1000px);
     left: calc(50vw - 500px);
     top: 35px;
-    //border: rgba(0,0,0,0.5) solid 1px; 
-    //box-shadow: 0px 0px 5px rgba(0,0,0,0.35);
+    border: rgba(50,50,50,1) solid 1px; 
+    box-shadow: -5px 0px 5px rgba(0,0,0,0.75);
     z-index: 9999999;
+    border-radius: 0px;
+    overflow: hidden;
 
     #profile-drag-bar {
         width: 100%;
@@ -16,11 +18,11 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        transition: 1s;
+        transition: 0.5s;
         font-size: 13px;
 
         &:hover {
-            background-color: #2d3f63;
+            background-color: #848a95;
         }
 
         #exit-button {
@@ -35,7 +37,7 @@
             font-size: 14px;
 
             &:hover {
-                background-color: rgb(134, 111, 75);
+                background-color: rgb(56, 127, 127);
                 cursor: pointer;
             }
         }

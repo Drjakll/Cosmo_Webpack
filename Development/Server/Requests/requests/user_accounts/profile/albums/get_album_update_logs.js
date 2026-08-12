@@ -12,6 +12,11 @@ let request = function({sql}) {
         
         let {id} = req.body;
 
+        if(!id){
+            res.status(400).json({message: "Invalid album update log id", failed: true});
+            return;
+        }
+
         let data = [
             id
         ];
@@ -23,7 +28,7 @@ let request = function({sql}) {
             let [result] = await sql.query(query, data);
 
             if(result.length === 0){
-                res.json({message: "Photo album log doesn't exist", photos: [], album_info: {}});
+                res.status(404).json({message: "Photo album log doesn't exist", photos: [], album_info: {}});
                 return;
             }
 
@@ -40,7 +45,7 @@ let request = function({sql}) {
 
             console.log(query, err);
 
-            res.json({message: "Failed to log onto album update!", failed: true});
+            res.status(500).json({message: "Failed to log onto album update!", failed: true});
 
         }
     };

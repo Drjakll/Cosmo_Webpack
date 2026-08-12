@@ -6,11 +6,10 @@ let request = function ({sql}) {
     
     this.req = async (req, res, next) => { 
         
-        //at_index, table_names and acc_info only exist if it's retrieving data from login
-        let { table_name, user_id, acc_info, at_index, table_names } = req.body;
+        let { table_name, user_id } = req.body;
 
         if(!table_name || !user_id){
-            res.json({message: "Invalid table name or user_id", results: []});
+            res.status(400).json({message: "Invalid table name or user_id", results: []});
             return;
         }
         
@@ -21,37 +20,13 @@ let request = function ({sql}) {
             let [results] = await sql.query(query, [user_id]);
 
 
-            //If anyone of these doesn't exist, then the request must be coming from need only one table
-            if(at_index === undefined || !table_names || !acc_info){
+            res.status(200).json({message: "Successfully retrieved results", results});
 
-                res.json({message: "Successfully retrieved results", results}); //It is no mistake that this uses results as the key instead of acc_info
-
-            } else {
-
-                acc_info[table_name] = results;
-
-                at_index++;
-
-                table_name = table_names[at_index];
-
-                if(at_index === table_names?.length){
-
-                    return res.json({message: "Successfully retrieved account information", acc_info, status: 0b11})
-
-                }
-
-                req.body.at_index = at_index;
-                req.body.table_name = table_name;
-
-                next();
-
-            }
-            
         }catch(err){
 
             console.log(query, err);
 
-            res.json({message: "Error while retrieving results", results: []});
+            res.status(500).json({message: "Error while retrieving results", results: []});
         }
 
     };

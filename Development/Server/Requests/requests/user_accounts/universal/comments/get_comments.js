@@ -66,12 +66,12 @@ let request = function({sql}) {
                 };
 
                 //All the results will be assembled at the front end
-                return res.json({message: "Successfully retrieved comments", results: all_results});
+                return res.status(200).json({message: "Successfully retrieved comments", results: all_results});
             }
 
             if(results.length === 0){
                 
-                return res.json({message: "No comments available", results: []});
+                return res.status(200).json({message: "No comments available", results: []});
             }
 
             
@@ -84,7 +84,7 @@ let request = function({sql}) {
 
             console.log(query, err);
 
-            res.json({message: `Error retrieving comments`, results: []});
+            res.status(500).json({message: `Error retrieving comments`, results: []});
         }
                 
     };

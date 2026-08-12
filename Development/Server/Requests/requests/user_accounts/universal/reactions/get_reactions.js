@@ -1,15 +1,20 @@
 let request = function({sql}) {
 
-    this.req_path = "/get_reactions";
-    this.req_type = "post";
-    this.callbacks = ["get_reactions"];
+    this.req_path = null;
+    this.req_type = null;
+    this.callbacks = [];
     
-    
+    //This is a pure middleware, it should not be directly called by the frontend
+    //It's used when retrieving a lots of reactions from a list of comments or a list of anything
     this.req = async (req, res) => { 
         
         let {targets, target_id_type} = req.body;
 
         let data = [];
+
+        if(!targets){
+            return res.status(400).json({message: "Missing targets", results: {reactions: [], targets}});
+        }
 
         for(let target of targets){
 
@@ -19,7 +24,7 @@ let request = function({sql}) {
         }
 
         if(!data.length){
-            res.json({message: "No data to retrrieve", results: {reactions: [], targets}})
+            res.status(200).json({message: "No data to retrrieve", results: {reactions: [], targets}})
             return;
         }
 
@@ -53,13 +58,13 @@ let request = function({sql}) {
                 targets
             };
 
-            res.json({message: "Successfully rertrieved some results", results: final_results, failed: false});
+            res.status(200).json({message: "Successfully rertrieved some results", results: final_results, failed: false});
 
         } catch(err){
 
             console.log(query, err);
 
-            res.json({message: `Error retrieving comments`, results: [], failed: true});
+            res.status(500).json({message: `Error retrieving comments`, results: [], failed: true});
         }
                 
     };

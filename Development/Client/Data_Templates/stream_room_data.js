@@ -6,7 +6,6 @@ let Stream_Room_Data_Template = function(initial){
         email: "",
         first_name: "",
         last_name: "",
-        date_of_birth: "",
         gender: "",
         User_Locations: [],
         User_Schools: [],

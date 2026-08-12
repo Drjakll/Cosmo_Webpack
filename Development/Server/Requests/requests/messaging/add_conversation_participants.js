@@ -8,6 +8,11 @@ function request({sql}) {
         
         let {new_users, conversation_id} = req.body;
 
+        if(!conversation_id){
+
+            return res.status(400).json({message: "Conversation ID not found"});
+        }
+
         let now = Date.now();
        
         let query = `insert into Users_In_Private_Conversations(conversation_id, time_joined, user_id, seen_last) values ?`;
@@ -24,13 +29,13 @@ function request({sql}) {
 
             await sql.query(query, [values]);
 
-            res.json({message: "Successfully joined the conversation!", success: true});
+            res.status(200).json({message: "Successfully joined the conversation!", success: true});
             
         } catch(err){
 
             console.log(query, err);
 
-            res.json({message: "Error joining the conversation", success: false});
+            res.status(500).json({message: "Error joining the conversation", success: false});
         }
     };
 };

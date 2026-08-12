@@ -11,12 +11,12 @@ let request = function ({sql}) {
 
 
         if(!follower_id || !followed_id || isNaN(parseInt(follower_id)) || isNaN(parseInt(followed_id))){
-            res.json({message: "Missing required fields!"});
+            res.status(400).json({message: "Missing required fields!"});
             return;
         }
 
         if(user_id !== followed_id){
-            res.json({message: "You are not authorized to remove this follower!"});
+            res.status(401).json({message: "You are not authorized to remove this follower!"});
             return;
         }
         
@@ -32,13 +32,13 @@ let request = function ({sql}) {
 
             sql.query(query, data);
 
-            res.json({message:"Successfully removed follower"});
+            res.status(200).json({message:"Successfully removed follower"});
 
         } catch(err){
 
             console.log(err);
 
-            res.json({message: "Error removing follower"});
+            res.status(500).json({message: "Error removing follower"});
         }
 
     };

@@ -7,6 +7,10 @@ let request = function({sql}) {
     this.req = async (req, res) => { 
         
         let {id} = req.body;
+
+        if(!id){
+            return res.status(400).json({message: "Invalid id", failed: true});
+        }
  
         let requirements = [id];
 
@@ -16,13 +20,13 @@ let request = function({sql}) {
 
             await sql.query(query, requirements);
 
-            res.json({message: "Successfully deleted the comment", failed: false});
+            res.status(200).json({message: "Successfully deleted the comment", failed: false});
 
         } catch(err){
 
             console.log(err);
 
-            res.json({message: "Failed to delete the comment", failed: true});
+            res.status(500).json({message: "Failed to delete the comment", failed: true});
             
         }
     };

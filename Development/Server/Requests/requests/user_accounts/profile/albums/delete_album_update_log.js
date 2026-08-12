@@ -9,7 +9,7 @@ let request = function({sql}) {
         let {time_uploaded, album_info, user_id} = req.body;
 
         if(!user_id){
-            return res.json({message: "Authentication error"});
+            return res.status(401).json({message: "Authentication error"});
         }
 
         let data = [
@@ -23,11 +23,11 @@ let request = function({sql}) {
 
             let [result] = await sql.query(query, data);
 
-            res.json({message: `All photos on this update has been erased`, failed: false, photos: [], album_info});
+            res.status(200).json({message: `All photos on this update has been erased`, failed: false, photos: [], album_info});
 
         }catch(err){
 
-            res.json({message: "Failed to log onto album update!", failed: true, album_info: {}});
+            res.status(500).json({message: "Failed to log onto album update!", failed: true, album_info: {}});
 
         }
     };

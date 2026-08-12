@@ -20,13 +20,13 @@ let request = function({sql}){
 
             let result = await sql.query(query, values);
 
-            res.json({message: `Successfully deleted ${result.affectedRows} feeds`});
+            res.status(200).json({message: `Successfully deleted ${result.affectedRows} feeds`});
 
         }catch(err){
 
             console.log(query, err);
 
-            res.json({message:"Error deleting feeds"});
+            res.status(500).json({message:"Error deleting feeds"});
         }
 
     };

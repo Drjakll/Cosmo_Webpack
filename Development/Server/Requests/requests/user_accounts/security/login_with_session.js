@@ -3,18 +3,12 @@ function request({sql}) {
     //This route should not be accessible by the frontend directly
     this.req_path = null;
     this.req_type = null;
-    this.callbacks = ['login_with_session'];
+    this.callbacks = [];
 
     this.req = async (req, res, next)=>{
 
-        const {acc_info, server_password} = req.body;
+        const {acc_info} = req.body;
         const {session_id} = req.cookies;
-
-        //The password is on the .env file
-        if(server_password !== process.env.SERVER_PASSWORD){
-            res.end();
-            return;
-        }
 
 
 
@@ -45,7 +39,7 @@ function request({sql}) {
 
             if(result.affectedRows === 0){
 
-                return res.json({message: "Login session has expired", acc_info: null, status: 0b001});
+                return res.status(401).json({message: "Login session has expired", acc_info: null, status: 0b001});
 
             } else {
 
@@ -67,7 +61,7 @@ function request({sql}) {
 
                 delete acc_info.password;
 
-                return res.json({message: "Successfully logged in", acc_info, status: 0b100})
+                return res.status(200).json({message: "Successfully logged in", acc_info, status: 0b100})
 
             }
 
@@ -75,7 +69,7 @@ function request({sql}) {
 
             console.log(err);
 
-            return res.json({message: "Error logging in", acc_info: null, status: 0b001});
+            return res.status(500).json({message: "Error logging in", acc_info: null, status: 0b001});
 
         }   
 

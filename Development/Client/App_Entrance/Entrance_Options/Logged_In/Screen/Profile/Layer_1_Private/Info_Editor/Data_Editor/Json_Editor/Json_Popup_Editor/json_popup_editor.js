@@ -99,7 +99,7 @@ class Json_Popup_Editor extends Json_Screen {
 
         let {value, table_name} = this.state;
 
-        await fetch(`${remove_item_from_profile_table}/?id=${id}&table_name=${table_name}`,
+        await fetch(`${remove_item_from_profile_table}/${table_name}/${id}`,
             {
                 method: "DELETE"
             }

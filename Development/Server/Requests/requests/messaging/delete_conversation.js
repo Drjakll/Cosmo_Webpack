@@ -14,13 +14,13 @@ function request({sql}) {
             
             await sql.query(query, [conversation_id]);
 
-            res.json({message: "Successfully deleted the conversation"});
+            res.status(200).json({message: "Successfully deleted the conversation"});
 
         }catch(err){
 
             console.log(query, err);
 
-            res.json({message: "Error deleting the conversation"});
+            res.status(500).json({message: "Error deleting the conversation"});
         }
     };
 };

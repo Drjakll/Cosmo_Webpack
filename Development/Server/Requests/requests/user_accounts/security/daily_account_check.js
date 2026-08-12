@@ -3,13 +3,21 @@
 //If any unverified accounts older than X days, it will get deleted from the database and their photos will be deleted from S3
 function request ({sql, s3, DeleteObjectsCommand}) {
 
-    this.req_path = '/daily_account_check';
-    this.req_type = 'post';
-    this.callbacks = ['daily_account_check'];
+    this.req_path = "/test_erase_unverify_account";
+    this.req_type = "post";
+    this.callbacks = ["daily_account_check"];
 
     this.req = async (req, res) => {
 
-        res.send("This request does nothing");
+        let {passcode, x_days} = req.body;
+
+        if(passcode === process.env.DAILY_CHECK_UP_PASSCODE){
+            let result = this.erase_unverified_accounts(x_days);
+            result === null ? res.status(500).json({message: "Database error"}) : res.status(200).json({message: "Done"});
+            return;
+        }
+
+        res.status(200).json({message: "This request does nothing"});
     };
 
     let get_accounts = async (x_days) => {
@@ -36,7 +44,7 @@ function request ({sql, s3, DeleteObjectsCommand}) {
 
             console.log(err);
 
-            return [];
+            return null;
         }
 
     };
@@ -63,7 +71,7 @@ function request ({sql, s3, DeleteObjectsCommand}) {
 
             console.log(err);
 
-            return [];
+            return null;
         }   
 
     };
@@ -87,9 +95,13 @@ function request ({sql, s3, DeleteObjectsCommand}) {
 
                 await s3.send(new DeleteObjectsCommand(deleteParams));
 
+                return true;
+
             } catch (err) {
 
                 console.log("Error deleting photo files from S3:", err);
+
+                return null;
 
             }
         }
@@ -110,12 +122,15 @@ function request ({sql, s3, DeleteObjectsCommand}) {
 
         try {
 
-            await sql.query(query, [user_ids]);
+            let [result] = await sql.query(query, [user_ids]);
+
+            return result;
 
         } catch(err){
 
             console.log(err);
 
+            return null;
         }   
 
     };
@@ -124,6 +139,10 @@ function request ({sql, s3, DeleteObjectsCommand}) {
     this.erase_unverified_accounts = async (x_days) => {
 
         let results = await get_accounts(x_days);
+
+        if(results === null){
+            return null;
+        }
 
         if(results.length === 0) {
             console.log("No unverified accounts to erase");
@@ -134,11 +153,19 @@ function request ({sql, s3, DeleteObjectsCommand}) {
 
         let photo_data = await get_photo_links(user_ids);
 
+        if(photo_data === null){
+            return null;
+        }
+
         //Erase the photo files from S3
-        await erase_photo_files(photo_data);
+        if(await erase_photo_files(photo_data) === null){
+            return null;
+        }
 
         //Erase the accounts from the database
-        await erase_accounts(results);
+        if(await erase_accounts(results) === null){
+            return null;
+        }
 
         return results;
     };

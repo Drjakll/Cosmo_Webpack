@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, createRef } from 'react';
 import Enlarged_Photo_Editor from './Enlarged_Photo_Editor/enlarged_photo_editor.js';
 import Single_Photo from '@single_photo_thumbnail';
 import './photo_thumbnail_editor.less';
@@ -26,6 +26,8 @@ class Single_Photo_Thumbnail_Editor extends Single_Photo {
         super.componentDidUpdate(prevProps, prevState);
     }
 
+    checkRef = createRef();
+
     render() {
 
         let { photos_to_be_deleted, photo_info } = this.state;
@@ -36,13 +38,28 @@ class Single_Photo_Thumbnail_Editor extends Single_Photo {
                 
                 <div id="selected-to-delete-button" onClick={(e) => {
 
+                        let {currentTarget} = e;
+                        let {current} = this.checkRef;
+
+                        currentTarget.classList.toggle("selected-to-delete");
+
                         this.props.insert_photo_to_delete(photo_info);
+
+                        if(!current){
+                            return;
+                        }
+
+                        if(current.innerHTML !== ""){
+                            current.innerHTML = "";
+                        } else {
+                            current.innerHTML = "&#10004;";
+                        }
 
                     }}
 
-                    className={`${photos_to_be_deleted[photo_info.id] ? "selected-to-delete" : "" }`}
+                    className={``}
                 >
-                    <label>&#10004;</label>
+                    <label ref={this.checkRef}></label>
                     
                     <div id="instruction">
 

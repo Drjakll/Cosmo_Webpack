@@ -49,13 +49,13 @@ let request = function ({sql}) {
 
             let [results] = await sql.query(query, data);
 
-            res.json({message: `Found ${results.length} followings`, results});
+            res.status(200).json({message: `Found ${results.length} followings`, results});
 
         } catch(err){
 
             console.log(err);
 
-            res.json({message: `Found error retrieving followings`, results: []});
+            res.status(500).json({message: `Found error retrieving followings`, results: []});
 
         }
     };

@@ -18,15 +18,15 @@ let request = function({sql}) {
             let [result] = await sql.query(query, data);
 
             if(result.affectedRows === 0){
-                res.json({message: "No post found"});
+                res.status(404).json({message: "No post found"});
             } else {
-                res.json({message: "Successfully updated post"});
+                res.status(200).json({message: "Successfully updated post"});
             }
 
 
         } catch(err){
             console.log(err);
-            res.json({message: "Error editing post"});
+            res.status(500).json({message: "Error editing post"});
         }
 
     };

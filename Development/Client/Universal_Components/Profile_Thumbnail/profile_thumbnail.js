@@ -312,7 +312,7 @@ class Profile_Thumbnail extends Component {
                 <img id="profile-thumbnail-image" 
                     src={profile_picture_link ? full_pp_link : placeholder} 
                     alt="Profile Thumbnail"
-                    style={{ borderRadius: rounded_portrait ? "50px" : "" }}
+                    style={{ borderRadius: rounded_portrait === true ? "50px" : "" }}
                     onClick={this.Trigger_Profile_Popup}
                     draggable={false}
                 />

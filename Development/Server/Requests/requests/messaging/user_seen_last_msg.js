@@ -11,11 +11,11 @@ function request({sql}) {
         const {user_id} = req.auth;
 
         if(!user_id){
-            return res.json({message: "Authentication required!"});
+            return res.status(400).json({message: "Authentication required!"});
         }
 
         if(!conversation_id){
-            return res.json({message: "Missing conversation id"});
+            return res.status(400).json({message: "Missing conversation id"});
         }
 
         let query = `update Users_In_Private_Conversations set seen_last = true where conversation_id = ? and user_id = ?`;
@@ -24,13 +24,13 @@ function request({sql}) {
 
             await sql.query(query, [conversation_id, user_id]);
 
-            res.json({message: "Successfully updated seen last"});
+            res.status(200).json({message: "Successfully updated seen last"});
 
         } catch(err){
 
             console.log(query, err);
 
-            res.json({message: "An error occured while updating seen last"});
+            res.status(500).json({message: "An error occured while updating seen last"});
         }
        
     };

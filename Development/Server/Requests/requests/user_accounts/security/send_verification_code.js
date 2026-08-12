@@ -34,7 +34,7 @@ function request({sql}) {
 
             if(result.affectedRows === 0){
 
-                res.json({message: "Error sending verification code", failed: true});
+                res.status(404).json({message: "Error sending verification code", failed: true});
 
                 return;
 
@@ -49,7 +49,7 @@ function request({sql}) {
 
             console.log(err);
 
-            res.json({message: "Error sending verification code", failed: true});
+            res.status(500).json({message: "Error sending verification code", failed: true});
 
         }
 

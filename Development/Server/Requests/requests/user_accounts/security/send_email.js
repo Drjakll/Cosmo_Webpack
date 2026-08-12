@@ -2,9 +2,9 @@ import nodemailer from 'nodemailer';
 
 function request ({sql}) {
 
-    this.req_path = '/send_email';
-    this.req_type = 'post';
-    this.callbacks = ['send_email'];
+    this.req_path = null;
+    this.req_type = null;
+    this.callbacks = [''];
 
     this.req = (req,res) => {
 
@@ -30,14 +30,16 @@ function request ({sql}) {
             if (error) {
                 console.log(error);
 
-                res.json({message: "Error sending email", failed: true});
+                res.status(500).json({message: "Error sending email", failed: true});
 
             } else {
                 console.log('Email sent: ' + info.response, response_msg);
 
-                res.json({message: response_msg, failed: false});
+                res.status(200).json({message: response_msg, failed: false});
             }
         });
+
+        res.status(200).json({message: "Successfully sent email", failed: false});
     };
 
 }

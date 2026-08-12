@@ -1,8 +1,6 @@
 import express from 'express';
 import body from 'body-parser';
 import cookieparser from 'cookie-parser';
-import cors from 'cors';
-import https from 'https';
 import http from 'http';
 import websocket from './Development/Server/Websockets/websocket.js';
 import path from 'path';
@@ -13,31 +11,25 @@ import 'dotenv/config';
 const uploads = multer({
     storage: multer.memoryStorage()
 });
-
-//let domain = '10.0.0.70';
-//let domain = '192.168.7.108';
-
-//const keyPath = './my-key.pem'; 
-//const certPath = './my-cert.pem';    
-
-const keyPath2 = './localhost+2-key.pem';
-const certPath2 = './localhost+2.pem';
-
-const privateKey = fs.readFileSync(keyPath2, 'utf8');
-const certificate = fs.readFileSync(certPath2, 'utf8');
+   
 
 let app = express();
 
-let server = https.createServer({ key: privateKey, cert: certificate },app);
-//let server = http.createServer(app);
+const keyPath = './localhost+2-key.pem';
+const certPath = './localhost+2.pem';
 
-websocket(server);
+const privateKey = fs.readFileSync(keyPath, 'utf8');
+const certificate = fs.readFileSync(certPath, 'utf8');
+
+//let server = https.createServer({ key: privateKey, cert: certificate },app);
+let server = http.createServer(app);
 
 app.use('/static', 
     express.static(path.join(__dirname, '..', 'Built_Client')));
 app.use(cookieparser());
 app.use(body.json({ limit: "10mb" }));
 app.use(body.urlencoded({ extended: true }));
+app.set('trust proxy', true);
 
 /*
 app.use((req, res, next) => {
@@ -53,13 +45,34 @@ app.use((req, res, next) => {
     next();
 });*/
 
+let progress_io = await websocket(server);
 
+let capture_io = (req, res, next) => {
 
-app.set('trust proxy', true);
+    let {socket_id} = JSON.parse(req.body.metadata);
+
+    let socket = progress_io.sockets.sockets.get(socket_id);
+
+    if(!socket){
+        console.log("Socket not found, unable to track progress");
+    }
+
+    req.body.socket = socket;
+
+    next();
+};
 
 import requests from './Development/Server/Requests/requests.js';
 
-let route_obj = {uploads: {req: uploads.array('files', 100)}};
+let route_obj = {uploads: {
+                    req: uploads.array('files', 50)
+                },
+                capture_io: {
+                    req: capture_io
+                }
+};
+
+
 let route_urls = {}; //This is a list of request url strings for frontend
 
 //Round up all the requests
@@ -147,7 +160,7 @@ let starter = async () => {
     recursion(requests);
     apply_paths();
 
-    let x_days = 3; //Number of days to check for unverified accounts
+    let x_days = 3; //Number of days to check for unverified accounts before it gets deleted
 
     setInterval(async ()=>{
         

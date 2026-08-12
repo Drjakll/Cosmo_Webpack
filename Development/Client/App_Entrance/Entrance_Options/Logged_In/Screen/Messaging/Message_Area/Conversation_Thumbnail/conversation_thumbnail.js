@@ -1,5 +1,6 @@
 import React, {Component, createRef} from 'react';
 import Request_URLs from '@request_urls';
+import Profile_Thumbnail from '@profile_thumbnail';
 import './conversation_thumbnail.less';
 
 class Conversation_Thumbnail extends Component {
@@ -17,7 +18,7 @@ class Conversation_Thumbnail extends Component {
             conversation_info,
             selected_room_tag,
             user_status,
-            conversatin_name_editable: false,
+            conversation_name_editable: false,
             this_user_seen_last: true
         };
     }
@@ -90,23 +91,29 @@ class Conversation_Thumbnail extends Component {
             return "";
         }
 
-        let {aws_s3_url} = Request_URLs;
+        let {owner_user_account} = this.state;
 
-        let {profile_picture_link, first_name, last_name, seen_last} = user_info;
+        let {first_name, last_name, seen_last} = user_info;
 
-        let profile_photo = profile_picture_link ? `${aws_s3_url}${profile_picture_link}` : './static/pp_placeholder.webp';
+        user_info.id = user_info.user_id;
 
         return <div className="user-info-small-icon" key={index}>
 
             <div id="user-small-profile-picture">
-                <img src={profile_photo} />
+                <Profile_Thumbnail 
+                    profile={user_info}
+                    owner_user_account={owner_user_account}
+                    visitor_user_account={owner_user_account}
+                    rounded_portrait={false}
+                    additional_options={[]}
+                />
             </div>
 
             <div id="is-online" className={is_online || this.state.owner_user_account.id === user_info.id ? "online" : "offline"}>
 
             </div>
 
-            { seen_last ? "" : <div id="attention-mark">!</div>}
+            { seen_last ? <div></div> : <div id="attention-mark">!</div>}
 
             <div id="user-profile-nametag">
 
@@ -146,7 +153,9 @@ class Conversation_Thumbnail extends Component {
 
                     <div id="edit-name-icon" onClick={this.Edit_Conversation_name}>
 
-                        <img src="./static/edit_text_icon.webp"/>
+                        <div id="instruction-label">Edit Conversation Name</div>
+
+                        <div id="editable-icon" className={conversation_name_editable ? "editable" : ""}>&#x270E;</div>
 
                     </div>
 

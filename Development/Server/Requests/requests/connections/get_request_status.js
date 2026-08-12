@@ -21,18 +21,18 @@ let request = function ({sql}) {
 
             if(result.length > 0){
 
-                res.json({message: "Successfully retrieved request status", success: 1, status: result[0].status});
+                res.status(200).json({message: "Successfully retrieved request status", success: 1, status: result[0].status});
 
             } else {
 
-                res.json({message: "No follow request found", success: 1, status: null});
+                res.status(200).json({message: "No follow request found", success: 1, status: null});
             }
 
         } catch(err){
 
             console.log(err);
 
-            res.json({message: "Error retrieving request status", success: 0, status: null});
+            res.status(500).json({message: "Error retrieving request status", success: 0, status: null});
         }   
 
     };

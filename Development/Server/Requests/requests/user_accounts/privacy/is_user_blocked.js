@@ -14,13 +14,15 @@ function request({sql}){
 
         const {user_id, commenter_user_id, owner_user_id, target_id_type, from_id, oppose_id, target_id, viewer_id} = req.body;
         
+        //defender_id is user to check to see if it's blocking attacker_id's account
+        let attacker_id = commenter_user_id || from_id || viewer_id;
+        let defender_id = owner_user_id || oppose_id || target_id;
 
-        if((!commenter_user_id && !from_id && !target_id) || 
-            (!owner_user_id && !oppose_id && !viewer_id)){
-            return res.json({message: "Invalid user id and/or target user id", blocked: true});
+        if(!defender_id || !attacker_id){
+            return res.status(401).json({message: "Invalid user id and/or target user id", blocked: true});
         }
 
-        let data = [owner_user_id ?? oppose_id ?? target_id, commenter_user_id ?? from_id ?? viewer_id];
+        let data = [defender_id, attacker_id];
 
         const query = `select * from Blocked_Users where user_id = ? and target_id = ?`;
 
@@ -49,7 +51,7 @@ function request({sql}){
 
             if(blocked_features_array.includes(blocked_feature_type)){
 
-                res.json({message: msg, blocked: true});
+                res.status(401).json({message: msg, blocked: true});
                 return;
 
             } 
@@ -61,7 +63,7 @@ function request({sql}){
 
             console.log(err);
 
-            res.json({message: "Error checking to see if user is blocked", blocked: true});
+            res.status(500).json({message: "Error checking to see if user is blocked", blocked: true});
 
         }
     };

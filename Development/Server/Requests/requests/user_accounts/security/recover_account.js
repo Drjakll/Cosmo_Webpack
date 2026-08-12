@@ -18,7 +18,7 @@ function request({sql}) {
 
             if(results.length === 0){
 
-                res.json({message: "No account found with that email", failed: true});
+                res.status(404).json({message: "No account found with that email", failed: true});
 
                 return;
                 
@@ -32,7 +32,7 @@ function request({sql}) {
             //Check if the last time recovered is less than 60 seconds ago
             if( seconds_since_last_recovery < 60){
 
-                res.json({message: `Wait for ${60 - seconds_since_last_recovery} seconds before \nrecovering your account again`, failed: true});
+                res.status(429).json({message: `Wait for ${60 - seconds_since_last_recovery} seconds before \nrecovering your account again`, failed: true});
                 
                 return;
 
