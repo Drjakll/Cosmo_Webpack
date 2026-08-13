@@ -272,7 +272,7 @@ class Comment_Container extends Component {
                             target_id={id}
                             target_id_type={"comment_id"}
                             reactions={reactions}
-                            refresh_parent={signal_refresh_this_section_comments}
+                            refresh_parent={null}
                         />
                     }
 

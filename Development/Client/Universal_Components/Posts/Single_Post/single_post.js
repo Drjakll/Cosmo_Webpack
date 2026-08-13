@@ -47,46 +47,17 @@ class Single_Post extends Component {
 
         this.bodyRef.current.innerHTML = this.state.post?.body;
 
-        this.Init_Socket();
+        //this.Init_Socket();
 
     }
 
     componentWillUnmount() {
 
-        this.socket?.disconnect();
+        //this.socket?.disconnect();
         
     }
 
-    Init_Socket = async  ()=>{
-
-        if(this.socket !== undefined){
-            await this.socket.disconnect();
-        }
-
-        this.socket = init_websocket('/reaction_room', this.Init_Socket);
-
-        this.socket?.on('connect', ()=>{
-
-            let {id} = this.state.post;
-
-            let room_name = `post_${id}`;
-
-            this.socket?.emit('join_reaction_room', {room_name});
-
-        });
-
-        this.socket?.on('refresh_reactions', this.Refresh_Reactions);        
-
-    }
-
-    Signal_All_Refresh_Reactions = ()=>{
-
-        let {id} = this.state.post;
-
-        this.socket?.emit('signal_all_refresh_reactions', {room_name: `post_${id}`});
-    }
-
-    Refresh_Reactions = async ()=>{
+    Refresh_Post = async ()=>{
 
         let {get_posts} = Request_URLs;
 
@@ -129,8 +100,6 @@ class Single_Post extends Component {
 
             this.bodyRef.current.innerHTML = post?.body;
         }
-
-        this.Init_Socket();
 
     }
     
@@ -224,7 +193,7 @@ class Single_Post extends Component {
                             owner_user_account={owner_user_account}
                             target_id={id}
                             target_id_type={"post_id"}
-                            refresh_parent={this.Signal_All_Refresh_Reactions}
+                            refresh_parent={null}
                             reactions={post.reactions}
                         />
 

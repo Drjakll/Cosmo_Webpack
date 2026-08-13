@@ -28,9 +28,11 @@ class General_Reactions_Container extends Component {
         };
     }
 
-    componentWillUnmount(){
+    async componentWillUnmount(){
 
-        this.socket?.disconnect();
+        console.log("unmounting reaction component");
+
+        await this.socket?.disconnect();
         
     }
 
@@ -42,10 +44,21 @@ class General_Reactions_Container extends Component {
 
     Init_Socket = ()=>{
 
-        this.socket = init_websocket('/reaction_room', this.Init_Socket);
+        if(!this.props.target_id || this.room_joined === true){
+            return;
+        }
+
+        this.room_joined = true;
+
+        this.socket = init_websocket('/reaction_room');
 
         this.socket?.on('connect', ()=>{
 
+            let {target_id_type, target_id} = this.props;
+
+            let room_name = `${target_id_type}_${target_id}`;
+
+            this.socket?.emit('join_reaction_room', {room_name});
 
         });
 
@@ -72,14 +85,7 @@ class General_Reactions_Container extends Component {
             target_id
         });
 
-        //Skip this step of it has already joined the room
-        if(this.room_joined){
-            return;
-        }
-
-        let room_name = `${target_id_type}_${target_id}`;
-
-        this.socket?.emit('join_reaction_room', {room_name});
+        this.Init_Socket();
     }
 
     Confirmed_Joined_Room = () => {
@@ -163,11 +169,7 @@ class General_Reactions_Container extends Component {
             }
         );
 
-        let {refresh_parent} = this.props;
-
-        refresh_parent && refresh_parent();
-
-        this.Refresh_Reactions();
+        this.socket?.emit('signal_all_refresh_reactions', {room_name: `${target_id_type}_${target_id}`});
 
     }
 

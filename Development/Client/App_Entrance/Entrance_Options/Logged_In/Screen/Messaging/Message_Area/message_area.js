@@ -12,7 +12,15 @@ class Message_Area extends Component {
         
         super(props);
 
-        let {conversations, private_or_public, owner_user_account, following_list, selected_room_tag, selected_users, current_users_info} = props;
+        let {
+            conversations, 
+            private_or_public, 
+            owner_user_account, 
+            following_list, 
+            selected_room_tag, 
+            selected_users, 
+            current_users_info
+        } = props;
 
         this.state = {
             conversations,

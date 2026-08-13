@@ -78,8 +78,6 @@ setInterval(async ()=>{
 
     console.error("Failed MySQL ping:", err.code);
 
-    Reconnect();
-
   }
 
 }, 30000);
@@ -103,8 +101,6 @@ let query_wrapper = {
       if(tries > 0 && this.isConnectionError(err)){
 
         console.warn("Retrying MySQL query after:", err.code);
-
-        Reconnect();
 
         return await this.query(q, data, tries - 1);
 
@@ -130,8 +126,6 @@ let query_wrapper = {
       if(tries > 0 && this.isConnectionError(err)){
 
         console.warn("Retrying MySQL execute after:", err.code);
-
-        Reconnect();
 
         return await this.execute(q, data, tries - 1);
 

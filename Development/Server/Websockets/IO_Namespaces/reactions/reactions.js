@@ -54,10 +54,6 @@ let Wrapper = function (){
             socket.on(key, events[key].event);
 
         }
-        /*
-        socket.on('ping', events.pong.event);
-        socket.on('join_reaction_room', events.join_reaction_room.event);
-        socket.on('signal_all_refresh_reactions', events.signal_all_refresh_reactions.event);*/
 
     };
 };

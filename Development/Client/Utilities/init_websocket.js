@@ -4,7 +4,6 @@ function init_websocket(namespace, reinit_callback = null, offline_callback = nu
 
 
     let socket = io(namespace, {
-                    transports: ["websocket"],
                     reconnection: true,
                     reconnectionAttempts: 5,
                     reconnectionDelay: 2000,
@@ -41,7 +40,7 @@ function init_websocket(namespace, reinit_callback = null, offline_callback = nu
     });
 
     socket.on("disconnect", reason => {
-        //console.log(namespace, " socket disconnected ",reason);
+        console.log(namespace, ` socket disconnected\nreason: `,reason);
     });
 
     socket.io.on("reconnect_attempt", attempt => {
@@ -52,15 +51,11 @@ function init_websocket(namespace, reinit_callback = null, offline_callback = nu
         //console.log(namespace,"reconnected after attempt:",attempt);
     });
 
-    socket.on("connect_error", err => {
-        //console.log("connect_error:", err.message);
-    });
-
     socket.io.on("reconnect_failed", () => {
 
         console.error(namespace, "reconnection failed");
 
-        reinit_callback?.(true);
+        //reinit_callback?.(true);
 
     });
 
