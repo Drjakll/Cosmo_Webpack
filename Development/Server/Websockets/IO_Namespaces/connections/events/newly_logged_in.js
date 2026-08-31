@@ -1,8 +1,8 @@
 let Wrapper = function(){
     
-    this.event = ({email}) => {
+    this.event = ({user_id}) => {
         
-        this.user_email[email] = this.socket;
+        this.user_sockets[user_id] = this.socket;
 
     };
     

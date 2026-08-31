@@ -43,7 +43,7 @@ class Alert_Buttons extends Component {
     Add_Connection_Websocket_Events = ()=>{
 
 
-        global_connection_socket?.on("refresh_alerts", async ({})=>{
+        window.global_connection_socket.on("refresh_alerts", async ({})=>{
 
             await this.Refresh_Alerts();
             

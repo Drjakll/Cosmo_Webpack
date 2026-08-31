@@ -16,7 +16,15 @@ class Comment_Container extends Component {
 
         super(props);
 
-        let {comment_info, owner_user_account, visitor_user_account, selected, target_id_type, target_id} = props;
+        let {
+                comment_info, 
+                owner_user_account, 
+                visitor_user_account, 
+                selected, 
+                target_id_type,
+                target_id,
+                visitor_all_following_status
+            } = props;
 
         this.state = {
             target_id_type,
@@ -24,6 +32,7 @@ class Comment_Container extends Component {
             comment_info,
             owner_user_account,
             visitor_user_account,
+            visitor_all_following_status,
             selected, //Only use by the child, which is an editor use for selecting the comment for potential purposes. Ex: deletion
             editable: false //Can only turn true if the visiting user is the owner of this comment
         };
@@ -201,9 +210,9 @@ class Comment_Container extends Component {
 
         let {signal_refresh_this_section_comments, additional_comment_options} = this.props;
 
-        let {comment_info, owner_user_account, visitor_user_account, editable} = this.state
+        let {comment_info, owner_user_account, visitor_user_account, editable, visitor_all_following_status} = this.state
 
-        let {first_name, last_name, profile_picture_link, id, comment, time_stamp, replies, reactions, user_id} = comment_info;
+        let {first_name, last_name, profile_picture_link, id, comment, time_stamp, replies, reactions, user_id, privacy} = comment_info;
 
         return (<div id="comment-container-wrapper">
 
@@ -230,8 +239,9 @@ class Comment_Container extends Component {
                     <Profile_Thumbnail
                         visitor_user_account={visitor_user_account}
                         owner_user_account={owner_user_account}
-                        profile={{profile_picture_link, id: user_id}}
+                        profile={{profile_picture_link, privacy, id: user_id}}
                         additional_options={additional_comment_options}
+                        visitor_all_following_status={visitor_all_following_status}
                     />
 
                 </div>
@@ -272,7 +282,7 @@ class Comment_Container extends Component {
                             target_id={id}
                             target_id_type={"comment_id"}
                             reactions={reactions}
-                            refresh_parent={null}
+                            refresh_parent={signal_refresh_this_section_comments}
                         />
                     }
 

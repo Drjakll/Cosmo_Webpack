@@ -32,7 +32,7 @@ class Posts extends Component {
         
         let today = new Date();
 
-        let {owner_user_account, visitor_user_account, connection_list, change_display} = props;
+        let {owner_user_account, visitor_user_account, connection_list, change_display, visitor_all_following_status} = props;
 
         this.state = {
             selected_year: today.getFullYear(),
@@ -44,6 +44,7 @@ class Posts extends Component {
             owner_user_account,
             visitor_user_account,
             change_display,
+            visitor_all_following_status,
             last_time_posted: Date.now() //This is the last time user made a post. Data is in milliseconds
         };
 
@@ -263,7 +264,15 @@ class Posts extends Component {
 
         const { Single_Post: Post} = this;
         
-        let { selected_year, selected_month, selected_date, selected_post, visitor_user_account, owner_user_account, change_display } = this.state;
+        let { selected_year, 
+                selected_month, 
+                selected_date, 
+                selected_post, 
+                visitor_user_account, 
+                owner_user_account, 
+                change_display,
+                visitor_all_following_status 
+            } = this.state;
         
         return (
             <div id="posts" tabIndex="0">
@@ -307,6 +316,7 @@ class Posts extends Component {
                             visitor_user_account={visitor_user_account} 
                             owner_user_account={owner_user_account} 
                             change_main_display={change_display}
+                            visitor_all_following_status={visitor_all_following_status}
                     />
 
                 </div>

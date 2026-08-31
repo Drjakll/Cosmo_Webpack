@@ -102,7 +102,7 @@ class Online_Users extends Component {
 
         this.socket?.on("who_is_online", ({online_users})=>{
 
-            let {online_followings} = this.state;
+            let online_followings = {};
 
             for(let user of online_users){
 
@@ -128,7 +128,7 @@ class Online_Users extends Component {
 
             let {id} = offline_user;
 
-            delete online_followings[id]
+            delete online_followings[id];
 
             this.setState({online_followings});
 
@@ -179,6 +179,8 @@ class Online_Users extends Component {
 
                     let {first_name, last_name} = value;
 
+                    console.log(key);
+
                     return <div key={key} className="online-user-entry">
 
                         <div id="profile-thumbnail-wrapper">
@@ -187,6 +189,7 @@ class Online_Users extends Component {
                                 profile={value}
                                 owner_user_account={owner_user_account}
                                 visitor_user_account={owner_user_account}
+                                generate_options_disabled={true}
                             />
 
                         </div>

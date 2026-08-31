@@ -34,11 +34,12 @@ class Comments_Container extends Component {
 
         super(props);
 
-        let {owner_user_account, visitor_user_account} = props;
+        let {owner_user_account, visitor_user_account, visitor_all_following_status} = props;
 
         this.state = {
             owner_user_account,
             visitor_user_account,
+            visitor_all_following_status,
             comments: [],
             show_current: this.Show_Original,
             previous_callbacks: [],
@@ -359,7 +360,7 @@ class Comments_Container extends Component {
 
         let {Single_Comment_Container, Show_Editor_Options} = this;
 
-        let {comments, visitor_user_account, owner_user_account, selected_comments} = this.state;
+        let {comments, visitor_user_account, owner_user_account, selected_comments, visitor_all_following_status} = this.state;
 
         let {back_previous, show_replies, target_id, target_id_type, reply_to_id, additional_comment_options} = this.props;
 
@@ -400,6 +401,7 @@ class Comments_Container extends Component {
                                 unselect_comment={this.Unselect_Comment}
                                 selected={selected_comments && selected_comments[value.id] ? true : false}
                                 additional_comment_options={additional_comment_options}
+                                visitor_all_following_status={visitor_all_following_status}
                             />
 
                         </div>;

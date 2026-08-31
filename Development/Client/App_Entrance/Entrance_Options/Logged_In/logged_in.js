@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import Screen from './Screen/screen.js';
 import Upper_Bar from './Upper_Bar/upper_bar.js';
 import init_websocket from '@init_websocket';
+import {Refresh, Queue_Set_State, Get_Following_Status} from '@get_follows';
 import './logged_in.less';
 
 
@@ -28,9 +29,6 @@ class Logged_In_Account extends Component {
         
         super(props);
 
-        this.Init_Global_Socket_IO();
-
-
         let {owner_user_account, visitor_user_account} = props;
 
         this.state = {
@@ -41,13 +39,20 @@ class Logged_In_Account extends Component {
             ],
             owner_user_account,
             visitor_user_account,
-            focused_column: "Profile" 
+            focused_column: "Profile",
+            all_following_status: [],
+            followings: [],
+            followers: []
         };
+
+        this.Init_Global_Socket_IO();
     }
 
-    Init_Global_Socket_IO = () => {
+    Init_Global_Socket_IO = async () => {
 
         window.global_connection_socket = init_websocket("/connections", this.Init_Global_Socket_IO);
+
+        await this.Setup_Socket();
 
     }
 
@@ -57,29 +62,49 @@ class Logged_In_Account extends Component {
 
     }
 
-    async componentDidMount() {
-    
+    Setup_Socket = async () => {
+
         //Delete the user key from the websocket backend before exiting
         window.addEventListener("beforeunload", (e)=>{
 
-            global_connection_socket?.emit("logging_off", {email: this.state.owner_user_account.email});
+            window.global_connection_socket?.emit("logging_off", {user_id: this.state.owner_user_account.id});
 
         });
 
-        global_connection_socket?.on("connect", async ()=>{
+        window.global_connection_socket?.on("connect", async ()=>{
 
             //Signal to create the user key at the websocket backend
-            global_connection_socket?.emit("newly_logged_in", {email: this.state.owner_user_account.email});
+            window.global_connection_socket?.emit("newly_logged_in", {user_id: this.state.owner_user_account.id});
 
         });
 
-        global_connection_socket?.on("refresh_account", ({})=>{
+        window.global_connection_socket?.on("refresh_account", ({})=>{
 
+            window.Refresh_Login();
+
+        });
+
+        window.global_connection_socket?.on("refresh_connection_list", async ()=>{
+
+            await Refresh(true); //Refresh all followers through out all components that has setup the setState to Queue_Set_State
+            await Refresh(false); //Refresh all followings through out all components that has setup the setState to Queue_set_State
             
+        });
+
+        window.global_connection_socket?.on("refresh_following_status", async()=>{
+
+            let all_following_status = await Get_Following_Status();
+
+            this.setState({all_following_status});
 
         });
 
-        //this.RotateScreen(0);
+        let all_following_status = await Get_Following_Status();
+
+        this.setState({all_following_status});
+    }
+
+    async componentDidMount() {
 
     }
     
@@ -171,7 +196,7 @@ class Logged_In_Account extends Component {
 
     render(){
         
-        let {owner_user_account, visitor_user_account} = this.state;
+        let {owner_user_account, visitor_user_account, all_following_status} = this.state;
         
         return (
             <div id="logged-in-account">
@@ -201,6 +226,7 @@ class Logged_In_Account extends Component {
                                     owner_user_account={owner_user_account} 
                                     visitor_user_account={visitor_user_account}
                                     screen_type={info.screen} 
+                                    all_following_status={all_following_status}
                                 />
 
                             </div>

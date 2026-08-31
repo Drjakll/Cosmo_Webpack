@@ -14,14 +14,15 @@ class Enlarged_Single_Photo extends Component {
         
         super(props);
 
-        let {owner_user_account, visitor_user_account, photo_info, aws_s3_url, album_info} = this.props;
+        let {owner_user_account, visitor_user_account, photo_info, aws_s3_url, album_info, visitor_all_following_status} = this.props;
         
         this.state = {
             photo_info,
             aws_s3_url,
             owner_user_account,
             visitor_user_account,
-            album_info
+            album_info,
+            visitor_all_following_status
         };
     }
 
@@ -70,7 +71,7 @@ class Enlarged_Single_Photo extends Component {
     
     render() {
 
-        let {photo_info, visitor_user_account, owner_user_account} = this.state;
+        let {photo_info, visitor_user_account, owner_user_account, visitor_all_following_status} = this.state;
 
         let {Comments} = this;
         
@@ -115,6 +116,7 @@ class Enlarged_Single_Photo extends Component {
                         owner_user_account={this.state.owner_user_account}
                         parent_room_name={null}
                         comments_count={photo_info.comments_count}
+                        visitor_all_following_status={visitor_all_following_status}
                     />
 
                 </div>

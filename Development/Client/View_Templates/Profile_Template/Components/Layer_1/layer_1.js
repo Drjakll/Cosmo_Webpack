@@ -9,12 +9,13 @@ class Layer_1 extends Component {
 
         super(props);
 
-        let {owner_user_account, visitor_user_account, change_display} = props;
+        let {owner_user_account, visitor_user_account, change_display, visitor_all_following_status} = props;
 
         this.General_Props = {
             owner_user_account,
             visitor_user_account,
-            change_display
+            change_display,
+            visitor_all_following_status: visitor_all_following_status || []
         };
 
         this.Render_List = {
@@ -45,9 +46,9 @@ class Layer_1 extends Component {
             return;
         }
 
-        let {owner_user_account, visitor_user_account, change_display} = this.props;
+        let {owner_user_account, visitor_user_account, change_display, visitor_all_following_status} = this.props;
 
-        this.General_Props = {owner_user_account, visitor_user_account, change_display}
+        this.General_Props = {owner_user_account, visitor_user_account, change_display, visitor_all_following_status}
 
         this.setState({
             owner_user_account,

@@ -14,12 +14,13 @@ class Profile_Template extends Component {
         super(props);
         
 
-        let {owner_user_account, visitor_user_account} = this.props;
+        let {owner_user_account, visitor_user_account, visitor_all_following_status} = this.props;
 
 
         this.General_Props = { //This props will be passed to all the components
             owner_user_account, 
             visitor_user_account,
+            visitor_all_following_status: visitor_all_following_status || [],
             change_display: this.Change_Display,
             return_previous_display: this.Return_Previous_Display
         };
@@ -66,14 +67,18 @@ class Profile_Template extends Component {
             return;
         }
 
-        let {visitor_user_account, owner_user_account} = this.props;
+        let {visitor_user_account, owner_user_account, visitor_all_following_status} = this.props;
 
         this.General_Props = {owner_user_account, 
                                 visitor_user_account, 
+                                visitor_all_following_status: visitor_all_following_status || [],
                                 change_display: this.Change_Display, 
                                 return_previous_display: this.Return_Previous_Display};
 
-        this.setState({owner_user_account, visitor_user_account, general_props: this.General_Props});
+        this.setState({visitor_all_following_status, 
+                        owner_user_account, 
+                        visitor_user_account, 
+                        general_props: this.General_Props});
         
     }
     
@@ -169,7 +174,7 @@ class Profile_Template extends Component {
                         <div id="contents">
 
                             {/* Pass owner_user_account to ensure updates for the other component, wherever render_callback is from */}
-                            {render_callback({owner_user_account})} 
+                            {render_callback({owner_user_account, state: this.state})} 
                             
                         </div>
 

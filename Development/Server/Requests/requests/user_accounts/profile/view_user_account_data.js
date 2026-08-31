@@ -5,9 +5,9 @@ let request = function({sql}){
 
     this.req_path = "/view_user_account_data";
     this.req_type = "post";
-    this.callbacks = ["central_auth","is_user_blocked","view_user_account_data"];
+    this.callbacks = ["central_auth","is_user_blocked","check_for_following_privacy","view_user_account_data"];
 
-    this.req = async (req, res)=>{
+    this.req = async (req, res, next)=>{
         
         let {target_id: id} = req.body;
 
@@ -56,7 +56,7 @@ let request = function({sql}){
                 res.status(404).json({message: "Account not found!", result: null});
 
             } else {
-
+                
                 res.status(200).json({message: "Account found!", result: result[0]});
 
             }

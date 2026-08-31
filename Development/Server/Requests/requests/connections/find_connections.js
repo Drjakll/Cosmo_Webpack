@@ -138,7 +138,8 @@ let request = function ({sql}) {
                         ac.gender as gender,
                         ac.marital_status as marital_status,
                         ac.date_of_birth as date_of_birth,
-                        ac.personal_traits,
+                        ac.personal_traits as personal_traits,
+                        ac.privacy as privacy,
                         pl.link as profile_picture_link
                     from
                         User_Accounts as ac

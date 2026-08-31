@@ -1,8 +1,8 @@
 let Wrapper = function(){
     
-    this.event = ({email}) => {
+    this.event = ({user_id}) => {
         
-        delete this.user_email[email];
+        delete this.user_sockets[user_id];
 
     };
     

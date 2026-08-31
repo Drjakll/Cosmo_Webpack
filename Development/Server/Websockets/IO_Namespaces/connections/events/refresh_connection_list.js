@@ -1,8 +1,10 @@
 let Wrapper = function(){
     
-    this.event = ({request_to_email}) => {
+    this.event = ({user_id}) => {
 
-        this.user_email[request_to_email]?.emit("refresh_connection_list", {});
+        this.user_sockets[user_id]?.emit("refresh_connection_list", {});
+
+        this.user_sockets[user_id]?.emit("refresh_following_status", {});
 
     };
     

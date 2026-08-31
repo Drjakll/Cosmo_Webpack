@@ -12,17 +12,24 @@ class Profile_Popup extends Component {
 
         super(props);
 
-        let { this_profile_data, owner_user_account, visitor_user_account} = props;
+        let { this_profile_data, owner_user_account, visitor_user_account, visitor_all_following_status} = props;
 
         this.state = {
             this_profile_data,
             owner_user_account,
             visitor_user_account,
-            is_blocked: true
+            is_blocked: true,
+            profile_error_message: "",
+            visitor_all_following_status
         };
     }
 
+    componentWillUnmount(){
+
+    }
+
     async componentDidMount(){
+
 
         this.Get_Profile_Account_Info();
 
@@ -32,7 +39,15 @@ class Profile_Popup extends Component {
 
         let {this_profile_data, visitor_user_account} = this.state;
 
-        let {id} = this_profile_data;
+        let {id} = this_profile_data ?? {};
+
+        if(!id || !visitor_user_account?.id){
+            this.setState({
+                is_blocked: true,
+                profile_error_message: "Unable to load this profile."
+            });
+            return;
+        }
 
         let {view_user_account_data} = Request_URLs;
 
@@ -54,20 +69,28 @@ class Profile_Popup extends Component {
 
         if(!data){
 
-            popup_message("message","Error getting account information!");
+            this.setState({
+                is_blocked: true,
+                profile_error_message: "Error getting account information!"
+            });
+            this.props.Exit();
 
         } else if (data.blocked) {
 
-            this.props.Exit();
-
+            this.setState({
+                is_blocked: true,
+                profile_error_message: data.message
+            });
             popup_message("message", data.message);
+            this.props.Exit();
         
         }
         else {
 
             this.setState({
                 this_profile_data: data.result,
-                is_blocked: false
+                is_blocked: false,
+                profile_error_message: ""
             });
 
         }
@@ -85,13 +108,20 @@ class Profile_Popup extends Component {
 
     render(){
 
-        let {owner_user_account, visitor_user_account, this_profile_data, is_blocked} = this.state;
+        let {
+            owner_user_account,
+            visitor_user_account,
+            this_profile_data,
+            is_blocked,
+            profile_error_message,
+            visitor_all_following_status
+        } = this.state;
 
         let drag = new Drag();
 
         let profile_bar_ref = createRef();
 
-        return owner_user_account ? 
+        return !is_blocked? 
         
         <Portal>
 
@@ -112,11 +142,15 @@ class Profile_Popup extends Component {
 
                 <div id="profile-template-inner-wrapper">
 
-                    {is_blocked === true ? "" :
+                    {is_blocked === true ? 
+                    <div id="profile-popup-error-message">
+                        {profile_error_message}
+                    </div> :
                      <Profile_Public_View 
                         visitor_user_account={visitor_user_account} 
                         owner_user_account={this_profile_data} 
                         Refresh_Profile_Data={this.Get_Profile_Account_Info}
+                        visitor_all_following_status={visitor_all_following_status}
                     />}
 
                 </div>
@@ -125,7 +159,7 @@ class Profile_Popup extends Component {
 
         </Portal>
         
-        : <></>;
+        : "";
     }
 }
 

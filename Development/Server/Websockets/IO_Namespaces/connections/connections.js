@@ -30,7 +30,7 @@ let Wrapper = function (){
             
     })();
     
-    this.user_email = {};
+    this.user_sockets = {};
 
     this.namespace = (socket) => {
         
@@ -42,7 +42,7 @@ let Wrapper = function (){
             events[i].socket = socket;
             events[i].io = this.io;
             events[i].root_io = this.root_io;
-            events[i].user_email = this.user_email;
+            events[i].user_sockets = this.user_sockets;
         }
 
         //console.log("connected: connections", socket.id);

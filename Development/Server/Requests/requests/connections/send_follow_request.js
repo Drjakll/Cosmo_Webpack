@@ -14,7 +14,7 @@ let request = function ({sql}) {
 
                 //let data = [from_id, to_id];
 
-                let data = [to_id, from_id ];
+                let data = [to_id, from_id];
 
                 let [mutual] = await this.sql.query(`
                     select 
@@ -74,7 +74,15 @@ let request = function ({sql}) {
 
         let { privacy, id } = to_account_info;
 
+        if(!privacy || !id || !from_id){
+            return res.status(400).json({message: "Missing required information"});
+        }
+
         let status = await calculate_status(privacy, id, from_id);
+
+        if(status === 'rejected'){
+            return res.status(401).json({message: "User set privacy to only mutual followers will be allow to request to follow. "});
+        }
 
         let data = [from_id, id, now, status];
 
@@ -97,11 +105,15 @@ let request = function ({sql}) {
 
             await sql.query(query, data); 
 
+            let [result] = await sql.query(`select status from Connections where follower_id = ? and followed_id = ?`, [from_id,id]);
+
+            status = result[0].status;
+
             switch(status){
 
                 case 'rejected':
 
-                    return res.status(401).json({message: "User set privacy to only mutual followers will be allow to request to follow. "});
+                    return res.status(401).json({message: "Follow request has been withdrawn."});
 
                 case 'pending':
                 

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Profile_Popup from '@profile_popup';
 import Request_URLs from '@request_urls';
 import popup_message from '@popup_message';
+import {Refresh} from '@get_follows';
 import './profile_thumbnail.less';
 
 class Profile_Thumbnail extends Component {
@@ -10,7 +11,12 @@ class Profile_Thumbnail extends Component {
 
         super(props);
 
-        let {profile: this_profile, owner_user_account, visitor_user_account, rounded_portrait, additional_options} = this.props;
+        let {profile: this_profile, 
+                owner_user_account, 
+                visitor_user_account, 
+                rounded_portrait, 
+                additional_options, 
+                visitor_all_following_status} = this.props;
 
         let options = [
             {
@@ -20,6 +26,10 @@ class Profile_Thumbnail extends Component {
             {
                 label: "Block User",
                 onclick_callback: this.Block_User
+            },
+            {
+                label: "Follow User",
+                onclick_callback: this.Request_Follow
             }
         ];
 
@@ -34,7 +44,9 @@ class Profile_Thumbnail extends Component {
             options,
             existing_blocked_information: {
                 features: ""
-            }
+            },
+            following_status: visitor_all_following_status?.find((user)=>{ return user.followed_id === this_profile.id; }),
+            visitor_all_following_status
         };
     }
 
@@ -42,21 +54,26 @@ class Profile_Thumbnail extends Component {
 
     }
 
-    componentDidUpdate(prevProps, prevState){
+    async componentDidUpdate(prevProps, prevState){
 
         if(this.props === prevProps){
             return;
         }
 
-        this.setState(this.props);
+        let following_status = this.props.visitor_all_following_status?.find((user)=>
+            { 
+                return user.followed_id === this.props.profile.id;
+            });
 
+        await this.setState(this.props);
+        this.setState({following_status});
     }   
 
     View_Popup_Profile = ()=>{
 
         let {show_popup} = this.state;
 
-        let {this_profile, owner_user_account, visitor_user_account} = this.state;
+        let {this_profile, owner_user_account, visitor_user_account, visitor_all_following_status} = this.state;
 
         return show_popup ?                
             
@@ -64,6 +81,7 @@ class Profile_Thumbnail extends Component {
                 this_profile_data={this_profile}
                 owner_user_account={owner_user_account} 
                 visitor_user_account={visitor_user_account} 
+                visitor_all_following_status={visitor_all_following_status}
                 Exit={this.Exit_Popup}/>  
                 
                 :
@@ -78,13 +96,65 @@ class Profile_Thumbnail extends Component {
 
     Trigger_Profile_Popup = async () => {
 
-        this.setState({show_popup: true});
+        await this.setState({show_popup: true});
 
+    }
+
+    Request_Follow = async ({user_info})=>{
+
+        let {send_follow_request} = Request_URLs;
+        
+        let {visitor_user_account} = this.state;
+
+
+        if(user_info.id === visitor_user_account.id){
+            
+            await popup_message("message", "You cannot follow yourself", null);
+            return;
+        }
+
+        let body = {
+            from_id: visitor_user_account.id,
+            to_account_info: {
+                id: user_info.id,
+                privacy: user_info.privacy
+            }
+        };
+
+        let data = await(await fetch(send_follow_request,
+            {
+                method: "POST",
+                body: JSON.stringify(body),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }
+        )).json(); 
+
+        //Refresh the followings list
+        await this.Refresh_List(false, user_info.id !== visitor_user_account.id);
+
+        window.global_connection_socket.emit("refresh_connection_list", {user_id: user_info.id});
+        window.global_connection_socket.emit("refresh_connection_list", {user_id: visitor_user_account.id});
+
+        window.global_connection_socket.emit("refresh_alerts", {user_id: user_info.id});
+        
+        popup_message("message", data?.message, null);
+    }
+
+    Refresh_List = async (refresh_followers = true, is_visiting = false) => {
+    
+        let {owner_user_account} = this.state;
+
+        await Refresh(refresh_followers, is_visiting, owner_user_account);
     }
 
     Generate_Options = () =>{
 
-        let {this_profile, options} = this.state;
+        let {this_profile, options, following_status, visitor_user_account} = this.state;
+
+        let {id: visitor_user_id} = visitor_user_account;
+        let {id: this_profile_id} = this_profile;
 
         return <div id="profile-thumbnail-options-wrapper" className={`popup`}>
 
@@ -92,7 +162,13 @@ class Profile_Thumbnail extends Component {
 
                 let {label, onclick_callback} = value;
 
-                return <div className="profile-thumbnail-option-selection"
+                const not_show = (following_status?.status === "accepted" 
+                                    || visitor_user_id === this_profile_id) 
+                                    && label === "Follow User";
+
+                label = label === "Follow User" && following_status?.status === "pending" ? "Withdraw Request" : label;
+
+                return !not_show ? <div className="profile-thumbnail-option-selection"
                             key={index}
                             onClick={async (e)=>{
 
@@ -102,7 +178,7 @@ class Profile_Thumbnail extends Component {
 
                                 {label}
 
-                    </div>;
+                    </div> : "";
 
             })}
 
@@ -172,9 +248,9 @@ class Profile_Thumbnail extends Component {
 
     Block_User = async ({user_info}) => {
 
-        let {owner_user_account} = this.state;
+        let {owner_user_account, visitor_user_account} = this.state;
 
-        if(owner_user_account.id === user_info.id){
+        if(owner_user_account.id === user_info.id || visitor_user_account.id === user_info.id){
             popup_message('message', "You cannot block yourself");
             return;
         }
@@ -322,7 +398,7 @@ class Profile_Thumbnail extends Component {
             {generate_options_disabled ? "" :
                 <div id="option-wrapper">
 
-                    <label>...</label>
+                    <div id="profile-thumbnail-dropdown-icon">...</div>
 
                     {this.Generate_Options()}
 

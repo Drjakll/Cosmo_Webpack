@@ -6,9 +6,6 @@ import './general_reactions_container.less';
 
 class General_Reactions_Container extends Component {
 
-    //A flag to confirm that joined the websocket's room, so that it only join the room once
-    room_joined = false;
-
     constructor(props){
 
         super(props);
@@ -28,43 +25,13 @@ class General_Reactions_Container extends Component {
         };
     }
 
-    async componentWillUnmount(){
+    componentWillUnmount(){
 
-        console.log("unmounting reaction component");
-
-        await this.socket?.disconnect();
         
     }
 
     componentDidMount(){
 
-        this.Init_Socket();
-
-    }
-
-    Init_Socket = ()=>{
-
-        if(!this.props.target_id || this.room_joined === true){
-            return;
-        }
-
-        this.room_joined = true;
-
-        this.socket = init_websocket('/reaction_room');
-
-        this.socket?.on('connect', ()=>{
-
-            let {target_id_type, target_id} = this.props;
-
-            let room_name = `${target_id_type}_${target_id}`;
-
-            this.socket?.emit('join_reaction_room', {room_name});
-
-        });
-
-        this.socket?.on('refresh_reactions', this.Refresh_Reactions);
-
-        this.socket?.on('confirm_joined_room', this.Confirmed_Joined_Room);
     }
 
     componentDidUpdate(prevProps, prevState){
@@ -85,16 +52,6 @@ class General_Reactions_Container extends Component {
             target_id
         });
 
-        this.Init_Socket();
-    }
-
-    Confirmed_Joined_Room = () => {
-
-        if(!this.state.target_id){
-            return;
-        }
-
-        this.room_joined = true;
     }
 
     Refresh_Reactions = async ()=>{
@@ -169,8 +126,9 @@ class General_Reactions_Container extends Component {
             }
         );
 
-        this.socket?.emit('signal_all_refresh_reactions', {room_name: `${target_id_type}_${target_id}`});
+        let {refresh_parent} = this.props;
 
+        refresh_parent && refresh_parent();
     }
 
     Thumbnails = {
@@ -222,7 +180,7 @@ class General_Reactions_Container extends Component {
 
                                     let split_emojis = emojis === "" ? [] : emojis.split(',');
 
-                                    return <div className="reaction-item" key={index}>
+                                    return <div className="reaction-item" key={user_id}>
 
                                             <div id="profile-picture-wrapper">
 

@@ -106,6 +106,7 @@ class Conversation_Thumbnail extends Component {
                     visitor_user_account={owner_user_account}
                     rounded_portrait={false}
                     additional_options={[]}
+                    generate_options_disabled={true}
                 />
             </div>
 
@@ -151,35 +152,35 @@ class Conversation_Thumbnail extends Component {
 
                     <label ref={this.nameRef} contentEditable={conversation_name_editable}>{conversation_name}</label>
 
-                    <div id="edit-name-icon" onClick={this.Edit_Conversation_name}>
+                    <div id="users-dropdown">
 
-                        <div id="instruction-label">Edit Conversation Name</div>
+                        {users.map((value, key)=>{
+                            
+                            let {user_id: id} = value;
 
-                        <div id="editable-icon" className={conversation_name_editable ? "editable" : ""}>&#x270E;</div>
+                            let is_online = online_users[id] ? true : false;
+
+                            return this.Create_Small_User_Icon(value, id, is_online);
+
+                        })}
+
+                        <div id="add-participant-button" onClick={(e)=>{
+
+                            this.props.add_users_to_conversation(this.state.conversation_info.id);
+                            
+                        }}>
+                            +
+                        </div>
 
                     </div>
 
                 </div>
 
-                <div id="users-dropdown">
+                <div id="edit-name-icon" onClick={this.Edit_Conversation_name}>
 
-                    {users.map((value, key)=>{
-                        
-                        let {user_id: id} = value;
+                    <div id="instruction-label">Edit Name</div>
 
-                        let is_online = online_users[id] ? true : false;
-
-                        return this.Create_Small_User_Icon(value, id, is_online);
-
-                    })}
-
-                    <div id="add-participant-button" onClick={(e)=>{
-
-                        this.props.add_users_to_conversation(this.state.conversation_info.id);
-                        
-                    }}>
-                        +
-                    </div>
+                    <div id="editable-icon" className={conversation_name_editable ? "editable" : ""}>&#x270E;</div>
 
                 </div>
 

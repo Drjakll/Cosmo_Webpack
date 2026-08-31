@@ -15,7 +15,7 @@ class Photos_Container extends Component {
         
         super(props);
 
-        let {owner_user_account, visitor_user_account, album_info, photo_links} = this.props;
+        let {owner_user_account, visitor_user_account, album_info, photo_links, visitor_all_following_status} = this.props;
 
         photo_links = this.Modify_Photo_Links(photo_links);
         
@@ -24,6 +24,7 @@ class Photos_Container extends Component {
             album_info,
             owner_user_account,
             visitor_user_account,
+            visitor_all_following_status,
             photos_to_be_deleted: {},
             enlarged_photo_view: false,
             initial_photo_index: null
@@ -49,7 +50,7 @@ class Photos_Container extends Component {
 
     async componentDidUpdate(prevProps, prevState) {
 
-        let {photo_links, album_info} = this.props;
+        let {photo_links, album_info, visitor_all_following_status} = this.props;
 
         if (photo_links === prevProps.photo_links && album_info === prevProps.album_info) {
             return;
@@ -58,7 +59,7 @@ class Photos_Container extends Component {
 
         photo_links = this.Modify_Photo_Links(photo_links);
 
-        await this.setState({album_info, photo_links});
+        await this.setState({album_info, photo_links, visitor_all_following_status});
     }
 
     Exit_Enlarge_Photo_Viewer = ()=>{
@@ -91,6 +92,7 @@ class Photos_Container extends Component {
                 visitor_user_account, 
                 photos_to_be_deleted, 
                 album_info, 
+                visitor_all_following_status
             } = this.state;
 
         return <div className="photo-thumbnail-wrapper" key={index}>
@@ -106,6 +108,7 @@ class Photos_Container extends Component {
                 insert_photo_to_delete={Insert_Photo_To_Delete}
                 open_enlarged_photo_viewer={this.Open_Enlarged_Photo_Viewer}
                 index={index}
+                visitor_all_following_status={visitor_all_following_status}
             />
 
         </div>;

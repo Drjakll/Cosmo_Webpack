@@ -25,7 +25,7 @@ class Follow_Editor extends Follow_List {
 
     }
 
-    Remove_Follower = async (follower_id)=>{
+    Remove_Follower = async ({user_info})=>{
 
         let confirmation = {agree: false};
 
@@ -40,7 +40,7 @@ class Follow_Editor extends Follow_List {
         let {remove_follower} = Request_URLs;
 
         let body = {
-            follower_id: follower_id,
+            follower_id: user_info.id,
             followed_id: id
         };
 
@@ -53,14 +53,19 @@ class Follow_Editor extends Follow_List {
         });
 
         //Update the removed follower's followings list
-        this.socket?.emit('report_update_followings', {follower_acc: {id: follower_id}});
+        this.socket?.emit('report_update_followings', {follower_acc: {id: user_info.id}});
 
         //Update this account's followers list
-        this.socket?.emit('report_update_followers', {following_acc: {id}, follower_acc: {id: follower_id}});
+        this.socket?.emit('report_update_followers', {following_acc: {id}, follower_acc: {id: user_info.id}});
+
+
+        //Update both parties connection list status
+        window.global_connection_socket.emit("refresh_connection_list", {user_id: id})
+        window.global_connection_socket.emit("refresh_connection_list", {user_id: user_info.id})
 
     }
 
-    Unfollow_User = async (following_id)=>{
+    Unfollow_User = async ({user_info})=>{
 
         let confirmation = {agree: false};
 
@@ -76,7 +81,7 @@ class Follow_Editor extends Follow_List {
 
         let body = {
             follower_id: id,
-            followed_id: following_id
+            followed_id: user_info.id
         };
 
         await fetch(unfollow_user_account, {
@@ -88,12 +93,23 @@ class Follow_Editor extends Follow_List {
         });
 
         //Update the unfollowed user's followers list
-        this.socket?.emit('report_update_followers', {following_acc: {id: following_id}, follower_acc: {id}});
+        this.socket?.emit('report_update_followers', {following_acc: {id: user_info.id}, follower_acc: {id}});
 
         //Update this acccount's followings list
         this.socket?.emit('report_update_followings', {follower_acc: {id}});
 
+        //Update both parties connection list status
+        window.global_connection_socket.emit("refresh_connection_list", {user_id: id})
+        window.global_connection_socket.emit("refresh_connection_list", {user_id: user_info.id})
+
     }
+
+    Additional_Profile_Options = [
+        {
+            label: this.props.label === "Follower" ? "Remove Follower" : "Unfollow User",
+            onclick_callback: this.props.label === "Follower" ? this.Remove_Follower : this.Unfollow_User
+        }
+    ]
     
     render(){
         

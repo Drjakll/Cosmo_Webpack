@@ -1,8 +1,8 @@
-import React, {createRef} from 'react';
-import Connection_List_Template from '../Connection_List_Template/connection_list_template.js';
+import React, {Component, createRef} from 'react';
+import Connection_List_Template from '@connection_list_template';
 import Search_Criteria_Box from '@search_criteria_box';
 import Request_URLs from '@request_urls';
-import {Get_Follows, Queue_Set_State, Refresh} from '@get_follows';
+import {Queue_Set_State, Refresh} from '@get_follows';
 import './follow_list.less';
 
 class Follow_List extends Connection_List_Template {
@@ -14,12 +14,27 @@ class Follow_List extends Connection_List_Template {
     Unfollow_User = null;
     Remove_Follower = null;
     Execute_Search = null;
+    Additional_Profile_Options = [];
 
     constructor(props){
 
         super(props);
 
-        this.Execute_Search = props.label === "Followers" ? this.Search_Followers : this.Search_Following;
+        let {label, owner_user_account, visitor_user_account, followings, followers} = props;
+
+        this.Execute_Search = label === "Follower" ? this.Search_Followers : this.Search_Following;
+
+        let state = {
+            followers,
+            followings,
+            label,
+            owner_user_account,
+            visitor_user_account
+        };
+
+        for(let i in state){
+            this.state[i] = state[i];
+        } 
 
     }
 
@@ -29,9 +44,11 @@ class Follow_List extends Connection_List_Template {
 
         let {owner_user_account, visitor_user_account} = this.state;
 
-        let follow_type = this.props.label === "Followers" ? "get_followers" : "get_followings"
+        let follow_type = this.props.label === "Follower" ? "get_followers" : "get_followings"
         
         Queue_Set_State(this.setState.bind(this), owner_user_account, follow_type, "Follow_List", owner_user_account.id !== visitor_user_account.id);
+
+        super.componentDidMount();
 
     }
 
@@ -45,7 +62,7 @@ class Follow_List extends Connection_List_Template {
 
         let {label, owner_user_account, visitor_user_account} = this.props;
 
-        this.Refresh(label === "Followers", owner_user_account.id !== visitor_user_account.id);
+        this.Refresh(label === "Follower", owner_user_account.id !== visitor_user_account.id, owner_user_account);
         
     }
 
@@ -115,8 +132,7 @@ class Follow_List extends Connection_List_Template {
 
     render(){
 
-        let {label} = this.props;
-        let {followings, followers} = this.state;
+        let {followings, followers, label} = this.state;
 
         return <div id="following-connection-list-wrapper">
 

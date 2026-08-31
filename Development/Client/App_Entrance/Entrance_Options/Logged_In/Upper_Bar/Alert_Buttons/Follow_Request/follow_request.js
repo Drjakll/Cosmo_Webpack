@@ -43,6 +43,9 @@ class Follow_Request extends Component {
 
         await this.props.Refresh_Alerts();
 
+        window.global_connection_socket?.emit("refresh_connection_list", {user_id: follower_id});
+        window.global_connection_socket?.emit("refresh_connection_list", {user_id: followed_id});
+
         window.Refresh_Login();
     }
 

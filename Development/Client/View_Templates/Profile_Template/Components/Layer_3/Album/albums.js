@@ -14,11 +14,12 @@ class Albums extends Component {
         super(props);
         
 
-        let {visitor_user_account, owner_user_account} = props;
+        let {visitor_user_account, owner_user_account, visitor_all_following_status} = props;
 
         this.state = {
             owner_user_account,
             visitor_user_account,
+            visitor_all_following_status,
             albums: [],
             photo_links: [],
             selected_album: {}
@@ -131,7 +132,7 @@ class Albums extends Component {
 
     Open_Photo_Container = () =>{
 
-        let {photo_links, selected_album, owner_user_account, visitor_user_account} = this.state;
+        let {photo_links, selected_album, owner_user_account, visitor_user_account, visitor_all_following_status} = this.state;
 
         let {change_display, return_previous_display} = this.props;
 
@@ -146,6 +147,7 @@ class Albums extends Component {
             change_main_display={change_display}
             return_previous_display={return_previous_display}
             refresh_photo_links={Get_Photo_Links}
+            visitor_all_following_status={visitor_all_following_status}
         />);
         
     }
@@ -162,7 +164,7 @@ class Albums extends Component {
         
         let drag_scroll = new Drag_Scroll();
 
-        let {albums} = this.state;
+        let {albums, visitor_all_following_status} = this.state;
 
         let {albumsWrapperRef} = this;
         
@@ -198,6 +200,7 @@ class Albums extends Component {
                                         Get_Photo_Links={this.Get_Photo_Links}
                                         owner_user_account={this.state.owner_user_account}
                                         visitor_user_account={this.state.visitor_user_account}
+                                        visitor_all_following_status={visitor_all_following_status}
                             />
             
                         </div>;

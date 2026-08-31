@@ -8,10 +8,11 @@ class Album_Cover extends Component {
         
         super(props);
 
-        let {album_info} = props;
+        let {album_info, visitor_all_following_status} = props;
         
         this.state = {
-            album_info
+            album_info,
+            visitor_all_following_status
         };
     }
     
@@ -25,15 +26,7 @@ class Album_Cover extends Component {
             return;
         }
         
-        let properties = this.props;
-        
-        for(let i in properties){
-            
-            this.state[i] = properties[i];
-            
-        }
-        
-        this.setState(this.state);
+        this.setState(this.props);
         
     }
     

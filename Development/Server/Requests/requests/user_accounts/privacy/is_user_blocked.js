@@ -12,7 +12,7 @@ function request({sql}){
 
     this.req = async (req, res, next) => {
 
-        const {user_id, commenter_user_id, owner_user_id, target_id_type, from_id, oppose_id, target_id, viewer_id} = req.body;
+        const {commenter_user_id, owner_user_id, target_id_type, from_id, oppose_id, target_id, viewer_id} = req.body;
         
         //defender_id is user to check to see if it's blocking attacker_id's account
         let attacker_id = commenter_user_id || from_id || viewer_id;

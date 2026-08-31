@@ -12,7 +12,7 @@ class Single_Photo extends Component {
         super(props);
     
 
-        let { owner_user_account, visitor_user_account, photo_info, album_info} = this.props;
+        let { owner_user_account, visitor_user_account, photo_info, album_info, visitor_all_following_status} = this.props;
         
         this.state = {
             photo_info,
@@ -20,7 +20,8 @@ class Single_Photo extends Component {
             owner_user_account,
             visitor_user_account,
             photos_to_be_deleted: {},
-            album_info
+            album_info,
+            visitor_all_following_status
         };
     }
 
@@ -51,7 +52,7 @@ class Single_Photo extends Component {
 
         let {Enlarged_Single_Photo: Enlarged_Photo, Signal_All_Refresh_Reactions} = this;
 
-        let {photo_info, owner_user_account, visitor_user_account, album_info} = this.state;
+        let {photo_info, owner_user_account, visitor_user_account, album_info, visitor_all_following_status} = this.state;
         
         return  <Enlarged_Photo 
             photo_info={photo_info}
@@ -60,6 +61,7 @@ class Single_Photo extends Component {
             visitor_user_account={visitor_user_account}
             album_info={album_info}
             Get_Albums={this.props.Get_Albums} 
+            visitor_all_following_status={visitor_all_following_status}
         />;
     }
     

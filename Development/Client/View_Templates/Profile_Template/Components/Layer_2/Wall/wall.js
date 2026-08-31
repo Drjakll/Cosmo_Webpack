@@ -14,12 +14,13 @@ class Wall extends Component {
 
         super(props);
 
-        let {owner_user_account, visitor_user_account} = props;
+        let {owner_user_account, visitor_user_account, visitor_all_following_status} = props;
 
         this.state = {
             owner_user_account,
             visitor_user_account,
-            wall_data: null
+            wall_data: null,
+            visitor_all_following_status
         };
     }
 
@@ -31,6 +32,15 @@ class Wall extends Component {
 
         this.setState({wall_data});
 
+    }
+
+    componentDidUpdate(prevProps, prevState){
+
+        if(this.props === prevProps){
+            return;
+        }
+
+        this.setState(this.props);
     }
 
     Get_Wall = async (user_id)=>{
@@ -62,7 +72,7 @@ class Wall extends Component {
 
         const {The_Comments_Container} = this;
 
-        let {wall_data, owner_user_account, visitor_user_account} = this.state;
+        let {wall_data, owner_user_account, visitor_user_account, visitor_all_following_status} = this.state;
 
         let {id: wall_id} = wall_data || {id: null};
 
@@ -83,6 +93,7 @@ class Wall extends Component {
                                 target_id_type={"wall_id"} 
                                 owner_user_account={owner_user_account}
                                 visitor_user_account={visitor_user_account}
+                                visitor_all_following_status={visitor_all_following_status}
                             /> : 
                         ""}
 

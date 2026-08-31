@@ -1,12 +1,12 @@
 let Wrapper = function(){
     
-    this.event = ({request_to_emails}) => {
+    this.event = ({request_to_users}) => {
 
-        for(let i in request_to_emails){
+        for(let i in request_to_users){
 
-            let email = request_to_emails[i].email
+            let id = request_to_users[i].id
 
-            this.user_email[email]?.emit("refresh_alerts", {});
+            this.user_sockets[id]?.emit("refresh_alerts", {});
 
         }
 

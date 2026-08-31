@@ -28,6 +28,7 @@ let request = function({sql}) {
                         coalesce(pl.link, "") as profile_picture_link,
                         ua.first_name as first_name,
                         ua.last_name as last_name,
+                        ua.privacy as privacy,
 
                         json_array() as replies,
                         json_array() as reactions

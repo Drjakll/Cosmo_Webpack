@@ -14,7 +14,7 @@ class Connections extends Component {
 
         super(props);
 
-        let {owner_user_account, visitor_user_account} = props;
+        let {owner_user_account, visitor_user_account, visitor_all_following_status} = props;
         
         this.Setup_Socket();
 
@@ -23,7 +23,8 @@ class Connections extends Component {
             visitor_user_account,
             followings: [],
             followers: [],
-            follow_req_status: null
+            follow_req_status: null,
+            visitor_all_following_status
         };
     }
 
@@ -45,9 +46,9 @@ class Connections extends Component {
         await this.Update_Follow_Request_Status();
 
         //Refresh followers
-        await Refresh(true, is_visiting);
+        await Refresh(true, is_visiting, owner_user_account);
         //Refresh followings
-        await Refresh(false, is_visiting);
+        await Refresh(false, is_visiting, owner_user_account);
         
     }
 
@@ -78,7 +79,9 @@ class Connections extends Component {
 
     Refresh_List = async (refresh_followers = true, is_visiting = false) => {
 
-        await Refresh(refresh_followers, is_visiting);
+        let {owner_user_account} = this.state;
+
+        await Refresh(refresh_followers, is_visiting, owner_user_account);
     }
 
     Send_Follow_Request = async ()=>{
@@ -114,6 +117,11 @@ class Connections extends Component {
         //Update the follower's account on following list
         this.socket?.emit("report_update_followings", {follower_acc: visitor_user_account});
 
+        window.global_connection_socket.emit("refresh_connection_list", {user_id: owner_user_account.id});
+        window.global_connection_socket.emit("refresh_connection_list", {user_id: visitor_user_account.id});
+
+        window.global_connection_socket.emit("refresh_alerts", {user_id: owner_user_account.id});
+
         await this.Update_Follow_Request_Status();
         
         Popup_Msg("message", data?.message, null);
@@ -140,7 +148,9 @@ class Connections extends Component {
         return result.status;
     }
 
-    Display_Followers_List = ()=>{
+    Display_Followers_List = ({state: parent_state})=>{
+
+        let { visitor_all_following_status} = parent_state;
 
         let {owner_user_account, visitor_user_account, followers} = this.state;
 
@@ -151,9 +161,10 @@ class Connections extends Component {
             <List 
                 owner_user_account={owner_user_account}
                 visitor_user_account={visitor_user_account}
-                label={"Followers"}
+                label={"Follower"}
                 followers={followers}
                 Refresh_List={this.Refresh_List}
+                visitor_all_following_status={visitor_all_following_status}
             />
 
         </div>;
@@ -161,7 +172,7 @@ class Connections extends Component {
 
     Display_Following_List = ()=>{
 
-        let {owner_user_account, visitor_user_account, followings} = this.state;
+        let {owner_user_account, visitor_user_account, followings, visitor_all_following_status} = this.state;
 
         let {List} = this;
 
@@ -173,6 +184,7 @@ class Connections extends Component {
                 label={"Following"}
                 followings={followings}
                 Refresh_List={this.Refresh_List}
+                visitor_all_following_status={visitor_all_following_status}
             />
 
         </div>;
@@ -197,7 +209,7 @@ class Connections extends Component {
                 
                     <div id="follow-icon" style={{backgroundImage: `url(./static/followers_icon.webp)`}}></div>
 
-                    <label>{followers?.length} Followers</label>
+                    <label>{followers?.length} Follower</label>
 
                 </div>
 

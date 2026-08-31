@@ -17,26 +17,32 @@ let visiting_account_data = null;
 
 let Queue_Set_State = (setState, user_account, slot, component_label, is_visiting = false) => {
 
+    let component_key = `${component_label}_${user_account.id}`;
+
     if(!is_visiting){
 
-        set_state_ptrs[slot][component_label] = setState;
+        set_state_ptrs[slot][component_key] = {setState, user_account};
 
         account_data = user_account;
 
     } else {
 
-        visiting_set_state_ptrs[slot][component_label] = setState;
+        visiting_set_state_ptrs[slot][component_key] = {setState, user_account};
 
         visiting_account_data = user_account;
 
     }
 };
 
-let Refresh = async (refresh_followers = true, is_visiting = false) => {
+let Refresh = async (refresh_followers = true, is_visiting = false, target_account = null) => {
 
     let {get_followers, get_followings} = (is_visiting ? visiting_set_state_ptrs : set_state_ptrs);
 
-    let account = is_visiting ? visiting_account_data : account_data
+    let account = target_account || (is_visiting ? visiting_account_data : account_data);
+
+    if(!account){
+        return;
+    }
 
     let list = await Get_Follows(account, refresh_followers);
 
@@ -44,8 +50,11 @@ let Refresh = async (refresh_followers = true, is_visiting = false) => {
 
         for(let comp_label in get_followers){
 
-            let setState = get_followers[comp_label];
+            let {setState, user_account} = get_followers[comp_label];
 
+            if(user_account.id !== account.id){
+                continue;
+            }
 
             setState && setState({
                 followers: list
@@ -57,7 +66,11 @@ let Refresh = async (refresh_followers = true, is_visiting = false) => {
 
         for(let comp_label in get_followings){
 
-            let setState = get_followings[comp_label];
+            let {setState, user_account} = get_followings[comp_label];
+
+            if(user_account.id !== account.id){
+                continue;
+            }
 
             setState && setState({
                 followings: list
@@ -90,5 +103,19 @@ let Get_Follows = async (account, get_followers = true)=>{
 
 };
 
-export {Queue_Set_State, Refresh, Get_Follows};
-export default {Queue_Set_State, Refresh, Get_Follows};
+let Get_Following_Status = async ()=>{
+
+    let {get_all_following_status} = Request_URLs;
+
+    let data = await(await fetch(
+        get_all_following_status,
+        {
+            method: "GET"
+        }
+    )).json();
+
+    return data?.following_status ?? [];
+}
+
+export {Queue_Set_State, Refresh, Get_Follows, Get_Following_Status};
+export default {Queue_Set_State, Refresh, Get_Follows, Get_Following_Status};

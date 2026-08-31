@@ -32,14 +32,15 @@ class Single_Post extends Component {
 
         super(props);
         
-        let { post, owner_user_account, visitor_user_account, for_commenting } = this.props;
+        let { post, owner_user_account, visitor_user_account, for_commenting,visitor_all_following_status } = this.props;
 
 
         this.state = {
             owner_user_account,
             visitor_user_account,
             post,
-            for_commenting
+            for_commenting,
+            visitor_all_following_status
         };
     }
 
@@ -47,17 +48,46 @@ class Single_Post extends Component {
 
         this.bodyRef.current.innerHTML = this.state.post?.body;
 
-        //this.Init_Socket();
+        this.Init_Socket();
 
     }
 
     componentWillUnmount() {
 
-        //this.socket?.disconnect();
+        this.socket?.disconnect();
         
     }
 
-    Refresh_Post = async ()=>{
+    Init_Socket = async  ()=>{
+
+        if(this.socket){
+            this.socket.disconnect();
+        }
+
+        this.socket = init_websocket('/reaction_room', this.Init_Socket);
+
+        this.socket?.on('connect', ()=>{
+
+            let {id} = this.state.post;
+
+            let room_name = `post_${id}`;
+
+            this.socket?.emit('join_reaction_room', {room_name});
+
+        });
+
+        this.socket?.on('refresh_reactions', this.Refresh_Reactions);        
+
+    }
+
+    Signal_All_Refresh_Reactions = ()=>{
+
+        let {id} = this.state.post;
+
+        this.socket?.emit('signal_all_refresh_reactions', {room_name: `post_${id}`});
+    }
+
+    Refresh_Reactions = async ()=>{
 
         let {get_posts} = Request_URLs;
 
@@ -88,19 +118,41 @@ class Single_Post extends Component {
     
     async componentDidUpdate(prevProps, prevState){
 
-        let {post, for_commenting} = this.props;
+        let {post, for_commenting, visitor_all_following_status} = this.props;
         
         if(post?.id === prevProps.post?.id){
             return;
         }
 
-        await this.setState({post, for_commenting});
+        this.Leave_Room(prevProps.post?.id);
+
+        await this.setState({post, for_commenting, visitor_all_following_status});
 
         if(this.bodyRef.current){
 
             this.bodyRef.current.innerHTML = post?.body;
         }
 
+        this.Join_Room(post?.id);
+
+    }
+
+    Leave_Room = (id)=>{
+
+        if(!id){
+            return;
+        }
+
+        this.socket?.emit("leave_reaction_room", {room_name: `post_${id}`})
+    }
+
+    Join_Room = (id) =>{
+
+        if(!id){
+            return;
+        }
+
+        this.socket?.emit("join_reaction_room", {room_name: `post_${id}`});
     }
     
     Generate_Beautiful_Date = (date_ms)=>{
@@ -121,7 +173,7 @@ class Single_Post extends Component {
 
     Render_Comments_Container = () => {
 
-        let {post, visitor_user_account, owner_user_account} = this.state;
+        let {post, visitor_user_account, owner_user_account, visitor_all_following_status} = this.state;
 
         let {Comments_Holder} = this;
 
@@ -148,6 +200,7 @@ class Single_Post extends Component {
                     visitor_user_account={visitor_user_account}
                     owner_user_account={owner_user_account}
                     parent_room_name={null}
+                    visitor_all_following_status={visitor_all_following_status}
                 />
 
             </div>
@@ -193,7 +246,7 @@ class Single_Post extends Component {
                             owner_user_account={owner_user_account}
                             target_id={id}
                             target_id_type={"post_id"}
-                            refresh_parent={null}
+                            refresh_parent={this.Signal_All_Refresh_Reactions}
                             reactions={post.reactions}
                         />
 

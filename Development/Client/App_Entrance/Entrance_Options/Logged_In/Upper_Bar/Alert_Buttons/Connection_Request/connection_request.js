@@ -89,11 +89,11 @@ class Connection_Request extends Component {
 
         this.props.refresh_alerts(); //Refresh self alerts
 
-        //Refresh self connection list
-        global_connection_socket?.emit("refresh_connection_list", {request_to_email: account_data.email}); 
+        //Refresh self connection list status
+        window.global_connection_socket?.emit("refresh_connection_list", {user_id: account_data.id}); 
 
-        //Refresh the other party's connection list
-        global_connection_socket?.emit("refresh_connection_list", {request_to_email: request_user_data.email});
+        //Refresh the other party's connection list status
+        window.global_connection_socket?.emit("refresh_connection_list", {user_id: request_user_data.id});
     }
 
     Decline_Connection_Request = async (e)=>{
