@@ -19,10 +19,11 @@ class Feeds extends Component {
         
         super(props);
 
-        let {owner_user_account} = props;
+        let {owner_user_account, visitor_all_following_status} = props;
 
         this.state = {
             owner_user_account,
+            visitor_all_following_status,
             feeds: [],
             feed_types: {},
             following: [],
@@ -166,7 +167,7 @@ class Feeds extends Component {
 
         }
 
-        let {feeds, owner_user_account} = this.state;
+        let {feeds, owner_user_account, visitor_all_following_status} = this.state;
 
         return <div id="feeds">
 
@@ -196,6 +197,7 @@ class Feeds extends Component {
                                     owner_user_account={owner_user_account}
                                     visitor_user_account={owner_user_account}
                                     rounded_portrait={0}
+                                    visitor_all_following_status={visitor_all_following_status}
                                 />
 
                             </div>
@@ -257,7 +259,7 @@ class Feeds extends Component {
 
             <div id="content-container">
 
-                {render_callback()}
+                {render_callback({state: this.state})}
 
             </div>
 

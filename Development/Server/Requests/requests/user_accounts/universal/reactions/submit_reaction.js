@@ -6,6 +6,8 @@ let request = function({sql}) {
 
     const Possible_Emojis = ["sad","laugh","sympathetic","passionate","surprised","angry",""];
     const Possible_Reactions = ["like","dislike","",null]; 
+
+    const Possible_Target_ID_Type = ["post_id","comment_id","photo_id"];
     
     this.req = async (req, res) => { 
 
@@ -24,12 +26,12 @@ let request = function({sql}) {
         }
         
         if(!target_id){
-            res.status(400).json({message: "Missing target_id!", failed: true});
+            res.status(400).json({message: "Invalid target_id!", failed: true});
             return;
         }
 
-        if(!target_id_type){
-            res.status(400).json({message: "Missing target_id_type!", failed: true});
+        if(!Possible_Target_ID_Type.includes(target_id_type)){
+            res.status(400).json({message: "Invalid target_id_type!", failed: true});
             return;
         }
         

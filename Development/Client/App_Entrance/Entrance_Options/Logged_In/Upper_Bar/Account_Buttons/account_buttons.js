@@ -18,9 +18,15 @@ class Account_Buttons extends Component {
 
     componentDidMount(){
 
-        window.global_user_socket.on('log_self_off', async ({})=>{
+        window.global_user_socket.on('kick_self_off', async ({})=>{
 
-            await this.Logout();
+            this.props.Change_Screen("Login Account");
+
+        });
+
+        window.global_user_socket.on('logout', async ({})=>{
+
+            this.Logout();
 
         });
 
@@ -28,9 +34,17 @@ class Account_Buttons extends Component {
 
     Logout = async () => {
 
-        await Logout();
+        let {id} = this.state.account_data;
+
+        await Logout({id});
 
         this.props.Change_Screen("Login Account");
+    }
+
+    Let_Followers_Know_Offline = () =>{
+
+        window.global_user_socket.emit('logout', {});
+
     }
 
     Privacy_Options = async (privacy_value) => {
@@ -92,7 +106,7 @@ class Account_Buttons extends Component {
             ]
         },
         { label: "Logout",
-            callback: this.Logout, 
+            callback: this.Let_Followers_Know_Offline, 
             sub_options: null 
         }
     ];

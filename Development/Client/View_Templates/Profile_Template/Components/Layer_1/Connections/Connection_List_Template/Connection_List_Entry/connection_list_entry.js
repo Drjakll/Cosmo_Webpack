@@ -8,13 +8,14 @@ class Connection_Entry_Template extends Component {
 
         super(props);
 
-        let {entry, visitor_user_account, owner_user_account, is_mutual} = props;
+        let {entry, visitor_user_account, owner_user_account, is_mutual, visitor_all_following_status} = props;
 
         this.state = {
             entry,
             visitor_user_account,
             owner_user_account,
-            is_mutual
+            is_mutual,
+            visitor_all_following_status
         };
     }
 

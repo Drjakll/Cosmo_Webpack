@@ -1,6 +1,13 @@
 let Wrapper = function(){
+
+    /*this.middleware_names = [
+        "user_auth",
+        "get_user_info_with_tables"
+    ];*/
     
-    this.event = async (room_tag) => {
+    this.event = async ({}) => {
+
+        let {tag: room_tag} = this.my_socket;
         
         if(!room_tag){
             return;
@@ -40,6 +47,14 @@ let Wrapper = function(){
         this.my_socket.to(stream_id).emit('disband_room', {msg: "The host has disconnected from the stream."});
 
         this.my_socket.leave(stream_id);
+
+        for(let socket_id in this.all_sockets[stream_id]){
+
+            let viewer_socket = this.all_sockets[stream_id][socket_id];
+
+            viewer_socket.disconnect(true);
+
+        }
 
         delete this.all_sockets[stream_id];
     };

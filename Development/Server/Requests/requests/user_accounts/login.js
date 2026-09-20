@@ -13,25 +13,6 @@ function request({sql, verify_encrypted_password}) {
         "login_with_session"
     ];
 
-    let Get_Table_Subquery = (item_names, table_name, alias)=>{
-
-        return `select json_arrayagg(
-            json_object(
-                ${item_names.map((name, i)=>{
-
-                    return `'${name}', ${alias}.${name}`
-
-                }).join(',')}
-            )
-        )
-        from 
-            ${table_name} as ${alias}
-        where
-            ${alias}.id = ua.id
-        `
-
-    }
-
     let get_acc_data = [
         "id",
         "password",
@@ -48,6 +29,11 @@ function request({sql, verify_encrypted_password}) {
         "created_on",
         "last_mood_updated"
     ]
+
+    let acc_data_privacy = [
+        "marital_status as marital_status_privacy",
+        "date_of_birth as date_of_birth_privacy"
+    ]
     
     this.req = async (req, res, next) => {
         
@@ -55,6 +41,7 @@ function request({sql, verify_encrypted_password}) {
 
         let {session_id, id} = req.cookies;
 
+        //User must either have inserted a password or have a session_id to login, if not then return an error
         if(!session_id && !password){
             return res.json({message: "No credentials found", acc_info: null, status: 0b010})
         }
@@ -64,49 +51,9 @@ function request({sql, verify_encrypted_password}) {
         let query = `
             select 
                 ua.${get_acc_data.join(", ua.")},
+                udps.${acc_data_privacy.join(", udps.")},
                 coalesce(pl.link, '')  as profile_picture_link,
-                pl.id as profile_picture_id,
-
-                coalesce((${Get_Table_Subquery([
-                    "id",
-                    "hobby_name",
-                    "proficiency",
-                    "story",
-                    "start_date",
-                    "privacy"
-                ], "User_Hobbies", "uh")}
-                ), json_array()) as User_Hobbies,
-                coalesce((${Get_Table_Subquery([
-                    "id",
-                    "city",
-                    "state",
-                    "country",
-                    "start_date",
-                    "end_date",
-                    "location_type",
-                    "privacy"
-                ], "User_Locations", "ul")}
-                ), json_array()) as User_Locations,
-                coalesce((${Get_Table_Subquery([
-                    "id",
-                    "city",
-                    "state",
-                    "country",
-                    "start_date",
-                    "end_date",
-                    "school_name",
-                    "school_type",
-                    "privacy"
-                ], "User_Schools", "us")}
-                ), json_array()) as User_Schools,
-                coalesce((${Get_Table_Subquery([
-                    "id",
-                    "profession_name",
-                    "proficiency",
-                    "start_date",
-                    "privacy"
-                ], "User_Professions", "up")}
-                ), json_array()) as User_Professions
+                pl.id as profile_picture_id
             
             from 
                 User_Accounts as ua
@@ -115,6 +62,11 @@ function request({sql, verify_encrypted_password}) {
                 Photo_Links as pl
             on 
                 pl.profile_id = ua.id and pl.is_a_cover = 1
+
+            left join
+                User_Data_Privacy_Settings as udps
+            on
+                udps.user_id = ua.id
 
             where 
                 ${password ? "ua.email = ?" : "ua.id = ?"}

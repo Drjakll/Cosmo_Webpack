@@ -19,7 +19,6 @@ let request = function({sql}){
                             ac.gender,
                             ac.marital_status,
                             ac.date_of_birth,
-                            ac.email,
                             ac.privacy,
                             ac.mood_today,
                             ac.last_mood_updated,

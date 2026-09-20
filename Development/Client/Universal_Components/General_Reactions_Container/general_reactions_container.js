@@ -128,7 +128,11 @@ class General_Reactions_Container extends Component {
 
         let {refresh_parent} = this.props;
 
-        refresh_parent && refresh_parent();
+        if(!refresh_parent){
+            await this.Refresh_Reactions();
+        } else {
+            refresh_parent();
+        }
     }
 
     Thumbnails = {

@@ -15,15 +15,29 @@ class Video_Stream_Screen extends Component {
         
         super(props);
 
+        const {
+            owner_user_account,
+            stream_id,
+            is_host,
+            stream_socket,
+            stream_title,
+            turn_server_cred
+        } = props;
+
         this.state = {
-            owner_user_account: this.props.owner_user_account,
+            owner_user_account: owner_user_account,
             //If stream_id exists, jump directly to streaming; if no stream_id exists, jump to prepare to stream
-            current_screen: this.props.stream_id ? "Streaming" : "Prepare_To_Stream",
-            is_host: this.props.is_host,
-            stream_id: this.props.stream_id,
-            stream_socket: this.props.stream_socket,
-            stream_title: ""
+            current_screen: stream_id ? "Streaming" : "Prepare_To_Stream",
+            is_host: is_host,
+            stream_id: stream_id,
+            stream_socket: stream_socket,
+            stream_title,
+            turn_server_cred
         };
+    }
+
+    async componentDidMount(){
+
     }
     
     componentDidUpdate(prevProps, prevState){
@@ -47,22 +61,37 @@ class Video_Stream_Screen extends Component {
 
     render(){
         
-        const Com = this.Screens[this.state.current_screen];
+        const {
+            turn_server_cred, 
+            is_host, 
+            stream_id, 
+            stream_socket, 
+            stream_title, 
+            owner_user_account,
+            current_screen
+        } = this.state;
+
+        const {
+            set_current_screen,
+        } = this.props;
+
+        const Com = this.Screens[current_screen];
         
         return (
                 <div id="video-stream-screen">
                     
-                <Com owner_user_account={this.state.owner_user_account}
-                    change_screen={this.Change_Screen}
-                    root_change_screen={this.props.set_current_screen}
-                    is_host={this.state.is_host}
-                    stream_id={this.state.stream_id}
-                    set_main_screen={this.props.set_current_screen}
-                    stream_socket={this.state.stream_socket}
-                    update_stream_title={this.Update_Stream_Title}
-                    stream_title={this.state.stream_title}
-                    />
-                    
+                    <Com owner_user_account={owner_user_account}
+                        change_screen={this.Change_Screen}
+                        root_change_screen={set_current_screen}
+                        is_host={is_host}
+                        stream_id={stream_id}
+                        set_main_screen={set_current_screen}
+                        stream_socket={stream_socket}
+                        update_stream_title={this.Update_Stream_Title}
+                        stream_title={stream_title}
+                        turn_server_cred={turn_server_cred}
+                        />
+                        
                 </div>
             );
     }

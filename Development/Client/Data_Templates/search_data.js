@@ -68,6 +68,8 @@ let Search_Data_Template = function(initial = Search_Parameters){
             value: [],
             options: [
                 { label: "School Name", data_name: "school_name", data_type: "string"},
+                { label: "Start Date", data_name: "start_date", data_type: "date"},
+                { label: "End Date", data_name: "end_date", data_type: "date"},
                 { label: "Country", data_name: "country", data_type: "string" },
                 { label: "State/Province", data_name: "state", data_type: "string" },
                 { label: "City", data_name: "city", data_type: "string" },

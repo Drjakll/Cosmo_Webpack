@@ -2,7 +2,7 @@ let request = function ({sql}) {
 
     this.req_path = "/send_follow_request";
     this.req_type = "post";
-    this.callbacks = ["send_follow_request"];
+    this.callbacks = ["central_auth","send_follow_request"];
 
     let calculate_status = async (privacy, to_id, from_id) => {
 
@@ -66,13 +66,23 @@ let request = function ({sql}) {
 
     };
 
+    let Get_Target_User_Privacy = async (id) => {
+
+        let [results] = await sql.query(`select privacy from User_Accounts where id = ?`, [id]);
+
+        return results.length ? results[0].privacy : null;
+    }
+
     this.req = async (req, res)=>{
 
-        let { from_id, to_account_info } = req.body;
+        let {to_account_info } = req.body;
+        let from_id = req.auth.user_id;
 
         let now = Date.now();
 
-        let { privacy, id } = to_account_info;
+        let { id } = to_account_info;
+
+        let privacy = await Get_Target_User_Privacy(id);
 
         if(!privacy || !id || !from_id){
             return res.status(400).json({message: "Missing required information"});

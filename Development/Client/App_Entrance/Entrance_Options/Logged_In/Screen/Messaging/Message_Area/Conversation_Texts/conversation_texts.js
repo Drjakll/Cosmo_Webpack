@@ -17,13 +17,14 @@ class Conversation_Texts extends Component {
         super(props);
 
 
-        let {my_account, conversation, user_status, private_or_public} = this.props;
+        let {my_account, conversation, user_status, private_or_public, visitor_all_following_status} = this.props;
 
         this.state = {
             my_account,
             conversation,
             user_status,
-            private_or_public
+            private_or_public,
+            visitor_all_following_status
         };
     }
 
@@ -125,7 +126,7 @@ class Conversation_Texts extends Component {
 
     render(){
 
-        let {conversation, my_account, user_status, private_or_public} = this.state;
+        let {conversation, my_account, user_status, private_or_public, visitor_all_following_status} = this.state;
 
         let {messages, users} = conversation || {};
 
@@ -151,6 +152,7 @@ class Conversation_Texts extends Component {
                             <Msg_Entry 
                                 msg_obj={value} 
                                 my_account={my_account}
+                                visitor_all_following_status={visitor_all_following_status}
                             />
 
                         </div> : "";

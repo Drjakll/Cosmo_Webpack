@@ -43,28 +43,38 @@ let Wrapper = function (){
             events[i].io = this.io;
             events[i].root_io = this.root_io;
             events[i].user_sockets = this.user_sockets;
+            events[i].middleware_wrapper = new this.middleware_wrapper({socket});
+
+            let middleware_names = events[i].middleware_names;
+
+            if(middleware_names){
+
+                for(let name of middleware_names){
+
+                    let middleware = this.middlewares[name];
+
+                    events[i].middleware_wrapper.add_to_middleware(middleware);
+
+                }
+                
+            } 
+
+            events[i].middleware_wrapper.add_to_middleware(events[i].event);
         }
 
-        //console.log("connected: connections", socket.id);
+        //console.log("connected: global_events", socket.id);
 
         socket.on("error", (err) => {
-            //console.log("socket error: connections", err);
+            //console.log("socket error: global_events", err);
         });
 
         for(let key in events){
 
-            socket.on(key, events[key].event);
+            let {run_middlewares} = events[key].middleware_wrapper;
+
+            socket.on(key, run_middlewares);
 
         }
-        /*
-        socket.on('ping', events.pong.event);
-        socket.on("newly_logged_in", events.newly_logged_in.event);
-        socket.on("refresh_alerts", events.refresh_alerts.event);
-        socket.on("logging_off", events.logging_off.event);
-        socket.on("refresh_account", events.refresh_account.event);
-        socket.on("refresh_group_alerts", events.refresh_group_alerts.event);
-        socket.on("refresh_connection_list", events.refresh_connection_list.event);
-        */
     };
 };
 

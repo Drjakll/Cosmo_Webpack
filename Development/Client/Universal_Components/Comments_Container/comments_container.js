@@ -384,7 +384,7 @@ class Comments_Container extends Component {
 
                 {comments.map((value, index)=>{
 
-                    return <div className="single-comment-entry" key={value.id}>
+                    return <div className="single-comment-entry" key={`${value.id}${index}`}>
 
                             <Single_Comment_Container 
                                 comment_info={value}

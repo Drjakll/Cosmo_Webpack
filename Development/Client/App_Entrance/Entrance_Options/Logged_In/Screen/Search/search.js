@@ -12,7 +12,7 @@ class Search extends Connection_List_Template {
     constructor(props){
         
         super(props);
-        
+    
     }
 
     Apply_Search = async (search_criteria)=>{

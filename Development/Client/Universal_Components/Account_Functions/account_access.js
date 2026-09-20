@@ -25,9 +25,9 @@ const Login = async (input_email, input_password) =>{
         return account ? Account_Data_Template(account) : null;
 };
 
-const Logout = async ()=>{
+const Logout = async ({id})=>{
     
-    await fetch(Request_URLs.logout, { method: "GET"});
+    await fetch(`${Request_URLs.logout}/${id}`, { method: "GET"});
 };
 
 export {Login, Logout};

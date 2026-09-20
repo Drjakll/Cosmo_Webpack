@@ -20,7 +20,7 @@ let Wrapper = function(){
             this.my_socket.leave(stream_id);
 
             if(this.all_sockets[stream_id]){
-            delete this.all_sockets[stream_id][tag.id];
+                delete this.all_sockets[stream_id][tag.id];
             }
 
             return;

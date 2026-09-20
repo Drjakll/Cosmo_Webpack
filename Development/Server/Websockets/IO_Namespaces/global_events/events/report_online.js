@@ -1,5 +1,11 @@
 let Wrapper = function(){
 
+    this.middleware_names = [
+        "user_auth",
+        "get_user_info",
+        "get_follower_ids"
+    ];
+
     //To log off other sessions of the same account except for the current session
     let log_off_self = (all_self_acc)=>{
 
@@ -11,23 +17,23 @@ let Wrapper = function(){
 
             const other_socket = all_self_acc[s_id].socket;
 
-            other_socket?.emit('log_self_off', {});
+            let {id} = other_socket ?? {id: null};
+
+            other_socket?.emit('kick_self_off', {});
+            other_socket?.disconnect(true);
 
             delete all_self_acc[s_id];
 
-            delete this.online_user_sockets[other_socket?.id];
+            delete this.online_user_sockets[id];
             
         }
     };
     
-    this.event = ({user_account, followers}) => {
+    this.event = async ({user_id: id, user_info: user_account, followers}) => {
 
         if(!user_account){
             return;
         }
-            
-        let {id} = user_account;
-
 
         //Log off self account from other sessions
         if(id && this.online_users[id]){
@@ -52,7 +58,7 @@ let Wrapper = function(){
         //Report to the user's followers that the user is online
         for(let i in followers){
 
-            let {id: follower_id} = followers[i];
+            let {follower_id} = followers[i];
 
             let follower_sockets = this.online_users[follower_id];
 

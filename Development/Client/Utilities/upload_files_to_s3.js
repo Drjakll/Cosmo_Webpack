@@ -23,7 +23,7 @@ let Upload_Files_To_S3 = async (url, files = [], json_obj = {}, update = null) =
         
     });
 
-    socket.on('init_upload', ({key, url})=>{
+    socket?.on('init_upload', ({key, url})=>{
 
         if(!update){
             return;
@@ -33,7 +33,7 @@ let Upload_Files_To_S3 = async (url, files = [], json_obj = {}, update = null) =
 
     });
 
-    socket.on('track_upload_progress', ({key, url, progress_completed})=>{
+    socket?.on('track_upload_progress', ({key, url, progress_completed})=>{
 
         if(!update){
             return;

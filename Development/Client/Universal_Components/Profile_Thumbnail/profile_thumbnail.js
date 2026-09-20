@@ -190,12 +190,12 @@ class Profile_Thumbnail extends Component {
     block_features = [
         {
             value: "wall",
-            label: "Wall",
+            label: "Writing on Wall",
             selected: false
         },
         {
             value: "photos",
-            label: "Photos",
+            label: "Commenting on Photos",
             selected: false
         },
         {
@@ -205,7 +205,7 @@ class Profile_Thumbnail extends Component {
         },
         {
             value: "posts",
-            label: "Posts",
+            label: "Commenting on Posts",
             selected: false
         },
         {

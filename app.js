@@ -2,11 +2,13 @@ import express from 'express';
 import body from 'body-parser';
 import cookieparser from 'cookie-parser';
 import http from 'http';
+import https from 'https';
 import websocket from './Development/Server/Websockets/websocket.js';
 import path from 'path';
 import fs from 'fs';
 import multer from 'multer';
 import 'dotenv/config';
+import { query_wrapper } from './Development/Server/Requests/configurations/sql_connect.js';
 
 const uploads = multer({
     storage: multer.memoryStorage(),
@@ -25,8 +27,8 @@ const certPath = './localhost+2.pem';
 const privateKey = fs.readFileSync(keyPath, 'utf8');
 const certificate = fs.readFileSync(certPath, 'utf8');
 
-//let server = https.createServer({ key: privateKey, cert: certificate },app);
-let server = http.createServer(app);
+let server = https.createServer({ key: privateKey, cert: certificate },app);
+//let server = http.createServer(app);
 
 app.use('/static', 
     express.static(path.join(__dirname, '..', 'Built_Client')));
@@ -49,8 +51,10 @@ app.use((req, res, next) => {
     next();
 });*/
 
-let progress_io = await websocket(server);
+let progress_io = await websocket(server, query_wrapper);
 
+//This for capturing the progress of uploading files and updating it to the client
+//through the use of websocket
 let capture_io = (req, res, next) => {
 
     let {socket_id} = JSON.parse(req.body.metadata);
@@ -66,7 +70,9 @@ let capture_io = (req, res, next) => {
     next();
 };
 
-import requests from './Development/Server/Requests/requests.js';
+import GatherRequests from './Development/Server/Requests/requests.js';
+
+let requests = await GatherRequests(`${__dirname}/../Development/Server/Requests/requests/`, query_wrapper);
 
 let route_obj = {uploads: {
                     req: uploads.array('files', 50)

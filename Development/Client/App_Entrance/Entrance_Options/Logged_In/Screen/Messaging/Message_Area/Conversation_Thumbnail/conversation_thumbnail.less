@@ -27,8 +27,8 @@
         .not-seen-last {
             background-color: rgb(182, 143, 121) !important;
             
-            label {
-                color: rgba(224, 219, 219, 1) !important;
+            #conversation-name-label {
+                color: rgba(50, 50, 50, 1) !important;
             }
         }
 
@@ -49,9 +49,13 @@
                 }
                     
                     
-                label {
-                    color: rgb(241, 239, 239);
+                #conversation-name-label {
+                    color: rgb(241, 239, 239) !important;
                     background-color: rgba(50, 50, 50, 0.85);
+
+                    #new-label {
+                        color: rgb(175, 234, 72) !important;
+                    }
                 }
 
                 .user-info-small-icon {
@@ -59,16 +63,22 @@
                 }
             }
 
-            label {
+            #conversation-name-label {
                 width: 100%;
                 height: 100%;
                 display: flex;
                 justify-content: center;
                 align-items: center;
                 font-size: 13px;
-                color: rgb(0, 10, 7);
+                color: rgb(50, 50, 50,1);
                 //background: linear-gradient(to right, rgba(75, 75,75,1) 0%, rgba(225,225,225,1) 100% );
                 background-color: rgba(225,225,225,1);
+                margin: 0;
+
+                #new-label {
+                    font-size: 16px;
+                    color: rgb(91, 96, 23);
+                }
 
                 &:hover {
                     cursor: pointer;
@@ -139,8 +149,8 @@
                         width: 10px;
                         height: 100%;
                         position: relative;
-                        color: rgb(171, 173, 25);
-                        font-size: 32px;
+                        color: rgb(210, 224, 80);
+                        font-size: 20px;
                         font-weight: bold;
                         display: flex;
                         justify-content: flex-start;
@@ -208,8 +218,9 @@
             }
 
             #instruction-label {
-                width: 100px;
+                min-width: 100px;
                 height: 30px;
+                padding: 0px 5px 0px 5px;
                 text-align: center;
                 display: none;
                 justify-content: center;
@@ -256,7 +267,7 @@
 
         #conversation-name {
 
-            label {
+            #conversation-name-label {
                 background-color: rgba(75,75,75,1) !important;
                 color: rgba(255,255,255,0.85) !important;
             }

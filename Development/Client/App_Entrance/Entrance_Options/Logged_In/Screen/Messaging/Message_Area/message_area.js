@@ -19,7 +19,8 @@ class Message_Area extends Component {
             following_list, 
             selected_room_tag, 
             selected_users, 
-            current_users_info
+            current_users_info,
+            visitor_all_following_status
         } = props;
 
         this.state = {
@@ -30,6 +31,7 @@ class Message_Area extends Component {
             selected_room_tag,
             selected_users, //Selected users for any purpose, (example: add selected users to a conversation)
             current_users_info, //Current user information that are in the chat room
+            visitor_all_following_status,
             show_right_thumbnails: false
         };  
     } 
@@ -173,7 +175,7 @@ class Message_Area extends Component {
 
     render(){
 
-        let {conversations, selected_room_tag, private_or_public, show_right_thumbnails} = this.state;
+        let {conversations, selected_room_tag, private_or_public, show_right_thumbnails, visitor_all_following_status} = this.state;
 
         let conversation = conversations[private_or_public][selected_room_tag];
 
@@ -219,6 +221,7 @@ class Message_Area extends Component {
                                                     current_users_info={this.state.current_users_info[conversation?.room_tag || conversation?.channel_name]} 
                                                     has_selected_conversation={this.Has_Selected_Conversation}
                                                     get_private_conversation_messages={this.props.get_private_conversation_messages}
+                                                    visitor_all_following_status={visitor_all_following_status}
                                     />
 
                             </div>
@@ -264,6 +267,7 @@ class Message_Area extends Component {
                                                 key={key}>
 
                                         <Conversation_Thumbnail 
+                                            visitor_all_following_status={visitor_all_following_status}
                                             conversation_info={value} 
                                             owner_user_account={this.state.owner_user_account}
                                             switch_conversation={this.props.switch_conversation}

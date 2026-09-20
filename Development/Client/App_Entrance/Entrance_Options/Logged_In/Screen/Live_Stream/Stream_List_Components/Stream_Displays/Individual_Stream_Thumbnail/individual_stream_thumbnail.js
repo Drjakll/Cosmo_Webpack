@@ -28,13 +28,14 @@ class Individual_Stream_Thumbnail extends Component {
     render(){
         
         const {aws_s3_url} = Request_URLs;
+        let {title, stream_id} = this.state;
         
         return <div id="stream-thumbnail">
             
             <div id="img" 
                 style={{backgroundImage: `url('${aws_s3_url}${this.state.image_link}')`}}
                 onClick = {(e)=>{
-                    this.props.set_current_screen("Video_Stream_Screen", false, this.state.stream_id);
+                    this.props.set_current_screen("Video_Stream_Screen", false, stream_id, title);
                 }}
             >
             </div>

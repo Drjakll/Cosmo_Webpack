@@ -63,6 +63,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/ClientSide/style.less to edit thi
 
             #the-mood {
                 width: 90% !important;
+                z-index: 99999;
 
                 #current-mood {
                     width: 100%;
@@ -87,6 +88,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/ClientSide/style.less to edit thi
             .mood-selectable {
                 transition: 0.5s;
                 border-radius: 10px;
+                z-index: 99999;
 
                 &:hover {
                     cursor: pointer;
@@ -178,6 +180,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/ClientSide/style.less to edit thi
             display: flex;
             justify-content: center;
             align-items: center;
+            position: relative;
 
             &:hover {
                 z-index: 9999999;

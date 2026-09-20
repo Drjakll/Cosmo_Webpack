@@ -41,28 +41,38 @@ let Wrapper = function (){
             events[i].socket = socket;
             events[i].root_io = this.root_io;
             events[i].io = this.io;
+            events[i].middleware_wrapper = new this.middleware_wrapper({socket});
+
+            let middleware_names = events[i].middleware_names;
+
+            if(middleware_names){
+
+                for(let name of middleware_names){
+
+                    let middleware = this.middlewares[name];
+
+                    events[i].middleware_wrapper.add_to_middleware(middleware);
+
+                }
+                
+            } 
+
+            events[i].middleware_wrapper.add_to_middleware(events[i].event);
         }
 
-        //console.log("connected: comments", socket.id);
-
+        //console.log("connected: global_events", socket.id);
 
         socket.on("error", (err) => {
-            //console.log("socket error: comments", err);
+            //console.log("socket error: global_events", err);
         });
 
         for(let key in events){
 
-            socket.on(key, events[key].event);
+            let {run_middlewares} = events[key].middleware_wrapper;
+
+            socket.on(key, run_middlewares);
 
         }
-        
-        /*
-        socket.on('ping', events.pong.event);
-        socket.on('join_comment_room', events.join_comment_room.event);
-        socket.on('signal_reload_get_new_comment', events.signal_reload_get_new_comment.event);
-        socket.on('signal_reload_parent_comments', events.signal_reload_parent_comments.event);
-        socket.on('signal_reload_self_comments', events.signal_reload_self_comments.event);
-        */
 
     };
 };

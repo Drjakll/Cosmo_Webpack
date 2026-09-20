@@ -47,7 +47,7 @@ class Login_Account extends Component {
 
                         <div id="slogan">
 
-                            Uniting our differences through understanding
+                            Bridging people's differences, one connection at a time
                             
                         </div>
 

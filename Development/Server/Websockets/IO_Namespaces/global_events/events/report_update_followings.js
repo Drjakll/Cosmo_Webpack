@@ -1,11 +1,13 @@
 let Wrapper = function(){
+
+    this.middleware_names = [
+        "user_auth"
+    ];
     
-    //The follower_acc is most likely to be making the request
-    this.event = ({follower_acc, following_acc = null}) => {
+    //The user_id is the follower's account's id
+    this.event = ({user_id: id, following_acc = null}) => {
 
-        if(follower_acc){
-
-            let {id} = follower_acc;
+        if(id){
 
             let follower_user = this.online_users[id];
 
@@ -22,9 +24,9 @@ let Wrapper = function(){
             return;
         }
 
-        let {id} = following_acc;
+        let {id: following_id} = following_acc;
 
-        let following_user = this.online_users[id];
+        let following_user = this.online_users[following_id];
 
         for(let socket_id in following_user){
 

@@ -1,12 +1,9 @@
 import fs from 'fs';
-import { query_wrapper } from './configurations/sql_connect.js';
 import {verify_encrypted_password, generate_encrypted_password} from './utilities/password_maintenance.js';
 import { S3ClientInstance, PutObjectCommand, DeleteObjectsCommand } from './configurations/aws_s3_config.js';
 import { request } from 'http';
 
-const GenerateEncryptedPasswords = async () => {
-
-    let sql = query_wrapper;
+const GenerateEncryptedPasswords = async (sql) => {
 
     let query = `select * from User_Accounts`;
 
@@ -26,7 +23,7 @@ const GenerateEncryptedPasswords = async () => {
 
 //Traverse through the "/requests/" directory to import all request functions
 
-const GatherRequests = async (rootPath) => {
+const GatherRequests = async (rootPath, sql) => {
 
     let requests = {};
 
@@ -40,7 +37,7 @@ const GatherRequests = async (rootPath) => {
 
         if (isDir) {
 
-            requests[file] = await GatherRequests(subPath + "/");
+            requests[file] = await GatherRequests(subPath + "/", sql);
 
         } else {
             
@@ -59,7 +56,7 @@ const GatherRequests = async (rootPath) => {
 
                 requests[key] = requests[key].default;
 
-                requests[key].prototype.sql = query_wrapper; //SQL_Middleware; //sql;
+                requests[key].prototype.sql = sql;
 
                 requests[key].prototype.s3 = S3ClientInstance;
 
@@ -68,7 +65,7 @@ const GatherRequests = async (rootPath) => {
                 requests[key].prototype.DeleteObjectsCommand = DeleteObjectsCommand;
 
                 requests[key] = new requests[key]({
-                    sql: query_wrapper, 
+                    sql, 
                     s3: S3ClientInstance, 
                     PutObjectCommand, 
                     DeleteObjectsCommand, 
@@ -89,7 +86,6 @@ const GatherRequests = async (rootPath) => {
 
 };
 
-let requests = await GatherRequests(`${__dirname}/../Development/Server/Requests/requests/`);
 
-export default requests;
+export default GatherRequests;
 

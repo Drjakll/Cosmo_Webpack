@@ -3,7 +3,6 @@ let Stream_Room_Data_Template = function(initial){
     let template = {
         id: "",
         stream_id: "",
-        email: "",
         first_name: "",
         last_name: "",
         gender: "",

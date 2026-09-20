@@ -1,11 +1,13 @@
 let Wrapper = function(){
-    
-    //The following_acc user is most likely making the request
-    this.event = ({following_acc, follower_acc = null}) => {
 
-        if(following_acc){
+    this.middleware_names = [
+        "user_auth"
+    ];
+       
+    //The user_id is the following's account's id
+    this.event = ({user_id: id, follower_acc = null}) => {
 
-            let {id} = following_acc;
+        if(id){
 
             let following_user = this.online_users[id];
 

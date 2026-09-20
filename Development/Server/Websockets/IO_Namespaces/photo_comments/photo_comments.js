@@ -41,21 +41,38 @@ let Wrapper = function (){
             events[i].socket = socket;
             events[i].root_io = this.root_io;
             events[i].io = this.io;
+            events[i].middleware_wrapper = new this.middleware_wrapper({socket});
+
+            let middleware_names = events[i].middleware_names;
+
+            if(middleware_names){
+
+                for(let name of middleware_names){
+
+                    let middleware = this.middlewares[name];
+
+                    events[i].middleware_wrapper.add_to_middleware(middleware);
+
+                }
+                
+            } 
+
+            events[i].middleware_wrapper.add_to_middleware(events[i].event);
         }
 
-        //console.log("connected: photo_comments", socket.id);
-
-        socket.on("disconnect", (reason) => {
-            //console.log("disconnected photo_comments:", socket.id, reason);
-        });
+        //console.log("connected: global_events", socket.id);
 
         socket.on("error", (err) => {
-            //console.log("socket error: photo_comments", err);
+            //console.log("socket error: global_events", err);
         });
-        
-        socket.on('ping', events.pong.event);
-        socket.on('join_comment_group', events.join_comment_group.event);
-        socket.on('reload_comments_to_all', events.reload_comments_to_all.event);
+
+        for(let key in events){
+
+            let {run_middlewares} = events[key].middleware_wrapper;
+
+            socket.on(key, run_middlewares);
+
+        }
         
     };
 };

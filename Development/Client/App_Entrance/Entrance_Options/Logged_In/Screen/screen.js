@@ -23,13 +23,14 @@ class Screen extends Component {
         
         super(props);
         
-        let {owner_user_account, screen_type, all_following_status} = props;
+        let {owner_user_account, screen_type, all_following_status, initial_screen_event} = props;
 
         this.state = {
             focus_screen: screen_type,
             owner_user_account: owner_user_account || {},
             visitor_user_account: owner_user_account || {},
-            all_following_status
+            all_following_status,
+            initial_screen_event //this is an event that gets triggered whenever a new screen gets loaded, it's optional
         };
 
     }
@@ -48,7 +49,7 @@ class Screen extends Component {
         
         const Screen_Type = this.Screen_Types[this.state.focus_screen];
 
-        let {owner_user_account, visitor_user_account, all_following_status} = this.state;
+        let {owner_user_account, visitor_user_account, all_following_status, initial_screen_event} = this.state;
 
         return (
                 <div id="screen">
@@ -57,6 +58,7 @@ class Screen extends Component {
                         owner_user_account={owner_user_account} 
                         visitor_user_account={visitor_user_account} 
                         visitor_all_following_status={all_following_status}
+                        initial_screen_event={initial_screen_event}
                     />
                     
                 </div>

@@ -11,7 +11,7 @@ class Conversation_Thumbnail extends Component {
 
         super(props);
 
-        let { owner_user_account, conversation_info, selected_room_tag, user_status} = props;
+        let { owner_user_account, conversation_info, selected_room_tag, user_status, visitor_all_following_status} = props;
 
         this.state = {
             owner_user_account,
@@ -19,7 +19,8 @@ class Conversation_Thumbnail extends Component {
             selected_room_tag,
             user_status,
             conversation_name_editable: false,
-            this_user_seen_last: true
+            this_user_seen_last: true,
+            visitor_all_following_status
         };
     }
 
@@ -33,7 +34,7 @@ class Conversation_Thumbnail extends Component {
             return;
         }
 
-        this.setState(this.props);
+        //this.setState(this.props);
 
         this.Update_User_Seen_Last();
 
@@ -91,7 +92,7 @@ class Conversation_Thumbnail extends Component {
             return "";
         }
 
-        let {owner_user_account} = this.state;
+        let {owner_user_account, visitor_all_following_status} = this.state;
 
         let {first_name, last_name, seen_last} = user_info;
 
@@ -100,6 +101,7 @@ class Conversation_Thumbnail extends Component {
         return <div className="user-info-small-icon" key={index}>
 
             <div id="user-small-profile-picture">
+
                 <Profile_Thumbnail 
                     profile={user_info}
                     owner_user_account={owner_user_account}
@@ -107,7 +109,9 @@ class Conversation_Thumbnail extends Component {
                     rounded_portrait={false}
                     additional_options={[]}
                     generate_options_disabled={true}
+                    visitor_all_following_status={visitor_all_following_status}
                 />
+                
             </div>
 
             <div id="is-online" className={is_online || this.state.owner_user_account.id === user_info.id ? "online" : "offline"}>
@@ -150,7 +154,9 @@ class Conversation_Thumbnail extends Component {
 
                 <div id="conversation-name" className={this_user_seen_last ? "seen-last" : "not-seen-last"}>
 
-                    <label ref={this.nameRef} contentEditable={conversation_name_editable}>{conversation_name}</label>
+                    <pre id ="conversation-name-label" ref={this.nameRef} contentEditable={conversation_name_editable}>
+                        {conversation_name} {this_user_seen_last ? "" : <div id="new-label"> !</div>}
+                    </pre>
 
                     <div id="users-dropdown">
 
@@ -178,7 +184,7 @@ class Conversation_Thumbnail extends Component {
 
                 <div id="edit-name-icon" onClick={this.Edit_Conversation_name}>
 
-                    <div id="instruction-label">Edit Name</div>
+                    <div id="instruction-label">Edit Chat Name</div>
 
                     <div id="editable-icon" className={conversation_name_editable ? "editable" : ""}>&#x270E;</div>
 

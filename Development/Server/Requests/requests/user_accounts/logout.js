@@ -1,13 +1,34 @@
 function request({sql, verify_encrypted_password}) {
 
-    this.req_path = "/logout";
+    this.req_path = "/logout/:id";
     this.req_type = "get";
 
     //User will try to login with an email, and then it will try to create a session, if an existing session
     //already exists, then it will login with the existing sessions, else it will continue creating a new session
     this.callbacks = ["logout"];
 
-    this.req = (req, res)=>{
+    this.req = async (req, res)=>{
+
+        const {session_id} = req.cookies;
+
+        let now = Date.now();
+
+        let query = `update 
+                        User_Sessions 
+                    set 
+                        expires_on = ? 
+                    where 
+                        session_id = ?`;
+
+        try {
+
+            await sql.query(query, [now, session_id]);
+
+        } catch(err){
+
+            console.log(err);
+
+        }
 
         const item_to_be_cleared = ['session_id', 'id'];
 

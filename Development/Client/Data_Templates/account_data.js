@@ -25,6 +25,8 @@ let Account_Data_Template = function(initial){
         date_of_birth: "",
         gender: "",
         marital_status: "",
+        marital_status_privacy: "public",
+        date_of_birth_privacy: "public",
         created_on: Date.now(),
         mood_today: "",
         personal_traits: {},
@@ -33,10 +35,10 @@ let Account_Data_Template = function(initial){
         privacy: null,
         profile_picture_link: null,
         profile_picture_id: null,
-        User_Schools: null,
-        User_Locations: null,
-        User_Hobbies: null,
-        User_Professions: null
+        User_Schools: [],
+        User_Locations: [],
+        User_Hobbies: [],
+        User_Professions: []
     };
     
     for(let i in initial){
@@ -78,35 +80,40 @@ let Account_Info_Data_Template = function(initial = {}){
             label: "First Name",
             value: "",
             options: [],
-            label_icon: "name_tag_icon.webp"
+            label_icon: "name_tag_icon.webp",
+            can_be_private: false
         },
         last_name: {
             component: Text_Type,
             label: "Last Name",
             value: "",
             options: [],
-            label_icon: "name_tag_icon.webp"
+            label_icon: "name_tag_icon.webp",
+            can_be_private: false
         },
         date_of_birth: { 
             component: Date_Type,
             label: "Date of Birth", 
             value: "", 
             options: [],
-            label_icon: "birthdate_icon.webp"
+            label_icon: "birthdate_icon.webp",
+            can_be_private: true
         },
         gender: {
             component: Choice_Type,
             label: "Gender",
             value: "",
             options: ["Male", "Female", "Unspecified"],
-            label_icon: "gender_icon.webp"
+            label_icon: "gender_icon.webp",
+            can_be_private: false
         },
         marital_status: {
             component: Choice_Type,
             label: "Marital Status",
             value: "",
             options: ["Single", "Dating", "Engaged", "Married", "Divorce", "Widow", "Unspecified"],
-            label_icon: "marital_status_icon.webp"
+            label_icon: "marital_status_icon.webp",
+            can_be_private: true
         },
         User_Locations: {
             component: Json_Type,
@@ -118,8 +125,7 @@ let Account_Info_Data_Template = function(initial = {}){
                 { label: "City", data_name: "city", data_type: "string" },
                 { label: "Start Date", data_name: "start_date", data_type: "date"},
                 { label: "End Date", data_name: "end_date", data_type: "date"},
-                { label: "Type of Location", data_name: "location_type", data_type: "enum", choices: ["birth","hometown","current","previous"]},
-                { label: "Privacy", data_name: "privacy", data_type: "enum", choices: ["private", "public", "mutual"]  }
+                { label: "Type of Location", data_name: "location_type", data_type: "enum", choices: ["birth","hometown","current","previous"]}
             ],
             background: "location_background.webp",
             label_icon: "location_icon.webp"
@@ -132,8 +138,7 @@ let Account_Info_Data_Template = function(initial = {}){
                 { label: "Hobby Name", data_name: "hobby_name", data_type: "string" },
                 { label: "Date Started", data_name: "start_date", data_type: "date" },
                 { label: "Proficiency", data_name: "proficiency", data_type: "enum", choices: ["beginner", "intermediate", "advanced", "expert"] },
-                { label: "Story", data_name: "story", data_type: "string" },
-                { label: "Privacy", data_name: "privacy", data_type: "enum", choices: ["private", "public", "mutual"]  }
+                { label: "Story", data_name: "story", data_type: "string" }
             ],
             background: "hobby_background.webp",
             label_icon: "hobby_icon.webp"
@@ -145,8 +150,7 @@ let Account_Info_Data_Template = function(initial = {}){
             options: [
                 { label: "Profession Name", data_name: "profession_name", data_type: "string" },
                 { label: "Date Started", data_name: "start_date", data_type: "date" },
-                { label: "Proficiency", data_name: "proficiency", data_type: "enum", choices: ["beginner", "intermediate", "advanced", "expert"] },
-                { label: "Privacy", data_name: "privacy", data_type: "enum", choices: ["private", "public", "mutual"]  }
+                { label: "Proficiency", data_name: "proficiency", data_type: "enum", choices: ["beginner", "intermediate", "advanced", "expert"] }
             ],
             background: "profession_background.webp",
             label_icon: "profession_icon.webp"
@@ -162,8 +166,7 @@ let Account_Info_Data_Template = function(initial = {}){
                 { label: "City", data_name: "city", data_type: "string" },
                 { label: "Start Date", data_name: "start_date", data_type: "date"},
                 { label: "End Date", data_name: "end_date", data_type: "date"},
-                { label: "Type of School", data_name: "school_type", data_type: "enum", choices: ["elementary", "middle", "high", "college"]},
-                { label: "Privacy", data_name: "privacy", data_type: "enum", choices: ["private", "public", "mutual"]  }
+                { label: "Type of School", data_name: "school_type", data_type: "enum", choices: ["elementary", "middle", "high", "college"]}
             ],
             background: "school_background.webp",
             label_icon: "school_icon.webp"

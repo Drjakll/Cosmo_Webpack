@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import Connection_Channel from './Connection_Channel/connection_channel.js';
 import Other_Channel from './Other_Channel/other_channel.js';
 import Join_Channel_Options from './Join_Channel_Options/join_channel_options.js';
+import Portal from '@portal';
 import './channel_selections.less';
 
 class Channel_Selections extends Component {
@@ -68,16 +69,18 @@ class Channel_Selections extends Component {
         return (
                 <div id="channel-selections">
 
-                    {show_join_channel ? 
-                    <Join_Channel_Options 
-                        exit={this.Show_Join_Channel} 
-                        join_public_channels={this.props.join_public_channels} 
-                        update_public_channels_database={this.props.update_public_channels_database}
-                        join_favorite_public_channels={this.props.join_favorite_public_channels}
-                        msg_socket={this.state.msg_socket}
-                        public_channels_search_results={this.state.public_channels_search_results}
-                        initialize_public_channel={this.props.initialize_public_channel}
-                    /> 
+                    {show_join_channel ?
+                    <Portal> 
+                        <Join_Channel_Options 
+                            exit={this.Show_Join_Channel} 
+                            join_public_channels={this.props.join_public_channels} 
+                            update_public_channels_database={this.props.update_public_channels_database}
+                            join_favorite_public_channels={this.props.join_favorite_public_channels}
+                            msg_socket={this.state.msg_socket}
+                            public_channels_search_results={this.state.public_channels_search_results}
+                            initialize_public_channel={this.props.initialize_public_channel}
+                        /> 
+                    </Portal>
                     : ""}
 
                     <div id="available-channels">

@@ -62,7 +62,7 @@ class Viewer_Display extends Component {
 
             let {participants, my_room_tag, my_account_data} = this.state;
 
-            participants[room_tag.id] = {account_data: account_data, room_tag: room_tag};
+            participants[room_tag.id] = {account_data, room_tag};
 
             this.setState({participants: participants});
 

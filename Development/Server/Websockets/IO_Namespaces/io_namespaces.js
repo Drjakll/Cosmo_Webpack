@@ -1,12 +1,12 @@
 import fs from 'fs';
 
-let Gather_Namespaces = async function(io){
+let Gather_Namespaces = async function({io, session_sockets}){
     
     let namespaces = {};
     
     let path = `${__dirname}/../Development/Server/Websockets/IO_Namespaces/`;
     
-    let entries = await fs.readdirSync(path);
+    let entries = fs.readdirSync(path);
     
     for await (let entry of entries){
         
@@ -16,7 +16,7 @@ let Gather_Namespaces = async function(io){
         
         if(is_dir){
             
-            let sub_entries = await fs.readdirSync(sub_path);
+            let sub_entries = fs.readdirSync(sub_path);
             
             for await (let sub_entry of sub_entries){
                 
@@ -34,7 +34,7 @@ let Gather_Namespaces = async function(io){
 
                     namespaces[key].prototype.storage = Storage;
                     
-                    namespaces[key] = new namespaces[key]();
+                    namespaces[key] = new namespaces[key]({session_sockets});
                 }
             }
             
@@ -125,7 +125,8 @@ let Storage = function(store_obj){
         //and if it's a number, then convert it into a string and then split it
         let vSplit = value?.toLowerCase ? value?.toLowerCase().split("") : value.toString().split("");
 
-        //This is the key for identifying the entry, must be manually added to the entry object
+        //This is a unique key (mostly the socket id) for identifying the entry, 
+        //must be manually added to the entry object
         let {key} = entry;
 
         let recursion = async (i, sub_ptr)=>{
@@ -148,18 +149,10 @@ let Storage = function(store_obj){
                 ptr = create_letter_array();
             }
 
-            //Toggle between deleting the storage or inserting the storage
-            if(ptr?.storage[key]){
-
-                delete ptr.storage[key];
-                
-            } else {
-
-                ptr.storage[key] = entry;
-                
-            }
+            ptr.storage[key] = entry;
 
             return ptr;
+            
         };
 
         dest = add(dest);
@@ -208,7 +201,8 @@ let Storage = function(store_obj){
 
             try {
 
-                let json_obj = JSON.parse(store_info[i]);
+                let json_obj = typeof store_info[i] !== 'object' ? 
+                            JSON.parse(store_info[i]) : store_info[i];
 
                 Store_JSON(store_info, json_obj, this.store_obj[i]);
 
@@ -496,7 +490,7 @@ let Storage = function(store_obj){
 
             try {
 
-                let jsonObj = JSON.parse(entry[i]);
+                let jsonObj = typeof entry[i] !== "object" ? JSON.parse(entry[i]) : entry[i];
 
                 await Search_JSON(jsonObj, i, entry);
 

@@ -22,7 +22,8 @@ class Logged_In_Account extends Component {
         { screen: "Livestream", is_main: false, id: "Livestream" },
         { screen: "Feeds", is_main: false, id: "Feeds" },
         { screen: "Chat", is_main: false, id: "Messaging"},
-        { screen: "Search", is_main: false, id: "Search"}
+        { screen: "Search", is_main: false, id: "Search"},
+        { screen: "Empty", is_main: false, id: "empty"}
     ];
     
     constructor(props){
@@ -39,10 +40,10 @@ class Logged_In_Account extends Component {
             ],
             owner_user_account,
             visitor_user_account,
-            focused_column: "Profile",
             all_following_status: [],
             followings: [],
-            followers: []
+            followers: [],
+            initial_screen_event: null //This is an event that gets triggered whenever a new screen gets loaded, it's optional
         };
 
         this.Init_Global_Socket_IO();
@@ -150,7 +151,8 @@ class Logged_In_Account extends Component {
 
     }
 
-    Change_View = (index)=>{
+    //initial_screen_event is an event that triggers when the screen first loaded, it's optional
+    Change_View = (index, initial_screen_event = null)=>{
 
         let {Columns} = this.state;
 
@@ -160,7 +162,7 @@ class Logged_In_Account extends Component {
 
         Columns[1].is_main = true;
 
-        this.setState({Columns});
+        this.setState({Columns, initial_screen_event});
 
     }
 
@@ -196,8 +198,10 @@ class Logged_In_Account extends Component {
 
     render(){
         
-        let {owner_user_account, visitor_user_account, all_following_status} = this.state;
-        
+        let {owner_user_account, visitor_user_account, all_following_status, initial_screen_event} = this.state;
+
+        let {Change_Screen} = this.props;
+
         return (
             <div id="logged-in-account">
 
@@ -205,7 +209,8 @@ class Logged_In_Account extends Component {
 
                     <Upper_Bar 
                         owner_user_account={owner_user_account} 
-                        Change_Screen={this.props.Change_Screen}
+                        change_view={this.Change_View}
+                        Change_Screen={Change_Screen}
                     />
 
                 </div>
@@ -227,6 +232,7 @@ class Logged_In_Account extends Component {
                                     visitor_user_account={visitor_user_account}
                                     screen_type={info.screen} 
                                     all_following_status={all_following_status}
+                                    initial_screen_event={initial_screen_event}
                                 />
 
                             </div>

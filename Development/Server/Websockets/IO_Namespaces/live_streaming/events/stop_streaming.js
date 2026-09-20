@@ -10,7 +10,9 @@ let Wrapper = function(){
 
         let { stream_id } = tag;
 
-        this.io.to(stream_id).emit('stop_streaming', { from });
+        tag.can_go_live = false;
+
+        this.io.to(stream_id).emit('stop_streaming', { from: tag });
 
     };
     

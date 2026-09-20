@@ -47,7 +47,7 @@ class Connection_Channel extends Component {
         return (
                 <div id="connection-channel" onClick={this.Switch_Channel} className={`${this.state.channel_selected === "connections" ? "selected-channel" : ""}`}>
 
-                    <label>Connections</label>
+                    <label>Followings</label>
                     
                 </div>
             );

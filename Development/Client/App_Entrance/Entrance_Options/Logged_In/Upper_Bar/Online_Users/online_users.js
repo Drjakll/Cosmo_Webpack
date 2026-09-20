@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import './online_users.less';
-import { Queue_Set_State, Refresh} from '@get_follows';
 import Profile_Thumbnail from '@profile_thumbnail';
-import init_websocket from '@init_websocket';
+
 
 class Online_Users extends Component {
 
@@ -10,155 +9,95 @@ class Online_Users extends Component {
 
         super(props);
 
-        let {owner_user_account} = this.props;
+        let {owner_user_account, followings, followers, online_followings, streaming_id} = this.props;
 
         this.state = {
-            followers: [],
-            followings: [],
-            online_followings: {},
-            owner_user_account
+            followers,
+            followings,
+            online_followings,
+            owner_user_account,
+            streaming_id //If user is currently in a stream, this value will not be null
         };
-
-        //Add this setState function to let the Refresh callback to update whenever a new followers/followings is added or removed
-        Queue_Set_State(this.setState.bind(this), owner_user_account, "get_followers", "Online_Users");
-        Queue_Set_State(this.setState.bind(this), owner_user_account, "get_followings", "Online_Users");
-    }
-
-    componentWillUnmount(){
-        
-        this.Handle_Offline();
-    }
-
-    Handle_Offline = (e)=>{
-
-        let {owner_user_account: user_account, followers} = this.state;
-
-        this.socket?.emit('report_offline', {user_account, followers});
-        this.socket?.disconnect();
-
-    }
-
-    componentDidMount() {
-
-        window.addEventListener('visibilitychange', (e)=>{
-
-
-            let {visibilityState} = document;
-
-            let {owner_user_account: user_account, followers} = this.state;
-
-            switch(visibilityState){
-                case 'visible': 
-                    this.Report_Online();
-                    break;
-                case 'hidden':
-                    this.socket?.emit('report_offline', {user_account, followers})
-                    break;
-            }
-
-        });
-
-        window.addEventListener('pageshow', (e)=>{
-            
-            this.Setup_Socket();
-            this.Report_Online();
-        });
-
-        window.addEventListener('pagehide', this.Handle_Offline);
-
-        this.Setup_Socket();
 
     }
 
     componentDidUpdate(prevProps, prevState){
 
-        if(this.state.followers === prevState.followers && this.state.followings === prevState.followings){
-            return;
-        }
-
-        this.Report_Online();
-
         if(this.props === prevProps){
             return;
         }
 
+        this.setState(this.props);
+
     }
 
-    Setup_Socket = () => {
+    Join_Stream = (room_tag)=>{
 
-        this.socket = init_websocket("/global_events", this.Setup_Socket, this.Handle_Offline);
+        const Control_Stream_Component = (stream_ref) => {
 
-        this.socket?.on("add_online_user", ({online_user}) => {
+            let {stream_id, stream_title} = room_tag;
 
-            let {online_followings } = this.state;
+            stream_ref.Set_Current_Screen("Video_Stream_Screen", false, stream_id, stream_title);
 
-            let {id} = online_user;
+        }
 
-            online_followings[id] = online_user;
+        let {change_view} = this.props;
 
-            this.setState({online_followings});
+        change_view(5);
 
-        });
+        setTimeout(()=>{
+            change_view(1, Control_Stream_Component);
+        }, 250);
+    }
 
-        this.socket?.on("who_is_online", ({online_users})=>{
+    Generate_Streaming_Buttons = (room_tag)=>{
 
-            let online_followings = {};
+        let {stream_title, is_host, stream_id: this_stream_id} = room_tag;
+        let {streaming_id: current_stream_id} = this.state;
 
-            for(let user of online_users){
+        return <div id = "join-another-stream-option-buttons">
 
-                let {id} = user;
+            <div id="streaming-label">
+                {is_host ? "Hosting" : "In"} a stream..
 
-                online_followings[id] = user;
+                <div id="stream-information">
+
+                    {stream_title} 
+
+                </div>
+
+            </div>
+
+            { this_stream_id === current_stream_id ? 
+
+                "" :
+
+                <div id="join-stream-button-wrapper">
+
+                    <div id="join-stream-button" onClick={
+                        (e)=>{ 
+
+                            this.Join_Stream(room_tag); 
+
+                        }
+                    }>
+                        Join
+                    </div>
+
+                </div>
             }
-
-            this.setState({online_followings});
-        });
-
-        this.socket?.on("force_user_to_check_who_is_online", ()=>{
-
-            let {followings, owner_user_account} = this.state;
-
-            this.socket?.emit("who_is_online", ({user_account: owner_user_account, followings}))
-
-        });
-
-        this.socket?.on("remove_offline_user", ({offline_user})=>{
-
-            let {online_followings} = this.state;
-
-            let {id} = offline_user;
-
-            delete online_followings[id];
-
-            this.setState({online_followings});
-
-        });
-
-        this.socket?.on("followers_update", async ()=>{
-
-            await Refresh(true);
-
-        });
-
-        this.socket?.on("followings_update", async ()=>{
-
-            await Refresh(false);
-
-        });
-
-        window.global_user_socket = this.socket;
-
+            
+        </div>
     }
 
-    Report_Online = () => {
-        
-        let {owner_user_account, followers, followings} = this.state;
+    Generate_Streaming_Options = (room_tag)=>{
 
-        //Report to followers that you are online
-        this.socket?.emit("report_online", {user_account: owner_user_account, followers});
+        return <div id="streaming-option-wrappers">
 
-        //Check all the followings to see who is online
-        this.socket?.emit("who_is_online", {user_account: owner_user_account, followings});
+            {!room_tag ? "" : this.Generate_Streaming_Buttons(room_tag)}
+
+        </div>
+
     }
 
     render() {
@@ -177,9 +116,7 @@ class Online_Users extends Component {
 
                 {Object.entries(online_followings).map(([key,value])=>{
 
-                    let {first_name, last_name} = value;
-
-                    console.log(key);
+                    let {first_name, last_name, room_tag} = value;
 
                     return <div key={key} className="online-user-entry">
 
@@ -204,9 +141,17 @@ class Online_Users extends Component {
 
                             <div id="status">
 
-                                <div id="green-dot"></div> (Online)
+                                <div id="greendot-wrapper">
+                                    <div id="green-dot"></div>
+                                </div> 
 
+                                <label id="online-label">Online</label> 
+
+                                {this.Generate_Streaming_Options(room_tag)}
+                                
                             </div>
+
+                            
 
                         </div>
 

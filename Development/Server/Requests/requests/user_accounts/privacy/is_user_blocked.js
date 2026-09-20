@@ -10,19 +10,20 @@ function request({sql}){
         photo_id: "photos",
     };
 
+    //This middleware will require "central_auth" to be called ahead of time to access req.auth.user_id
     this.req = async (req, res, next) => {
 
-        const {commenter_user_id, owner_user_id, target_id_type, from_id, oppose_id, target_id, viewer_id} = req.body;
+        const {owner_user_id, target_id_type, from_id, oppose_id, target_id, viewer_id} = req.body;
         
-        //defender_id is user to check to see if it's blocking attacker_id's account
-        let attacker_id = commenter_user_id || from_id || viewer_id;
+        //defender_id is user to check to see if it's blocking visitor_id's account
+        let visitor_id = req.auth.user_id;
         let defender_id = owner_user_id || oppose_id || target_id;
 
-        if(!defender_id || !attacker_id){
+        if(!defender_id || !visitor_id){
             return res.status(401).json({message: "Invalid user id and/or target user id", blocked: true});
         }
 
-        let data = [defender_id, attacker_id];
+        let data = [defender_id, visitor_id];
 
         const query = `select * from Blocked_Users where user_id = ? and target_id = ?`;
 

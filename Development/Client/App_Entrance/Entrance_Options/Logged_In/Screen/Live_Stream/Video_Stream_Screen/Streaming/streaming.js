@@ -6,6 +6,7 @@ import init_websocket from '@init_websocket';
 import Stream_Room_Data_Templates from '@stream_room_data';
 import Profile_Popup from '@profile_popup';
 import Drag_Scroll from '@drag_scroll';
+import Popup_Msg from '@popup_message';
 import './streaming.less';
 
 class Streaming extends Component {
@@ -22,6 +23,8 @@ class Streaming extends Component {
         
         super(props);
         
+        let {owner_user_account, is_host, stream_id, turn_server_cred, stream_title} = props;
+
         this.peerConfig = {
             iceServers: [
                 { 
@@ -32,8 +35,8 @@ class Streaming extends Component {
                         "turn:turn.cosmo-one.com:3478?transport=udp", 
                         "turn:turn.cosmo-one.com:3478?transport=tcp"
                     ],
-                    username: "dr_jakll",
-                    credential: "Kingman123!"
+                    username: turn_server_cred?.username,
+                    credential: turn_server_cred?.credential
                 }
             ]
         };
@@ -41,14 +44,12 @@ class Streaming extends Component {
         this.participants = {};
         this.the_host = null;
         this.my_media_source = null;
-
-        let {owner_user_account, is_host, stream_id} = props;
         
         this.state = {
             owner_user_account,
             is_host,
             stream_id, //The stream_id is the host socket.id + Date.now()
-            stream_title: props.stream_title ?? "New Room",
+            stream_title: stream_title ?? "New Room",
             streamer_small_screens: {}, //Streamers at the smaller screen
             streamer_big_screen: null, //Streamer at the bigger screen
             my_room_tag: null,
@@ -68,8 +69,10 @@ class Streaming extends Component {
     componentWillUnmount() {
 
         this.Shut_Off_Camera();
-        this.socket?.emit('leave_stream', this.my_room_tag);
+        this.socket?.emit('leave_stream', {room_tag: this.my_room_tag});
         this.socket?.disconnect();
+        
+        this.Report_Streaming_Status_To_Followers({room_tag: this.my_room_tag, is_streaming: false, is_hosting: this.state.is_host});
     }
     
     componentDidUpdate(prevProps, prevState){
@@ -77,6 +80,12 @@ class Streaming extends Component {
         if(this.props === prevProps){
             return;
         }
+
+        const {turn_server_cred} = this.props;
+        const {username, credential} = turn_server_cred ?? {username: "", credential: ""};
+
+        this.peerConfig.iceServers[1].username = username;
+        this.peerConfig.iceServers[1].credential = credential;
         
         this.setState(this.props);
     }
@@ -95,7 +104,21 @@ class Streaming extends Component {
     }
 
     Generate_Stream_ID = (socket_id) => {
-        return `${socket_id}${Date.now()}`;
+        return `stream:${socket_id}${Date.now()}`;
+    }
+
+    Report_Streaming_Status_To_Followers = async ({room_tag, is_hosting, is_streaming}) => {
+
+        //Send the streaming status to the upper_bar.js through websocket because
+        //upper_bar.js has the followers data while this component doesn't.
+        window.global_user_socket?.emit("reporting_streaming_status",
+            {
+                room_tag,
+                is_hosting,
+                is_streaming
+            }
+        );
+
     }
 
     Init_Streaming = async ()=>{
@@ -122,11 +145,13 @@ class Streaming extends Component {
                         streamer_big_screen: this.my_media_source,
                         the_host: this.my_room_tag,
                         my_room_tag: this.my_room_tag,
-                        socket: this.socket
+                        socket: this.socket,
+                        stream_id
                     });
-                    
 
-                    this.socket?.emit('create_stream', this.my_room_tag);
+                    this.socket?.emit('create_stream', {my_room_tag: this.my_room_tag});
+
+                    this.Report_Streaming_Status_To_Followers({room_tag: this.my_room_tag, is_hosting: true, is_streaming: true});
                     
                 } else {
 
@@ -138,6 +163,8 @@ class Streaming extends Component {
                     });
                     
                     this.socket?.emit('join_stream', {room_tag: this.my_room_tag, account_data: owner_user_account});
+
+                    this.Report_Streaming_Status_To_Followers({room_tag: this.my_room_tag, is_hosting: false, is_streaming: true});
                     
                 }
                 
@@ -151,8 +178,12 @@ class Streaming extends Component {
         
         this.socket?.on('new_viewer_joined', async (new_viewer_tag) => {
 
-            let { id } = new_viewer_tag;
+            let {stream_id: self_stream_id} = this.my_room_tag;
+            let { id, stream_id: from_stream_id } = new_viewer_tag;
             
+            if(self_stream_id !== from_stream_id){
+                return;
+            }
 
             this.participants[id] = {};
             this.participants[id].tag = new_viewer_tag;
@@ -165,7 +196,13 @@ class Streaming extends Component {
 
         this.socket?.on('video_stream_from_user', ({user_room_tag})=>{
 
-            let {id} = user_room_tag;
+            let {stream_id: self_stream_id} = this.my_room_tag;
+
+            let {id, stream_id: from_stream_id} = user_room_tag;
+
+            if(self_stream_id !== from_stream_id){
+                return;
+            }
 
             this.participants[id] = {};
             this.participants[id].tag = user_room_tag;
@@ -178,7 +215,12 @@ class Streaming extends Component {
 
         this.socket?.on('receive_offer', async ({ from, remote_offer }) => {
 
-            let { id } = from;
+            let {stream_id: self_stream_id} = this.my_room_tag;
+            let { id, stream_id: from_stream_id } = from;
+
+            if(self_stream_id !== from_stream_id){
+                return;
+            }
 
             this.participants[id] = {};
             this.participants[id].tag = from;
@@ -201,12 +243,19 @@ class Streaming extends Component {
 
         this.socket?.on('stream_full', async({})=>{
 
-            alert("Sorry, this stream is full. The maximum number of viewers has been reached.");
+            await Popup_Msg("message","Sorry, this stream is full. The maximum number of viewers has been reached.");
 
             this.props.set_main_screen("Stream_List_Components");
         });
 
         this.socket?.on('receive_answer', async ({ from, answer }) => {
+
+            let {stream_id: self_stream_id} = this.my_room_tag;
+            let {stream_id: from_stream_id} = from;
+
+            if(self_stream_id !== from_stream_id){
+                return;
+            }
 
             let { peer } = this.participants[from.id];
 
@@ -215,6 +264,13 @@ class Streaming extends Component {
         });
 
         this.socket?.on('receive_candidate', async ({ from, candidate }) => {
+
+            let {stream_id: self_stream_id} = this.my_room_tag;
+            let {stream_id: from_stream_id} = from;
+
+            if(self_stream_id !== from_stream_id){
+                return;
+            }
 
             let { peer } = this.participants[from.id];
 
@@ -229,6 +285,10 @@ class Streaming extends Component {
                 this.my_media_source = await this.Capture_Video();
                 
                 this.Go_Live_To_All();
+
+                this.setState({
+                    streaming_status: this.streaming_status.streaming
+                });
 
             } else {
 
@@ -248,9 +308,9 @@ class Streaming extends Component {
 
         });
 
-        this.socket?.on('disband_room', ({ msg }) => {
+        this.socket?.on('disband_room', async ({ msg }) => {
 
-            alert("The host has closed the stream");
+            await Popup_Msg("message","The host has closed the stream");
 
             this.Shut_Off_Camera();
 
@@ -260,7 +320,15 @@ class Streaming extends Component {
 
         this.socket?.on('stop_streaming', ({from})=>{
 
+            let {stream_id : from_stream_id} = from;
+
             let { streamer_small_screens, my_room_tag} = this.state;
+
+            let {stream_id: self_stream_id} = this.my_room_tag;
+
+            if(from_stream_id !== self_stream_id){
+                return;
+            }
 
             delete streamer_small_screens[from.id];
 
@@ -271,18 +339,26 @@ class Streaming extends Component {
                 this.setState({streaming_status: this.streaming_status.not_streaming})
             }
         });
+
+        this.socket?.on('stream_not_exist', async ({})=>{
+
+            await Popup_Msg('message', "Stream doesn't exist!");
+
+        });
     }
 
     Shut_Off_Camera = () => {
 
 
         if (this.my_media_source) {
+
             this.my_media_source.getTracks().forEach(track => track.stop());
+
         }
 
     }
 
-    Create_Room_Tag = (my_id, stream_id) => {
+    Create_Room_Tag = (my_socket_id, stream_id) => {
         
 
         let acc_copy = JSON.parse(JSON.stringify(this.state.owner_user_account));
@@ -291,9 +367,9 @@ class Streaming extends Component {
 
         acc_copy.stream_id = stream_id;
         
-        acc_copy.id = my_id;
+        acc_copy.id = my_socket_id;
 
-        acc_copy.thumbnail_link = acc_copy.profile_picture_link;
+        //acc_copy.thumbnail_link = acc_copy.profile_picture_link;
 
         acc_copy.stream_title = this.state.stream_title;
 

@@ -1,6 +1,7 @@
 import React, {Component, createRef} from 'react';
 import Drag_Scroll from '@drag_scroll';
-import Account_Data_Templates from '@account_data'
+import Account_Data_Templates from '@account_data';
+import Request_URLs from '@request_urls';
 import './profile_info_data.less';
 
 let {Mood_Options} = Account_Data_Templates;
@@ -61,6 +62,8 @@ class Profile_Info_Data extends Component {
         return <div id="current-mood"><img src={`./static/${Mood_Options[mood_today]}`}/> {mood_today}</div>;
 
     }
+
+    Data_Privacy_Options = null;
 
     render(){
         
@@ -132,7 +135,7 @@ class Profile_Info_Data extends Component {
 
                         const Com = template.component;
                         let value = owner_user_account[key];
-                        let { label, options, background, label_icon } = template;
+                        let { label, options, background, label_icon, can_be_private } = template;
 
                         return <div className="individual-info-wrapper" key={index}>
 
@@ -143,6 +146,8 @@ class Profile_Info_Data extends Component {
                                 <label>{label}</label> 
 
                             </div>
+
+                            {can_be_private && this.Data_Privacy_Options && this.Data_Privacy_Options(key, owner_user_account[`${key}_privacy`] ?? "public")}
 
                             <div id="info-value">
 

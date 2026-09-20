@@ -46,6 +46,7 @@ class Profile_Template extends Component {
         this.state = {
             owner_user_account,
             visitor_user_account,
+            visitor_all_following_status,
             render_list: this.Render_List,
             general_props: this.General_Props,
             render_callback: this.Display_Main_Components //The display that will be rendered
@@ -157,7 +158,7 @@ class Profile_Template extends Component {
     render(){
         
         let { render_callback, owner_user_account } = this.state;
-        
+
         return (
             <div id="profile-template">
 

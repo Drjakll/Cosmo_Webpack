@@ -299,6 +299,64 @@ class Profile_Data_Editor extends Profile_Info_Data {
         </div>
     }
 
+    Update_Privacy_Value = async (data_name, privacy_value)=>{
+
+        let {set_user_data_privacy} = Request_URLs;
+
+        let body = {
+            privacy: privacy_value,
+            data_name
+        }
+
+        await fetch(set_user_data_privacy, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(body)
+        })
+
+        let {owner_user_account} = this.state;
+
+        owner_user_account[`${data_name}_privacy`] = privacy_value;
+
+        this.setState({owner_user_account});
+    }
+
+    Privacy_Options = ["public", "mutual", "private"];
+
+    Data_Privacy_Options = (data_name, original_value)=>{
+
+        let ov = original_value[0].toUpperCase() + original_value.slice(1);
+
+        return <div id="data-privacy-options-wrapper">
+
+            <div id="privacy-options-label">
+                {ov}
+            </div>
+
+            <div id="privacy-selections-wrapper">
+
+                {this.Privacy_Options.map((value, index)=>{
+
+                    return value === original_value ? "" : <div className="privacy-selection" key={index} onClick={(e)=>{
+                        
+                        this.Update_Privacy_Value(data_name, value);
+
+                    }}>
+
+                        {value.charAt(0).toUpperCase() + value.slice(1)}
+
+                    </div>
+
+                })}
+
+            </div>
+
+        </div>
+
+    }
+
     render(){
 
         let {owner_user_account} = this.state;

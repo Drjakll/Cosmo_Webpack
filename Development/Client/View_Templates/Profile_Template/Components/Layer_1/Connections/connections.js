@@ -170,9 +170,11 @@ class Connections extends Component {
         </div>;
     }
 
-    Display_Following_List = ()=>{
+    Display_Following_List = ({state: parent_state})=>{
 
-        let {owner_user_account, visitor_user_account, followings, visitor_all_following_status} = this.state;
+        let { visitor_all_following_status} = parent_state;
+
+        let {owner_user_account, visitor_user_account, followings} = this.state;
 
         let {List} = this;
 

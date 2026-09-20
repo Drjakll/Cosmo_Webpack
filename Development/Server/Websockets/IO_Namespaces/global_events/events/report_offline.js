@@ -1,21 +1,26 @@
-let Wrapper = function(){
+let Wrapper = function({session_sockets}){
     
-    this.event = ({user_account, followers}) => {
+    this.middleware_names = [
+        "user_auth",
+        "get_follower_ids"
+    ];
 
-        if(!user_account){
+    this.event = async ({followers, user_id: id}) => {
+
+        if(!id){
             return;
         }
 
-        let {id} = user_account;
-
         if(this.online_users[id]){
+
             this.online_users[id].hidden = true;
+            
         }
 
         //Report to the user's followers that the user is offline
         for(let i in followers){
 
-            let {id: follower_id} = followers[i];
+            let {follower_id} = followers[i];
 
             let follower_sockets = this.online_users[follower_id];
 
@@ -23,10 +28,11 @@ let Wrapper = function(){
 
                 let follower_socket = follower_sockets[s_id].socket;
 
-                follower_socket?.emit("remove_offline_user", {offline_user: user_account});
+                follower_socket?.emit("remove_offline_user", {offline_user_id: id});
             }
 
         }
+
     };
     
 };

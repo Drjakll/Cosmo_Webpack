@@ -20,45 +20,62 @@ let request = function ({sql}) {
         let {user_id} = req.auth;
 
         if(!target_id){
-            res.status(400).json({message: "Missing target id"});
+            return res.status(400).json({message: "Missing target id"});
+        }
+
+        if(target_id === user_id){
+            next();
+            return;
         }
 
         let target_privacy = await Get_Account_Privacy(target_id);
 
         if(!target_privacy){
-            res.status(400).json({message: "No account found", blocked: true});
+            return res.status(400).json({message: "No account found", blocked: true});
         }
 
         let query = "";
 
-        let data = [target_id, user_id];
+        let data = [];
 
         let msg = "";
 
         if(target_privacy === "mutual"){
 
+            data = [user_id, target_id, user_id];
+
             query = `
-                select distinct
-                    c.status as status
-                from 
-                    Connections as c
-                left join
+                select 
+                    *
+                from
                     Connections as d
-                on
-                    d.followed_id = ?
                 left join
                     Connections as e
                 on
-                    e.followed_id = d.follower_id
+					e.follower_id = ?
+				and 
+					e.status = 'accepted'
+				and
+					d.follower_id = e.followed_id 
+				and 
+					d.status = 'accepted'
+                    
                 where
-                    (c.followed_id = ? and e.follower_id = c.followed_id and e.status = 'accepted') 
-                    or 
-                    (d.follower_id = c.followed_id and d.status = 'accepted');
+                    d.followed_id = ?
+                and
+					d.status = 'accepted'
+				and
+					(e.followed_id is not null 
+						or
+					d.follower_id = ?)
+                ;
             `;
 
-            msg = "Missing mutual following connection";
+            msg = "Missing mutual following";
 
         } else if (target_privacy === "private") {
+
+            data = [target_id, user_id];
 
             query = `
                 select 

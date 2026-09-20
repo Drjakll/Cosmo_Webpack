@@ -61,21 +61,36 @@ let Wrapper = function (){
             events[i].existing_public_channels = Existing_Public_Channels;
             events[i].user_socket = this.user_socket;
             events[i].public_channel_list = this.public_channel_list;
+            events[i].middleware_wrapper = new this.middleware_wrapper({socket});
+
+            let middleware_names = events[i].middleware_names;
+
+            if(middleware_names){
+
+                for(let name of middleware_names){
+
+                    let middleware = this.middlewares[name];
+
+                    events[i].middleware_wrapper.add_to_middleware(middleware);
+
+                }
+                
+            } 
+
+            events[i].middleware_wrapper.add_to_middleware(events[i].event);
         }
 
-        //console.log("connected: messagings", socket.id);
-
-        socket.on("disconnect", (reason) => {
-            //console.log("disconnected: messaging", socket.id, reason);
-        });
+        //console.log("connected: global_events", socket.id);
 
         socket.on("error", (err) => {
-            //console.log("socket error: messaging", err);
+            //console.log("socket error: global_events", err);
         });
 
         for(let key in events){
 
-            socket.on(key, events[key].event);
+            let {run_middlewares} = events[key].middleware_wrapper;
+
+            socket.on(key, run_middlewares);
 
         }
 

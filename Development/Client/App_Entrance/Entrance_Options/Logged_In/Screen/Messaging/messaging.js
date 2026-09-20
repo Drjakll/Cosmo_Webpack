@@ -20,10 +20,11 @@ class Messaging extends Component {
 
         this.Msg_Area_Ref = createRef();
 
-        let {owner_user_account} = props;
+        let {owner_user_account, visitor_all_following_status} = props;
         
         this.state = {
             owner_user_account,
+            visitor_all_following_status,
             following: [], 
             visible_users: {},
             conversations: {public: {}, private: {}},
@@ -399,9 +400,7 @@ class Messaging extends Component {
 
         }
 
-        let {id, first_name, last_name, profile_picture_link} = owner_user_account;
-
-        let msg_obj = {sender_id: id, conversation_id: selected_room_tag, first_name, last_name, profile_picture_link, text: msg, created_on};
+        let msg_obj = {conversation_id: selected_room_tag, text: msg, created_on};
 
         this.msg_socket?.emit('send_msg_to_channel', {room_tag: selected_room_tag, msg_obj, private_or_public});
     }
@@ -716,7 +715,9 @@ class Messaging extends Component {
             public_channels_search_results, 
             selected_users, 
             private_or_public, 
-            current_users_info} = this.state;
+            current_users_info,
+            visitor_all_following_status
+        } = this.state;
 
         return (
             <div id="messaging">
@@ -761,6 +762,7 @@ class Messaging extends Component {
                     <div id="message-area-wrapper">
 
                         <Message_Area 
+                            visitor_all_following_status={visitor_all_following_status}
                             following_list={following} 
                             owner_user_account={owner_user_account}
                             conversations={conversations}

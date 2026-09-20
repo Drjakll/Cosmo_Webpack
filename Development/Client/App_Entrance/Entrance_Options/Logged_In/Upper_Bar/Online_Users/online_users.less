@@ -26,12 +26,13 @@
         &:hover {
             cursor: pointer;
             color: rgba(255,255,255,1) !important;
-            background-color: rgba(70,70,70,1);
+            background-color: rgba(255,255,255,0.25);
         }
     }
 
     #online-users-list {
-        width: 100%;
+        width: 400px;;
+        left: 0;
         max-height: 375px;
         position: absolute;
         top: 100%;
@@ -86,13 +87,105 @@
 
                 #status {
 
-                    #green-dot {
-                        height: 15px;
-                        width: 15px;
-                        border-radius: 20px;
-                        border: rgba(50,50,50,1) solid 0.5ps;
-                        background-color: rgb(28, 152, 48);
-                        //box-shadow: rgba(0,0,0,0.25) 0px 2.5px 5px;
+                    #greendot-wrapper {
+                        width: 10%;
+                        height: 100%;
+                        display: flex;
+                        justify-content: center;
+                        align-items :center;
+
+                        #green-dot {
+                            height: 15px;
+                            width: 15px;
+                            border-radius: 20px;
+                            border: rgba(50,50,50,1) solid 0.5ps;
+                            background-color: rgb(28, 152, 48);
+                            //box-shadow: rgba(0,0,0,0.25) 0px 2.5px 5px;
+                        }
+                    }
+
+                    #online-label {
+                        width: 20%;
+                        height: 100%;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                    }
+
+                    #streaming-option-wrappers {
+                        width: 70%;
+                        height: 100%;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+
+                        #join-another-stream-option-buttons {
+                            height: 100%;
+                            width: 100%;
+                            display: flex;
+                            justify-content: space-evenly;
+                            align-items: center;
+
+                            #streaming-label {
+                                width: 75%;
+                                height: 100%;
+                                display: flex;
+                                justify-content: center;
+                                align-items: center;
+                                position: relative;
+                                font-size: 13px;
+
+                                &:hover {
+                                    cursor: pointer;
+                                    color: green;
+
+                                    #stream-information {
+                                        display: flex;
+                                    }
+                                }
+
+                                #stream-information {
+                                    min-width: 150px;
+                                    height: 35px;
+                                    position: absolute;
+                                    display: none;
+                                    justify-content: center;
+                                    align-items: center;
+                                    border: rgba(0,0,0,0.5) solid 0.5px;
+                                    background-color: white;
+                                    border-radius: 10px;
+                                    left: 0%;
+                                    bottom: 75%;
+                                    font-size: 13px;
+                                    padding: 2.5px 5px 2.5px 5px;
+                                    text-align: center;
+                                    box-shadow: -5px 5px 5px rgba(0,0,0,0.5);
+                                }
+                            }
+
+                            #join-stream-button-wrapper {
+                                width: 25%;
+                                height: 100%;
+                                display: flex;
+                                justify-content: center;
+                                align-items: center;
+
+                                #join-stream-button {
+                                    padding: 5px 10px 5px 10px;
+                                    border-radius: 50px;
+                                    background-color: rgba(50,50,50,1);
+                                    color: rgba(205,205,205,1);
+                                    font-size: 14px;
+                                    transition: 0.5s;
+
+                                    &:hover {
+                                        cursor: pointer;
+                                        background-color: rgba(150,150,150,1);
+                                        color: rgba(75,75,75,1);
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
 

@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import Request_URLs from '@request_urls';
+import Profile_Thumbnail from '@profile_thumbnail';
 import './msg_entry.less';
 
 class Msg_Entry extends Component {
@@ -8,7 +9,7 @@ class Msg_Entry extends Component {
 
         super(props);
 
-        let { msg_obj, my_account } = props;
+        let { msg_obj, my_account, visitor_all_following_status } = props;
 
         let {sender_id, first_name, last_name, profile_picture_link, text, created_on} = msg_obj;
 
@@ -19,7 +20,8 @@ class Msg_Entry extends Component {
             profile_picture_link, 
             text,
             created_on,
-            my_account
+            my_account,
+            visitor_all_following_status
         };
     }
 
@@ -29,7 +31,7 @@ class Msg_Entry extends Component {
             return;
         }
 
-        let { msg_obj, my_account, recipient_info } = this.props;
+        let { msg_obj, my_account, visitor_all_following_status } = this.props;
 
         let {sender_id, first_name, last_name, profile_picture_link, text, read_by, created_on} = msg_obj;
 
@@ -41,7 +43,8 @@ class Msg_Entry extends Component {
             text,
             read_by,
             created_on,
-            my_account
+            my_account,
+            visitor_all_following_status
         });
 
     }
@@ -72,10 +75,11 @@ class Msg_Entry extends Component {
 
     render(){
 
-        let {sender_id, first_name, last_name, profile_picture_link, text, created_on, my_account} = this.state;
+        let {sender_id, first_name, last_name, profile_picture_link, text, created_on, my_account, visitor_all_following_status} = this.state;
+        
         
 
-        let {aws_s3_url} = Request_URLs;
+        //let {aws_s3_url} = Request_URLs;
 
         return <div id="msg-entry"  className={`${sender_id === my_account.id ? "myself" : "others"}`}>
 
@@ -91,7 +95,15 @@ class Msg_Entry extends Component {
 
                     <div id="profile-pic">
                         
-                        <img src={`${aws_s3_url}${profile_picture_link}`} />
+                        <Profile_Thumbnail 
+                            profile={{id: sender_id, profile_picture_link}}
+                            generate_options_disabled={true}
+                            owner_user_account={my_account}
+                            visitor_user_account={my_account}
+                            rounded_portrait={true}
+                            visitor_all_following_status={visitor_all_following_status}
+                        />
+                        {/*<img src={`${aws_s3_url}${profile_picture_link}`} />*/}
 
                     </div>
 

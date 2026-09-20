@@ -3,6 +3,8 @@ let request = function({sql}) {
     this.req_path = "/get_one_set_reactions/:target_id/:target_id_type";
     this.req_type = "get";
     this.callbacks = ["get_one_set_reactions"];
+
+    const Possible_Target_ID_Type = ["post_id","comment_id","photo_id"];
     
     //If frontend needs only one set of reactions, i.e. A post's reactions
     this.req = async (req, res) => { 
@@ -11,12 +13,12 @@ let request = function({sql}) {
 
         if(!target_id){
 
-            return res.status(400).json({message: "Missing target id", results: [], failed: true});
+            return res.status(400).json({message: "Invalid target id", results: [], failed: true});
         }
 
-        if(!target_id_type){
+        if(!Possible_Target_ID_Type.includes(target_id_type)){
 
-            return res.status(400).json({message: "Missing target id type", results: [], failed: true});
+            return res.status(400).json({message: "Invalid target id type", results: [], failed: true});
         }
 
         let query = `select 

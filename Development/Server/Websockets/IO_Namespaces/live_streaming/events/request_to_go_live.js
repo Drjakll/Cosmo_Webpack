@@ -1,14 +1,16 @@
 let Wrapper = function(){
     
-    this.event = (data) => {
+    this.event = ({host}) => {
 
-        if(!data){
+        let {tag: from} = this.my_socket;
+
+        if(!host || !from){
             return;
         }
+
+        from.request_to_go_live = true;
         
-        let {host, from} = data;
-        
-        this.io.to(host.id).emit('acknowledge_request_to_go_live', {from: from});
+        this.io.to(host.id).emit('acknowledge_request_to_go_live', {from});
         
     };
     
